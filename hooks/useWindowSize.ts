@@ -7,6 +7,10 @@ export interface WindowSize {
   height: number
 }
 
+/**
+ * Custom hook that returns the current size of the window.
+ * @returns {WindowSize} The current window size.
+ */
 export const useWindowSize = (): WindowSize => {
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: 0,

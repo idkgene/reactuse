@@ -1,3 +1,9 @@
+/**
+ * A React hook that detects the visibility of the iOS toolbar and provides its state.
+ *
+ * @returns {{isVisible: boolean | undefined}} An object containing the visibility state of the iOS toolbar.
+ */
+
 import { useEffect, useState } from 'react'
 
 export const useIOSToolbarState = () => {
@@ -10,6 +16,9 @@ export const useIOSToolbarState = () => {
     const iOSSafari = iOS && webkit && !ua.match(/CriOS/i)
     const baseWindowHeight = window.innerHeight
 
+    /**
+     * Handles the scroll event and updates the toolbar visibility state.
+     */
     function handleScroll() {
       const newWindowHeight = window.innerHeight
       if (newWindowHeight - 50 > baseWindowHeight) {

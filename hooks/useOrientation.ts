@@ -1,3 +1,9 @@
+/**
+ * A React hook that provides the current orientation of the device or browser window.
+ *
+ * @returns {{angle: number, type: string}} An object containing the current orientation angle and type.
+ */
+
 import { useLayoutEffect, useState } from 'react'
 
 export function useOrientation() {
@@ -7,6 +13,9 @@ export function useOrientation() {
   })
 
   useLayoutEffect(() => {
+     /**
+     * A function to handle orientation changes using the Screen Orientation API.
+     */
     const handleChange = () => {
       const { angle, type } = window.screen.orientation
       setOrientation({
@@ -15,6 +24,9 @@ export function useOrientation() {
       })
     }
 
+    /**
+     * A function to handle orientation changes using the deprecated window.orientation API.
+     */
     const handle_orientationchange = () => {
       setOrientation({
         type: 'UNKNOWN',

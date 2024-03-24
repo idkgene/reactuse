@@ -1,8 +1,19 @@
+/**
+ * A React hook that determines if the current device is a touch device or not.
+ *
+ * @returns {boolean} A boolean indicating if the device is a touch device.
+ */
+
 import { useCallback, useEffect, useState } from 'react'
 
 export const useIsTouchDevice = () => {
   const [isTouchDevice, setIsTouchDevice] = useState(false)
 
+   /**
+   * A memoized function that checks if the device has a touch screen.
+   * It uses various methods to detect touch support, including navigator.maxTouchPoints,
+   * Window.matchMedia, and user agent string checks.
+   */
   const check = useCallback(() => {
     let hasTouchScreen = false
 
@@ -26,6 +37,10 @@ export const useIsTouchDevice = () => {
     }
   }, [])
 
+  /**
+   * A memoized function that calls the check function to detect touch screen support.
+   * It is used as an event handler for the window.resize event.
+   */
   const onResize = useCallback(() => {
     check()
   }, [check])

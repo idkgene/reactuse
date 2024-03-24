@@ -1,3 +1,9 @@
+/**
+ * A React hook that allows you to execute a function when a component is unmounted.
+ *
+ * @param {function} fn - The function to be executed when the component is unmounted.
+ * @returns {void}
+**/
 import { useRef } from "react";
 import { useEffectOnce } from "./useEffectOnce";
 
