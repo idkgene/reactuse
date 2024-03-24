@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# React Hooks Collection
 
-## Getting Started
+Welcome to the React Hooks Collection repository! This is a collection of custom React hooks that are designed to simplify and improve your React development experience. These hooks provide reusable and effective solutions to problems and patterns found in React applications.
 
-First, run the development server:
+## Available Hooks
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Currently, the following hooks have been implemented and thoroughly tested:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `useClipboard`: Simplifies clipboard operations, allowing you to easily copy and paste text.
+- `useDebounce`: A hook that provides a debounced version of a value, which is updated only after a certain delay.
+- `useDebug`: A hook that returns true if the current window URL contains the string `#debug` or if we're in development mode.
+- `useDocumentReadyState`: A hook that returns the document ready state, which is useful for detecting when the document is fully loaded.
+- `useDocumentTitle`: A hook that sets the document title based on a given string.
+- `useIsClient`: A hook that returns true if the current window is a client-side window.
+- `useIsTouchDevice`: A hook that returns true if the current window is a touch device.
+- `useIsVisible`: A hook that returns true if an element is visible within the viewport.
+- `useMediaQuery`: A hook that returns true if a given media query matches the current viewport.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+More hooks are currently being developed and will be added to the collection soon. Stay tuned for updates!
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+! Under construction !
