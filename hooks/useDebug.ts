@@ -1,8 +1,8 @@
 /**
- * @summary A hook that returns true if the current window URL contains the
- *   string #debug or if we're in development mode.
- * @returns {Boolean} True if current window URL contains the string #debug or
- *   if we're in development mode, false otherwise.
+ * A React hook that determines if the current environment is in debug mode.
+ *
+ * @module useDebug
+ * @returns {boolean} True if the current environment is in debug mode, false otherwise.
  */
 
 import { useMemo } from "react";

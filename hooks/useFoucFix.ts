@@ -1,3 +1,36 @@
+/**
+ * A React hook that applies a temporary fix for the Flash of Unstyled Content (FOUC) issue in Next.js.
+ *
+ * @module useFoucFix
+ * @returns {void}
+ *
+ * @interface StyleEntry
+ * @property {HTMLStyleElement} element - The `<style>` element.
+ * @property {string} href - The value of the `data-n-href` attribute.
+ *
+ * @interface StylesheetEntry
+ * @property {HTMLLinkElement} element - The `<link>` element for the stylesheet.
+ * @property {string} href - The value of the `href` attribute.
+ *
+ * @description
+ * This hook is a temporary fix for the FOUC issue in Next.js, which occurs when stylesheets are loaded asynchronously,
+ * causing a brief period where the page is rendered without styles. The hook works by:
+ *
+ * 1. Gathering all server-side rendered stylesheet entries (`<link rel="stylesheet" data-n-p>`).
+ * 2. Removing the `data-n-p` attribute to prevent Next.js from removing it early.
+ * 3. Setting up a MutationObserver to watch for `<style data-n-href="/...">` elements added by Next.js.
+ * 4. For each new `<style>` element, either:
+ *    - Remove the `data-n-href` attribute to prevent Next.js from removing it early.
+ *    - Remove the element if it's already present (to avoid duplicates).
+ * 5. For each server-side rendered stylesheet, remove it if it's already present as an inline `<style>` tag (to avoid duplicates).
+ *
+ * The hook logs a warning to the console, suggesting that it should be removed once the Next.js bug is fixed.
+ *
+ * @note
+ * This hook is a temporary solution and should be removed once the FOUC issue is resolved in Next.js.
+ * See https://github.com/vercel/next.js/issues/17464 for more information.
+ */
+
 import { useEffect } from 'react'
 
 interface StyleEntry {

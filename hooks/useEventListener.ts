@@ -1,3 +1,25 @@
+/**
+ * A React hook that adds an event listener to a specified target element or window.
+ *
+ * @module useEventListener
+ * @template K - The event name type.
+ * @template T - The target element type.
+ * @param {K} eventName - The name of the event to listen for.
+ * @param {(event: Event) => void} handler - The event handler function.
+ * @param {RefObject<T>} [element] - A reference to the target element. If not provided, defaults to the window object.
+ * @param {boolean | AddEventListenerOptions} [options] - Optional options to pass to the addEventListener method.
+ * @returns {void}
+ *
+ * @example
+ * // Listen for click events on a button
+ * const buttonRef = useRef<HTMLButtonElement>(null);
+ * useEventListener('click', handleClick, buttonRef);
+ *
+ * @example
+ * // Listen for resize events on the window
+ * useEventListener('resize', handleResize);
+ */
+
 import { RefObject, useEffect, useRef } from 'react'
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
