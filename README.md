@@ -67,6 +67,8 @@ function MyComponent() {
 }
 ```
 
+---
+
 `useDebounce`
 
 The `useDebounce` hook is used to debounce a value, which means delaying the update of the value until a certain amount of time has passed since the last change. This is useful for scenarios where you want to wait for a user to finish typing or for a certain event to settle before triggering an action
@@ -101,6 +103,8 @@ function MyComponent() {
 }
 ```
 
+---
+
 `useDebug`
 
 The `useDebug` hook is a utility that determines whether the current environment is in debug mode. It returns true if the current window URL contains the string #debug or if the application is running in development mode.
@@ -128,6 +132,8 @@ function MyComponent() {
 }
 ```
 
+---
+
 `useDocumentReadyState`
 
 The `useDocumentReadyState` hook provides the current `readyState` of the document. It returns the `readyState` value, which can be one of the following:
@@ -152,6 +158,8 @@ function MyComponent() {
 }
 ```
 
+---
+
 `useDocumentTitle`
 
 The `useDocumentTitle` hook is used to update the document title with a provided string. It takes a single parameter, `title`, which represents the new title to be set for the document.
@@ -170,6 +178,8 @@ function MyComponent() {
   );
 }
 ```
+
+---
 
 `useEffectOnce`
 
@@ -193,4 +203,220 @@ function MyComponent() {
       {/* Component content */}
     </div>
   );
-}```
+}
+```
+
+---
+
+`useEventListener`
+
+The `useEventListener` hook is used to add an event listener to a specified target element or the window object. It provides a convenient way to handle events in functional components.
+
+```tsx
+import { useEventListener } from './hooks/useEventListener';
+import { useRef } from 'react';
+
+function MyComponent() {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEventListener('click', handleClick, buttonRef);
+
+  function handleClick(event: MouseEvent) {
+    console.log('Button clicked!', event);
+  }
+
+  return (
+    <div>
+      <button ref={buttonRef}>Click me</button>
+    </div>
+  );
+}
+```
+
+---
+
+`useFavicon`
+
+The `useFavicon` hook is used to dynamically update the browser's favicon with a provided URL. It allows you to change the favicon image displayed in the browser's address bar and tabs.
+
+Example usage:
+
+```tsx
+import { useFavicon } from './hooks/useFavicon';
+
+function MyComponent() {
+  useFavicon('https://example.com/favicon.ico');
+
+  return (
+    <div>
+      <h1>My Component</h1>
+      {/* Component content */}
+    </div>
+  );
+}
+```
+
+---
+
+`useFirstMountState`
+
+The `useFirstMountState` hook is used to determine whether the component is being rendered for the first time or not. It returns `true` on the initial render and `false` on subsequent renders.
+
+Example usage:
+
+```tsx
+import { useFirstMountState } from './hooks/useFirstMountState';
+
+function MyComponent() {
+  const isFirstMount = useFirstMountState();
+
+  useEffect(() => {
+    if (isFirstMount) {
+      console.log('This is the first render');
+    } else {
+      console.log('This is a subsequent render');
+    }
+  }, [isFirstMount]);
+
+  return (
+    <div>
+      <h1>My Component</h1>
+      {/* Component content */}
+    </div>
+  );
+}
+```
+
+---
+
+`useFoucFix`
+
+The `useFoucFix` hook is a temporary fix for the Flash of Unstyled Content (FOUC) issue in Next.js. It addresses the problem where stylesheets are loaded asynchronously, causing a brief period where the page is rendered without styles.
+
+This hook is a temporary solution and should be removed once the FOUC issue is resolved in Next.js.
+
+See https://github.com/vercel/next.js/issues/17464 for more information. 
+
+```tsx
+import { useFoucFix } from './hooks/useFoucFix';
+
+function MyApp({ Component, pageProps }) {
+  useFoucFix();
+
+  return (
+    <div>
+      <Component {...pageProps} />
+    </div>
+  );
+}
+
+export default MyApp;
+```
+
+---
+
+`useHover`
+
+The `useHover` hook provides a convenient way to track the hover state of a given element. It returns a ref object that can be attached to the target element, and a boolean value indicating whether the element is currently being hovered over.
+
+```tsx
+import { useHover } from './hooks/useHover';
+
+function MyComponent() {
+  const [hoverRef, isHovered] = useHover<HTMLDivElement>();
+
+  return (
+    <div ref={hoverRef}>
+      {isHovered ? 'Hovered' : 'Not hovered'}
+    </div>
+  );
+}
+```
+
+---
+
+`useIdle`
+
+The useIdle hook is a utility that detects user inactivity and sets an idle state after a specified amount of time. It monitors various user events such as mouse movements, mouse clicks, keyboard input, window resizing, touch events, and scroll events. If no user activity is detected within the specified time (default is 1 minute), the hook sets the idle state to true. The idle state is reset to false whenever user activity is detected.
+
+```tsx
+import { useIdle } from './hooks/useIdle';
+
+function MyComponent() {
+  const isIdle = useIdle(1000 * 60 * 5); // User is considered idle after 5 minutes
+
+  return (
+    <div>
+      {isIdle ? 'User is idle' : 'User is active'}
+    </div>
+  );
+}
+```
+
+---
+
+`useIntersectionObserver`
+
+The `useIntersectionObserver` hook is a utility that uses the Intersection Observer API to track the visibility of a DOM element. It allows you to detect when an element enters or leaves the viewport or a specified root element.
+
+```tsx
+import { useIntersectionObserver } from './hooks/useIntersectionObserver';
+
+function MyComponent() {
+  const ref = useRef<HTMLDivElement>(null);
+  const entry = useIntersectionObserver(ref, {
+    threshold: 0.5,
+    freezeOnceVisible: true,
+  });
+
+  return (
+    <div ref={ref}>
+      {entry?.isIntersecting ? 'Element is visible' : 'Element is not visible'}
+    </div>
+  );
+}
+```
+
+---
+
+`useInterval`
+
+The `useInterval` hook is a utility that creates an interval and executes a callback function at specified delay. It allows you to easily set up recurring tasks or animations in your React components.
+
+```tsx
+import { useInterval } from './hooks/useInterval';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  useInterval(() => {
+    setCount(count + 1);
+  }, 1000);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+    </div>
+  );
+}
+```
+
+---
+
+`useIOSToolbarState`
+
+The `useIOSToolbarState` hook is a utility that detects the visibility of the iOS toolbar and provides its state. It is specifically designed to handle the behavior of the toolbar in iOS Safari.
+
+```tsx
+import { useIOSToolbarState } from './hooks/useIOSToolbarState';
+
+function MyComponent() {
+  const { isVisible } = useIOSToolbarState();
+
+  return (
+    <div>
+      {isVisible ? 'iOS toolbar is visible' : 'iOS toolbar is hidden'}
+    </div>
+  );
+}
+```
