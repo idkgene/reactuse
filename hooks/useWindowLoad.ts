@@ -1,38 +1,28 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from "react";
 
-type WindowSize = {
-  innerWidth: number;
-  innerHeight: number;
-  outerWidth: number;
-  outerHeight: number;
-};
+/**
+ * The `useWindowLoad` custom hook in TypeScript uses `useEffect` to track the window load event and
+ * returns a boolean state indicating whether the window has finished loading.
+ * @returns The `useWindowLoad` custom hook returns a boolean value indicating whether the window has
+ * finished loading (`isLoaded`).
+ */
 
-const useWindowResize = () => {
-  const [windowSize, setWindowSize] = useState<WindowSize>({
-    innerWidth: window.innerWidth,
-    innerHeight: window.innerHeight,
-    outerWidth: window.outerWidth,
-    outerHeight: window.outerHeight,
-  });
-
-  const handleResize = useCallback(() => {
-    setWindowSize({
-      innerWidth: window.innerWidth,
-      innerHeight: window.innerHeight,
-      outerWidth: window.outerWidth,
-      outerHeight: window.outerHeight,
-    });
-  }, []);
+const useWindowLoad = () => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
+    const handleLoad = () => {
+      setIsLoaded(true);
+    };
+
+    window.addEventListener("load", handleLoad);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("load", handleLoad);
     };
-  }, [handleResize]);
+  }, []);
 
-  return windowSize;
-};
+  return isLoaded;
+}
 
-export default useWindowResize;
+export default useWindowLoad;

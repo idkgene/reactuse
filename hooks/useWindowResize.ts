@@ -1,21 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useCallback } from 'react';
 
-const useWindowLoad = () => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+type WindowSize = {
+  innerWidth: number;
+  innerHeight: number;
+  outerWidth: number;
+  outerHeight: number;
+};
 
-  useEffect(() => {
-    const handleLoad = () => {
-      setIsLoaded(true);
-    };
+/**
+ * The function `useWindowResize` in TypeScript is a custom React hook that tracks and returns the
+ * window's inner and outer dimensions on resize.
+ * @returns The `useWindowResize` custom hook is returning an object containing the current window size
+ * information. The object has the following properties:
+ */
 
-    window.addEventListener("load", handleLoad);
+const useWindowResize = () => {
+  const [windowSize, setWindowSize] = useState<WindowSize>({
+    innerWidth: window.innerWidth,
+    innerHeight: window.innerHeight,
+    outerWidth: window.outerWidth,
+    outerHeight: window.outerHeight,
+  });
 
-    return () => {
-      window.removeEventListener("load", handleLoad);
-    };
+  const handleResize = useCallback(() => {
+    setWindowSize({
+      innerWidth: window.innerWidth,
+      innerHeight: window.innerHeight,
+      outerWidth: window.outerWidth,
+      outerHeight: window.outerHeight,
+    });
   }, []);
 
-  return isLoaded;
-}
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
 
-export default useWindowLoad;
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [handleResize]);
+
+  return windowSize;
+};
+
+export default useWindowResize;
