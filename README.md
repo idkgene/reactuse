@@ -1,6 +1,4 @@
-# React Hooks Collection
-
-![](https://miro.medium.com/v2/resize:fit:1400/1*-Ijet6kVJqGgul6adezDLQ.png)
+![Banner Logo](https://miro.medium.com/v2/resize:fit:1400/1*-Ijet6kVJqGgul6adezDLQ.png)
 
 Welcome to the React Hooks Collection repository! This is a collection of custom React hooks that are designed to simplify and improve your React development experience. These hooks provide reusable and effective solutions to problems and patterns found in React applications.
 
@@ -40,9 +38,45 @@ usePageLeave: A hook that triggers a callback when the user attempts to leave th
 - `useUpdateEffect`: A hook that runs an effect only when the dependencies change, skipping the initial render.
 - `useWindowSize`: A hook that returns the current size of the browser window.
 
-## Usage
+### Usage
 
-`useClipboard`
+- [Available Hooks](#available-hooks)
+  - [Usage](#usage)
+    - [`useClipboard`](#useclipboard)
+    - [`useDebounce`](#usedebounce)
+    - [`useDebug`](#usedebug)
+    - [`useDocumentReadyState`](#usedocumentreadystate)
+    - [`useDocumentTitle`](#usedocumenttitle)
+    - [`useEffectOnce`](#useeffectonce)
+    - [`useEventListener`](#useeventlistener)
+    - [`useFavicon`](#usefavicon)
+    - [`useFirstMountState`](#usefirstmountstate)
+    - [`useFoucFix`](#usefoucfix)
+    - [`useHover`](#usehover)
+    - [`useIdle`](#useidle)
+    - [`useIntersectionObserver`](#useintersectionobserver)
+    - [`useInterval`](#useinterval)
+    - [`useIOSToolbarState`](#useiostoolbarstate)
+    - [`useIsClient`](#useisclient)
+    - [`useIsomorphicLayoutEffect`](#useisomorphiclayouteffect)
+    - [`useIsTouchDevice`](#useistouchdevice)
+    - [`useIsVisible`](#useisvisible)
+    - [`useKeySequence`](#usekeysequence)
+    - [`useList`](#uselist)
+    - [`useMediaQuery`](#usemediaquery)
+    - [`useOnClickOutside`](#useonclickoutside)
+    - [`useOrientation`](#useorientation)
+    - [`usePageLeave`](#usepageleave)
+    - [`useScript`](#usescript)
+    - [`useSessionStorage`](#usesessionstorage)
+    - [`useThrottle`](#usethrottle)
+    - [`useUnmout`](#useunmout)
+    - [`useUpdateEffect`](#useupdateeffect)
+    - [`useWindowSize`](#usewindowsize)
+
+---
+
+#### `useClipboard`
 
 The `useClipboard` hook simplifies clipboard operations, allowing you to easily copy text to the clipboard and retrieve the currently copied value
 
@@ -69,7 +103,7 @@ function MyComponent() {
 
 ---
 
-`useDebounce`
+#### `useDebounce`
 
 The `useDebounce` hook is used to debounce a value, which means delaying the update of the value until a certain amount of time has passed since the last change. This is useful for scenarios where you want to wait for a user to finish typing or for a certain event to settle before triggering an action
 
@@ -105,7 +139,7 @@ function MyComponent() {
 
 ---
 
-`useDebug`
+#### `useDebug`
 
 The `useDebug` hook is a utility that determines whether the current environment is in debug mode. It returns true if the current window URL contains the string #debug or if the application is running in development mode.
 
@@ -134,14 +168,13 @@ function MyComponent() {
 
 ---
 
-`useDocumentReadyState`
+#### `useDocumentReadyState`
 
 The `useDocumentReadyState` hook provides the current `readyState` of the document. It returns the `readyState` value, which can be one of the following:
 
 - `'loading'`: The document is still loading.
 - `'interactive'`: The document has finished loading and the document has been parsed, but sub-resources such as images, stylesheets, and frames are still loading.
 - `'complete'`: The document and all sub-resources have finished loading. The state indicates that the `load` event is about to fire.
-
 
 ```tsx
 import { useDocumentReadyState } from './hooks/useDocumentReadyState';
@@ -160,7 +193,7 @@ function MyComponent() {
 
 ---
 
-`useDocumentTitle`
+#### `useDocumentTitle`
 
 The `useDocumentTitle` hook is used to update the document title with a provided string. It takes a single parameter, `title`, which represents the new title to be set for the document.
 
@@ -181,7 +214,7 @@ function MyComponent() {
 
 ---
 
-`useEffectOnce`
+#### `useEffectOnce`
 
 The `useEffectOnce` hook is used to run an effect function only once, on the initial render of a component. It takes a single parameter, `effect`, which is the effect function to be executed.
 
@@ -208,7 +241,7 @@ function MyComponent() {
 
 ---
 
-`useEventListener`
+#### `useEventListener`
 
 The `useEventListener` hook is used to add an event listener to a specified target element or the window object. It provides a convenient way to handle events in functional components.
 
@@ -235,7 +268,7 @@ function MyComponent() {
 
 ---
 
-`useFavicon`
+#### `useFavicon`
 
 The `useFavicon` hook is used to dynamically update the browser's favicon with a provided URL. It allows you to change the favicon image displayed in the browser's address bar and tabs.
 
@@ -258,7 +291,7 @@ function MyComponent() {
 
 ---
 
-`useFirstMountState`
+#### `useFirstMountState`
 
 The `useFirstMountState` hook is used to determine whether the component is being rendered for the first time or not. It returns `true` on the initial render and `false` on subsequent renders.
 
@@ -289,13 +322,13 @@ function MyComponent() {
 
 ---
 
-`useFoucFix`
+#### `useFoucFix`
 
-The `useFoucFix` hook is a temporary fix for the Flash of Unstyled Content (FOUC) issue in Next.js. It addresses the problem where stylesheets are loaded asynchronously, causing a brief period where the page is rendered without styles.
+The `useFoucFix` hook is a temporary fix for the [Flash of Unstyled Content (FOUC)](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.) issue in Next.js. It addresses the problem where stylesheets are loaded asynchronously, causing a brief period where the page is rendered without styles.
 
 This hook is a temporary solution and should be removed once the FOUC issue is resolved in Next.js.
 
-See https://github.com/vercel/next.js/issues/17464 for more information. 
+See [https://github.com/vercel/next.js/issues/17464](https://github.com/vercel/next.js/issues/17464) for more information.
 
 ```tsx
 import { useFoucFix } from './hooks/useFoucFix';
@@ -315,7 +348,7 @@ export default MyApp;
 
 ---
 
-`useHover`
+#### `useHover`
 
 The `useHover` hook provides a convenient way to track the hover state of a given element. It returns a ref object that can be attached to the target element, and a boolean value indicating whether the element is currently being hovered over.
 
@@ -335,7 +368,7 @@ function MyComponent() {
 
 ---
 
-`useIdle`
+#### `useIdle`
 
 The useIdle hook is a utility that detects user inactivity and sets an idle state after a specified amount of time. It monitors various user events such as mouse movements, mouse clicks, keyboard input, window resizing, touch events, and scroll events. If no user activity is detected within the specified time (default is 1 minute), the hook sets the idle state to true. The idle state is reset to false whenever user activity is detected.
 
@@ -355,7 +388,7 @@ function MyComponent() {
 
 ---
 
-`useIntersectionObserver`
+#### `useIntersectionObserver`
 
 The `useIntersectionObserver` hook is a utility that uses the Intersection Observer API to track the visibility of a DOM element. It allows you to detect when an element enters or leaves the viewport or a specified root element.
 
@@ -379,7 +412,7 @@ function MyComponent() {
 
 ---
 
-`useInterval`
+#### `useInterval`
 
 The `useInterval` hook is a utility that creates an interval and executes a callback function at specified delay. It allows you to easily set up recurring tasks or animations in your React components.
 
@@ -403,7 +436,7 @@ function MyComponent() {
 
 ---
 
-`useIOSToolbarState`
+#### `useIOSToolbarState`
 
 The `useIOSToolbarState` hook is a utility that detects the visibility of the iOS toolbar and provides its state. It is specifically designed to handle the behavior of the toolbar in iOS Safari.
 
@@ -416,6 +449,357 @@ function MyComponent() {
   return (
     <div>
       {isVisible ? 'iOS toolbar is visible' : 'iOS toolbar is hidden'}
+    </div>
+  );
+}
+```
+
+---
+
+#### `useIsClient`
+
+The `useIsClient` hook is a utility that determines if the code is running on the client-side or server-side. It can be useful in scenarios where you need to conditionally execute code or render components based on the execution environment.
+
+```tsx
+import { useIsClient } from './hooks/useIsClient';
+
+function MyComponent() {
+  const isClient = useIsClient();
+
+  return (
+    <div>
+      {isClient ? 'Running on the client-side' : 'Running on the server-side'}
+    </div>
+  );
+}
+```
+
+---
+
+#### `useIsomorphicLayoutEffect`
+
+The `useIsomorphicLayoutEffect` hook is a utility that provides a unified way to use either useEffect or useLayoutEffect based on the environment (client-side or server-side). It is particularly useful when dealing with server-side rendering (SSR) scenarios, where the useLayoutEffect hook cannot be used on the server-side because it requires a browser environment.
+
+```tsx
+import { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
+
+function MyComponent() {
+  useIsomorphicLayoutEffect(() => {
+    console.log('This effect runs on both client-side and server-side');
+  }, []);
+
+  return <div>My Component</div>;
+}
+```
+
+---
+
+#### `useIsTouchDevice`
+
+The useIsTouchDevice hook is a utility that determines if the current device is a touch device or not. It can be useful for adapting your application's user interface or functionality based on the input method available on the user's device.
+
+```tsx
+import { useIsTouchDevice } from './hooks/useIsTouchDevice';
+
+function MyComponent() {
+  const isTouchDevice = useIsTouchDevice();
+
+  return (
+    <div>
+      {isTouchDevice ? 'This is a touch device' : 'This is not a touch device'}
+    </div>
+  );
+}
+```
+
+---
+
+#### `useIsVisible`
+
+The useIsVisible hook is a utility that uses the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect if an element is visible within the viewport or a specified root element. It provides a convenient way to track the visibility of elements and trigger actions based on their visibility state.
+
+```tsx
+import { useIsVisible } from './hooks/useIsVisible';
+
+function MyComponent() {
+  const { setRef, inView } = useIsVisible({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5,
+    once: true,
+  });
+
+  return (
+    <div ref={setRef}>
+      {inView ? 'Element is visible' : 'Element is not visible'}
+    </div>
+  );
+}
+```
+
+---
+
+#### `useKeySequence`
+
+The `useKeySequence` hook is a utility that listens for a specific key sequence and executes a callback function when the sequence is detected. It allows you to define custom keyboard shortcuts or triggers in your application.
+
+```tsx
+import { useKeySequence } from './hooks/useKeySequence';
+
+function MyComponent() {
+  useKeySequence({
+    sequence: 'abc',
+    callback: () => {
+      console.log('Key sequence "abc" detected!');
+    },
+    eventType: 'keydown',
+    keystrokeDelay: 500,
+  });
+
+  return <div>Press the keys 'a', 'b', and 'c' in sequence to trigger the callback.</div>;
+}
+```
+
+---
+
+#### `useList`
+
+The `useList` hook is a custom React hook that provides a list and a set of utility functions to manage the list. It allows you to easily manipulate the elements of the list without directly modifying the state.
+
+```tsx
+import { useList } from './hooks/useList';
+
+function MyComponent() {
+  const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList(['apple', 'banana', 'orange']);
+
+  return (
+    <div>
+      <ul>
+        {list.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+      <button onClick={() => push('grape')}>Add Grape</button>
+      <button onClick={() => removeAt(1)}>Remove at Index 1</button>
+      <button onClick={() => insertAt(2, 'pineapple')}>Insert Pineapple at Index 2</button>
+      <button onClick={() => updateAt(0, 'mango')}>Update at Index 0 with Mango</button>
+      <button onClick={clear}>Clear List</button>
+    </div>
+  );
+}
+```
+
+---
+
+#### `useMediaQuery`
+
+The useMediaQuery hook is a utility that checks if the current browser window matches a given media query. It allows you to conditionally render components or apply styles based on the viewport size or other media features.
+
+```tsx
+import { useMediaQuery } from './hooks/useMediaQuery';
+
+function MyComponent() {
+  const isSmallScreen = useMediaQuery('(max-width: 600px)');
+
+  return (
+    <div>
+      {isSmallScreen ? (
+        <div>
+          <h2>Small Screen</h2>
+          <p>This content is optimized for small screens.</p>
+        </div>
+      ) : (
+        <div>
+          <h2>Large Screen</h2>
+          <p>This content is optimized for large screens.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
+#### `useOnClickOutside`
+
+The `useOnClickOutside` hook is a utility that triggers a callback when a click event occurs outside of a specified ref.
+
+```tsx
+import { useRef } from 'react';
+import { useOnClickOutside } from './hooks/useOnClickOutside';
+
+function MyComponent() {
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => {
+    console.log('Clicked outside the element');
+  });
+
+  return (
+    <div ref={ref}>
+      <h1>Click outside of this element</h1>
+    </div>
+  );
+}
+```
+
+---
+
+#### `useOrientation`
+
+The `useOrientation` hook is a utility that provides the current orientation of the device or browser window. It returns an object containing the angle and type of the device orientation.
+
+```tsx
+import { useOrientation } from './hooks/useOrientation';
+
+function MyComponent() {
+  const { angle, type } = useOrientation();
+
+  return (
+    <div>
+      <p>Device Orientation: {angle} degrees</p>
+      <p>Device Type: {type}</p>
+    </div>
+  );
+}
+```
+
+---
+
+#### `usePageLeave`
+
+The `usePageLeave` hook is a utility that triggers a callback when the user attempts to leave the current page. It provides a way to handle page transitions or perform cleanup tasks when the user navigates away from the page.
+
+```tsx
+import { usePageLeave } from './hooks/usePageLeave';
+
+function MyComponent() {
+  usePageLeave(() => {
+    console.log('User has left the page');
+  });
+
+  return <div>Click the button to leave the page</div>;
+}
+```
+
+---
+
+#### `useScript`
+
+The `useScript` hook is a utility that dynamically loads an external script from a given URL. It allows you to load and execute scripts in your React components without having to use the `<script>` tag directly.
+
+```tsx
+import { useScript } from './hooks/useScript';
+
+function MyComponent() {
+  useScript('https://example.com/script.js');
+
+  return <div>My Component</div>;
+}
+```
+
+---
+
+#### `useSessionStorage`
+
+The `useSessionStorage` hook is a utility that provides a convenient way to interact with session storage. It allows you to store and retrieve data in the session storage of the browser.
+
+```tsx
+import { useSessionStorage } from './hooks/useSessionStorage';
+
+function MyComponent() {
+  const [storedValue, setStoredValue] = useSessionStorage('my-key', 'initial-value');
+
+  return (
+    <div>
+      <p>Stored Value: {storedValue}</p>
+      <button onClick={() => setStoredValue('new-value')}>Set Value</button>
+    </div>
+  );
+}
+```
+
+---
+
+#### `useThrottle`
+
+The `useThrottle` hook is a utility that throttles the update of a value, ensuring that it is only updated at most once per specified duration. It allows you to limit the frequency of updates to a value, which can be useful in scenarios where you want to perform an action or update a state only once per user interaction.
+
+```tsx
+import { useThrottle } from './hooks/useThrottle';
+
+function MyComponent() {
+  const [value, setValue] = useState(0);
+  const throttledValue = useThrottle(value, 500);
+
+  return (
+    <div>
+      <p>Throttled Value: {throttledValue}</p>
+      <button onClick={() => setValue(value + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+---
+
+#### `useUnmout`
+
+The `useUnmout` hook is a utility that allows you to execute a function when a component is unmounted. It provides a way to clean up resources or perform cleanup tasks when a component is removed from the DOM.
+
+```tsx
+import { useUnmout } from './hooks/useUnmout';
+
+function MyComponent() {
+  useUnmout(() => {
+    console.log('Component has been unmounted');
+  });
+
+  return <div>My Component</div>;
+}
+```
+
+---
+
+#### `useUpdateEffect`
+
+The `useUpdateEffect` hook is a utility that runs an effect function only when the dependencies change, skipping the initial render. It allows you to perform side effects or update state based on the values of the dependencies.
+
+```tsx
+import { useUpdateEffect } from './hooks/useUpdateEffect';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  useUpdateEffect(() => {
+    console.log('Count has been updated');
+  }, [count]);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+---
+
+#### `useWindowSize`
+
+The `useWindowSize` hook is a utility that returns the current size of the browser window. It provides an object containing the width and height of the window.
+
+```tsx
+import { useWindowSize } from './hooks/useWindowSize';
+
+function MyComponent() {
+  const { width, height } = useWindowSize();
+
+  return (
+    <div>
+      <p>Window Size: {width}x{height}</p>
     </div>
   );
 }
