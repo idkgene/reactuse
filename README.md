@@ -15,7 +15,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useEventListener`: A hook that adds an event listener to a specified target and removes it when the component unmounts.
 - `useFavicon`: A hook that sets the favicon of the document.
 - `useFirstMountState`: A hook that returns true if the component is being rendered for the first time.
-- `useFoucFix`: A hook that fixes the focus issue in iOS Safari.
+- `useFoucFix`: A hook that fixes the focus issue in Next JS.
 - `useHover`: A hook that tracks the hover state of a given ref.
 - `useIdle`: A hook that tracks whether the user is idle or active based on mouse and keyboard events.
 - `useIntersectionObserver`: A hook that observes the intersection of a target element with an ancestor element or the viewport.
