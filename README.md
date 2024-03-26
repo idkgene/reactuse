@@ -11,11 +11,13 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useDebug`: A hook that returns true if the current window URL contains the string `#debug` or if we're in development mode.
 - `useDocumentReadyState`: A hook that returns the document ready state, which is useful for detecting when the document is fully loaded.
 - `useDocumentTitle`: A hook that sets the document title based on a given string.
+- `useDrag` - [UNFINISHED]
 - `useEffectOnce`: A hook that runs an effect only once, on the initial render.
 - `useEventListener`: A hook that adds an event listener to a specified target and removes it when the component unmounts.
 - `useFavicon`: A hook that sets the favicon of the document.
 - `useFirstMountState`: A hook that returns true if the component is being rendered for the first time.
 - `useFoucFix`: A hook that fixes the focus issue in Next JS.
+- `useGeolocation`: A hook that alows to get the current geolocation of the user.
 - `useHover`: A hook that tracks the hover state of a given ref.
 - `useIdle`: A hook that tracks whether the user is idle or active based on mouse and keyboard events.
 - `useIntersectionObserver`: A hook that observes the intersection of a target element with an ancestor element or the viewport.
@@ -29,8 +31,11 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useList`: A hook that manages a list of items and provides convenience methods for adding, removing, and updating items.
 - `useMediaQuery`: A hook that returns true if a given media query matches the current viewport.
 useOnClickOutside: A hook that triggers a callback when a click event occurs outside of a specified ref.
+- `useMousePosition`: A hook that returns the current mouse position.
+- `useNetworkState`: A hook that returns the current network state (online/offline).
 - `useOrientation`: A hook that returns the current orientation of the device (portrait or landscape).
-usePageLeave: A hook that triggers a callback when the user attempts to leave the current page.
+- `usePageLeave`: A hook that triggers a callback when the user attempts to leave the current page.
+- `useRect`: A hook that returns the current dimensions of a DOM element.
 - `useScript`: A hook that dynamically loads an external script.
 - `useSessionStorage`: A hook that provides a convenient way to interact with session storage.
 - `useThrottle`: A hook that throttles a value, ensuring that it is only updated at most once per specified duration.
@@ -52,6 +57,7 @@ usePageLeave: A hook that triggers a callback when the user attempts to leave th
     - [`useFavicon`](#usefavicon)
     - [`useFirstMountState`](#usefirstmountstate)
     - [`useFoucFix`](#usefoucfix)
+    - [`useGeolocation`](#usegeolocation)
     - [`useHover`](#usehover)
     - [`useIdle`](#useidle)
     - [`useIntersectionObserver`](#useintersectionobserver)
@@ -348,6 +354,35 @@ export default MyApp;
 
 ---
 
+#### `useGeolocation`
+
+The `useGeolocation` hook is a utility that allows you to get the current geolocation of the user. It provides a `loading` state that indicates whether the geolocation data is still loading, and a `error` state that indicates whether there was an error fetching the geolocation data.
+
+```tsx
+import { useGeolocation } from './hooks/useGeolocation';
+
+function MyComponent() {
+  const { loading, accuracy, altitude, altitudeAccuracy, heading, latitude, longitude, speed, timestamp, error } = useGeolocation();
+
+  return (
+    <div>
+      <p>Loading: {loading}</p>
+      <p>Accuracy: {accuracy}</p>
+      <p>Altitude: {altitude}</p>
+      <p>Altitude Accuracy: {altitudeAccuracy}</p>
+      <p>Heading: {heading}</p>
+      <p>Latitue {latitute}</p>
+      <p>Longtitude {longtitude}</p>
+      <p>Speed {speed}</p>
+      <p>Timestamp {timestamp}</p>
+      <p>Error {error}</p>
+    </div>
+  );
+}
+```
+
+---
+
 #### `useHover`
 
 The `useHover` hook provides a convenient way to track the hover state of a given element. It returns a ref object that can be attached to the target element, and a boolean value indicating whether the element is currently being hovered over.
@@ -621,6 +656,48 @@ function MyComponent() {
 
 ---
 
+`useMousePosition`
+
+The `useMousePosition` hook is a utility that returns the current mouse position. It provides a `x` and `y` property that represent the mouse's x and y coordinates, respectively.
+
+```tsx
+import { useMousePosition } from './hooks/useMousePosition';
+
+function MyComponent() {
+  const { x, y } = useMousePosition();
+
+  return (
+    <div>
+      <p>Mouse X: {x}</p>
+      <p>Mouse Y: {y}</p>
+    </div>
+  );
+}
+```
+
+---
+
+`useNetworkState`
+
+The `useNetworkState` hook is a utility that returns the current network state (online/offline). It provides a `online` property that indicates whether the network is currently online, and a `speed` property that represents the current network speed in bytes per second.
+
+```tsx
+import { useNetworkState} from './hooks/useNetworkState.ts';
+
+function MyComponent() {
+  const { online, speed } = useNetworkState();
+
+  return (
+    <>
+      <p>Network is {online ? 'online' : 'offline'}</p>
+      <p>Network speed: {speed} bytes per second</p>
+    </>
+  )
+}
+```
+
+---
+
 #### `useOnClickOutside`
 
 The `useOnClickOutside` hook is a utility that triggers a callback when a click event occurs outside of a specified ref.
@@ -680,6 +757,27 @@ function MyComponent() {
   });
 
   return <div>Click the button to leave the page</div>;
+}
+```
+
+---
+
+`useRect`
+
+The `useRect` hook is a utility that returns the current dimensions of a DOM element. It provides a `width` and `height` property that represent the width and height of the element, respectively.
+
+```tsx
+import { useRect} from './hooks/useRect';
+
+function MyComponent() {
+  const { width, height } = useRect(document.getElementById('my-element'));
+
+  return (
+    <div>
+      <p>Element Width: {width}</p>
+      <p>Element Height: {height}</p>
+    </div>
+  );
 }
 ```
 
