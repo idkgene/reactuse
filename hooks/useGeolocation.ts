@@ -36,13 +36,13 @@ export function useGeolocation() {
       return
     }
 
-    // Success callback function for getCurrentPosition
+    // Success callback function for watchPosition
     const successHandler = (pos: GeolocationPosition) => {
       setPosition(pos)
       setLoading(false)
     }
 
-    // Error callback function for getCurrentPosition
+    // Error callback function for watchPosition
     const errorHandler = (err: GeolocationPositionError) => {
       setError(err)
       setLoading(false)

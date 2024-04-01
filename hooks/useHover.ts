@@ -22,26 +22,26 @@ export function useHover<T extends HTMLElement>(): [RefObject<T>, boolean] {
   const ref = useRef<T>(null)
 
   useEffect(() => {
+    // Get the current node from the ref
     const node = ref.current
 
+    // If the node doesn't exist, return early
     if (!node) return
 
-    const handleMouseEnter = () => {
-      setHovering(true)
-    }
+    // Define the event handler functions
+    const handleMouseEnter = () => setHovering(true)
+    const handleMouseLeave = () => setHovering(false)
 
-    const handleMouseLeave = () => {
-      setHovering(false)
-    }
-
+    // Add event listeners to the node
     node.addEventListener('mouseenter', handleMouseEnter)
     node.addEventListener('mouseleave', handleMouseLeave)
 
+    // Clean up the event listeners when the component unmounts or the ref changes
     return () => {
       node.removeEventListener('mouseenter', handleMouseEnter)
       node.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [])
+  }, [ref])
 
   return [ref, hovering]
 }
