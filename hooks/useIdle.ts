@@ -29,53 +29,33 @@
  * }
  */
 
-import { useEffect, useState } from 'react';
-import { throttle } from '../utils/utils';
+import { RefObject, useEffect, useRef, useState } from 'react'
 
-export function useIdle(ms = 1000 * 60) {
-  const [idle, setIdle] = useState(false)
+export function useHover<T extends HTMLElement>(): [RefObject<T>, boolean] {
+  const [hovering, setHovering] = useState(false)
+  const ref = useRef<T>(null)
 
   useEffect(() => {
-    let timeoutId: number
+    // Get the current node from the ref
+    const node = ref.current
 
-    const handleTimeout = () => {
-      setIdle(true)
-    }
+    // If the node doesn't exist, return early
+    if (!node) return
 
-    const handleEvent = throttle(() => {
-      setIdle(false)
+    // Define the event handler functions
+    const handleMouseEnter = () => setHovering(true)
+    const handleMouseLeave = () => setHovering(false)
 
-      window.clearTimeout(timeoutId)
-      timeoutId = window.setTimeout(handleTimeout, ms)
-    }, 500)
+    // Add event listeners to the node
+    node.addEventListener('mouseenter', handleMouseEnter)
+    node.addEventListener('mouseleave', handleMouseLeave)
 
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        handleEvent()
-      }
-    }
-
-    timeoutId = window.setTimeout(handleTimeout, ms)
-
-    window.addEventListener('mousemove', handleEvent)
-    window.addEventListener('mousedown', handleEvent)
-    window.addEventListener('resize', handleEvent)
-    window.addEventListener('keydown', handleEvent)
-    window.addEventListener('touchstart', handleEvent)
-    window.addEventListener('wheel', handleEvent)
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-
+    // Clean up the event listeners when the component unmounts or the ref changes
     return () => {
-      window.removeEventListener('mousemove', handleEvent)
-      window.removeEventListener('mousedown', handleEvent)
-      window.removeEventListener('resize', handleEvent)
-      window.removeEventListener('keydown', handleEvent)
-      window.removeEventListener('touchstart', handleEvent)
-      window.removeEventListener('wheel', handleEvent)
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-      window.clearTimeout(timeoutId)
+      node.removeEventListener('mouseenter', handleMouseEnter)
+      node.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [ms])
+  }, [ref])
 
-  return idle
+  return [ref, hovering]
 }
