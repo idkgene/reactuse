@@ -1,3 +1,6 @@
+import { useEffect, useRef } from 'react';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+
 /**
  * A React hook that adds an event listener to a specified target element or window.
  *
@@ -19,76 +22,36 @@
  * // Listen for resize events on the window
  * useEventListener('resize', handleResize);
  */
-
-import { RefObject, useEffect, useRef } from 'react'
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
-
-export function useEventListener<K extends keyof MediaQueryListEventMap>(
-  eventName: K,
-  handler: (event: MediaQueryListEventMap[K]) => void,
-  element: RefObject<MediaQueryList>,
-  options?: boolean | AddEventListenerOptions,
-): void
-
-export function useEventListener<K extends keyof WindowEventMap>(
-  eventName: K,
-  handler: (event: WindowEventMap[K]) => void,
-  element?: undefined,
-  options?: boolean | AddEventListenerOptions,
-): void
-
 export function useEventListener<
-  K extends keyof HTMLElementEventMap,
-  T extends HTMLElement = HTMLDivElement,
+  K extends keyof WindowEventMap | keyof HTMLElementEventMap | keyof MediaQueryListEventMap,
+  T extends HTMLElement | MediaQueryList | Window = HTMLElement | MediaQueryList | Window
 >(
   eventName: K,
-  handler: (event: HTMLElementEventMap[K]) => void,
-  element: RefObject<T>,
-  options?: boolean | AddEventListenerOptions,
-): void
-
-export function useEventListener<K extends keyof DocumentEventMap>(
-  eventName: K,
-  handler: (event: DocumentEventMap[K]) => void,
-  element: RefObject<Document>,
-  options?: boolean | AddEventListenerOptions,
-): void
-
-export function useEventListener<
-  KW extends keyof WindowEventMap,
-  KH extends keyof HTMLElementEventMap,
-  KM extends keyof MediaQueryListEventMap,
-  T extends HTMLElement | MediaQueryList | void = void,
->(
-  eventName: KW | KH | KM,
-  handler: (
-    event:
-      | WindowEventMap[KW]
-      | HTMLElementEventMap[KH]
-      | MediaQueryListEventMap[KM]
-      | Event,
-  ) => void,
-  element?: RefObject<T>,
-  options?: boolean | AddEventListenerOptions,
+  handler: (event: Event) => void,
+  element?: React.RefObject<T>,
+  options?: boolean | AddEventListenerOptions
 ) {
+  // Use a ref to store the latest handler function
+  const handlerRef = useRef(handler);
 
-  const savedHandler = useRef(handler)
-
+  // Update the handler ref whenever the handler function changes
   useIsomorphicLayoutEffect(() => {
-    savedHandler.current = handler
-  }, [handler])
+    handlerRef.current = handler;
+  }, [handler]);
 
   useEffect(() => {
-    const targetElement: T | Window = element?.current ?? window
+    // Get the target element from the ref or default to the window
+    const targetElement: T | Window = element?.current ?? window;
 
-    if (!(targetElement && targetElement.addEventListener)) return
+    // Check if the target element has the addEventListener method
+    if (targetElement && typeof targetElement.addEventListener === 'function') {
+      // Add the event listener to the target element
+      targetElement.addEventListener(eventName, handlerRef.current, options);
 
-    const listener: typeof handler = (event) => savedHandler.current(event)
-
-    targetElement.addEventListener(eventName, listener, options)
-
-    return () => {
-      targetElement.removeEventListener(eventName, listener, options)
+      // Return a cleanup function to remove the event listener on component unmount
+      return () => {
+        targetElement.removeEventListener(eventName, handlerRef.current, options);
+      };
     }
-  }, [eventName, element, options])
+  }, [eventName, element, options]);
 }
