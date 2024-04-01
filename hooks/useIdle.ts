@@ -29,33 +29,67 @@
  * }
  */
 
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { throttle } from '../utils/utils';
 
-export function useHover<T extends HTMLElement>(): [RefObject<T>, boolean] {
-  const [hovering, setHovering] = useState(false)
-  const ref = useRef<T>(null)
+export function useIdle(ms = 1000 * 60) {
+  const [idle, setIdle] = useState(false)
 
   useEffect(() => {
-    // Get the current node from the ref
-    const node = ref.current
+    let timeoutId: number | null = null
 
-    // If the node doesn't exist, return early
-    if (!node) return
-
-    // Define the event handler functions
-    const handleMouseEnter = () => setHovering(true)
-    const handleMouseLeave = () => setHovering(false)
-
-    // Add event listeners to the node
-    node.addEventListener('mouseenter', handleMouseEnter)
-    node.addEventListener('mouseleave', handleMouseLeave)
-
-    // Clean up the event listeners when the component unmounts or the ref changes
-    return () => {
-      node.removeEventListener('mouseenter', handleMouseEnter)
-      node.removeEventListener('mouseleave', handleMouseLeave)
+    // Function to handle the idle timeout
+    const handleTimeout = () => {
+      setIdle(true)
     }
-  }, [ref])
 
-  return [ref, hovering]
+    // Throttled function to handle user events
+    const handleEvent = throttle(() => {
+      setIdle(false)
+
+      // Clear the previous timeout
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId)
+      }
+
+      // Set a new timeout to trigger idle state
+      timeoutId = window.setTimeout(handleTimeout, ms)
+    }, 500)
+
+    // Function to handle the visibility change event
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        handleEvent()
+      }
+    }
+
+    // Set the initial timeout to trigger idle state
+    timeoutId = window.setTimeout(handleTimeout, ms)
+
+    // Add event listeners for various user events
+    window.addEventListener('mousemove', handleEvent)
+    window.addEventListener('mousedown', handleEvent)
+    window.addEventListener('resize', handleEvent)
+    window.addEventListener('keydown', handleEvent)
+    window.addEventListener('touchstart', handleEvent)
+    window.addEventListener('wheel', handleEvent)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    // Clean up the event listeners and timeout when the component unmounts
+    return () => {
+      window.removeEventListener('mousemove', handleEvent)
+      window.removeEventListener('mousedown', handleEvent)
+      window.removeEventListener('resize', handleEvent)
+      window.removeEventListener('keydown', handleEvent)
+      window.removeEventListener('touchstart', handleEvent)
+      window.removeEventListener('wheel', handleEvent)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId)
+      }
+    }
+  }, [ms])
+
+  return idle
 }

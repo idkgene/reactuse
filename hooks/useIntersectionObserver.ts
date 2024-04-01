@@ -12,7 +12,7 @@
 
 import { RefObject, useEffect, useState } from 'react'
 
-export interface Args extends IntersectionObserverInit {
+interface Args extends IntersectionObserverInit {
   freezeOnceVisible?: boolean
 }
 
@@ -37,18 +37,21 @@ export function useIntersectionObserver(
     const node = elementRef?.current // DOM Ref
     const hasIOSupport = !!window.IntersectionObserver
 
+    // If Intersection Observer is not supported, the element is frozen, or the node is null, return early
     if (!hasIOSupport || frozen || !node) return
 
+    // Create the observer parameters object
     const observerParams = { threshold, root, rootMargin }
+
+    // Create a new Intersection Observer instance with the provided parameters and callback
     const observer = new IntersectionObserver(updateEntry, observerParams)
 
+    // Start observing the target element
     observer.observe(node)
 
+    // Disconnect the observer when the component unmounts or the dependencies change
     return () => observer.disconnect()
-
-    // Disable the exhaustive-deps lint rule for this effect, as we want to re-create the observer whenever the ref or observer parameters change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [elementRef?.current, JSON.stringify(threshold), root, rootMargin, frozen])
+  }, [elementRef, threshold, root, rootMargin, frozen])
 
   return entry
 }
