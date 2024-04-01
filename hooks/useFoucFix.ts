@@ -50,17 +50,18 @@ export const useFoucFix = (): void =>
     )
 
     // Gather all server-side rendered stylesheet entries.
-    let stylesheets: StylesheetEntry[] = Array.from(
+    const stylesheets: StylesheetEntry[] = Array.from(
       document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][data-n-p]'),
     ).map((element) => ({
       element,
       href: element.getAttribute('href') || '',
     }))
 
+    // Create a Set to store the href values for faster lookup.
+    const hrefSet = new Set<string>()
+
     // Remove the `data-n-p` attribute to prevent Next.js from removing it early.
     stylesheets.forEach(({ element }) => element.removeAttribute('data-n-p'))
-
-    const hrefs: string[] = []
 
     const mutationHandler = (mutations: MutationRecord[]) => {
       // Gather all <style data-n-href="/..."> elements.
@@ -74,35 +75,28 @@ export const useFoucFix = (): void =>
           href: (target as HTMLStyleElement).getAttribute('data-n-href') || '',
         }))
 
-      // Cycle through them and either:
+      // Cycle through the entries and either:
       // - Remove the `data-n-href` attribute to prevent Next.js from removing it early.
       // - Remove the element if it's already present.
       entries.forEach(({ element, href }) => {
-        const exists = hrefs.includes(href)
-
-        if (exists) {
+        if (hrefSet.has(href)) {
           element.remove()
         } else {
           element.setAttribute('data-fouc-fix-n-href', href)
           element.removeAttribute('data-n-href')
-          hrefs.push(href)
+          hrefSet.add(href)
         }
       })
 
       // Cycle through the server-side rendered stylesheets and remove the ones that
       // are already present as inline <style> tags added by Next.js, so that we don't have duplicate styles.
-      stylesheets = stylesheets.reduce((entries, entry) => {
-        const { element, href } = entry
-        const exists = hrefs.includes(href)
-
-        if (exists) {
+      for (let i = stylesheets.length - 1; i >= 0; i--) {
+        const { element, href } = stylesheets[i]
+        if (hrefSet.has(href)) {
           element.remove()
-        } else {
-          entries.push(entry)
+          stylesheets.splice(i, 1)
         }
-
-        return entries
-      }, [] as StylesheetEntry[])
+      }
     }
 
     const observer = new MutationObserver(mutationHandler)
