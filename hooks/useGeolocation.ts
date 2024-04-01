@@ -7,55 +7,92 @@
  * - `accuracy`: the accuracy of the geolocation coordinates
  * - `altitude`: the altitude in meters above the WGS 84 reference ellipsoid
  * - `altitudeAccuracy`: the accuracy of the altitude in meters
- * - `heading`: the
+ * - `heading`: the direction in which the device is traveling, specified in degrees counting clockwise relative to the true north
+ * - `latitude`: the latitude coordinate of the device's position, in decimal degrees
+ * - `longitude`: the longitude coordinate of the device's position, in decimal degrees
+ * - `speed`: the velocity of the device in meters per second
+ * - `timestamp`: the time at which the position was determined
+ * - `error`: the error object if there was an issue getting the geolocation data
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 export function useGeolocation() {
-  const [position, setPosition] = useState<GeolocationPosition | null>(null);
-  const [error, setError] = useState<GeolocationPositionError | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [position, setPosition] = useState<GeolocationPosition | null>(null)
+  const [error, setError] = useState<GeolocationPositionError | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    // Check if the Geolocation API is supported by the browser
+    if (!navigator.geolocation) {
+      setError({
+        code: 2,
+        PERMISSION_DENIED: 1,
+        POSITION_UNAVAILABLE: 2,
+        TIMEOUT: 3,
+        message: 'Geolocation not supported',
+      })
+      setLoading(false)
+      return
+    }
+
+    // Success callback function for getCurrentPosition
     const successHandler = (pos: GeolocationPosition) => {
-      setPosition(pos);
-      setLoading(false);
-    };
-
-    const errorHandler = (err: GeolocationPositionError) => {
-      setError(err);
-      setLoading(false);
-    };
-
-    const options: PositionOptions = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    };
-
-    const geo = navigator.geolocation;
-    if (geo) {
-      setLoading(true);
-      geo.getCurrentPosition(successHandler, errorHandler, options);
-    } else {
-      setError({ code: 2, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3, message: "Geolocation not supported" });
+      setPosition(pos)
       setLoading(false)
     }
 
+    // Error callback function for getCurrentPosition
+    const errorHandler = (err: GeolocationPositionError) => {
+      setError(err)
+      setLoading(false)
+    }
+
+    // Options for watchPosition
+    const options: PositionOptions = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    }
+
+    // Start loading
+    setLoading(true)
+
+    // Call watchPosition with the success and error callbacks and options
+    const watchId = navigator.geolocation.watchPosition(
+      successHandler,
+      errorHandler,
+      options,
+    )
+
+    // Clean up the watch when the component unmounts
     return () => {
-      geo?.clearWatch(0);
-    };
-  }, []);
+      navigator.geolocation.clearWatch(watchId)
+    }
+  }, [])
 
-  const accuracy = position?.coords.accuracy || null;
-  const altitude = position?.coords.altitude || null;
-  const altitudeAccuracy = position?.coords.altitudeAccuracy || null;
-  const heading = position?.coords.heading || null;
-  const latitude = position?.coords.latitude || null;
-  const longitude = position?.coords.longitude || null;
-  const speed = position?.coords.speed || null;
-  const timestamp = position?.timestamp || null;
+  // Extract the necessary properties from the position object
+  const {
+    accuracy,
+    altitude,
+    altitudeAccuracy,
+    heading,
+    latitude,
+    longitude,
+    speed,
+  } = position?.coords || {}
 
-  return { loading, accuracy, altitude, altitudeAccuracy, heading, latitude, longitude, speed, timestamp, error };
+  // Return the geolocation data and loading/error states
+  return {
+    loading,
+    accuracy: accuracy ?? null,
+    altitude: altitude ?? null,
+    altitudeAccuracy: altitudeAccuracy ?? null,
+    heading: heading ?? null,
+    latitude: latitude ?? null,
+    longitude: longitude ?? null,
+    speed: speed ?? null,
+    timestamp: position?.timestamp ?? null,
+    error,
+  }
 }
