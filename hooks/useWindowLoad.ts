@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 /**
  * The `useWindowLoad` custom hook in TypeScript uses `useEffect` to track the window load event and
@@ -8,21 +8,23 @@ import { useEffect, useState } from "react";
  */
 
 const useWindowLoad = () => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   useEffect(() => {
     const handleLoad = () => {
-      setIsLoaded(true);
-    };
+      setIsLoaded(document.readyState === 'complete')
+    }
 
-    window.addEventListener("load", handleLoad);
+    handleLoad()
+
+    window.addEventListener('load', handleLoad)
 
     return () => {
-      window.removeEventListener("load", handleLoad);
-    };
-  }, []);
+      window.removeEventListener('load', handleLoad)
+    }
+  }, [])
 
-  return isLoaded;
+  return isLoaded
 }
 
-export default useWindowLoad;
+export default useWindowLoad
