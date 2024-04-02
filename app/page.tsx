@@ -30,12 +30,20 @@ import { Input } from '../components/ui/input'
 import { useDebounce } from '../hooks/useDebounce'
 import { useDebug } from '../hooks/useDebug'
 import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const debouncedValue = useDebounce(inputValue, 500)
   const isDebugMode = useDebug()
   const readyState = useDocumentReadyState()
+  const [title, setTitle] = useState<string>('')
+
+  useDocumentTitle(title)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value)
+  }
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -169,7 +177,7 @@ export default function Dashboard() {
                   <p>Debounced value: {debouncedValue}</p>
                 </div>
                 <div className="grid gap-3">
-                  <Label>isDebug</Label>
+                  <Label>useDebugMode</Label>
                   {isDebugMode ? (
                     <div>
                       <p>The application is running in debug mode.</p>
@@ -194,6 +202,17 @@ export default function Dashboard() {
                       The document and all sub-resources have finished loading.
                     </p>
                   )}
+                </div>
+                <div className="grid gap-3">
+                  <Label>useDocumentTitle</Label>
+                  <Input
+                    type="text"
+                    value={title}
+                    onChange={handleChange}
+                    maxLength={30}
+                    placeholder="Enter a new document title"
+                  />
+                  <p>Current document title: {title}</p>
                 </div>
               </fieldset>
               <fieldset className="grid gap-6 rounded-lg border p-4">
