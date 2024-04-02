@@ -10,12 +10,16 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useState } from 'react'
+import Alert from '../components/ui/alert'
 import { Input } from '../components/ui/input'
 import { useDebounce } from '../hooks/useDebounce'
 import { useDebug } from '../hooks/useDebug'
 import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
+import { useOrientation } from '../hooks/useOrientation'
+import { usePageLeave } from '../hooks/usePageLeave'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -24,12 +28,23 @@ export default function Dashboard() {
   const readyState = useDocumentReadyState()
   const position = useMousePosition()
   const [title, setTitle] = useState<string>('')
+  const [queryString, setQueryString] = useState<string>('')
+  const isMatch = useMediaQuery(queryString)
+  const orientation = useOrientation()
+  const [userStatus, setUserStatus] = useState<string>('User is on the page')
 
   useDocumentTitle(title)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }
+
+  const handlePageLeave = () => {
+    setUserStatus('User left the page')
+    console.log('User left the page')
+  }
+
+  usePageLeave(handlePageLeave)
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -99,9 +114,10 @@ export default function Dashboard() {
                 </legend>
                 <div className="grid gap-3">
                   <Label htmlFor="useClipboard">useClipboard</Label>
-                  <div id="useClipboard">
-                    This preview is under construction.
-                  </div>
+                  <Alert
+                    id="useClipboard"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useDeboune">useDebounce</Label>
@@ -156,7 +172,10 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useDrag">useDrag</Label>
-                  <div id="useDrag">This preview is under construction</div>
+                  <Alert
+                    id="useDrag"
+                    message="This preview is under construction"
+                  />
                 </div>
               </fieldset>
             </form>
@@ -169,29 +188,31 @@ export default function Dashboard() {
                 </legend>
                 <div className="grid gap-3">
                   <Label htmlFor="useEffectOnce">useEffectOnce</Label>
-                  <div id="useEffectOnce">
-                    This preview is under construction.
-                  </div>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="useEventListener">useEventListener</Label>
-                  <div id="useEventListener">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useEffectOnce"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label id="useDebounce">useFavicon</Label>
-                  <div id="useFavicon">This preview is under construction</div>
+                  <Alert
+                    id="useFavicon"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label id="useFetch">useFetch</Label>
-                  <div id="useFetch">This preview is under construction</div>
+                  <Alert
+                    id="useFetch"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label id="useFirstMountState">useFirstMountState</Label>
-                  <div id="useFirstMountState">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useFirstMountState"
+                    message="This preview is under construction."
+                  />
                 </div>
               </fieldset>
             </form>
@@ -204,39 +225,54 @@ export default function Dashboard() {
                 </legend>
                 <div className="grid gap-3">
                   <Label htmlFor="useFouxFix">useFouxFix</Label>
-                  <div id="useFouxFix">This preview is under construction.</div>
+                  <Alert
+                    id="useFouxFix"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useGeolocation">useGeolocation</Label>
-                  <div id="useGeolocation">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useGeolocation"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label id="useHover">useHover</Label>
-                  <div id="useHover">This preview is under construction</div>
+                  <Alert
+                    id="useHover"
+                    message="This preview is under construction."
+                  />{' '}
                 </div>
                 <div className="grid gap-3">
                   <Label id="useIdle">useIdle</Label>
-                  <div id="useIdle">This preview is under construction</div>
+                  <Alert
+                    id="useIdle"
+                    message="This preview is under construction."
+                  />{' '}
                 </div>
                 <div className="grid gap-3">
                   <Label id="useIntersectionObserver">
                     useIntersectionObserver
                   </Label>
-                  <div id="useIntersectionObserver">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useIntersectionObserver"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label id="useInterval">useInterval</Label>
-                  <div id="useInterval">This preview is under construction</div>
+                  <Alert
+                    id="useInterval"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label id="useIOSToolbarState">useIOSToolbarState</Label>
-                  <div id="useIOSToolbarState">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useIOSToolbarState"
+                    message="This preview is under construction."
+                  />
                 </div>
               </fieldset>
             </form>
@@ -248,34 +284,41 @@ export default function Dashboard() {
                   Hooks Block 4
                 </legend>
                 <div className="grid gap-3">
-                  <Label htmlFor="useFouxFix">useIsClient</Label>
-                  <div id="useFouxFix">This preview is under construction.</div>
+                  <Label htmlFor="useIsClient">useIsClient</Label>
+                  <Alert
+                    id="useIsClient"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useIsomorphicLayoutEffect">
                     useIsomorphicLayoutEffect
                   </Label>
-                  <div id="useIsomorphicLayoutEffect">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useIsomorphicLayoutEffect"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useIsTouchDevice">useIsTouchDevice</Label>
-                  <div id="useIsTouchDevice">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useIsTouchDevice"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useIsVisible">useIsVisible</Label>
-                  <div id="useIsVisible">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useIsVisible"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useKeySequence">useKeySequence</Label>
-                  <div id="useKeySequence">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useKeySequence"
+                    message="This preview is under construction."
+                  />
                 </div>
               </fieldset>
             </form>
@@ -288,13 +331,17 @@ export default function Dashboard() {
                 </legend>
                 <div className="grid gap-3">
                   <Label htmlFor="useList">useList</Label>
-                  <div id="useList">This preview is under construction.</div>
+                  <Alert
+                    id="useList"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useMediaQuery">useMediaQuery</Label>
-                  <div id="useMediaQuery">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useMediaQuery"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useMousePosition">useMousePosition</Label>
@@ -306,15 +353,17 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useNetworkState">useNetworkState</Label>
-                  <div id="useNetworkState">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useNetworkState"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useOnClickOutside">useOnCLickOutside</Label>
-                  <div id="useOnClickOutside">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useOnCLickOutside"
+                    message="This preview is under construction."
+                  />
                 </div>
               </fieldset>
             </form>
@@ -328,60 +377,82 @@ export default function Dashboard() {
                 <div className="grid gap-3">
                   <Label htmlFor="useOrientation">useOrientation</Label>
                   <div id="useOrientation">
-                    This preview is under construction.
+                    <p>Current angle: {orientation.angle}</p>
+                    <p>Current type: {orientation.type}</p>
                   </div>
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="usePageLeave">usePageLeave</Label>
-                  <div id="usePageLeave">
-                    This preview is under construction
+                  <div>
+                    <p>{userStatus}</p>
+                    <p>
+                      Click outside of this page to trigger the `usePageLeave`
+                      hook.
+                    </p>
                   </div>
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useRect">useRect</Label>
-                  <div id="useRect">This preview is under construction</div>
+                  <Alert
+                    id="useRect"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useScript">useScript</Label>
-                  <div id="useScript">This preview is under construction</div>
+                  <Alert
+                    id="useScript"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useSessionStorage">useSessionStorage</Label>
-                  <div id="useSessionStorage">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useSessionStorage"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useThrottle">useThrottle</Label>
-                  <div id="useThrottle">This preview is under construction</div>
+                  <Alert
+                    id="useThrottle"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useUnmount">useUnmount</Label>
-                  <div id="useUnmount">This preview is under construction</div>
+                  <Alert
+                    id="useUnmount"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useUpdateEffect">useUpdateEffect</Label>
-                  <div id="useUpdateEffect">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useUpdateEffect"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowLoad">useWindowLoad</Label>
-                  <div id="useWindowLoad">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useWindowLoad"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowResize">useWindowResize</Label>
-                  <div id="useWindowResize">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useWindowResize"
+                    message="This preview is under construction."
+                  />
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowSize">useWindowSize</Label>
-                  <div id="useWindowSize">
-                    This preview is under construction
-                  </div>
+                  <Alert
+                    id="useWindowSize"
+                    message="This preview is under construction."
+                  />
                 </div>
               </fieldset>
             </form>
