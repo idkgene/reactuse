@@ -8,35 +8,54 @@ type WindowSize = {
 };
 
 /**
- * The function `useWindowResize` in TypeScript is a custom React hook that tracks and returns the
- * window's inner and outer dimensions on resize.
- * @returns The `useWindowResize` custom hook is returning an object containing the current window size
- * information. The object has the following properties:
+ * Custom React hook that tracks and returns the window's inner and outer dimensions on resize.
+ * @returns An object containing the current window size information.
  */
-
 const useWindowResize = () => {
-  const [windowSize, setWindowSize] = useState<WindowSize>({
-    innerWidth: window.innerWidth,
-    innerHeight: window.innerHeight,
-    outerWidth: window.outerWidth,
-    outerHeight: window.outerHeight,
+  // Initialize the window size state with default values
+  const [windowSize, setWindowSize] = useState<WindowSize>(() => {
+    // Check if the window object is available (browser environment)
+    if (typeof window !== 'undefined') {
+      return {
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        outerWidth: window.outerWidth,
+        outerHeight: window.outerHeight,
+      };
+    }
+    // Return default values for non-browser environments
+    return {
+      innerWidth: 0,
+      innerHeight: 0,
+      outerWidth: 0,
+      outerHeight: 0,
+    };
   });
 
+  // Memoized callback function to handle the window resize event
   const handleResize = useCallback(() => {
-    setWindowSize({
-      innerWidth: window.innerWidth,
-      innerHeight: window.innerHeight,
-      outerWidth: window.outerWidth,
-      outerHeight: window.outerHeight,
-    });
+    // Check if the window object is available (browser environment)
+    if (typeof window !== 'undefined') {
+      setWindowSize({
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        outerWidth: window.outerWidth,
+        outerHeight: window.outerHeight,
+      });
+    }
   }, []);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
+    // Check if the window object is available (browser environment)
+    if (typeof window !== 'undefined') {
+      // Attach the resize event listener
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      // Clean up the event listener on component unmount
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, [handleResize]);
 
   return windowSize;
