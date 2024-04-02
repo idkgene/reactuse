@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Alert from '../components/ui/alert'
 import { Input } from '../components/ui/input'
 import { useDebounce } from '../hooks/useDebounce'
@@ -20,6 +20,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
 import { usePageLeave } from '../hooks/usePageLeave'
+import useThrottle from '../hooks/useThrottle'
 import useWindowLoad from '../hooks/useWindowLoad'
 import useWindowResize from '../hooks/useWindowResize'
 
@@ -33,9 +34,11 @@ export default function Dashboard() {
   const [queryString, setQueryString] = useState<string>('')
   const isMatch = useMediaQuery(queryString)
   const orientation = useOrientation()
+  const throttledValue = useThrottle(inputValue, 500)
   const isLoaded = useWindowLoad()
   const windowSize = useWindowResize()
   const [userStatus, setUserStatus] = useState<string>('User is on the page')
+  const [value, setValue] = useState<string>('')
 
   useDocumentTitle(title)
 
@@ -49,6 +52,10 @@ export default function Dashboard() {
   }
 
   usePageLeave(handlePageLeave)
+
+  useEffect(() => {
+    console.log('Throttled value:', throttledValue)
+  }, [throttledValue])
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -113,19 +120,30 @@ export default function Dashboard() {
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
+                <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 1
                 </legend>
-                <div className="grid gap-3">
-                  <Label htmlFor="useClipboard">useClipboard</Label>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <h2
+                    id="useDeboune"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useClipboard
+                  </h2>
                   <Alert
                     id="useClipboard"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="useDeboune">useDebounce</Label>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <h2
+                    id="useDeboune"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useDebounce
+                  </h2>
                   <Input
+                    className="mt-3"
                     type="text"
                     id="useDebounce"
                     value={inputValue}
@@ -133,49 +151,85 @@ export default function Dashboard() {
                     placeholder="Type something"
                     aria-describedby="debouncedValue"
                   />
-                  <p id="debouncedValue">Debounced value: {debouncedValue}</p>
+                  <p
+                    id="debouncedValue"
+                    className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Debounced value: {debouncedValue}
+                  </p>
                 </div>
-                <div className="grid gap-3">
-                  <Label id="useDebounce">useDebugMode</Label>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <h2
+                    id="useDebug"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useDebug
+                  </h2>
                   {isDebugMode ? (
                     <div>
-                      <p>The application is running in debug mode.</p>
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        🛠️ The application is running in debug mode.
+                      </p>
                     </div>
                   ) : (
-                    <p>The application is running in production mode.</p>
+                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      🚀 The application is running in production mode.
+                    </p>
                   )}
                 </div>
-                <div className="grid gap-3">
-                  <p>Current ready state: {readyState}</p>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <h2
+                    id="useDocumentReadyState"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useDocumentReadyState
+                  </h2>
+                  <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Current ready state: {readyState}
+                  </p>
                   {readyState === 'loading' && (
-                    <p>The document is still loading.</p>
+                    <p>⌛ The document is still loading.</p>
                   )}
                   {readyState === 'interactive' && (
-                    <p>
-                      The document has finished parsing but is still loading
+                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      🕹️ The document has finished parsing but is still loading
                       sub-resources.
                     </p>
                   )}
                   {readyState === 'complete' && (
-                    <p>
-                      The document and all sub-resources have finished loading.
+                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      ✅ The document and all sub-resources have finished
+                      loading.
                     </p>
                   )}
                 </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="useDocumentTitle">useDocumentTitle</Label>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <h2
+                    id="useDocumentTitle"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useDocumentTitle
+                  </h2>
                   <Input
                     type="text"
+                    className="mt-3"
                     value={title}
                     onChange={handleChange}
                     maxLength={30}
                     id="useDocumentTitle"
                     placeholder="Enter a new document title"
                   />
-                  <p>Current document title: {title}</p>
+                  <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Current document title: {title}
+                  </p>
                 </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="useDrag">useDrag</Label>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <h2
+                    id="useDrag"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useDrag
+                  </h2>
                   <Alert
                     id="useDrag"
                     message="This preview is under construction"
@@ -187,31 +241,31 @@ export default function Dashboard() {
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
+                <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 2
                 </legend>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useEffectOnce">useEffectOnce</Label>
                   <Alert
                     id="useEffectOnce"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
-                  <Label id="useDebounce">useFavicon</Label>
+                <div className="grid gap-3 p-4 border rounded-lg">
+                  <Label id="useFavicon">useFavicon</Label>
                   <Alert
                     id="useFavicon"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useFetch">useFetch</Label>
                   <Alert
                     id="useFetch"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useFirstMountState">useFirstMountState</Label>
                   <Alert
                     id="useFirstMountState"
@@ -224,38 +278,38 @@ export default function Dashboard() {
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
+                <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 3
                 </legend>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useFouxFix">useFouxFix</Label>
                   <Alert
                     id="useFouxFix"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useGeolocation">useGeolocation</Label>
                   <Alert
                     id="useGeolocation"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useHover">useHover</Label>
                   <Alert
                     id="useHover"
                     message="This preview is under construction."
                   />{' '}
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useIdle">useIdle</Label>
                   <Alert
                     id="useIdle"
                     message="This preview is under construction."
                   />{' '}
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useIntersectionObserver">
                     useIntersectionObserver
                   </Label>
@@ -264,14 +318,14 @@ export default function Dashboard() {
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useInterval">useInterval</Label>
                   <Alert
                     id="useInterval"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useIOSToolbarState">useIOSToolbarState</Label>
                   <Alert
                     id="useIOSToolbarState"
@@ -284,17 +338,17 @@ export default function Dashboard() {
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
+                <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 4
                 </legend>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useIsClient">useIsClient</Label>
                   <Alert
                     id="useIsClient"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useIsomorphicLayoutEffect">
                     useIsomorphicLayoutEffect
                   </Label>
@@ -303,21 +357,21 @@ export default function Dashboard() {
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useIsTouchDevice">useIsTouchDevice</Label>
                   <Alert
                     id="useIsTouchDevice"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useIsVisible">useIsVisible</Label>
                   <Alert
                     id="useIsVisible"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useKeySequence">useKeySequence</Label>
                   <Alert
                     id="useKeySequence"
@@ -330,24 +384,24 @@ export default function Dashboard() {
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
+                <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 5
                 </legend>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useList">useList</Label>
                   <Alert
                     id="useList"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useMediaQuery">useMediaQuery</Label>
                   <Alert
                     id="useMediaQuery"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useMousePosition">useMousePosition</Label>
                   <div id="useMousePosition">
                     <p>
@@ -355,14 +409,14 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useNetworkState">useNetworkState</Label>
                   <Alert
                     id="useNetworkState"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useOnClickOutside">useOnCLickOutside</Label>
                   <Alert
                     id="useOnCLickOutside"
@@ -375,17 +429,17 @@ export default function Dashboard() {
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
+                <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 6
                 </legend>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useOrientation">useOrientation</Label>
                   <div id="useOrientation">
                     <p>Current angle: {orientation.angle}</p>
                     <p>Current type: {orientation.type}</p>
                   </div>
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="usePageLeave">usePageLeave</Label>
                   <div>
                     <p>{userStatus}</p>
@@ -395,49 +449,52 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useRect">useRect</Label>
                   <Alert
                     id="useRect"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useScript">useScript</Label>
                   <Alert
                     id="useScript"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useSessionStorage">useSessionStorage</Label>
                   <Alert
                     id="useSessionStorage"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useThrottle">useThrottle</Label>
-                  <Alert
-                    id="useThrottle"
-                    message="This preview is under construction."
-                  />
+                  <div>
+                    <Input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useUnmount">useUnmount</Label>
                   <Alert
                     id="useUnmount"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useUpdateEffect">useUpdateEffect</Label>
                   <Alert
                     id="useUpdateEffect"
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useWindowLoad">useWindowLoad</Label>
                   <div>
                     {isLoaded ? (
@@ -447,7 +504,7 @@ export default function Dashboard() {
                     )}
                   </div>
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useWindowResize">useWindowResize</Label>
                   <div>
                     <p>Inner Width: {windowSize.innerWidth}</p>
@@ -456,7 +513,7 @@ export default function Dashboard() {
                     <p>Outer Height: {windowSize.outerHeight}</p>
                   </div>
                 </div>
-                <div className="grid gap-3">
+                <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useWindowSize">useWindowSize</Label>
                   <div>
                     <p>Window Size {JSON.stringify(windowSize)}</p>
