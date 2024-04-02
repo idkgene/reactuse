@@ -18,6 +18,7 @@ import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { useFirstMountState } from '../hooks/useFirstMountState'
 import { useHover } from '../hooks/useHover'
+import { useIdle } from '../hooks/useIdle'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -43,6 +44,7 @@ export default function Dashboard() {
   const [userStatus, setUserStatus] = useState<string>('User is on the page')
   const [value, setValue] = useState<string>('')
   const [hoverRef, isHovered] = useHover<HTMLDivElement>()
+  const isIdle = useIdle(60000) // 1 minute
   const divRef = useRef<HTMLDivElement>(null)
 
   useDocumentTitle(title)
@@ -326,10 +328,17 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useIdle">useIdle</Label>
-                  <Alert
-                    id="useIdle"
-                    message="This preview is under construction."
-                  />{' '}
+                  <div>
+                    {isIdle ? (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        🦥 User is idle
+                      </p>
+                    ) : (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        🙋🏻‍♂️ User is active
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useIntersectionObserver">
