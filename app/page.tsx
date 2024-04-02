@@ -25,10 +25,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import useWindowLoad from '../hooks/useWindowLoad'
+import { useState } from 'react'
+import { Input } from '../components/ui/input'
+import { useDebounce } from '../hooks/useDebounce'
 
 export default function Dashboard() {
-  const isLoaded = useWindowLoad()
+  const [inputValue, setInputValue] = useState<string>('')
+  const debouncedValue = useDebounce(inputValue, 500)
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -152,8 +155,14 @@ export default function Dashboard() {
                   Block 1
                 </legend>
                 <div className="grid gap-3">
-                  <Label htmlFor="model">useWindowLoad</Label>
-                  {isLoaded ? <p>The!</p> : <p>Загрузка окна...</p>}
+                  <Label htmlFor="model">useDebounce</Label>
+                  <Input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Type something"
+                  />
+                  <p>Debounced value: {debouncedValue}</p>
                 </div>
               </fieldset>
               <fieldset className="grid gap-6 rounded-lg border p-4">
