@@ -23,6 +23,7 @@ import { useIdle } from '../hooks/useIdle'
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useInterval } from '../hooks/useInterval'
 import { useIsClient } from '../hooks/useIsClient'
+import { useIsTouchDevice } from '../hooks/useIsTouchDevice'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -41,6 +42,7 @@ export default function Dashboard() {
   const [title, setTitle] = useState<string>('')
   const [queryString, setQueryString] = useState<string>('')
   const isMatch = useMediaQuery(queryString)
+  const isTouchDevice = useIsTouchDevice()
   const orientation = useOrientation()
   const isClient = useIsClient()
   const throttledValue = useThrottle(inputValue, 500)
@@ -280,25 +282,47 @@ export default function Dashboard() {
                   Hooks Block 2
                 </legend>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useEffectOnce">useEffectOnce</Label>
-                  <p>Check the console for the effect and cleanup messages.</p>
+                  <h2
+                    id="useEffectOnce"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useEffectOnce
+                  </h2>
+                  <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Check the console for the effect and cleanup messages.
+                  </p>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useFavicon">useFavicon</Label>
+                  <h2
+                    id="useFavicon"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useFavicon
+                  </h2>
                   <Alert
                     id="useFavicon"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useFetch">useFetch</Label>
+                  <h2
+                    id="useFetch"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useFetch
+                  </h2>
                   <Alert
                     id="useFetch"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useFirstMountState">useFirstMountState</Label>
+                  <h2
+                    id="useFirstMountState"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useFirstMountState
+                  </h2>
                   <div>
                     {isFirstMount ? (
                       <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -312,9 +336,14 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useFouxFix">useFouxFix</Label>
+                  <h2
+                    id="useFoucFix"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useFoucFix
+                  </h2>
                   <Alert
-                    id="useFouxFix"
+                    id="useFoucFix"
                     message="This preview is under construction."
                   />
                 </div>
@@ -335,7 +364,12 @@ export default function Dashboard() {
                   Hooks Block 3
                 </legend>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useHover">useHover</Label>
+                  <h2
+                    id="useHover"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useHover
+                  </h2>
                   <div
                     ref={hoverRef}
                     className="py-6 text-center border-2 border-dashed rounded-lg"
@@ -352,7 +386,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useIdle">useIdle</Label>
+                  <h2
+                    id="useIdle"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useIdle
+                  </h2>
                   <div>
                     {isIdle ? (
                       <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -366,9 +405,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useIntersectionObserver">
+                  <h2
+                    id="useIntersectionObserver"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
                     useIntersectionObserver
-                  </Label>
+                  </h2>
                   <div
                     ref={observerRef}
                     className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -381,7 +423,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useInterval">useInterval</Label>
+                  <h2
+                    id="useInterval"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useInterval
+                  </h2>
                   <div>
                     <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                       ⏱ Count {count}
@@ -389,14 +436,24 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label id="useIOSToolbarState">useIOSToolbarState</Label>
+                  <h2
+                    id="useIOSToolbarState"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useIOSToolbarState
+                  </h2>
                   <Alert
                     id="useIOSToolbarState"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useIsClient">useIsClient</Label>
+                  <h2
+                    htmlFor="useIsClient"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useIsClient
+                  </h2>
                   <div>
                     {isClient ? (
                       <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -419,44 +476,79 @@ export default function Dashboard() {
                   Hooks Block 4
                 </legend>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useIsomorphicLayoutEffect">
+                  <h2
+                    id="useIsomorphicLayoutEffect"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
                     useIsomorphicLayoutEffect
-                  </Label>
+                  </h2>
                   <Alert
                     id="useIsomorphicLayoutEffect"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useIsTouchDevice">useIsTouchDevice</Label>
-                  <Alert
+                  <h2
                     id="useIsTouchDevice"
-                    message="This preview is under construction."
-                  />
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useIsTouchDevice
+                  </h2>
+                  <div>
+                    {isTouchDevice ? (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        👆🏻 Touch Device
+                      </p>
+                    ) : (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        ❌ Not a Touch Device
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useIsVisible">useIsVisible</Label>
+                  <h2
+                    id="useIsVisible"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useIsVisible
+                  </h2>
                   <Alert
                     id="useIsVisible"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useKeySequence">useKeySequence</Label>
+                  <h2
+                    id="useKeySequence"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useKeySequence
+                  </h2>
                   <Alert
                     id="useKeySequence"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useList">useList</Label>
+                  <h2
+                    id="useList"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useList
+                  </h2>
                   <Alert
                     id="useList"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useMediaQuery">useMediaQuery</Label>
+                  <h2
+                    id="useMediaQuery"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useMediaQuery
+                  </h2>
                   <Alert
                     id="useMediaQuery"
                     message="This preview is under construction."
@@ -472,36 +564,64 @@ export default function Dashboard() {
                   Hooks Block 5
                 </legend>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useMousePosition">useMousePosition</Label>
-                  <div id="useMousePosition">
+                  <h2
+                    id="useMousePosition"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useMousePosition
+                  </h2>
+                  <div
+                    id="useMousePosition"
+                    className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
                     <p>
                       X: {position.x}, Y: {position.y}
                     </p>
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useNetworkState">useNetworkState</Label>
+                  <h2
+                    id="useNetworkState"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useNetworkState
+                  </h2>
                   <Alert
                     id="useNetworkState"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useOnClickOutside">useOnCLickOutside</Label>
+                  <h2
+                    id="useOnClickOutside"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useOnCLickOutside
+                  </h2>
                   <Alert
                     id="useOnCLickOutside"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useOrientation">useOrientation</Label>
+                  <h2
+                    id="useOrientation"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useOrientation
+                  </h2>
                   <div id="useOrientation">
                     <p>Current angle: {orientation.angle}</p>
                     <p>Current type: {orientation.type}</p>
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="usePageLeave">usePageLeave</Label>
+                  <h2
+                    id="usePageLeave"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    usePageLeave
+                  </h2>
                   <div>
                     <p>{userStatus}</p>
                     <p>
@@ -511,7 +631,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useRect">useRect</Label>
+                  <h2
+                    id="useRect"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useRect
+                  </h2>
                   <Alert
                     id="useRect"
                     message="This preview is under construction."
@@ -527,7 +652,12 @@ export default function Dashboard() {
                   Hooks Block 6
                 </legend>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useScript">useScript</Label>
+                  <h2
+                    id="useScript"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useScript
+                  </h2>
                   <Alert
                     id="useScript"
                     message="This preview is under construction."
@@ -535,14 +665,24 @@ export default function Dashboard() {
                 </div>
 
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useSessionStorage">useSessionStorage</Label>
+                  <h2
+                    id="useSessionStorage"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useSessionStorage
+                  </h2>
                   <Alert
                     id="useSessionStorage"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useThrottle">useThrottle</Label>
+                  <h2
+                    id="useThrottle"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useThrottle
+                  </h2>
                   <div>
                     <Input
                       type="text"
@@ -553,21 +693,36 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useUnmount">useUnmount</Label>
+                  <h2
+                    id="useUnmount"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useUnmount
+                  </h2>
                   <Alert
                     id="useUnmount"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useUpdateEffect">useUpdateEffect</Label>
+                  <h2
+                    id="useUpdateEffect"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useUpdateEffect
+                  </h2>
                   <Alert
                     id="useUpdateEffect"
                     message="This preview is under construction."
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useWindowLoad">useWindowLoad</Label>
+                  <h2
+                    id="useWindowLoad"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useWindowLoad
+                  </h2>
                   <div>
                     {isLoaded ? (
                       <h1>Window has finished loading!</h1>
@@ -577,7 +732,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useWindowResize">useWindowResize</Label>
+                  <h2
+                    id="useWindowResize"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useWindowResize
+                  </h2>
                   <div>
                     <p>Inner Width: {windowSize.innerWidth}</p>
                     <p>Inner Height: {windowSize.innerHeight}</p>
@@ -586,7 +746,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useWindowSize">useWindowSize</Label>
+                  <h2
+                    id="useWindowSize"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useWindowSize
+                  </h2>
                   <div>
                     <p>Window Size {JSON.stringify(windowSize)}</p>
                   </div>
