@@ -10,41 +10,26 @@
  * @returns {DocumentReadyState} The current readyState of the document.
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 export function useDocumentReadyState(): DocumentReadyState {
-  // Use the useState hook to manage the state of the readyState
-  const [readyState, setReadyState] = useState<DocumentReadyState>(() => {
-    // Check if the document object is available
-    if (typeof document !== 'undefined') {
-      // If available, return the current readyState
-      return document.readyState as DocumentReadyState;
-    }
-    // If not available (e.g., server-side rendering), return 'loading'
-    return 'loading';
-  });
+  const [readyState, setReadyState] = useState<DocumentReadyState>('loading')
 
   useEffect(() => {
-    // Check if the document object is available
-    if (typeof document === 'undefined') {
-      // If not available, return early to avoid accessing properties on undefined
-      return;
+    const onStateChange = () => {
+      setReadyState(document.readyState as DocumentReadyState)
     }
 
-    // Define a function to handle readyState changes
-    const onStateChange = () => {
-      setReadyState(document.readyState as DocumentReadyState);
-    };
+    if (document.readyState !== 'loading') {
+      setReadyState(document.readyState as DocumentReadyState)
+    } else {
+      document.addEventListener('readystatechange', onStateChange)
+    }
 
-    // Add an event listener for the 'readystatechange' event
-    document.addEventListener('readystatechange', onStateChange);
-
-    // Clean up the event listener when the component unmounts
     return () => {
-      document.removeEventListener('readystatechange', onStateChange);
-    };
-  }, []); // Empty dependency array ensures the effect runs only once
+      document.removeEventListener('readystatechange', onStateChange)
+    }
+  }, []) // Empty dependency array ensures the effect runs only once
 
-  // Return the current readyState
-  return readyState;
+  return readyState
 }

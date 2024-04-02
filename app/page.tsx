@@ -24,6 +24,7 @@ import { useInterval } from '../hooks/useInterval'
 import { useIsClient } from '../hooks/useIsClient'
 import { useIsTouchDevice } from '../hooks/useIsTouchDevice'
 import { useIsVisible } from '../hooks/useIsVisible'
+import useKeySequence from '../hooks/useKeySequence'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -125,6 +126,17 @@ export default function Dashboard() {
     }
   }, [isResizing, rect, targetRef])
 
+  const KeySequenceTester = () => {
+    useKeySequence({
+      sequence: 'xd',
+      callback: () => {
+        alert('Key sequence detected!')
+        console.log('Key sequence detected!')
+      },
+      eventType: 'keydown',
+      keystrokeDelay: 1000,
+    })
+  }
   return (
     <div className="grid h-screen w-full pl-[53px]">
       <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
@@ -571,10 +583,10 @@ export default function Dashboard() {
                   >
                     useKeySequence
                   </h2>
-                  <Alert
-                    id="useKeySequence"
-                    message="This preview is under construction."
-                  />
+                  <div>
+                    Press <kbd>h</kbd> then <kbd>e</kbd> then <kbd>l</kbd> then{' '}
+                    <kbd>l</kbd> then <kbd>o</kbd> to trigger the alert.
+                  </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
