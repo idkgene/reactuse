@@ -28,10 +28,12 @@ import {
 import { useState } from 'react'
 import { Input } from '../components/ui/input'
 import { useDebounce } from '../hooks/useDebounce'
+import { useDebug } from '../hooks/useDebug'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const debouncedValue = useDebounce(inputValue, 500)
+  const isDebugMode = useDebug()
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -163,6 +165,16 @@ export default function Dashboard() {
                     placeholder="Type something"
                   />
                   <p>Debounced value: {debouncedValue}</p>
+                </div>
+                <div className="grid gap-3">
+                  <Label>isDebug</Label>
+                  {isDebugMode ? (
+                    <div>
+                      <p>The application is running in debug mode.</p>
+                    </div>
+                  ) : (
+                    <p>The application is running in production mode.</p>
+                  )}
                 </div>
               </fieldset>
               <fieldset className="grid gap-6 rounded-lg border p-4">
