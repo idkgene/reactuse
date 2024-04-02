@@ -449,10 +449,12 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowResize">useWindowResize</Label>
-                  <Alert
-                    id="useWindowResize"
-                    message="This preview is under construction."
-                  />
+                  <div>
+                    <p>Inner Width: {windowSize.innerWidth}</p>
+                    <p>Inner Height: {windowSize.innerHeight}</p>
+                    <p>Outer Width: {windowSize.outerWidth}</p>
+                    <p>Outer Height: {windowSize.outerHeight}</p>
+                  </div>
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowSize">useWindowSize</Label>
