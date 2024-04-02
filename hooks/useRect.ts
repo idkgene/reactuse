@@ -1,77 +1,65 @@
 /**
  * This custom React hook, `useRect`, allows you to get the size and position of an HTML element.
  * It uses the ResizeObserver API if available, otherwise it falls back to the window resize event.
+ * The hook efficiently updates the size and position only when the element's size changes,
+ * avoiding unnecessary re-renders
  *
- * @param {MutableRefObject<any>} ref - The reference to the HTML element you want to observe.
- * @returns {Object} - An object containing the size and position of the observed element.
+ * @param {MutableRefObject<HTMLElement | null>} ref - The reference to the HTML element you want to observe.
+ * @returns {DOMRect | null} - The size and position of the observed element, or null if the element is not available.
  */
 
 import { MutableRefObject, useCallback, useLayoutEffect, useState } from 'react'
 
-export const useRect = (ref: MutableRefObject<any>) => {
-  // Initialize the state with the initial size and position of the element
-  const [rect, setRect] = useState(getRect(ref ? ref.current : null))
+export const useRect = (ref: MutableRefObject<HTMLElement | null>) => {
+  // Initialize the state with null, indicating that the element's size and position are not yet known
+  const [rect, setRect] = useState<DOMRect | null>(null)
 
-  // Function to handle the resize event
+  // Memoize the callback to avoid unnecessary recreation on each render
   const handleResize = useCallback(() => {
-    // If the refference doesn't exist, return early
+    // If the reference doesn't exist, set the rect state to null and return early
     if (!ref.current) {
+      setRect(null)
       return
     }
 
-    // Update client rect with the new size and position of the element
-    setRect(getRect(ref.current))
+    // Update the rect state with the new size and position of the element
+    setRect(ref.current.getBoundingClientRect())
   }, [ref])
 
-  // Effect hook to handle the resize event
   useLayoutEffect(() => {
+    // Store the current element reference in a variable
     const element = ref.current
 
-    // If the refference is not available, return early
+    // If the element is not available, return early
     if (!element) {
       return
     }
 
-    // Call the handleResize function to initialize the client rect
+    // Call the handleResize function to initialize the rect state
     handleResize()
 
     // Check if the ResizeObserver API is available
     if (typeof ResizeObserver === 'function') {
-      let resizeObserver: ResizeObserver | null = new ResizeObserver(() => handleResize())
+      // Create a new ResizeObserver instance
+      const resizeObserver = new ResizeObserver(handleResize)
+
+      // Observe the element for size changes
       resizeObserver.observe(element)
 
+      // Clean up the ResizeObserver on component unmount
       return () => {
-        if (!resizeObserver) {
-          return
-        }
-
         resizeObserver.disconnect()
-        resizeObserver = null
       }
     } else {
-      // Browser support, remove freely
+      // Fallback to the window resize event if ResizeObserver is not available
       window.addEventListener('resize', handleResize)
 
+      // Clean up the event listener on component unmount
       return () => {
         window.removeEventListener('resize', handleResize)
       }
     }
-  }, )
+  }, [ref, handleResize])
 
   return rect
-}
-
-function getRect(element: HTMLElement | null) {
-  if (!element) {
-    return {
-      bottom: 0,
-      height: 0,
-      left: 0,
-      right: 0,
-      top: 0,
-      width: 0,
-    }
-  }
-
-  return element.getBoundingClientRect()
 }
