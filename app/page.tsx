@@ -28,6 +28,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
 import { usePageLeave } from '../hooks/usePageLeave'
+import { useRect } from '../hooks/useRect'
 import useThrottle from '../hooks/useThrottle'
 import useWindowLoad from '../hooks/useWindowLoad'
 import useWindowResize from '../hooks/useWindowResize'
@@ -59,6 +60,8 @@ export default function Dashboard() {
   })
   const [count, setCount] = useState(0)
   const { setRef, inView } = useIsVisible({ threshold: 1 })
+  const targetRef = useRef(null)
+  const rect = useRect(targetRef)
 
   useDocumentTitle(title)
 
@@ -653,10 +656,16 @@ export default function Dashboard() {
                   >
                     useRect
                   </h2>
-                  <Alert
-                    id="useRect"
-                    message="This preview is under construction."
-                  />
+                  <div
+                    ref={targetRef}
+                    style={{
+                      width: '100px',
+                      height: '100px',
+                      backgroundColor: 'lightgray',
+                    }}
+                  >
+                    <pre>{JSON.stringify(rect, null, 2)}</pre>
+                  </div>
                 </div>
               </fieldset>
             </form>
