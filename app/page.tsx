@@ -2,7 +2,6 @@
 import { GithubIcon, SquareTerminal, Triangle } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
 import {
   Tooltip,
   TooltipContent,
@@ -24,6 +23,7 @@ import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useInterval } from '../hooks/useInterval'
 import { useIsClient } from '../hooks/useIsClient'
 import { useIsTouchDevice } from '../hooks/useIsTouchDevice'
+import { useIsVisible } from '../hooks/useIsVisible'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -58,6 +58,7 @@ export default function Dashboard() {
     threshold: 0.5,
   })
   const [count, setCount] = useState(0)
+  const { setRef, inView } = useIsVisible({ threshold: 1 })
 
   useDocumentTitle(title)
 
@@ -348,7 +349,12 @@ export default function Dashboard() {
                   />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
-                  <Label htmlFor="useGeolocation">useGeolocation</Label>
+                  <h2
+                    id="useGeolocation"
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    useGeolocation
+                  </h2>
                   <Alert
                     id="useGeolocation"
                     message="This preview is under construction."
@@ -449,7 +455,7 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
-                    htmlFor="useIsClient"
+                    id="useIsClient"
                     className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     useIsClient
@@ -513,10 +519,20 @@ export default function Dashboard() {
                   >
                     useIsVisible
                   </h2>
-                  <Alert
-                    id="useIsVisible"
-                    message="This preview is under construction."
-                  />
+                  <div
+                    ref={setRef}
+                    className="py-6 text-center border-2 border-dashed rounded-lg"
+                  >
+                    {inView ? (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        ✅ The heading is current in view!
+                      </p>
+                    ) : (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        ❌ The heading is not in view
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
@@ -723,7 +739,7 @@ export default function Dashboard() {
                   >
                     useWindowLoad
                   </h2>
-                  <div>
+                  <div className="py-6 text-center border-2 border-dashed rounded-lg">
                     {isLoaded ? (
                       <h1>Window has finished loading!</h1>
                     ) : (
