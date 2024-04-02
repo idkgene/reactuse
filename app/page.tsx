@@ -1,24 +1,8 @@
 'use client'
-import { GithubIcon, Settings, SquareTerminal, Triangle } from 'lucide-react'
+import { GithubIcon, SquareTerminal, Triangle } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer'
 import { Label } from '@/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import {
   Tooltip,
   TooltipContent,
@@ -103,62 +87,7 @@ export default function Dashboard() {
         </nav>
       </aside>
       <div className="flex flex-col">
-        <header className="sticky top-0 z-10 flex h-[53px] items-center gap-1 border-b bg-background px-4">
-          <h1 className="text-xl font-semibold">React Hooks Showcase</h1>
-          <Drawer>
-            <DrawerTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden"
-              >
-                <Settings className="size-4" />
-                <span className="sr-only">Block 1</span>
-              </Button>
-            </DrawerTrigger>
-            <DrawerContent className="max-h-[80vh]">
-              <DrawerHeader>
-                <DrawerTitle>Configuration</DrawerTitle>
-                <DrawerDescription>
-                  Configure the settings for the model and messages.
-                </DrawerDescription>
-              </DrawerHeader>
-              <form className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
-                <fieldset className="grid gap-6 rounded-lg border p-4">
-                  <legend className="-ml-1 px-1 text-sm font-medium">
-                    Settings
-                  </legend>
-                  <div className="grid gap-3"></div>
-                </fieldset>
-                <fieldset className="grid gap-6 rounded-lg border p-4">
-                  <legend className="-ml-1 px-1 text-sm font-medium">
-                    Messages
-                  </legend>
-                  <div className="grid gap-3">
-                    <Label htmlFor="role">Role</Label>
-                    <Select defaultValue="system">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="system">System</SelectItem>
-                        <SelectItem value="user">User</SelectItem>
-                        <SelectItem value="assistant">Assistant</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="grid gap-3">
-                    <Label htmlFor="content">Content</Label>
-                    <Textarea
-                      id="content"
-                      placeholder="You are a..."
-                    />
-                  </div>
-                </fieldset>
-              </form>
-            </DrawerContent>
-          </Drawer>
-        </header>
+        {/* Need to implement the drawer component to make this page responsive */}
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
@@ -167,17 +96,25 @@ export default function Dashboard() {
                   Block 1
                 </legend>
                 <div className="grid gap-3">
-                  <Label htmlFor="model">useDebounce</Label>
+                  <Label htmlFor="useClipboard">useClipboard</Label>
+                  <div id="useClipboard">
+                    This preview is under construction.
+                  </div>
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="useDeboune">useDebounce</Label>
                   <Input
                     type="text"
+                    id="useDebounce"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Type something"
+                    aria-describedby="debouncedValue"
                   />
-                  <p>Debounced value: {debouncedValue}</p>
+                  <p id="debouncedValue">Debounced value: {debouncedValue}</p>
                 </div>
                 <div className="grid gap-3">
-                  <Label>useDebugMode</Label>
+                  <Label id="useDebounce">useDebugMode</Label>
                   {isDebugMode ? (
                     <div>
                       <p>The application is running in debug mode.</p>
@@ -204,41 +141,16 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="grid gap-3">
-                  <Label>useDocumentTitle</Label>
+                  <Label htmlFor="useDocumentTitle">useDocumentTitle</Label>
                   <Input
                     type="text"
                     value={title}
                     onChange={handleChange}
                     maxLength={30}
+                    id="useDocumentTitle"
                     placeholder="Enter a new document title"
                   />
                   <p>Current document title: {title}</p>
-                </div>
-              </fieldset>
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
-                </legend>
-                <div className="grid gap-3">
-                  <Label htmlFor="role">Role</Label>
-                  <Select defaultValue="system">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="system">System</SelectItem>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="assistant">Assistant</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="content">Content</Label>
-                  <Textarea
-                    id="content"
-                    placeholder="You are a..."
-                    className="min-h-[9.5rem]"
-                  />
                 </div>
               </fieldset>
             </form>
