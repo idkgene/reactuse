@@ -16,11 +16,13 @@ import { useDebounce } from '../hooks/useDebounce'
 import { useDebug } from '../hooks/useDebug'
 import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { useEffectOnce } from '../hooks/useEffectOnce'
 import { useFirstMountState } from '../hooks/useFirstMountState'
 import { useHover } from '../hooks/useHover'
 import { useIdle } from '../hooks/useIdle'
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useInterval } from '../hooks/useInterval'
+import { useIsClient } from '../hooks/useIsClient'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -40,6 +42,7 @@ export default function Dashboard() {
   const [queryString, setQueryString] = useState<string>('')
   const isMatch = useMediaQuery(queryString)
   const orientation = useOrientation()
+  const isClient = useIsClient()
   const throttledValue = useThrottle(inputValue, 500)
   const isLoaded = useWindowLoad()
   const windowSize = useWindowResize()
@@ -80,6 +83,14 @@ export default function Dashboard() {
   useInterval(() => {
     setCount((prevCount) => (prevCount + 1) % 25)
   }, 1000)
+
+  useEffectOnce(() => {
+    console.log('Effect ran only once')
+
+    return () => {
+      console.log('Effect cleaned up')
+    }
+  })
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -270,10 +281,7 @@ export default function Dashboard() {
                 </legend>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useEffectOnce">useEffectOnce</Label>
-                  <Alert
-                    id="useEffectOnce"
-                    message="This preview is under construction."
-                  />
+                  <p>Check the console for the effect and cleanup messages.</p>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useFavicon">useFavicon</Label>
@@ -375,7 +383,9 @@ export default function Dashboard() {
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useInterval">useInterval</Label>
                   <div>
-                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">⏱ Count {count}</p>
+                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      ⏱ Count {count}
+                    </p>
                   </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
@@ -387,10 +397,17 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label htmlFor="useIsClient">useIsClient</Label>
-                  <Alert
-                    id="useIsClient"
-                    message="This preview is under construction."
-                  />
+                  <div>
+                    {isClient ? (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        💻 Running on the client-side
+                      </p>
+                    ) : (
+                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        🗄️ Running on the server-side
+                      </p>
+                    )}
+                  </div>
                 </div>
               </fieldset>
             </form>
@@ -531,6 +548,7 @@ export default function Dashboard() {
                       type="text"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Type your value"
                     />
                   </div>
                 </div>
