@@ -20,6 +20,7 @@ import { useFirstMountState } from '../hooks/useFirstMountState'
 import { useHover } from '../hooks/useHover'
 import { useIdle } from '../hooks/useIdle'
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
+import { useInterval } from '../hooks/useInterval'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -51,6 +52,7 @@ export default function Dashboard() {
   const entry = useIntersectionObserver(observerRef, {
     threshold: 0.5,
   })
+  const [count, setCount] = useState(0)
 
   useDocumentTitle(title)
 
@@ -74,6 +76,10 @@ export default function Dashboard() {
       console.log(`Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
     }
   }, [entry])
+
+  useInterval(() => {
+    setCount((prevCount) => (prevCount + 1) % 25)
+  }, 1000)
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -368,10 +374,9 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useInterval">useInterval</Label>
-                  <Alert
-                    id="useInterval"
-                    message="This preview is under construction."
-                  />
+                  <div>
+                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">⏱ Count {count}</p>
+                  </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useIOSToolbarState">useIOSToolbarState</Label>
