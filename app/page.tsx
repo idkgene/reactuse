@@ -19,6 +19,7 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { useFirstMountState } from '../hooks/useFirstMountState'
 import { useHover } from '../hooks/useHover'
 import { useIdle } from '../hooks/useIdle'
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
@@ -46,6 +47,10 @@ export default function Dashboard() {
   const [hoverRef, isHovered] = useHover<HTMLDivElement>()
   const isIdle = useIdle(60000) // 1 minute
   const divRef = useRef<HTMLDivElement>(null)
+  const observerRef = useRef<HTMLDivElement>(null)
+  const entry = useIntersectionObserver(observerRef, {
+    threshold: 0.5,
+  })
 
   useDocumentTitle(title)
 
@@ -63,6 +68,12 @@ export default function Dashboard() {
   useEffect(() => {
     console.log('Throttled value:', throttledValue)
   }, [throttledValue])
+
+  useEffect(() => {
+    if (entry) {
+      console.log(`Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
+    }
+  }, [entry])
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -344,10 +355,16 @@ export default function Dashboard() {
                   <Label id="useIntersectionObserver">
                     useIntersectionObserver
                   </Label>
-                  <Alert
-                    id="useIntersectionObserver"
-                    message="This preview is under construction."
-                  />
+                  <div
+                    ref={observerRef}
+                    className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    <p>
+                      ⬇️ Scroll this element into view to see it logged to the
+                      console. l this element into view to see it logged to the
+                      console.
+                    </p>
+                  </div>
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <Label id="useInterval">useInterval</Label>
