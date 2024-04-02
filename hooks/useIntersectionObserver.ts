@@ -25,17 +25,24 @@ export function useIntersectionObserver(
     freezeOnceVisible = false,
   }: Args,
 ): IntersectionObserverEntry | undefined {
+  // State variable to store the current IntersectionObserverEntry
   const [entry, setEntry] = useState<IntersectionObserverEntry>()
 
+  // Check if the element is frozen (i.e., has already become visible and freezeOnceVisible is true)
   const frozen = entry?.isIntersecting && freezeOnceVisible
 
+  // Callback function to update the entry state when the intersection changes
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
     setEntry(entry)
   }
 
   useEffect(() => {
-    const node = elementRef?.current // DOM Ref
-    const hasIOSupport = !!window.IntersectionObserver
+    // Get the current DOM node from the ref
+    const node = elementRef?.current
+
+    // Check if the Intersection Observer API is supported by the browser
+    const hasIOSupport =
+      typeof window !== 'undefined' && !!window.IntersectionObserver
 
     // If Intersection Observer is not supported, the element is frozen, or the node is null, return early
     if (!hasIOSupport || frozen || !node) return
@@ -50,8 +57,11 @@ export function useIntersectionObserver(
     observer.observe(node)
 
     // Disconnect the observer when the component unmounts or the dependencies change
-    return () => observer.disconnect()
-  }, [elementRef, threshold, root, rootMargin, frozen])
+    return () => {
+      observer.disconnect()
+    }
+  }, [elementRef, JSON.stringify(threshold), root, rootMargin, frozen])
+  // Note: JSON.stringify(threshold) is used to trigger the effect when the threshold array changes
 
   return entry
 }

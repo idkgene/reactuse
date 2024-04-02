@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import { useEventListener } from './useEventListener'
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
+import { useState } from 'react';
+import { useEventListener } from './useEventListener';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
-export interface WindowSize {
-  width: number
-  height: number
+interface WindowSize {
+  width: number;
+  height: number;
 }
 
 /**
@@ -12,24 +12,30 @@ export interface WindowSize {
  * @returns {WindowSize} The current window size.
  */
 export const useWindowSize = (): WindowSize => {
+  // State variable to store the current window size
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: 0,
     height: 0,
-  })
+  });
 
+  // Function to update the window size state
   const handleSize = () => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    })
-  }
+    // Check if the window object is available (browser environment)
+    if (typeof window !== 'undefined') {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+  };
 
-  useEventListener('resize', handleSize)
+  // Use the useEventListener hook to attach the resize event listener
+  useEventListener('resize', handleSize);
 
+  // Use the useIsomorphicLayoutEffect hook to update the window size on component mount
   useIsomorphicLayoutEffect(() => {
-    handleSize()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    handleSize();
+  }, []); // Empty dependency array to run the effect only once on mount
 
-  return windowSize
-}
+  return windowSize;
+};
