@@ -15,12 +15,14 @@ import { useDebounce } from '../hooks/useDebounce'
 import { useDebug } from '../hooks/useDebug'
 import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import useMousePosition from '../hooks/useMousePosition'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const debouncedValue = useDebounce(inputValue, 500)
   const isDebugMode = useDebug()
   const readyState = useDocumentReadyState()
+  const position = useMousePosition()
   const [title, setTitle] = useState<string>('')
 
   useDocumentTitle(title)
@@ -297,7 +299,9 @@ export default function Dashboard() {
                 <div className="grid gap-3">
                   <Label htmlFor="useMousePosition">useMousePosition</Label>
                   <div id="useMousePosition">
-                    This preview is under construction
+                    <p>
+                      X: {position.x}, Y: {position.y}
+                    </p>
                   </div>
                 </div>
                 <div className="grid gap-3">
