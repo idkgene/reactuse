@@ -29,11 +29,13 @@ import { useState } from 'react'
 import { Input } from '../components/ui/input'
 import { useDebounce } from '../hooks/useDebounce'
 import { useDebug } from '../hooks/useDebug'
+import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const debouncedValue = useDebounce(inputValue, 500)
   const isDebugMode = useDebug()
+  const readyState = useDocumentReadyState()
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -174,6 +176,23 @@ export default function Dashboard() {
                     </div>
                   ) : (
                     <p>The application is running in production mode.</p>
+                  )}
+                </div>
+                <div className="grid gap-3">
+                  <p>Current ready state: {readyState}</p>
+                  {readyState === 'loading' && (
+                    <p>The document is still loading.</p>
+                  )}
+                  {readyState === 'interactive' && (
+                    <p>
+                      The document has finished parsing but is still loading
+                      sub-resources.
+                    </p>
+                  )}
+                  {readyState === 'complete' && (
+                    <p>
+                      The document and all sub-resources have finished loading.
+                    </p>
                   )}
                 </div>
               </fieldset>
