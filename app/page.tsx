@@ -20,6 +20,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery'
 import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
 import { usePageLeave } from '../hooks/usePageLeave'
+import useWindowLoad from '../hooks/useWindowLoad'
 import useWindowResize from '../hooks/useWindowResize'
 
 export default function Dashboard() {
@@ -32,6 +33,7 @@ export default function Dashboard() {
   const [queryString, setQueryString] = useState<string>('')
   const isMatch = useMediaQuery(queryString)
   const orientation = useOrientation()
+  const isLoaded = useWindowLoad()
   const windowSize = useWindowResize()
   const [userStatus, setUserStatus] = useState<string>('User is on the page')
 
@@ -437,10 +439,13 @@ export default function Dashboard() {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowLoad">useWindowLoad</Label>
-                  <Alert
-                    id="useWindowLoad"
-                    message="This preview is under construction."
-                  />
+                  <div>
+                    {isLoaded ? (
+                      <h1>Window has finished loading!</h1>
+                    ) : (
+                      <h1>Loading...</h1>
+                    )}
+                  </div>
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="useWindowResize">useWindowResize</Label>
