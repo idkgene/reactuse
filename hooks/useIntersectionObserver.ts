@@ -1,6 +1,4 @@
 /**
- * A React hook that uses the Intersection Observer API to track the visibility of a DOM element.
- *
  * @param {RefObject<Element>} elementRef - A React ref object that references the DOM element to observe.
  * @param {Args} options - An object containing options for the Intersection Observer.
  * @param {number} [options.threshold=0] - A number or an array of numbers representing the percentage of the target element's visibility that should trigger the observer callback.
@@ -25,38 +23,28 @@ export function useIntersectionObserver(
     freezeOnceVisible = false,
   }: Args,
 ): IntersectionObserverEntry | undefined {
-  // State variable to store the current IntersectionObserverEntry
   const [entry, setEntry] = useState<IntersectionObserverEntry>()
 
-  // Check if the element is frozen (i.e., has already become visible and freezeOnceVisible is true)
   const frozen = entry?.isIntersecting && freezeOnceVisible
 
-  // Callback function to update the entry state when the intersection changes
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
     setEntry(entry)
   }
 
   useEffect(() => {
-    // Get the current DOM node from the ref
     const node = elementRef?.current
 
-    // Check if the Intersection Observer API is supported by the browser
     const hasIOSupport =
       typeof window !== 'undefined' && !!window.IntersectionObserver
 
-    // If Intersection Observer is not supported, the element is frozen, or the node is null, return early
     if (!hasIOSupport || frozen || !node) return
 
-    // Create the observer parameters object
     const observerParams = { threshold, root, rootMargin }
 
-    // Create a new Intersection Observer instance with the provided parameters and callback
     const observer = new IntersectionObserver(updateEntry, observerParams)
 
-    // Start observing the target element
     observer.observe(node)
 
-    // Disconnect the observer when the component unmounts or the dependencies change
     return () => {
       observer.disconnect()
     }

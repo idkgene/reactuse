@@ -3,8 +3,6 @@ import useUnmount from "./useUnmout";
 useUnmount
 
 /**
- * A custom React hook that throttles the update of a value.
- *
  * @param {T} value - The value to be throttled.
  * @param {number} [ms=200] - The throttle delay in milliseconds.
  * @returns {T} The throttled value.

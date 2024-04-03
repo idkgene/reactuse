@@ -2,8 +2,6 @@
 import { useEffect, useState } from 'react'
 
 /**
- * Represents the current network state.
- *
  * @interface NetworkState
  * @property {boolean} online - Whether the device is online or offline.
  * @property {number} speed - The current network download speed in Mbps.
@@ -16,8 +14,6 @@ interface NetworkState {
 }
 
 /**
- * Extends the Navigator interface with additional properties related to the network connection.
- *
  * @interface NavigatorConnection
  * @extends Navigator
  * @property {object} connection - Information about the current network connection.
@@ -38,15 +34,7 @@ interface NavigatorConnection extends Navigator {
 }
 
 /**
- * Custom hook that provides the current network state.
- *
  * @returns {NetworkState} An object representing the current network state.
- *
- * @example
- * const { online, speed, type } = useNetworkState();
- * console.log(`Online: ${online}`);
- * console.log(`Connection speed: ${speed} Mbps`);
- * console.log(`Connection type: ${type}`);
  */
 
 export function useNetworkState(): NetworkState {

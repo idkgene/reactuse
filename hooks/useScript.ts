@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 
 /**
- * A React hook that dynamically loads an external script from a given URL.
- *
  * @param {string} url - The URL of the script to be loaded.
  */
 

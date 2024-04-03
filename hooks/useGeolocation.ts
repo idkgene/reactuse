@@ -1,7 +1,4 @@
 /**
- * The `useGeolocation` custom hook in TypeScript utilizes the Geolocation API to provide real-time
- * geolocation data including position accuracy, altitude, heading, latitude, longitude, speed, and
- * timestamp, while handling loading and error states.
  * @returns The `useGeolocation` custom hook returns an object with the following properties:
  * - `loading`: a boolean indicating whether the geolocation data is still loading
  * - `accuracy`: the accuracy of the geolocation coordinates

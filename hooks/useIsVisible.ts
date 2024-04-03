@@ -1,6 +1,4 @@
 /**
- * A React hook that uses the Intersection Observer API to detect if an element is visible within the viewport or a specified root element.
- *
  * @param {UseIsVisibleArgs} options - An object containing options for the Intersection Observer.
  * @param {Element | Document | null} [options.root=null] - The root element to use as the intersection root for the observer.
  * @param {string} [options.rootMargin='0px'] - A string describing a set of offsets to add to the root's bounding box when calculating intersections.
@@ -33,19 +31,12 @@ export function useIsVisible({
   const ref = useRef<HTMLElement | null>(null)
   const [inView, setInView] = useState(false)
 
-    /**
-   * A memoized function that sets the ref to the provided node.
-   * It ensures that the ref is only updated when it's initially null.
-   */
   const setRef = useCallback((node: HTMLElement | null) => {
     if (!ref.current) {
       ref.current = node
     }
   }, [])
 
-    /**
-   * A memoized callback function that updates the inView state based on the intersection entries.
-   */
   const callbackFunction = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [entry] = entries

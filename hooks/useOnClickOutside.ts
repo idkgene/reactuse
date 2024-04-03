@@ -1,6 +1,4 @@
 /**
- * A React hook that adds an event listener to detect clicks outside of a specified DOM element.
- *
  * @template T - The type of the DOM element to be observed.
  * @param {RefObject<T>} ref - A React ref object that references the DOM element to observe.
  * @param {Handler} handler - The callback function to be called when a click outside the element is detected.

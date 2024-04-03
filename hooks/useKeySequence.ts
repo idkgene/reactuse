@@ -1,6 +1,4 @@
 /**
- * An interface defining the options for the `useKeySequence` hook.
- *
  * @interface UseKeySequenceOptions
  * @property {string} sequence - The key sequence to listen for.
  * @property {() => void} callback - The callback function to be executed when the key sequence is detected.
@@ -16,8 +14,6 @@ export interface UseKeySequenceOptions {
 }
 
 /**
- * A React hook that listens for a specific key sequence and executes a callback function when detected.
- *
  * @param {UseKeySequenceOptions} options - An object containing the options for the hook.
  * @returns {null} The hook does not return any value.
  */
@@ -28,16 +24,12 @@ export const useKeySequence = ({
   eventType = 'keydown',
   keystrokeDelay = 1000,
 }: UseKeySequenceOptions) => {
-    /**
-   * A function that sets up the event listener and handles the key sequence detection.
-   */
+
   function keyMapper() {
     let buffer: string[] = []
     let lastKeyTime = Date.now()
 
     /**
-     * An event listener function that handles key events.
-     *
      * @param {KeyboardEvent} event - The keyboard event object.
      */
     document.addEventListener(eventType, (event: KeyboardEvent) => {
@@ -45,8 +37,6 @@ export const useKeySequence = ({
 
       const currentTime = Date.now()
 
-      // If the time between the current key press and the last key press exceeds the keystrokeDelay,
-      // reset the buffer array
       if (currentTime - lastKeyTime > keystrokeDelay) {
         buffer = []
       }

@@ -8,8 +8,6 @@ export type SetValue = (
 export type RemoveValue = () => void
 
 /**
- * A React hook that provides a way to interact with the browser's session storage.
- *
  * @param {string} key - The key to use for storing and retrieving the value in session storage.
  * @param {InitialValueType} [initialValue] - The initial value to use if no value is found in session storage.
  * @returns {Readonly<[StoredValue, SetValue, RemoveValue]>} An array with three elements:

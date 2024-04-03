@@ -2,8 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useIsClient } from './useIsClient'
 
 /**
- * A React hook that checks if the current browser window matches a given media query.
- *
  * @param {string} queryString - The media query string to be checked.
  * @returns {boolean | undefined} The current match state of the media query, or undefined if the browser does not support the MediaQueryList API or if the hook is executed on the server-side.
  */
