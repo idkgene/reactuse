@@ -33,10 +33,13 @@ import { useEffect, useRef, useState } from 'react'
 import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
 import FoucFixShowcase from '../components/blocks/FoucFix'
+import GeolocationShowcase from '../components/blocks/Geolocation'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
 import IntervalShowcase from '../components/blocks/Interval'
+import IsomorphicLayoutEffect from '../components/blocks/IsomorphicLayoutEffect'
 import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
+import NetworkState from '../components/blocks/NetworkState'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
 
 export default function Dashboard() {
@@ -271,18 +274,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <FoucFixShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useGeolocation"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useGeolocation
-                  </h2>
-                  <Alert
-                    id="useGeolocation"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <GeolocationShowcase />
               </fieldset>
             </form>
           </div>
@@ -323,18 +315,7 @@ export default function Dashboard() {
                 <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 4
                 </legend>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIsomorphicLayoutEffect"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIsomorphicLayoutEffect
-                  </h2>
-                  <Alert
-                    id="useIsomorphicLayoutEffect"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <IsomorphicLayoutEffect />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useIsTouchDevice"
@@ -400,18 +381,7 @@ export default function Dashboard() {
                   Hooks Block 5
                 </legend>
                 <MousePositionShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useNetworkState"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useNetworkState
-                  </h2>
-                  <Alert
-                    id="useNetworkState"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <NetworkState />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useOnClickOutside"
