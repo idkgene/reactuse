@@ -8,8 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useDebug } from '@hooks/useDebug'
-import { useDocumentReadyState } from '@hooks/useDocumentReadyState'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { useEffectOnce } from '@hooks/useEffectOnce'
 import { useFirstMountState } from '@hooks/useFirstMountState'
@@ -31,11 +29,11 @@ import DebounceShowcase from '@ui-showcase/Debounce'
 import HoverShowase from '@ui-showcase/Hover'
 import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
+import DebugShowcase from '../components/blocks/Debug'
+import DocumentReadyShowCase from '../components/blocks/DocumentReady'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
-  const isDebugMode = useDebug()
-  const readyState = useDocumentReadyState()
   const isFirstMount = useFirstMountState()
   const [title, setTitle] = useState<string>('')
   const [queryString, setQueryString] = useState<string>('')
@@ -209,51 +207,8 @@ export default function Dashboard() {
                   />
                 </div>
                 <DebounceShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useDebug"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useDebug
-                  </h2>
-                  {isDebugMode ? (
-                    <div>
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        🛠️ The application is running in debug mode.
-                      </p>
-                    </div>
-                  ) : (
-                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      🚀 The application is running in production mode.
-                    </p>
-                  )}
-                </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useDocumentReadyState"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useDocumentReadyState
-                  </h2>
-                  <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Current ready state: {readyState}
-                  </p>
-                  {readyState === 'loading' && (
-                    <p>⌛ The document is still loading.</p>
-                  )}
-                  {readyState === 'interactive' && (
-                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      🕹️ The document has finished parsing but is still loading
-                      sub-resources.
-                    </p>
-                  )}
-                  {readyState === 'complete' && (
-                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      ✅ The document and all sub-resources have finished
-                      loading.
-                    </p>
-                  )}
-                </div>
+                <DebugShowcase />
+                <DocumentReadyShowCase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useDocumentTitle"
