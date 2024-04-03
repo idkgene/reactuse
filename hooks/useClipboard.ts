@@ -8,12 +8,12 @@
  * @typedef {(text: string) => Promise<boolean>} CopyFn - The type representing the copy function.
  */
 
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
-export type CopiedValue = string | null;
-export type CopyFn = (text: string) => Promise<boolean>;
+type CopiedValue = string | null;
+type CopyFn = (text: string) => Promise<boolean>;
 
-export function useCopyToClipBoard(copiedValue: CopiedValue = null, copyFn?: CopyFn) {
+export function useCopyToClipBoard(copiedValue: CopiedValue = null, copyFn?: CopyFn): [CopiedValue, CopyFn] {
   const [copiedText, setCopiedText] = useState<CopiedValue>(copiedValue);
 
 /**
@@ -26,12 +26,12 @@ export function useCopyToClipBoard(copiedValue: CopiedValue = null, copyFn?: Cop
         setCopiedText(text);
         return true;
       } catch (error) {
-        console.warn('Copy failed', error);
+        console.warn('useClipboard: Copy failed', error);
         setCopiedText(null);
         return false;
       }
     } else {
-      console.warn('Clipboard not supported');
+      console.warn('CuseClipboard: lipboard not supported');
       return false;
     }
   }, []);
