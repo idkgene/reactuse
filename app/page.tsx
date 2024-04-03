@@ -8,13 +8,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useEffectOnce } from '@hooks/useEffectOnce'
 import { useFirstMountState } from '@hooks/useFirstMountState'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
-import { useRect } from '@hooks/useRect'
 import useThrottle from '@hooks/useThrottle'
-import useWindowLoad from '@hooks/useWindowLoad'
-import useWindowResize from '@hooks/useWindowResize'
 import { Input } from '@ui-components/input'
 import ClipboardShowcase from '@ui-showcase/Clipboard'
 import DebounceShowcase from '@ui-showcase/Debounce'
@@ -42,25 +38,25 @@ import NetworkState from '../components/blocks/NetworkState'
 import OnClickOutsideShowcase from '../components/blocks/OnClickOutside'
 import OrientationShowcase from '../components/blocks/Orientation'
 import PageLeaveShowcase from '../components/blocks/PageLeave'
+import RectShowcase from '../components/blocks/Rect'
 import ScriptShowcase from '../components/blocks/Script'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
 import UnmountShowcase from '../components/blocks/Unmount'
 import UpdateEffectShowcase from '../components/blocks/UpdateEffect'
+import UseEffectOnceShowcase from '../components/blocks/UseEffectOnce'
+import WindowLoadShowcase from '../components/blocks/WindowLoad'
+import WindowResizeShowcase from '../components/blocks/WindowResize'
+import WindowSizeShowcase from '../components/blocks/WindowSize'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const isFirstMount = useFirstMountState()
   const throttledValue = useThrottle(inputValue, 500)
-  const isLoaded = useWindowLoad()
-  const windowSize = useWindowResize()
   const [value, setValue] = useState<string>('')
   const observerRef = useRef<HTMLDivElement>(null)
   const entry = useIntersectionObserver(observerRef, {
     threshold: 0.5,
   })
-  const targetRef = useRef<HTMLDivElement>(null)
-  const rect = useRect(targetRef)
-  const [isResizing, setIsResizing] = useState<boolean>(false)
 
   useEffect(() => {
     console.log('Throttled value:', throttledValue)
@@ -71,40 +67,6 @@ export default function Dashboard() {
       console.log(`Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
     }
   }, [entry])
-
-  useEffectOnce(() => {
-    console.log('Effect ran only once')
-
-    return () => {
-      console.log('Effect cleaned up')
-    }
-  })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isResizing && targetRef.current && rect) {
-        const newWidth = e.clientX - rect.left
-        const newHeight = e.clientY - rect.top
-
-        ;(targetRef.current as HTMLDivElement).style.width = `${newWidth}px`
-        ;(targetRef.current as HTMLDivElement).style.height = `${newHeight}px`
-      }
-    }
-
-    const handleMouseUp = () => {
-      setIsResizing(false)
-    }
-
-    if (isResizing) {
-      document.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseup', handleMouseUp)
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [isResizing, rect, targetRef])
 
   return (
     <div className="grid h-screen w-full pl-[53px]">
@@ -187,17 +149,7 @@ export default function Dashboard() {
                 <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 2
                 </legend>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useEffectOnce"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useEffectOnce
-                  </h2>
-                  <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Check the console for the effect and cleanup messages.
-                  </p>
-                </div>
+                <UseEffectOnceShowcase />
                 <FaviconShowcase />
                 <FetchShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
@@ -281,31 +233,7 @@ export default function Dashboard() {
                 <OnClickOutsideShowcase />
                 <OrientationShowcase />
                 <PageLeaveShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useRect"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useRect
-                  </h2>
-                  <div
-                    ref={targetRef}
-                    style={{
-                      width: '100px',
-                      height: '100px',
-                      backgroundColor: 'lightgray',
-                      cursor: 'nwse-resize',
-                      minHeight: '100px',
-                      minWidth: '100px',
-                      maxWidth: '350px',
-                      maxHeight: '350px',
-                    }}
-                    onMouseDown={() => setIsResizing(true)}
-                  ></div>
-                  <pre className="select-none">
-                    {JSON.stringify(rect, null, 2)}
-                  </pre>
-                </div>
+                <RectShowcase />
               </fieldset>
             </form>
           </div>
@@ -335,46 +263,9 @@ export default function Dashboard() {
                 </div>
                 <UnmountShowcase />
                 <UpdateEffectShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useWindowLoad"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useWindowLoad
-                  </h2>
-                  <div className="py-6 text-center border-2 border-dashed rounded-lg">
-                    {isLoaded ? (
-                      <h1>Window has finished loading!</h1>
-                    ) : (
-                      <h1>Loading...</h1>
-                    )}
-                  </div>
-                </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useWindowResize"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useWindowResize
-                  </h2>
-                  <div>
-                    <p>Inner Width: {windowSize.innerWidth}</p>
-                    <p>Inner Height: {windowSize.innerHeight}</p>
-                    <p>Outer Width: {windowSize.outerWidth}</p>
-                    <p>Outer Height: {windowSize.outerHeight}</p>
-                  </div>
-                </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useWindowSize"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useWindowSize
-                  </h2>
-                  <div className="max-w-[50ch] text-pretty break-words">
-                    <p>Window Size {JSON.stringify(windowSize)}</p>
-                  </div>
-                </div>
+                <WindowLoadShowcase />
+                <WindowResizeShowcase />
+                <WindowSizeShowcase />
               </fieldset>
             </form>
           </div>
