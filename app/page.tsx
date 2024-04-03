@@ -12,8 +12,6 @@ import { useEffectOnce } from '@hooks/useEffectOnce'
 import { useFirstMountState } from '@hooks/useFirstMountState'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
 import { useIsClient } from '@hooks/useIsClient'
-import { useIsTouchDevice } from '@hooks/useIsTouchDevice'
-import { useOrientation } from '@hooks/useOrientation'
 import { usePageLeave } from '@hooks/usePageLeave'
 import { useRect } from '@hooks/useRect'
 import useThrottle from '@hooks/useThrottle'
@@ -36,6 +34,7 @@ import FoucFixShowcase from '../components/blocks/FoucFix'
 import GeolocationShowcase from '../components/blocks/Geolocation'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
 import IntervalShowcase from '../components/blocks/Interval'
+import IsTouchDeviceShowcase from '../components/blocks/IsTouchDevice'
 import IsVisibleShowcase from '../components/blocks/IsVisible'
 import IsomorphicLayoutEffect from '../components/blocks/IsomorphicLayoutEffect'
 import KeySequenceShowcase from '../components/blocks/KeySequence'
@@ -43,6 +42,7 @@ import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
 import OnClickOutsideShowcase from '../components/blocks/OnClickOutside'
+import OrientationShowcase from '../components/blocks/Orientation'
 import PageLeaveShowcase from '../components/blocks/PageLeave'
 import ScriptShowcase from '../components/blocks/Script'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
@@ -53,8 +53,6 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const isFirstMount = useFirstMountState()
   const [queryString, setQueryString] = useState<string>('')
-  const isTouchDevice = useIsTouchDevice()
-  const orientation = useOrientation()
   const isClient = useIsClient()
   const throttledValue = useThrottle(inputValue, 500)
   const isLoaded = useWindowLoad()
@@ -277,25 +275,7 @@ export default function Dashboard() {
                   Hooks Block 4
                 </legend>
                 <IsomorphicLayoutEffect />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIsTouchDevice"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIsTouchDevice
-                  </h2>
-                  <div>
-                    {isTouchDevice ? (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        👆🏻 Touch Device
-                      </p>
-                    ) : (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        ❌ Not a Touch Device
-                      </p>
-                    )}
-                  </div>
-                </div>
+                <IsTouchDeviceShowcase />
                 <IsVisibleShowcase />
                 <KeySequenceShowcase />
                 <ListShowcase />
@@ -312,18 +292,7 @@ export default function Dashboard() {
                 <MousePositionShowcase />
                 <NetworkState />
                 <OnClickOutsideShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useOrientation"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useOrientation
-                  </h2>
-                  <div id="useOrientation">
-                    <p>Current angle: {orientation.angle}</p>
-                    <p>Current type: {orientation.type}</p>
-                  </div>
-                </div>
+                <OrientationShowcase />
                 <PageLeaveShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
