@@ -32,11 +32,12 @@ import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
 import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
+import FoucFixShowcase from '../components/blocks/FoucFix'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
 import IntervalShowcase from '../components/blocks/Interval'
 import ListShowcase from '../components/blocks/List'
-import SessioStorageShowcase from '../components/blocks/SessionStorage'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
+import SessioStorageShowcase from '../components/blocks/SessionStorage'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -269,18 +270,7 @@ export default function Dashboard() {
                     )}
                   </div>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useFoucFix"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useFoucFix
-                  </h2>
-                  <Alert
-                    id="useFoucFix"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <FoucFixShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useGeolocation"
@@ -399,7 +389,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <ListShowcase />
-               <MediaQueryShowcase />
+                <MediaQueryShowcase />
               </fieldset>
             </form>
           </div>
