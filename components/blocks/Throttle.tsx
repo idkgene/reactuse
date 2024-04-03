@@ -7,7 +7,7 @@ export default function ThrottleShowcase() {
   const throttledValue = useThrottle(inputValue, 500)
 
   useEffect(() => {
-    console.log('Throttled value:', throttledValue)
+    console.log('useThrottle: Throttled value:', throttledValue)
   }, [throttledValue])
 
   return (

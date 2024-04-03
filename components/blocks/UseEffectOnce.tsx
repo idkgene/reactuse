@@ -2,10 +2,10 @@ import { useEffectOnce } from '@hooks/useEffectOnce'
 
 export default function UseEffectOnceShowcase() {
   useEffectOnce(() => {
-    console.log('Effect ran only once')
+    console.log('useEffectOnce: Effect ran only once')
 
     return () => {
-      console.log('Effect cleaned up')
+      console.log('useEffectOnce: Effect cleaned up')
     }
   })
 

@@ -1,6 +1,11 @@
-import Alert from '@ui-components/alert'
+import useUnmount from '../../hooks/useUnmout';
 
 export default function UnmountShowcase() {
+  useUnmount(() => {
+    console.log('useUnmount: Component is about to be unmounted!');
+  });
+
+
   return (
     <>
       <div className="grid gap-3 p-4 border rounded-lg">
@@ -10,10 +15,7 @@ export default function UnmountShowcase() {
         >
           useUnmount
         </h2>
-        <Alert
-          id="useUnmount"
-          message="This preview is under construction."
-        />
+        <div>There&apos;s a message in the console indicating that the component is about to be unmounted.</div>
       </div>
     </>
   )
