@@ -11,8 +11,6 @@ import {
 import { useEffectOnce } from '@hooks/useEffectOnce'
 import { useFirstMountState } from '@hooks/useFirstMountState'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
-import { useIsClient } from '@hooks/useIsClient'
-import { usePageLeave } from '@hooks/usePageLeave'
 import { useRect } from '@hooks/useRect'
 import useThrottle from '@hooks/useThrottle'
 import useWindowLoad from '@hooks/useWindowLoad'
@@ -52,14 +50,10 @@ import UpdateEffectShowcase from '../components/blocks/UpdateEffect'
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const isFirstMount = useFirstMountState()
-  const [queryString, setQueryString] = useState<string>('')
-  const isClient = useIsClient()
   const throttledValue = useThrottle(inputValue, 500)
   const isLoaded = useWindowLoad()
   const windowSize = useWindowResize()
-  const [userStatus, setUserStatus] = useState<string>('User is on the page')
   const [value, setValue] = useState<string>('')
-  const divRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<HTMLDivElement>(null)
   const entry = useIntersectionObserver(observerRef, {
     threshold: 0.5,
@@ -67,13 +61,6 @@ export default function Dashboard() {
   const targetRef = useRef<HTMLDivElement>(null)
   const rect = useRect(targetRef)
   const [isResizing, setIsResizing] = useState<boolean>(false)
-
-  const handlePageLeave = () => {
-    setUserStatus('User left the page')
-    console.log('User left the page')
-  }
-
-  usePageLeave(handlePageLeave)
 
   useEffect(() => {
     console.log('Throttled value:', throttledValue)
@@ -384,7 +371,7 @@ export default function Dashboard() {
                   >
                     useWindowSize
                   </h2>
-                  <div>
+                  <div className="max-w-[50ch] text-pretty break-words">
                     <p>Window Size {JSON.stringify(windowSize)}</p>
                   </div>
                 </div>
