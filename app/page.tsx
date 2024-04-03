@@ -11,7 +11,6 @@ import {
 import { useEffectOnce } from '@hooks/useEffectOnce'
 import { useFirstMountState } from '@hooks/useFirstMountState'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
-import { useInterval } from '@hooks/useInterval'
 import { useIsClient } from '@hooks/useIsClient'
 import { useIsTouchDevice } from '@hooks/useIsTouchDevice'
 import { useIsVisible } from '@hooks/useIsVisible'
@@ -31,7 +30,10 @@ import DocumentReadyShowCase from '@ui-showcase/DocumentReady'
 import HoverShowase from '@ui-showcase/Hover'
 import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
+import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
+import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
+import IntervalShowcase from '../components/blocks/Interval'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
 
 export default function Dashboard() {
@@ -57,10 +59,6 @@ export default function Dashboard() {
   const rect = useRect(targetRef)
   const [isResizing, setIsResizing] = useState<boolean>(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value)
-  }
-
   const handlePageLeave = () => {
     setUserStatus('User left the page')
     console.log('User left the page')
@@ -77,10 +75,6 @@ export default function Dashboard() {
       console.log(`Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
     }
   }, [entry])
-
-  useInterval(() => {
-    setCount((prevCount) => (prevCount + 1) % 25)
-  }, 1000)
 
   useEffectOnce(() => {
     console.log('Effect ran only once')
@@ -325,50 +319,9 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useInterval"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useInterval
-                  </h2>
-                  <div>
-                    <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      ⏱ Count {count}
-                    </p>
-                  </div>
-                </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIOSToolbarState"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIOSToolbarState
-                  </h2>
-                  <Alert
-                    id="useIOSToolbarState"
-                    message="This preview is under construction."
-                  />
-                </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIsClient"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIsClient
-                  </h2>
-                  <div>
-                    {isClient ? (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        💻 Running on the client-side
-                      </p>
-                    ) : (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        🗄️ Running on the server-side
-                      </p>
-                    )}
-                  </div>
-                </div>
+                <IntervalShowcase />
+                <IOSToolbarStateShowcase />
+                <ClientShowcase />
               </fieldset>
             </form>
           </div>
