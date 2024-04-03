@@ -32,6 +32,7 @@ import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
 import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
+import FaviconShowcase from '../components/blocks/Favicon'
 import FoucFixShowcase from '../components/blocks/FoucFix'
 import GeolocationShowcase from '../components/blocks/Geolocation'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
@@ -40,6 +41,7 @@ import IsomorphicLayoutEffect from '../components/blocks/IsomorphicLayoutEffect'
 import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
+import OnClickOutsideShowcase from '../components/blocks/OnClickOutside'
 import PageLeaveShowcase from '../components/blocks/PageLeave'
 import ScriptShowcase from '../components/blocks/Script'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
@@ -234,18 +236,7 @@ export default function Dashboard() {
                     Check the console for the effect and cleanup messages.
                   </p>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useFavicon"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useFavicon
-                  </h2>
-                  <Alert
-                    id="useFavicon"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <FaviconShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useFetch"
@@ -386,18 +377,7 @@ export default function Dashboard() {
                 </legend>
                 <MousePositionShowcase />
                 <NetworkState />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useOnClickOutside"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useOnCLickOutside
-                  </h2>
-                  <Alert
-                    id="useOnCLickOutside"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <OnClickOutsideShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useOrientation"
