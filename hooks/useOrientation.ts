@@ -1,11 +1,11 @@
-/**
- * A React hook that provides the current orientation of the device or browser window.
- *
- * @returns {{angle: number, type: string}} An object containing the current orientation angle and type.
- */
-
 import { useLayoutEffect, useState } from 'react'
 
+/**
+ * 
+ * @returns {Object} An object containing the current mouse position.
+ * @returns {number} position.x - The x-coordinate of the mouse position.
+ * @returns {number} position.y - The y-coordinate of the mouse position.
+ */
 export function useOrientation() {
   const [orientation, setOrientation] = useState({
     angle: 0,
@@ -13,9 +13,6 @@ export function useOrientation() {
   })
 
   useLayoutEffect(() => {
-     /**
-     * A function to handle orientation changes using the Screen Orientation API.
-     */
     const handleChange = () => {
       const { angle, type } = window.screen.orientation
       setOrientation({
@@ -24,9 +21,6 @@ export function useOrientation() {
       })
     }
 
-    /**
-     * A function to handle orientation changes using the deprecated window.orientation API.
-     */
     const handle_orientationchange = () => {
       setOrientation({
         type: 'UNKNOWN',
