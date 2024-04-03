@@ -41,6 +41,7 @@ import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
+import UnmountShowcase from '../components/blocks/Unmount'
 import UpdateEffectShowcase from '../components/blocks/UpdateEffect'
 
 export default function Dashboard() {
@@ -483,18 +484,7 @@ export default function Dashboard() {
                     />
                   </div>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useUnmount"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useUnmount
-                  </h2>
-                  <Alert
-                    id="useUnmount"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <UnmountShowcase />
                 <UpdateEffectShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
