@@ -34,6 +34,7 @@ import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
 import IntervalShowcase from '../components/blocks/Interval'
+import ListShowcase from '../components/blocks/List'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
 
 export default function Dashboard() {
@@ -396,18 +397,7 @@ export default function Dashboard() {
                     <kbd>l</kbd> then <kbd>o</kbd> to trigger the alert.
                   </div>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useList"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useList
-                  </h2>
-                  <Alert
-                    id="useList"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <ListShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useMediaQuery"
