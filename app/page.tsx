@@ -19,8 +19,6 @@ import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { useEffectOnce } from '../hooks/useEffectOnce'
 import { useFirstMountState } from '../hooks/useFirstMountState'
-import { useHover } from '../hooks/useHover'
-import { useIdle } from '../hooks/useIdle'
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useInterval } from '../hooks/useInterval'
 import { useIsClient } from '../hooks/useIsClient'
@@ -28,7 +26,6 @@ import { useIsTouchDevice } from '../hooks/useIsTouchDevice'
 import { useIsVisible } from '../hooks/useIsVisible'
 import useKeySequence from '../hooks/useKeySequence'
 import { useMediaQuery } from '../hooks/useMediaQuery'
-import useMousePosition from '../hooks/useMousePosition'
 import { useOrientation } from '../hooks/useOrientation'
 import { usePageLeave } from '../hooks/usePageLeave'
 import { useRect } from '../hooks/useRect'
@@ -42,7 +39,6 @@ export default function Dashboard() {
   const isDebugMode = useDebug()
   const readyState = useDocumentReadyState()
   const isFirstMount = useFirstMountState()
-  const position = useMousePosition()
   const [title, setTitle] = useState<string>('')
   const [queryString, setQueryString] = useState<string>('')
   const isMatch = useMediaQuery(queryString)
@@ -54,8 +50,6 @@ export default function Dashboard() {
   const windowSize = useWindowResize()
   const [userStatus, setUserStatus] = useState<string>('User is on the page')
   const [value, setValue] = useState<string>('')
-  const [hoverRef, isHovered] = useHover<HTMLDivElement>()
-  const isIdle = useIdle(60000) // 1 minute
   const divRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<HTMLDivElement>(null)
   const entry = useIntersectionObserver(observerRef, {
@@ -414,25 +408,6 @@ export default function Dashboard() {
                   Hooks Block 3
                 </legend>
                 <HoverShowase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIdle"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIdle
-                  </h2>
-                  <div>
-                    {isIdle ? (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        🦥 User is idle
-                      </p>
-                    ) : (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        🙋🏻‍♂️ User is active
-                      </p>
-                    )}
-                  </div>
-                </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useIntersectionObserver"

@@ -1,25 +1,24 @@
-import { useIdle } from '../../hooks/useIdle'
+import { useFirstMountState } from '../../hooks/useFirstMountState'
 
-export default function IdleShowcase() {
-  const isIdle = useIdle(60000) // 1 minute
-
+export default function FirstMountState() {
+  const isFirstMount = useFirstMountState()
   return (
     <>
       <div className="grid gap-3 p-4 border rounded-lg">
         <h2
-          id="useIdle"
+          id="useFirstMountState"
           className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          useIdle
+          useFirstMountState
         </h2>
         <div>
-          {isIdle ? (
+          {isFirstMount ? (
             <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              🦥 User is idle
+              🥇 First render
             </p>
           ) : (
             <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              🙋🏻‍♂️ User is active
+              🔜 Subsequent render
             </p>
           )}
         </div>
