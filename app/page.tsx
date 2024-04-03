@@ -46,7 +46,7 @@ import {
   UseEffectOnceShowcase,
   WindowLoadShowcase,
   WindowResizeShowcase,
-  WindowSizeShowcase,
+  WindowSizeShowcase
 } from '@ui-showcase/Showcases';
 
 export default function Dashboard() {

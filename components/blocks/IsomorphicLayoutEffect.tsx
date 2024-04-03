@@ -1,6 +1,10 @@
-import Alert from '@ui-components/alert'
+import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect';
 
 export default function IsomorphicLayoutEffect() {
+  useIsomorphicLayoutEffect(() => {
+    console.log('Isomorphic layout effect triggered');
+  }, [])
+  
   return (
     <>
       <div className="grid gap-3 p-4 border rounded-lg">
@@ -10,10 +14,7 @@ export default function IsomorphicLayoutEffect() {
         >
           useIsomorphicLayoutEffect
         </h2>
-        <Alert
-          id="useIsomorphicLayoutEffect"
-          message="This preview is under construction."
-        />
+        <p>Check console for effect trigger</p>
       </div>
     </>
   )
