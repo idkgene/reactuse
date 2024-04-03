@@ -8,40 +8,29 @@ import { useEffect, useState } from 'react'
  */
 
 const useWindowLoad = () => {
-  // State variable to track whether the window has finished loading
-  const [isLoaded, setIsLoaded] = useState<boolean>(() => {
-    // Check if the window object is available (browser environment)
-    if (typeof window !== 'undefined') {
-      // Check if the document has already finished loading
-      return document.readyState === 'complete';
-    }
-    // Return false for non-browser environments
-    return false;
-  });
+  // State variable to track if the window has finished loading
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
+
+  // Effect to handle the window load event
   useEffect(() => {
-    // Function to handle the window load event
     const handleLoad = () => {
-      // Check if the document has finished loading
-      setIsLoaded(document.readyState === 'complete');
+      setIsLoaded(true);
     };
 
-    // Check if the window object is available (browser environment)
+    // Check if the window object is available
     if (typeof window !== 'undefined') {
-      // Check if the document has already finished loading
       if (document.readyState === 'complete') {
         setIsLoaded(true);
       } else {
-        // Attach the load event listener
         window.addEventListener('load', handleLoad);
       }
 
-      // Clean up the event listener on component unmount
       return () => {
         window.removeEventListener('load', handleLoad);
       };
     }
-  }, []); // Empty dependency array to run the effect only once on mount
+  }, []);
 
   return isLoaded;
 };
