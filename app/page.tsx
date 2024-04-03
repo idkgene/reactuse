@@ -33,6 +33,7 @@ import { useEffect, useRef, useState } from 'react'
 import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
 import FaviconShowcase from '../components/blocks/Favicon'
+import FetchShowcase from '../components/blocks/Fetch'
 import FoucFixShowcase from '../components/blocks/FoucFix'
 import GeolocationShowcase from '../components/blocks/Geolocation'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
@@ -237,18 +238,7 @@ export default function Dashboard() {
                   </p>
                 </div>
                 <FaviconShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useFetch"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useFetch
-                  </h2>
-                  <Alert
-                    id="useFetch"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <FetchShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useFirstMountState"
