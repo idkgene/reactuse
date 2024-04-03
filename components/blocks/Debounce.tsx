@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useDebounce } from '../../hooks/useDebounce'
-import { Input } from '../ui/input'
+import { useDebounce } from '@hooks/useDebounce'
+import { Input } from '@ui-components/input'
 
 export default function DebounceShowcase() {
   const [inputValue, setInputValue] = useState<string>('')

@@ -8,30 +8,29 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useDebug } from '@hooks/useDebug'
+import { useDocumentReadyState } from '@hooks/useDocumentReadyState'
+import { useDocumentTitle } from '@hooks/useDocumentTitle'
+import { useEffectOnce } from '@hooks/useEffectOnce'
+import { useFirstMountState } from '@hooks/useFirstMountState'
+import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
+import { useInterval } from '@hooks/useInterval'
+import { useIsClient } from '@hooks/useIsClient'
+import { useIsTouchDevice } from '@hooks/useIsTouchDevice'
+import { useIsVisible } from '@hooks/useIsVisible'
+import useKeySequence from '@hooks/useKeySequence'
+import { useOrientation } from '@hooks/useOrientation'
+import { usePageLeave } from '@hooks/usePageLeave'
+import { useRect } from '@hooks/useRect'
+import useThrottle from '@hooks/useThrottle'
+import useWindowLoad from '@hooks/useWindowLoad'
+import useWindowResize from '@hooks/useWindowResize'
+import Alert from '@ui-components/alert'
+import { Input } from '@ui-components/input'
+import DebounceShowcase from '@ui-showcase/Debounce'
+import HoverShowase from '@ui-showcase/Hover'
+import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
-import HoverShowase from '../components/blocks/Hover'
-import MousePositionShowcase from '../components/blocks/MousePosition'
-import Alert from '../components/ui/alert'
-import { Input } from '../components/ui/input'
-import { useDebug } from '../hooks/useDebug'
-import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
-import { useDocumentTitle } from '../hooks/useDocumentTitle'
-import { useEffectOnce } from '../hooks/useEffectOnce'
-import { useFirstMountState } from '../hooks/useFirstMountState'
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
-import { useInterval } from '../hooks/useInterval'
-import { useIsClient } from '../hooks/useIsClient'
-import { useIsTouchDevice } from '../hooks/useIsTouchDevice'
-import { useIsVisible } from '../hooks/useIsVisible'
-import useKeySequence from '../hooks/useKeySequence'
-import { useMediaQuery } from '../hooks/useMediaQuery'
-import { useOrientation } from '../hooks/useOrientation'
-import { usePageLeave } from '../hooks/usePageLeave'
-import { useRect } from '../hooks/useRect'
-import useThrottle from '../hooks/useThrottle'
-import useWindowLoad from '../hooks/useWindowLoad'
-import useWindowResize from '../hooks/useWindowResize'
-import DebounceShowcase from '../components/blocks/Debounce'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -40,7 +39,6 @@ export default function Dashboard() {
   const isFirstMount = useFirstMountState()
   const [title, setTitle] = useState<string>('')
   const [queryString, setQueryString] = useState<string>('')
-  const isMatch = useMediaQuery(queryString)
   const isTouchDevice = useIsTouchDevice()
   const orientation = useOrientation()
   const isClient = useIsClient()
@@ -210,7 +208,7 @@ export default function Dashboard() {
                     message="This preview is under construction."
                   />
                 </div>
-               <DebounceShowcase />
+                <DebounceShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useDebug"

@@ -1,4 +1,4 @@
-import { useFirstMountState } from '../../hooks/useFirstMountState'
+import { useFirstMountState } from '@hooks/useFirstMountState'
 
 export default function FirstMountState() {
   const isFirstMount = useFirstMountState()

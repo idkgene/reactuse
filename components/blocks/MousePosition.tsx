@@ -1,4 +1,4 @@
-import useMousePosition from '../../hooks/useMousePosition'
+import useMousePosition from '@hooks/useMousePosition'
 
 export default function MousePositionShowcase() {
   const position = useMousePosition()

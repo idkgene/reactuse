@@ -1,4 +1,4 @@
-import { useIdle } from '../../hooks/useIdle'
+import { useIdle } from '@hooks/useIdle'
 
 export default function IdleShowcase() {
   const isIdle = useIdle(60000) // 1 minute
