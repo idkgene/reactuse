@@ -13,8 +13,6 @@ import { useFirstMountState } from '@hooks/useFirstMountState'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
 import { useIsClient } from '@hooks/useIsClient'
 import { useIsTouchDevice } from '@hooks/useIsTouchDevice'
-import { useIsVisible } from '@hooks/useIsVisible'
-import useKeySequence from '@hooks/useKeySequence'
 import { useOrientation } from '@hooks/useOrientation'
 import { usePageLeave } from '@hooks/usePageLeave'
 import { useRect } from '@hooks/useRect'
@@ -38,7 +36,9 @@ import FoucFixShowcase from '../components/blocks/FoucFix'
 import GeolocationShowcase from '../components/blocks/Geolocation'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
 import IntervalShowcase from '../components/blocks/Interval'
+import IsVisibleShowcase from '../components/blocks/IsVisible'
 import IsomorphicLayoutEffect from '../components/blocks/IsomorphicLayoutEffect'
+import KeySequenceShowcase from '../components/blocks/KeySequence'
 import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
@@ -66,8 +66,6 @@ export default function Dashboard() {
   const entry = useIntersectionObserver(observerRef, {
     threshold: 0.5,
   })
-  const [count, setCount] = useState(0)
-  const { setRef, inView } = useIsVisible({ threshold: 1 })
   const targetRef = useRef<HTMLDivElement>(null)
   const rect = useRect(targetRef)
   const [isResizing, setIsResizing] = useState<boolean>(false)
@@ -123,17 +121,6 @@ export default function Dashboard() {
     }
   }, [isResizing, rect, targetRef])
 
-  const KeySequenceTester = () => {
-    useKeySequence({
-      sequence: 'xd',
-      callback: () => {
-        alert('Key sequence detected!')
-        console.log('Key sequence detected!')
-      },
-      eventType: 'keydown',
-      keystrokeDelay: 1000,
-    })
-  }
   return (
     <div className="grid h-screen w-full pl-[53px]">
       <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
@@ -309,40 +296,8 @@ export default function Dashboard() {
                     )}
                   </div>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIsVisible"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIsVisible
-                  </h2>
-                  <div
-                    ref={setRef}
-                    className="py-6 text-center border-2 border-dashed rounded-lg"
-                  >
-                    {inView ? (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        ✅ The heading is current in view!
-                      </p>
-                    ) : (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        ❌ The heading is not in view
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useKeySequence"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useKeySequence
-                  </h2>
-                  <div>
-                    Press <kbd>h</kbd> then <kbd>e</kbd> then <kbd>l</kbd> then{' '}
-                    <kbd>l</kbd> then <kbd>o</kbd> to trigger the alert.
-                  </div>
-                </div>
+                <IsVisibleShowcase />
+                <KeySequenceShowcase />
                 <ListShowcase />
                 <MediaQueryShowcase />
               </fieldset>
