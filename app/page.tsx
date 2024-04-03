@@ -41,6 +41,7 @@ import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
+import UpdateEffectShowcase from '../components/blocks/UpdateEffect'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -494,18 +495,7 @@ export default function Dashboard() {
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useUpdateEffect"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useUpdateEffect
-                  </h2>
-                  <Alert
-                    id="useUpdateEffect"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <UpdateEffectShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useWindowLoad"
