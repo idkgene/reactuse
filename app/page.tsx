@@ -36,6 +36,7 @@ import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
 import IntervalShowcase from '../components/blocks/Interval'
 import ListShowcase from '../components/blocks/List'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
+import MediaQueryShowcase from '../components/blocks/MediaQuery'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -398,18 +399,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <ListShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useMediaQuery"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useMediaQuery
-                  </h2>
-                  <Alert
-                    id="useMediaQuery"
-                    message="This preview is under construction."
-                  />
-                </div>
+               <MediaQueryShowcase />
               </fieldset>
             </form>
           </div>
