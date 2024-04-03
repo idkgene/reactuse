@@ -32,6 +32,7 @@ import HoverShowase from '@ui-showcase/Hover'
 import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
+import SessioStorageShowcase from '../components/blocks/SessionStorage'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -571,18 +572,7 @@ export default function Dashboard() {
                   />
                 </div>
 
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useSessionStorage"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useSessionStorage
-                  </h2>
-                  <Alert
-                    id="useSessionStorage"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <SessioStorageShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useThrottle"
