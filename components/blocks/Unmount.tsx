@@ -1,4 +1,4 @@
-import useUnmount from '../../hooks/useUnmout';
+import useUnmount from '@/hooks/useUnmout';
 
 export default function UnmountShowcase() {
   useUnmount(() => {

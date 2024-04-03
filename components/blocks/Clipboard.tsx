@@ -1,5 +1,7 @@
+import { useCopyToClipBoard } from '@hooks/useClipboard';
+import { Button } from '@ui-components/button';
+import { Input } from '@ui-components/input';
 import React from 'react';
-import { useCopyToClipBoard } from '../../hooks/useClipboard';
 
 export default function ClipboardShowcase() {
   const [inputText, setInputText] = React.useState<string>('');
@@ -23,8 +25,8 @@ export default function ClipboardShowcase() {
         >
           useClipboard
         </h2>
-        <input type="text" value={inputText} onChange={handleInputChange} />
-      <button onClick={handleCopy}>Copy Text</button>
+        <Input type="text" value={inputText} onChange={handleInputChange} />
+      <Button onClick={handleCopy}>Copy Text</Button>
       {copiedText && <p>Copied Text: {copiedText}</p>}
       </div>
     </>

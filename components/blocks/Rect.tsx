@@ -1,5 +1,5 @@
+import { useRect } from '@/hooks/useRect'
 import { useEffect, useRef, useState } from 'react'
-import { useRect } from '../../hooks/useRect'
 
 export default function RectShowcase() {
   const targetRef = useRef<HTMLDivElement>(null)

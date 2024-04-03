@@ -1,4 +1,4 @@
-import { useNetworkState } from '../../hooks/useNetworkState'
+import { useNetworkState } from '@/hooks/useNetworkState'
 
 export default function NetworkState() {
   const networkState = useNetworkState()

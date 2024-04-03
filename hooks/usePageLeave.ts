@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { off, on } from '../utils/utils'
+import { off, on } from '@/utils/utils'
 
 type Handler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 

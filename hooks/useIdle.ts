@@ -4,8 +4,8 @@
  * @returns {boolean} A boolean indicating whether the user is currently idle.
  */
 
+import { throttle } from '@/utils/utils';
 import { useEffect, useState } from 'react';
-import { throttle } from '../utils/utils';
 
 export function useIdle(ms = 1000 * 60) {
   const [idle, setIdle] = useState(false)

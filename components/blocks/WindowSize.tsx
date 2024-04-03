@@ -1,4 +1,4 @@
-import { useWindowSize } from '../../hooks/useWindowSize'
+import { useWindowSize } from '@/hooks/useWindowSize'
 
 export default function WindowSizeShowcase() {
   const windowSize = useWindowSize()
