@@ -2,8 +2,6 @@ import { useEffect, useRef } from 'react';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 /**
- * A React hook that adds an event listener to a specified target element or window.
- *
  * @module useEventListener
  * @template K - The event name type.
  * @template T - The target element type.
@@ -23,24 +21,18 @@ export function useEventListener<
   element?: React.RefObject<T>,
   options?: boolean | AddEventListenerOptions
 ) {
-  // Use a ref to store the latest handler function
   const handlerRef = useRef(handler);
 
-  // Update the handler ref whenever the handler function changes
   useIsomorphicLayoutEffect(() => {
     handlerRef.current = handler;
   }, [handler]);
 
   useEffect(() => {
-    // Get the target element from the ref or default to the window
     const targetElement: T | Window = element?.current ?? window;
 
-    // Check if the target element has the addEventListener method
     if (targetElement && typeof targetElement.addEventListener === 'function') {
-      // Add the event listener to the target element
       targetElement.addEventListener(eventName, handlerRef.current, options);
 
-      // Return a cleanup function to remove the event listener on component unmount
       return () => {
         targetElement.removeEventListener(eventName, handlerRef.current, options);
       };
