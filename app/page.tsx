@@ -8,7 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { useEffectOnce } from '@hooks/useEffectOnce'
 import { useFirstMountState } from '@hooks/useFirstMountState'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
@@ -25,17 +24,18 @@ import useWindowLoad from '@hooks/useWindowLoad'
 import useWindowResize from '@hooks/useWindowResize'
 import Alert from '@ui-components/alert'
 import { Input } from '@ui-components/input'
+import ClipboardShowcase from '@ui-showcase/Clipboard'
 import DebounceShowcase from '@ui-showcase/Debounce'
+import DebugShowcase from '@ui-showcase/Debug'
+import DocumentReadyShowCase from '@ui-showcase/DocumentReady'
 import HoverShowase from '@ui-showcase/Hover'
 import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
-import DebugShowcase from '../components/blocks/Debug'
-import DocumentReadyShowCase from '../components/blocks/DocumentReady'
+import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
   const isFirstMount = useFirstMountState()
-  const [title, setTitle] = useState<string>('')
   const [queryString, setQueryString] = useState<string>('')
   const isTouchDevice = useIsTouchDevice()
   const orientation = useOrientation()
@@ -55,8 +55,6 @@ export default function Dashboard() {
   const targetRef = useRef<HTMLDivElement>(null)
   const rect = useRect(targetRef)
   const [isResizing, setIsResizing] = useState<boolean>(false)
-
-  useDocumentTitle(title)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
@@ -194,41 +192,11 @@ export default function Dashboard() {
                 <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 1
                 </legend>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useDeboune"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useClipboard
-                  </h2>
-                  <Alert
-                    id="useClipboard"
-                    message="This preview is under construction."
-                  />
-                </div>
+                <ClipboardShowcase />
                 <DebounceShowcase />
                 <DebugShowcase />
                 <DocumentReadyShowCase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useDocumentTitle"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useDocumentTitle
-                  </h2>
-                  <Input
-                    type="text"
-                    className="mt-3"
-                    value={title}
-                    onChange={handleChange}
-                    maxLength={15}
-                    id="useDocumentTitle"
-                    placeholder="Enter a new document title"
-                  />
-                  <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Current document title: {title}
-                  </p>
-                </div>
+                <DocumentTitleShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useDrag"
