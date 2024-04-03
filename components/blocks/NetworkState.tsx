@@ -1,6 +1,8 @@
-import Alert from "@ui-components/alert"
+import { useNetworkState } from '../../hooks/useNetworkState'
 
 export default function NetworkState() {
+  const networkState = useNetworkState()
+
   return (
     <>
       <div className="grid gap-3 p-4 border rounded-lg">
@@ -10,10 +12,11 @@ export default function NetworkState() {
         >
           useNetworkState
         </h2>
-        <Alert
-          id="useNetworkState"
-          message="This preview is under construction."
-        />
+        <div>
+          <p>Online: {networkState.online ? 'Yes' : 'No'}</p>
+          <p>Speed: {networkState.speed}</p>
+          <p>Type: {networkState.type}</p>
+        </div>
       </div>
     </>
   )
