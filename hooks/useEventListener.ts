@@ -13,14 +13,6 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
  * @param {boolean | AddEventListenerOptions} [options] - Optional options to pass to the addEventListener method.
  * @returns {void}
  *
- * @example
- * // Listen for click events on a button
- * const buttonRef = useRef<HTMLButtonElement>(null);
- * useEventListener('click', handleClick, buttonRef);
- *
- * @example
- * // Listen for resize events on the window
- * useEventListener('resize', handleResize);
  */
 export function useEventListener<
   K extends keyof WindowEventMap | keyof HTMLElementEventMap | keyof MediaQueryListEventMap,

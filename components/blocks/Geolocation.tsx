@@ -1,6 +1,19 @@
-import Alert from '@ui-components/alert'
+import { useGeolocation } from '@hooks/useGeolocation'
 
 export default function GeolocationShowcase() {
+  const {
+    loading,
+    accuracy,
+    altitude,
+    altitudeAccuracy,
+    heading,
+    latitude,
+    longitude,
+    speed,
+    timestamp,
+    error,
+  } = useGeolocation()
+
   return (
     <>
       <div className="grid gap-3 p-4 border rounded-lg">
@@ -10,10 +23,22 @@ export default function GeolocationShowcase() {
         >
           useGeolocation
         </h2>
-        <Alert
-          id="useGeolocation"
-          message="This preview is under construction."
-        />
+        {loading ? (
+          <p>Loading geolocation data...</p>
+        ) : error ? (
+          <p>Error: {error.message}</p>
+        ) : (
+          <div>
+            <p>Accuracy: {accuracy}</p>
+            <p>Altitude: {altitude}</p>
+            <p>Altitude Accuracy: {altitudeAccuracy}</p>
+            <p>Heading: {heading}</p>
+            <p>Latitude: {latitude}</p>
+            <p>Longitude: {longitude}</p>
+            <p>Speed: {speed}</p>
+            <p>Timestamp: {timestamp}</p>
+          </div>
+        )}
       </div>
     </>
   )
