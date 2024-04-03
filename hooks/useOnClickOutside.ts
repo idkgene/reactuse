@@ -12,7 +12,7 @@ import { RefObject } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * A utility type representing a function that handles mouse events.
+ * 
  *
  * @typedef {(event: MouseEvent) => void} Handler
   */
