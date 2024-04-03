@@ -40,6 +40,7 @@ import IsomorphicLayoutEffect from '../components/blocks/IsomorphicLayoutEffect'
 import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
+import ScriptShowcase from '../components/blocks/Script'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
 import UnmountShowcase from '../components/blocks/Unmount'
 import UpdateEffectShowcase from '../components/blocks/UpdateEffect'
@@ -454,19 +455,7 @@ export default function Dashboard() {
                 <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 6
                 </legend>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useScript"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useScript
-                  </h2>
-                  <Alert
-                    id="useScript"
-                    message="This preview is under construction."
-                  />
-                </div>
-
+                <ScriptShowcase />
                 <SessioStorageShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
