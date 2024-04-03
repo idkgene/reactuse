@@ -8,25 +8,23 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useFirstMountState } from '@hooks/useFirstMountState'
-import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
-import useThrottle from '@hooks/useThrottle'
-import { Input } from '@ui-components/input'
 import ClipboardShowcase from '@ui-showcase/Clipboard'
 import DebounceShowcase from '@ui-showcase/Debounce'
 import DebugShowcase from '@ui-showcase/Debug'
 import DocumentReadyShowCase from '@ui-showcase/DocumentReady'
 import HoverShowase from '@ui-showcase/Hover'
 import MousePositionShowcase from '@ui-showcase/MousePosition'
-import { useEffect, useRef, useState } from 'react'
 import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
 import DragShowcase from '../components/blocks/Drag'
 import FaviconShowcase from '../components/blocks/Favicon'
 import FetchShowcase from '../components/blocks/Fetch'
+import FirstMountStateShowcase from '../components/blocks/FirstMountState'
 import FoucFixShowcase from '../components/blocks/FoucFix'
 import GeolocationShowcase from '../components/blocks/Geolocation'
+import HooksBlock from '../components/blocks/HooksBlock'
 import IOSToolbarStateShowcase from '../components/blocks/IOSToolbarState'
+import IntersectionObserverShowcase from '../components/blocks/IntersectionObserver'
 import IntervalShowcase from '../components/blocks/Interval'
 import IsTouchDeviceShowcase from '../components/blocks/IsTouchDevice'
 import IsVisibleShowcase from '../components/blocks/IsVisible'
@@ -41,6 +39,7 @@ import PageLeaveShowcase from '../components/blocks/PageLeave'
 import RectShowcase from '../components/blocks/Rect'
 import ScriptShowcase from '../components/blocks/Script'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
+import ThrottleShowcase from '../components/blocks/Throttle'
 import UnmountShowcase from '../components/blocks/Unmount'
 import UpdateEffectShowcase from '../components/blocks/UpdateEffect'
 import UseEffectOnceShowcase from '../components/blocks/UseEffectOnce'
@@ -49,25 +48,6 @@ import WindowResizeShowcase from '../components/blocks/WindowResize'
 import WindowSizeShowcase from '../components/blocks/WindowSize'
 
 export default function Dashboard() {
-  const [inputValue, setInputValue] = useState<string>('')
-  const isFirstMount = useFirstMountState()
-  const throttledValue = useThrottle(inputValue, 500)
-  const [value, setValue] = useState<string>('')
-  const observerRef = useRef<HTMLDivElement>(null)
-  const entry = useIntersectionObserver(observerRef, {
-    threshold: 0.5,
-  })
-
-  useEffect(() => {
-    console.log('Throttled value:', throttledValue)
-  }, [throttledValue])
-
-  useEffect(() => {
-    if (entry) {
-      console.log(`Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
-    }
-  }, [entry])
-
   return (
     <div className="grid h-screen w-full pl-[53px]">
       <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
@@ -128,147 +108,60 @@ export default function Dashboard() {
       <div className="flex flex-col">
         {/* Need to implement the drawer component to make this page responsive */}
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-base font-medium">
-                  Hooks Block 1
-                </legend>
-                <ClipboardShowcase />
-                <DebounceShowcase />
-                <DebugShowcase />
-                <DocumentReadyShowCase />
-                <DocumentTitleShowcase />
-                <DragShowcase />
-              </fieldset>
-            </form>
-          </div>
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-base font-medium">
-                  Hooks Block 2
-                </legend>
-                <UseEffectOnceShowcase />
-                <FaviconShowcase />
-                <FetchShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useFirstMountState"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useFirstMountState
-                  </h2>
-                  <div>
-                    {isFirstMount ? (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        🥇 First render
-                      </p>
-                    ) : (
-                      <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        🔜 Subsequent render
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <FoucFixShowcase />
-                <GeolocationShowcase />
-              </fieldset>
-            </form>
-          </div>
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-base font-medium">
-                  Hooks Block 3
-                </legend>
-                <HoverShowase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useIntersectionObserver"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useIntersectionObserver
-                  </h2>
-                  <div
-                    ref={observerRef}
-                    className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    <p>
-                      ⬇️ Scroll this element into view to see it logged to the
-                      console. l this element into view to see it logged to the
-                      console.
-                    </p>
-                  </div>
-                </div>
-                <IntervalShowcase />
-                <IOSToolbarStateShowcase />
-                <ClientShowcase />
-              </fieldset>
-            </form>
-          </div>
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-base font-medium">
-                  Hooks Block 4
-                </legend>
-                <IsomorphicLayoutEffect />
-                <IsTouchDeviceShowcase />
-                <IsVisibleShowcase />
-                <KeySequenceShowcase />
-                <ListShowcase />
-                <MediaQueryShowcase />
-              </fieldset>
-            </form>
-          </div>
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-base font-medium">
-                  Hooks Block 5
-                </legend>
-                <MousePositionShowcase />
-                <NetworkState />
-                <OnClickOutsideShowcase />
-                <OrientationShowcase />
-                <PageLeaveShowcase />
-                <RectShowcase />
-              </fieldset>
-            </form>
-          </div>
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-base font-medium">
-                  Hooks Block 6
-                </legend>
-                <ScriptShowcase />
-                <SessioStorageShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useThrottle"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useThrottle
-                  </h2>
-                  <div>
-                    <Input
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Type your value"
-                    />
-                  </div>
-                </div>
-                <UnmountShowcase />
-                <UpdateEffectShowcase />
-                <WindowLoadShowcase />
-                <WindowResizeShowcase />
-                <WindowSizeShowcase />
-              </fieldset>
-            </form>
-          </div>
+          <HooksBlock title="Hooks Block">
+            <ClipboardShowcase />
+            <DebounceShowcase />
+            <DebugShowcase />
+            <DocumentReadyShowCase />
+            <DocumentTitleShowcase />
+            <DragShowcase />
+          </HooksBlock>
+
+          <HooksBlock title="Hooks Block 2">
+            <UseEffectOnceShowcase />
+            <FaviconShowcase />
+            <FetchShowcase />
+            <FirstMountStateShowcase />
+            <FoucFixShowcase />
+            <GeolocationShowcase />
+          </HooksBlock>
+
+          <HooksBlock title="Hooks Block 3">
+            <HoverShowase />
+            <IntersectionObserverShowcase />
+            <IntervalShowcase />
+            <IOSToolbarStateShowcase />
+            <ClientShowcase />
+          </HooksBlock>
+
+          <HooksBlock title="Hooks Block 4">
+            <IsomorphicLayoutEffect />
+            <IsTouchDeviceShowcase />
+            <IsVisibleShowcase />
+            <KeySequenceShowcase />
+            <ListShowcase />
+            <MediaQueryShowcase />
+          </HooksBlock>
+
+          <HooksBlock title="Hooks Block 5">
+            <MousePositionShowcase />
+            <NetworkState />
+            <OnClickOutsideShowcase />
+            <OrientationShowcase />
+            <PageLeaveShowcase />
+            <RectShowcase />
+          </HooksBlock>
+
+          <HooksBlock title="Hooks Block 6">
+            <ScriptShowcase />
+            <SessioStorageShowcase />
+            <ThrottleShowcase />
+            <UnmountShowcase />
+            <UpdateEffectShowcase />
+            <WindowLoadShowcase />
+            <WindowResizeShowcase />
+            <WindowSizeShowcase />
+          </HooksBlock>
         </main>
       </div>
     </div>

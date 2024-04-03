@@ -1,6 +1,6 @@
 import { useFirstMountState } from '@hooks/useFirstMountState'
 
-export default function FirstMountState() {
+export default function FirstMountStateShowcase() {
   const isFirstMount = useFirstMountState()
   return (
     <>

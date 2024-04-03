@@ -1,11 +1,17 @@
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function IntersectionObserverShowcase() {
   const observerRef = useRef<HTMLDivElement>(null)
   const entry = useIntersectionObserver(observerRef, {
     threshold: 0.5,
   })
+
+  useEffect(() => {
+    if (entry) {
+      console.log(`Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
+    }
+  }, [entry])
 
   return (
     <>
