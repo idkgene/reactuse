@@ -1,12 +1,53 @@
-// There's some dumb stuff hapenning here, gotta read about the connection thing to fix it
-// So that the hook would work normally as expected as it should be, not how I see with the warnings and all that crap
+
 import { useEffect, useState } from 'react'
 
+/**
+ * Represents the current network state.
+ *
+ * @interface NetworkState
+ * @property {boolean} online - Whether the device is online or offline.
+ * @property {number} speed - The current network download speed in Mbps.
+ * @property {string} type - The current network connection type (e.g., 'wifi', '4g', '3g', 'unknown').
+ */
 interface NetworkState {
   online: boolean
   speed: number
   type: string
 }
+
+/**
+ * Extends the Navigator interface with additional properties related to the network connection.
+ *
+ * @interface NavigatorConnection
+ * @extends Navigator
+ * @property {object} connection - Information about the current network connection.
+ * @property {number} connection.downlink - The current download speed in Mbps.
+ * @property {string} connection.effectiveType - The current network connection type.
+ * @property {function} [connection.onchange] - A callback function that is called when the network connection changes.
+ * @property {function} connection.addEventListener - Adds an event listener for network connection changes.
+ * @property {function} connection.removeEventListener - Removes an event listener for network connection changes.
+ */
+interface NavigatorConnection extends Navigator {
+  connection?: {
+    downlink: number
+    effectiveType: string
+    onchange?: () => void
+    addEventListener: (event: string, listener: () => void) => void
+    removeEventListener: (event: string, listener: () => void) => void
+  }
+}
+
+/**
+ * Custom hook that provides the current network state.
+ *
+ * @returns {NetworkState} An object representing the current network state.
+ *
+ * @example
+ * const { online, speed, type } = useNetworkState();
+ * console.log(`Online: ${online}`);
+ * console.log(`Connection speed: ${speed} Mbps`);
+ * console.log(`Connection type: ${type}`);
+ */
 
 export function useNetworkState(): NetworkState {
   const [networkState, setNetworkState] = useState<NetworkState>(() => ({
@@ -22,11 +63,11 @@ export function useNetworkState(): NetworkState {
         online: navigator.onLine,
         speed:
           'connection' in navigator
-            ? (navigator as any).connection?.downlink || 0
+            ? (navigator as NavigatorConnection).connection?.downlink || 0
             : 0,
         type:
           'connection' in navigator
-            ? (navigator as any).connection?.effectiveType || 'unknown'
+            ? (navigator as NavigatorConnection).connection?.effectiveType || 'unknown'
             : 'unknown',
       }))
     }
@@ -46,7 +87,7 @@ export function useNetworkState(): NetworkState {
       window.addEventListener('offline', handleOffline)
 
       if ('connection' in navigator) {
-        ;(navigator as any).connection.addEventListener(
+        (navigator as NavigatorConnection).connection?.addEventListener(
           'change',
           updateNetworkState,
         )
@@ -57,7 +98,7 @@ export function useNetworkState(): NetworkState {
         window.removeEventListener('offline', handleOffline)
 
         if ('connection' in navigator) {
-          ;(navigator as any).connection.removeEventListener(
+          (navigator as NavigatorConnection).connection?.removeEventListener(
             'change',
             updateNetworkState,
           )
