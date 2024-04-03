@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react'
 
 type WindowSize = {
-  innerWidth: number;
-  innerHeight: number;
-  outerWidth: number;
-  outerHeight: number;
-};
+  innerWidth: number
+  innerHeight: number
+  outerWidth: number
+  outerHeight: number
+}
 
 /**
  * Custom React hook that tracks and returns the window's inner and outer dimensions on resize.
@@ -21,7 +21,7 @@ const useWindowResize = () => {
         innerHeight: window.innerHeight,
         outerWidth: window.outerWidth,
         outerHeight: window.outerHeight,
-      };
+      }
     }
     // Return default values for non-browser environments
     return {
@@ -29,8 +29,8 @@ const useWindowResize = () => {
       innerHeight: 0,
       outerWidth: 0,
       outerHeight: 0,
-    };
-  });
+    }
+  })
 
   // Memoized callback function to handle the window resize event
   const handleResize = useCallback(() => {
@@ -41,24 +41,26 @@ const useWindowResize = () => {
         innerHeight: window.innerHeight,
         outerWidth: window.outerWidth,
         outerHeight: window.outerHeight,
-      });
+      })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     // Check if the window object is available (browser environment)
     if (typeof window !== 'undefined') {
       // Attach the resize event listener
-      window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize)
 
       // Clean up the event listener on component unmount
       return () => {
-        window.removeEventListener('resize', handleResize);
-      };
+        window.removeEventListener('resize', handleResize)
+      }
     }
-  }, [handleResize]);
+  }, [handleResize])
 
-  return windowSize;
-};
+  return windowSize
+}
 
-export default useWindowResize;
+export default typeof window !== 'undefined'
+  ? useWindowResize
+  : () => ({ innerWidth: 0, innerHeight: 0, outerWidth: 0, outerHeight: 0 })

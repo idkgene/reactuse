@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useEffect, useRef, useState } from 'react'
+import MousePositionShowcase from '../components/blocks/seMousePosition'
 import Alert from '../components/ui/alert'
 import { Input } from '../components/ui/input'
 import { useDebounce } from '../hooks/useDebounce'
@@ -621,22 +622,7 @@ export default function Dashboard() {
                 <legend className="-ml-1 px-1 text-base font-medium">
                   Hooks Block 5
                 </legend>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useMousePosition"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useMousePosition
-                  </h2>
-                  <div
-                    id="useMousePosition"
-                    className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    <p>
-                      X: {position.x}, Y: {position.y}
-                    </p>
-                  </div>
-                </div>
+                <MousePositionShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useNetworkState"
@@ -680,13 +666,10 @@ export default function Dashboard() {
                   >
                     usePageLeave
                   </h2>
-                  <div>
-                    <p>{userStatus}</p>
-                    <p>
-                      Click outside of this page to trigger the `usePageLeave`
-                      hook.
-                    </p>
-                  </div>
+                  <Alert
+                    id="usePageLeave"
+                    message="This section is under construction"
+                  />
                 </div>
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
