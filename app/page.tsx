@@ -40,6 +40,7 @@ import IsomorphicLayoutEffect from '../components/blocks/IsomorphicLayoutEffect'
 import ListShowcase from '../components/blocks/List'
 import MediaQueryShowcase from '../components/blocks/MediaQuery'
 import NetworkState from '../components/blocks/NetworkState'
+import PageLeaveShowcase from '../components/blocks/PageLeave'
 import ScriptShowcase from '../components/blocks/Script'
 import SessioStorageShowcase from '../components/blocks/SessionStorage'
 import UnmountShowcase from '../components/blocks/Unmount'
@@ -409,18 +410,7 @@ export default function Dashboard() {
                     <p>Current type: {orientation.type}</p>
                   </div>
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="usePageLeave"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    usePageLeave
-                  </h2>
-                  <Alert
-                    id="usePageLeave"
-                    message="This section is under construction"
-                  />
-                </div>
+                <PageLeaveShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useRect"
