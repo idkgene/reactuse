@@ -13,7 +13,6 @@ import HoverShowase from '../components/blocks/Hover'
 import MousePositionShowcase from '../components/blocks/MousePosition'
 import Alert from '../components/ui/alert'
 import { Input } from '../components/ui/input'
-import { useDebounce } from '../hooks/useDebounce'
 import { useDebug } from '../hooks/useDebug'
 import { useDocumentReadyState } from '../hooks/useDocumentReadyState'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
@@ -32,10 +31,10 @@ import { useRect } from '../hooks/useRect'
 import useThrottle from '../hooks/useThrottle'
 import useWindowLoad from '../hooks/useWindowLoad'
 import useWindowResize from '../hooks/useWindowResize'
+import DebounceShowcase from '../components/blocks/Debounce'
 
 export default function Dashboard() {
   const [inputValue, setInputValue] = useState<string>('')
-  const debouncedValue = useDebounce(inputValue, 500)
   const isDebugMode = useDebug()
   const readyState = useDocumentReadyState()
   const isFirstMount = useFirstMountState()
@@ -211,29 +210,7 @@ export default function Dashboard() {
                     message="This preview is under construction."
                   />
                 </div>
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useDeboune"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useDebounce
-                  </h2>
-                  <Input
-                    className="mt-3"
-                    type="text"
-                    id="useDebounce"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Type something"
-                    aria-describedby="debouncedValue"
-                  />
-                  <p
-                    id="debouncedValue"
-                    className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Debounced value: {debouncedValue}
-                  </p>
-                </div>
+               <DebounceShowcase />
                 <div className="grid gap-3 p-4 border rounded-lg">
                   <h2
                     id="useDebug"
