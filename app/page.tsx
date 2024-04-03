@@ -21,7 +21,6 @@ import { useRect } from '@hooks/useRect'
 import useThrottle from '@hooks/useThrottle'
 import useWindowLoad from '@hooks/useWindowLoad'
 import useWindowResize from '@hooks/useWindowResize'
-import Alert from '@ui-components/alert'
 import { Input } from '@ui-components/input'
 import ClipboardShowcase from '@ui-showcase/Clipboard'
 import DebounceShowcase from '@ui-showcase/Debounce'
@@ -32,6 +31,7 @@ import MousePositionShowcase from '@ui-showcase/MousePosition'
 import { useEffect, useRef, useState } from 'react'
 import ClientShowcase from '../components/blocks/Client'
 import DocumentTitleShowcase from '../components/blocks/DocumentTitle'
+import DragShowcase from '../components/blocks/Drag'
 import FaviconShowcase from '../components/blocks/Favicon'
 import FetchShowcase from '../components/blocks/Fetch'
 import FoucFixShowcase from '../components/blocks/FoucFix'
@@ -205,18 +205,7 @@ export default function Dashboard() {
                 <DebugShowcase />
                 <DocumentReadyShowCase />
                 <DocumentTitleShowcase />
-                <div className="grid gap-3 p-4 border rounded-lg">
-                  <h2
-                    id="useDrag"
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    useDrag
-                  </h2>
-                  <Alert
-                    id="useDrag"
-                    message="This preview is under construction"
-                  />
-                </div>
+                <DragShowcase />
               </fieldset>
             </form>
           </div>
