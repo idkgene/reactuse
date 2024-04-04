@@ -24,9 +24,9 @@ export default function GeolocationShowcase() {
           useGeolocation
         </h2>
         {loading ? (
-          <p>Loading geolocation data...</p>
+          <p>◌ Loading geolocation data...</p>
         ) : error ? (
-          <p>Error: {error.message}</p>
+          <p>⚠️ Error: {error.message}</p>
         ) : (
           <div>
             <p>Accuracy: {accuracy}</p>

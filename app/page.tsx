@@ -117,44 +117,35 @@ export default function Dashboard() {
             <DocumentReadyShowCase />
             <DocumentTitleShowcase />
             <DragShowcase />
-          </HooksBlock>
-
-          <HooksBlock title="Hooks Block 2">
             <UseEffectOnceShowcase />
             <FaviconShowcase />
             <FetchShowcase />
             <FirstMountStateShowcase />
             <FoucFixShowcase />
             <GeolocationShowcase />
+            <HoverShowase />
           </HooksBlock>
 
-          <HooksBlock title="Hooks Block 3">
-            <HoverShowase />
+          <HooksBlock title="Hooks Block 2">
             <IntersectionObserverShowcase />
             <IntervalShowcase />
             <IOSToolbarStateShowcase />
             <ClientShowcase />
-          </HooksBlock>
-
-          <HooksBlock title="Hooks Block 4">
             <IsomorphicLayoutEffect />
             <IsTouchDeviceShowcase />
             <IsVisibleShowcase />
             <KeySequenceShowcase />
             <ListShowcase />
             <MediaQueryShowcase />
-          </HooksBlock>
-
-          <HooksBlock title="Hooks Block 5">
             <MousePositionShowcase />
             <NetworkState />
             <OnClickOutsideShowcase />
+          </HooksBlock>
+
+          <HooksBlock title="Hooks Block 3">
             <OrientationShowcase />
             <PageLeaveShowcase />
             <RectShowcase />
-          </HooksBlock>
-
-          <HooksBlock title="Hooks Block 6">
             <ScriptShowcase />
             <SessioStorageShowcase />
             <ThrottleShowcase />
@@ -162,8 +153,9 @@ export default function Dashboard() {
             <UpdateEffectShowcase />
             <WindowLoadShowcase />
             <WindowResizeShowcase />
-            <WindowSizeShowcase />
+            <WindowSizeShowcase />          
           </HooksBlock>
+
         </main>
       </div>
     </div>

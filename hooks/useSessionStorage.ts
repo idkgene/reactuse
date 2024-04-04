@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export type InitialValueType = string | number | boolean | object | null | any
+export type InitialValueType = string | number | boolean | object | null
 export type StoredValue = InitialValueType
 export type SetValue = (
   value: InitialValueType | ((val: InitialValueType) => InitialValueType),
