@@ -21,6 +21,23 @@ interface UseFetchResult<TData> {
   refetch: () => void
 }
 
+/**
+ * @param url - The URL to fetch data from.
+ * @param options - An optional object containing configuration options for the fetch operation.
+ * @param options.library - The HTTP client library to use for the fetch operation. Can be 'axios', 'ky', 'fetch', or 'react-query'. Defaults to 'axios'.
+ * @param options.queryKey - The query key to use when using the 'react-query' library. Required when using 'react-query'.
+ * @param options.queryFn - The query function to use when using the 'react-query' library. Required when using 'react-query'.
+ * @param options.axiosOptions - An object containing options to be passed to the Axios library when using the 'axios' library.
+ * @param options.kyOptions - An object containing options to be passed to the Ky library when using the 'ky' library.
+ * @param options.fetchOptions - An object containing options to be passed to the Fetch API when using the 'fetch' library.
+ *
+ * @returns An object with the following properties:
+ * - `data`: The fetched data, or `undefined` if the fetch operation is still in progress or has failed.
+ * - `loading`: A boolean indicating whether the fetch operation is still in progress.
+ * - `error`: An `Error` object if the fetch operation has failed, or `null` otherwise.
+ * - `refetch`: A function that can be called to refetch the data.
+ */
+
 export function useFetch<TData = unknown>(
   url: string,
   options: UseFetchOptions<TData> = {},
