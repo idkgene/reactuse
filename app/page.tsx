@@ -15,7 +15,6 @@ import {
   DocumentTitleShowcase,
   DragShowcase,
   FaviconShowcase,
-  FetchShowcase,
   FirstMountStateShowcase,
   GeolocationShowcase,
   HooksBlock,
@@ -122,7 +121,7 @@ export default function Dashboard() {
                 <DragShowcase />
                 <UseEffectOnceShowcase />
                 <FaviconShowcase />
-                <FetchShowcase />
+                {/* <FetchShowcase /> */}
                 <FirstMountStateShowcase />
                 <GeolocationShowcase />
                 <HoverShowase />
