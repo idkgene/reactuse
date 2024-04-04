@@ -1,78 +1,132 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+// # todo fix the positioning of the clicked element
+
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
 interface DragOptions {
-  onDragStart?: (event: MouseEvent | TouchEvent) => void;
-  onDrag?: (event: MouseEvent | TouchEvent) => void;
-  onDragEnd?: (event: MouseEvent | TouchEvent) => void;
+  onDragStart?: (
+    event: MouseEvent | TouchEvent,
+    position: { x: number; y: number },
+  ) => void
+  onDrag?: (
+    event: MouseEvent | TouchEvent,
+    position: { x: number; y: number },
+  ) => void
+  onDragEnd?: (
+    event: MouseEvent | TouchEvent,
+    position: { x: number; y: number },
+  ) => void
 }
 
 interface DragResult {
-  isDragging: boolean;
-  dragRef: RefObject<HTMLDivElement>;
+  isDragging: boolean
+  dragRef: RefObject<HTMLDivElement>
+  position: { x: number; y: number }
 }
 
 export function useDrag(options: DragOptions = {}): DragResult {
-  const { onDragStart, onDrag, onDragEnd } = options;
-  const dragRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const { onDragStart, onDrag, onDragEnd } = options
+  const dragRef = useRef<HTMLDivElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+
+  const handleMouseDown = useCallback(
+    (event: MouseEvent) => {
+      if (event.button !== 0) return // Left mouse button is 0
+      setIsDragging(true)
+      setPosition({ x: event.clientX, y: event.clientY })
+      onDragStart?.(event, { x: event.clientX, y: event.clientY })
+    },
+    [onDragStart],
+  )
+
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      if (!isDragging) return
+      setPosition({ x: event.clientX, y: event.clientY })
+      onDrag?.(event, { x: event.clientX, y: event.clientY })
+    },
+    [isDragging, onDrag],
+  )
+
+  const handleMouseUp = useCallback(
+    (event: MouseEvent) => {
+      if (event.button !== 0) return
+      setIsDragging(false)
+      onDragEnd?.(event, { x: event.clientX, y: event.clientY })
+    },
+    [onDragEnd],
+  )
+
+  const handleTouchStart = useCallback(
+    (event: TouchEvent) => {
+      setIsDragging(true)
+      setPosition({ x: event.touches[0].clientX, y: event.touches[0].clientY })
+      onDragStart?.(event, {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      })
+    },
+    [onDragStart],
+  )
+
+  const handleTouchMove = useCallback(
+    (event: TouchEvent) => {
+      if (!isDragging) return
+      setPosition({ x: event.touches[0].clientX, y: event.touches[0].clientY })
+      onDrag?.(event, {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      })
+    },
+    [isDragging, onDrag],
+  )
+
+  const handleTouchEnd = useCallback(
+    (event: TouchEvent) => {
+      setIsDragging(false)
+      onDragEnd?.(event, {
+        x: event.changedTouches[0].clientX,
+        y: event.changedTouches[0].clientY,
+      })
+    },
+    [onDragEnd],
+  )
 
   useEffect(() => {
-    const handleMouseDown = (event: MouseEvent) => {
-      setIsDragging(true);
-      onDragStart?.(event);
-    };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!isDragging) return;
-      onDrag?.(event);
-    };
-
-    const handleMouseUp = (event: MouseEvent) => {
-      setIsDragging(false);
-      onDragEnd?.(event);
-    };
-
-    const handleTouchStart = (event: TouchEvent) => {
-      setIsDragging(true);
-      onDragStart?.(event);
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      if (!isDragging) return;
-      onDrag?.(event);
-    };
-
-    const handleTouchEnd = (event: TouchEvent) => {
-      setIsDragging(false);
-      onDragEnd?.(event);
-    };
-
-    const element = dragRef.current;
+    const element = dragRef.current
     if (element) {
-      element.addEventListener('mousedown', handleMouseDown);
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
+      element.addEventListener('mousedown', handleMouseDown)
+      window.addEventListener('mousemove', handleMouseMove, { passive: true })
+      window.addEventListener('mouseup', handleMouseUp)
 
-      element.addEventListener('touchstart', handleTouchStart);
-      window.addEventListener('touchmove', handleTouchMove);
-      window.addEventListener('touchend', handleTouchEnd);
+      element.addEventListener('touchstart', handleTouchStart)
+      window.addEventListener('touchmove', handleTouchMove, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd)
     }
 
     return () => {
       if (element) {
-        element.removeEventListener('mousedown', handleMouseDown);
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
+        element.removeEventListener('mousedown', handleMouseDown)
+        window.removeEventListener('mousemove', handleMouseMove)
+        window.removeEventListener('mouseup', handleMouseUp)
 
-        element.removeEventListener('touchstart', handleTouchStart);
-        window.removeEventListener('touchmove', handleTouchMove);
-        window.removeEventListener('touchend', handleTouchEnd);
+        element.removeEventListener('touchstart', handleTouchStart)
+        window.removeEventListener('touchmove', handleTouchMove)
+        window.removeEventListener('touchend', handleTouchEnd)
       }
-    };
-  }, [isDragging, onDragStart, onDrag, onDragEnd]);
+    }
+  }, [
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+  ])
 
   return {
     isDragging,
     dragRef,
-  };
+    position,
+  }
 }
