@@ -1,13 +1,11 @@
 'use client'
-import { GithubIcon, SquareTerminal, Triangle } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '@radix-ui/react-tooltip'
 import {
   ClientShowcase,
   ClipboardShowcase,
@@ -46,8 +44,12 @@ import {
   UseEffectOnceShowcase,
   WindowLoadShowcase,
   WindowResizeShowcase,
-  WindowSizeShowcase
-} from '@ui-showcase/Showcases';
+  WindowSizeShowcase,
+} from '@ui-showcase/Showcases'
+import { GithubIcon, SquareTerminal, Triangle } from 'lucide-react'
+import { Suspense } from 'react'
+import Spinner from '../components/blocks/Spinner'
+import { Button } from '../components/ui/button'
 
 export default function Dashboard() {
   return (
@@ -110,37 +112,45 @@ export default function Dashboard() {
       <div className="flex flex-col">
         {/* Need to implement the drawer component to make this page responsive */}
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
-          <HooksBlock title="Hooks Block">
-            <ClipboardShowcase />
-            <DebounceShowcase />
-            <DebugShowcase />
-            <DocumentReadyShowCase />
-            <DocumentTitleShowcase />
-            <DragShowcase />
-            <UseEffectOnceShowcase />
-            <FaviconShowcase />
-            <FetchShowcase />
-            <FirstMountStateShowcase />
-            <FoucFixShowcase />
-            <GeolocationShowcase />
-            <HoverShowase />
-          </HooksBlock>
+          <Suspense fallback={<Spinner />}>
+            <HooksBlock title="Hooks Block">
+              <Suspense fallback={<Spinner />}>
+                <ClipboardShowcase />
+                <DebounceShowcase />
+                <DebugShowcase />
+                <DocumentReadyShowCase />
+                <DocumentTitleShowcase />
+                <DragShowcase />
+                <UseEffectOnceShowcase />
+                <FaviconShowcase />
+                <FetchShowcase />
+                <FirstMountStateShowcase />
+                <FoucFixShowcase />
+                <GeolocationShowcase />
+                <HoverShowase />
+              </Suspense>
+            </HooksBlock>
+          </Suspense>
 
-          <HooksBlock title="Hooks Block 2">
-            <IntersectionObserverShowcase />
-            <IntervalShowcase />
-            <IOSToolbarStateShowcase />
-            <ClientShowcase />
-            <IsomorphicLayoutEffect />
-            <IsTouchDeviceShowcase />
-            <IsVisibleShowcase />
-            <KeySequenceShowcase />
-            <ListShowcase />
-            <MediaQueryShowcase />
-            <MousePositionShowcase />
-            <NetworkState />
-            <OnClickOutsideShowcase />
-          </HooksBlock>
+          <Suspense>
+            <HooksBlock title="Hooks Block 2">
+              <Suspense>
+                <IntersectionObserverShowcase />
+                <IntervalShowcase />
+                <IOSToolbarStateShowcase />
+                <ClientShowcase />
+                <IsomorphicLayoutEffect />
+                <IsTouchDeviceShowcase />
+                <IsVisibleShowcase />
+                <KeySequenceShowcase />
+                <ListShowcase />
+                <MediaQueryShowcase />
+                <MousePositionShowcase />
+                <NetworkState />
+                <OnClickOutsideShowcase />
+              </Suspense>
+            </HooksBlock>
+          </Suspense>
 
           <HooksBlock title="Hooks Block 3">
             <OrientationShowcase />
@@ -153,9 +163,8 @@ export default function Dashboard() {
             <UpdateEffectShowcase />
             <WindowLoadShowcase />
             <WindowResizeShowcase />
-            <WindowSizeShowcase />          
+            <WindowSizeShowcase />
           </HooksBlock>
-
         </main>
       </div>
     </div>

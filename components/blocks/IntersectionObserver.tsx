@@ -9,7 +9,11 @@ export default function IntersectionObserverShowcase() {
 
   useEffect(() => {
     if (entry) {
-      console.log(`useIntersectionObserver: Element is ${entry.isIntersecting ? 'visible' : 'hidden'}`)
+      console.log(
+        `useIntersectionObserver: Element is ${
+          entry.isIntersecting ? 'visible' : 'hidden'
+        }`,
+      ) //unneccessary
     }
   }, [entry])
 
