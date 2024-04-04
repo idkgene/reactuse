@@ -1,3 +1,5 @@
+import { QueryClient } from '@tanstack/react-query'
+
 export function throttle(cb: () => void, ms: number) {
   let lastTime = 0
   return () => {
@@ -32,3 +34,5 @@ export function off<T extends Window | Document | HTMLElement | EventTarget>(
     )
   }
 }
+
+export const queryClient = new QueryClient()

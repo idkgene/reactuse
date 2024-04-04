@@ -1,6 +1,8 @@
-import Alert from '@ui-components/alert'
+import { useIOSToolbarState } from '../../hooks/useIOSToolbarState'
 
 export default function IOSToolbarStateShowcase() {
+  const { isVisible } = useIOSToolbarState()
+
   return (
     <>
       <div className="grid gap-3 p-4 border rounded-lg">
@@ -10,10 +12,7 @@ export default function IOSToolbarStateShowcase() {
         >
           useIOSToolbarState
         </h2>
-        <Alert
-          id="useIOSToolbarState"
-          message="This preview is under construction."
-        />
+        <p>Is iOS toolbar visible? {isVisible ? '✅ Yes' : '❌ No'}</p>
       </div>
     </>
   )

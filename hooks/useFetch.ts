@@ -12,6 +12,7 @@ interface UseFetchOptions<TData> {
   axiosOptions?: AxiosRequestConfig
   kyOptions?: KyOptions
   fetchOptions?: RequestInit
+  queryClient?: QueryClient
 }
 
 interface UseFetchResult<TData> {
@@ -49,6 +50,7 @@ export function useFetch<TData = unknown>(
     axiosOptions,
     kyOptions,
     fetchOptions,
+    queryClient,
   } = options
   const [data, setData] = useState<TData | undefined>(undefined)
   const [loading, setLoading] = useState(true)
@@ -73,12 +75,11 @@ export function useFetch<TData = unknown>(
           response = await response.json()
           break
         case 'react-query':
-          if (!queryKey || !queryFn) {
+          if (!queryKey || !queryFn || !queryClient) {
             throw new Error(
-              'queryKey and queryFn are required when using react-query',
+              'queryKey, queryFn, and queryClient are required when using react-query',
             )
           }
-          const queryClient = new QueryClient()
           response = await queryClient.fetchQuery<TData>({
             queryKey,
             queryFn,
@@ -94,7 +95,16 @@ export function useFetch<TData = unknown>(
     } finally {
       setLoading(false)
     }
-  }, [url, library, axiosOptions, kyOptions, fetchOptions, queryKey, queryFn])
+  }, [
+    url,
+    library,
+    axiosOptions,
+    kyOptions,
+    fetchOptions,
+    queryKey,
+    queryFn,
+    queryClient,
+  ])
 
   useEffect(() => {
     fetchData()

@@ -11,7 +11,9 @@ export default function DragShowcase() {
           useDrag
         </h2>
         <Alert
+          type="warning"
           id="useDrag"
+          icon="🚧"
           message="This preview is under construction."
         />
       </div>

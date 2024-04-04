@@ -17,7 +17,6 @@ import {
   FaviconShowcase,
   FetchShowcase,
   FirstMountStateShowcase,
-  FoucFixShowcase,
   GeolocationShowcase,
   HooksBlock,
   HoverShowase,
@@ -125,7 +124,6 @@ export default function Dashboard() {
                 <FaviconShowcase />
                 <FetchShowcase />
                 <FirstMountStateShowcase />
-                <FoucFixShowcase />
                 <GeolocationShowcase />
                 <HoverShowase />
               </Suspense>
