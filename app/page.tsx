@@ -1,15 +1,12 @@
-'use client'
+"use client";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@radix-ui/react-tooltip'
+} from "@radix-ui/react-tooltip";
 import {
-  ClientShowcase,
-  ClipboardShowcase,
-  DebounceShowcase,
   DebugShowcase,
   DocumentReadyShowCase,
   DocumentTitleShowcase,
@@ -43,22 +40,21 @@ import {
   WindowLoadShowcase,
   WindowResizeShowcase,
   WindowSizeShowcase,
-} from '@ui-showcase/Showcases'
-import { GithubIcon, SquareTerminal, Triangle } from 'lucide-react'
-import { Suspense } from 'react'
-import Spinner from '../components/blocks/Spinner'
-import { Button } from '../components/ui/button'
+} from "@ui-showcase/Showcases";
+import { GithubIcon, SquareTerminal, Triangle } from "lucide-react";
+import { Suspense } from "react";
+import Spinner from "../components/blocks/Spinner";
+import { Button } from "../components/ui/button";
+import ClientShowcase from "@/components/Containers/Client";
+import ClipboardShowcase from "@/components/Containers/Clipboard";
+import DebounceShowcase from "@/components/Containers/Debounce";
 
 export default function Dashboard() {
   return (
     <div className="grid h-screen w-full pl-[53px]">
       <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
         <div className="border-b p-2">
-          <Button
-            variant="outline"
-            size="icon"
-            aria-label="Home"
-          >
+          <Button variant="outline" size="icon" aria-label="Home">
             <Triangle className="size-5 fill-foreground" />
           </Button>
         </div>
@@ -75,10 +71,7 @@ export default function Dashboard() {
                   <SquareTerminal className="size-5" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent
-                side="right"
-                sideOffset={5}
-              >
+              <TooltipContent side="right" sideOffset={5}>
                 React Hooks Showcase
               </TooltipContent>
             </Tooltip>
@@ -97,10 +90,7 @@ export default function Dashboard() {
                   <GithubIcon className="size-5" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent
-                side="right"
-                sideOffset={5}
-              >
+              <TooltipContent side="right" sideOffset={5}>
                 Help
               </TooltipContent>
             </Tooltip>
@@ -165,5 +155,5 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-  )
+  );
 }
