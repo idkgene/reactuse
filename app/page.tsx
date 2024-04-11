@@ -8,7 +8,6 @@ import {
 } from "@radix-ui/react-tooltip";
 import {
   HooksBlock,
-  IOSToolbarStateShowcase,
   IsTouchDeviceShowcase,
   IsVisibleShowcase,
   IsomorphicLayoutEffect,
@@ -49,6 +48,7 @@ import GeolocationShowcase from "@/components/Containers/Geolocation";
 import HoverShowase from "@/components/Containers/Hover";
 import IntersectionObserverShowcase from "@/components/Containers/IntersectionObserver";
 import IntervalShowcase from "@/components/Containers/Interval";
+import IOSToolbarStateShowcase from "@/components/Containers/IOSToolbarState";
 
 export default function Dashboard() {
   return (

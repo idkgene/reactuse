@@ -2,7 +2,6 @@ import MediaQueryShowcase from "@/components/blocks/MediaQuery";
 import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
 import HooksBlock from "@ui-showcase/HooksBlock";
-import IOSToolbarStateShowcase from "@ui-showcase/IOSToolbarState";
 import IsTouchDeviceShowcase from "@ui-showcase/IsTouchDevice";
 import IsVisibleShowcase from "@ui-showcase/IsVisible";
 import IsomorphicLayoutEffect from "@ui-showcase/IsomorphicLayoutEffect";
@@ -24,7 +23,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  IOSToolbarStateShowcase,
   IsTouchDeviceShowcase,
   IsVisibleShowcase,
   IsomorphicLayoutEffect,
