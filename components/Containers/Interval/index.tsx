@@ -1,42 +1,33 @@
-import { useInterval } from '@hooks/useInterval'
-import { Info } from 'lucide-react'
-import { useState } from 'react'
+import { useInterval } from "@hooks/useInterval";
+import { Info } from "lucide-react";
+import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../ui/tooltip'
+} from "../../ui/tooltip";
+import styles from "./index.module.css";
 
 export default function IntervalShowcase() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   useInterval(() => {
-    setCount((prevCount) => (prevCount + 1) % 25)
-  }, 1000)
+    setCount((prevCount) => (prevCount + 1) % 25);
+  }, 1000);
 
   return (
     <>
-      <div className="grid gap-3 p-4 border rounded-lg">
-        <h2
-          id="useInterval"
-          className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          useInterval
-        </h2>
+      <div className={styles.container}>
+        <h2 id="useInterval">useInterval</h2>
         <div>
-          <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            ⏱ Count {count}
-          </p>
+          <p>⏱ Count {count}</p>
 
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="w-fit flex items-center gap-2 mt-6 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#9c9c9c]">
-                  <Info
-                    size={16}
-                    color="#9c9c9c"
-                  />
+                  <Info size={16} color="#9c9c9c" />
                   Hover to see the tooltip
                 </div>
               </TooltipTrigger>
@@ -55,5 +46,5 @@ export default function IntervalShowcase() {
         </div>
       </div>
     </>
-  )
+  );
 }
