@@ -1,7 +1,6 @@
 import MediaQueryShowcase from "@/components/blocks/MediaQuery";
 import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
-import FaviconShowcase from "@ui-showcase/Favicon";
 import FetchShowcase from "@ui-showcase/Fetch";
 import FirstMountStateShowcase from "@ui-showcase/FirstMountState";
 import GeolocationShowcase from "@ui-showcase/Geolocation";
@@ -30,7 +29,6 @@ import WindowResizeShowcase from "@ui-showcase/WindowResize";
 import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
-  FaviconShowcase,
   FetchShowcase,
   FirstMountStateShowcase,
   GeolocationShowcase,

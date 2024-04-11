@@ -1,6 +1,7 @@
 import React from "react";
 import { Input } from "@ui-components/input";
 import { useState } from "react";
+import styles from "./index.module.css";
 
 export default function FaviconShowcase() {
   const [faviconUrl, setFaviconUrl] = useState<string>(
@@ -13,13 +14,8 @@ export default function FaviconShowcase() {
 
   return (
     <>
-      <div className="grid gap-3 p-4 border rounded-lg">
-        <h2
-          id="useFavicon"
-          className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          useFavicon
-        </h2>
+      <div className={styles.container}>
+        <h2 id="useFavicon">useFavicon</h2>
         <Input
           type="text"
           placeholder="Enter a new favicon URL"
