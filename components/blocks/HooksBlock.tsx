@@ -1,9 +1,11 @@
+import React from "react";
+
 const HooksBlock = ({
   title,
   children,
 }: {
-  title: string
-  children: React.ReactNode
+  title: string;
+  children: React.ReactNode;
 }) => {
   return (
     <div className="relative hidden flex-col items-start gap-8 md:flex">
@@ -14,7 +16,7 @@ const HooksBlock = ({
         </fieldset>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default HooksBlock
+export default HooksBlock;

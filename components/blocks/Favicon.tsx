@@ -1,14 +1,15 @@
-import { Input } from '@ui-components/input'
-import { useState } from 'react'
+import React from "react";
+import { Input } from "@ui-components/input";
+import { useState } from "react";
 
 export default function FaviconShowcase() {
   const [faviconUrl, setFaviconUrl] = useState<string>(
-    'https://www.w3schools.com/favicon.ico',
-  )
+    "https://www.w3schools.com/favicon.ico"
+  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFaviconUrl(event.target.value)
-  }
+    setFaviconUrl(event.target.value);
+  };
 
   return (
     <>
@@ -28,5 +29,5 @@ export default function FaviconShowcase() {
         />
       </div>
     </>
-  )
+  );
 }

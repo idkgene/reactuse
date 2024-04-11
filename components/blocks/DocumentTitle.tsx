@@ -1,15 +1,16 @@
-import { useDocumentTitle } from '@hooks/useDocumentTitle'
-import { Input } from '@ui-components/input'
-import { useState } from 'react'
+import React from "react";
+import { useDocumentTitle } from "@hooks/useDocumentTitle";
+import { Input } from "@ui-components/input";
+import { useState } from "react";
 
 export default function DocumentTitleShowcase() {
-  const [title, setTitle] = useState<string>('')
+  const [title, setTitle] = useState<string>("");
 
-  useDocumentTitle(title)
+  useDocumentTitle(title);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value)
-  }
+    setTitle(e.target.value);
+  };
 
   return (
     <>
@@ -34,5 +35,5 @@ export default function DocumentTitleShowcase() {
         </p>
       </div>
     </>
-  )
+  );
 }
