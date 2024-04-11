@@ -3,7 +3,6 @@ import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
 import HooksBlock from "@ui-showcase/HooksBlock";
 import IOSToolbarStateShowcase from "@ui-showcase/IOSToolbarState";
-import IntersectionObserverShowcase from "@ui-showcase/IntersectionObserver";
 import IntervalShowcase from "@ui-showcase/Interval";
 import IsTouchDeviceShowcase from "@ui-showcase/IsTouchDevice";
 import IsVisibleShowcase from "@ui-showcase/IsVisible";
@@ -27,7 +26,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 export {
   HooksBlock,
   IOSToolbarStateShowcase,
-  IntersectionObserverShowcase,
   IntervalShowcase,
   IsTouchDeviceShowcase,
   IsVisibleShowcase,

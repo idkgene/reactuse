@@ -9,7 +9,6 @@ import {
 import {
   HooksBlock,
   IOSToolbarStateShowcase,
-  IntersectionObserverShowcase,
   IntervalShowcase,
   IsTouchDeviceShowcase,
   IsVisibleShowcase,
@@ -49,6 +48,7 @@ import FaviconShowcase from "@/components/Containers/Favicon";
 import FirstMountStateShowcase from "@/components/Containers/FirstMountState";
 import GeolocationShowcase from "@/components/Containers/Geolocation";
 import HoverShowase from "@/components/Containers/Hover";
+import IntersectionObserverShowcase from "@/components/Containers/IntersectionObserver";
 
 export default function Dashboard() {
   return (
