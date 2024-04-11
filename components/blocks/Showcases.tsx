@@ -1,8 +1,6 @@
 import MediaQueryShowcase from "@/components/blocks/MediaQuery";
 import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
-import DocumentReadyShowCase from "@ui-showcase/DocumentReady";
-import DocumentTitleShowcase from "@ui-showcase/DocumentTitle";
 import DragShowcase from "@ui-showcase/Drag";
 import FaviconShowcase from "@ui-showcase/Favicon";
 import FetchShowcase from "@ui-showcase/Fetch";
@@ -33,8 +31,6 @@ import WindowResizeShowcase from "@ui-showcase/WindowResize";
 import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
-  DocumentReadyShowCase,
-  DocumentTitleShowcase,
   DragShowcase,
   FaviconShowcase,
   FetchShowcase,

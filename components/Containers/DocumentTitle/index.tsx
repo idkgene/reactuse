@@ -2,6 +2,7 @@ import React from "react";
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
 import { Input } from "@ui-components/input";
 import { useState } from "react";
+import styles from "./index.module.css";
 
 export default function DocumentTitleShowcase() {
   const [title, setTitle] = useState<string>("");
@@ -14,13 +15,8 @@ export default function DocumentTitleShowcase() {
 
   return (
     <>
-      <div className="grid gap-3 p-4 border rounded-lg">
-        <h2
-          id="useDocumentTitle"
-          className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          useDocumentTitle
-        </h2>
+      <div className={styles.container}>
+        <h2 id="useDocumentTitle">useDocumentTitle</h2>
         <Input
           type="text"
           className="mt-3"
@@ -30,9 +26,7 @@ export default function DocumentTitleShowcase() {
           id="useDocumentTitle"
           placeholder="Enter a new document title"
         />
-        <p className="mt-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-          Current document title: {title}
-        </p>
+        <p>Current document title: {title}</p>
       </div>
     </>
   );

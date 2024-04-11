@@ -7,7 +7,6 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import {
-  DocumentTitleShowcase,
   DragShowcase,
   FaviconShowcase,
   FirstMountStateShowcase,
@@ -48,6 +47,7 @@ import ClipboardShowcase from "@/components/Containers/Clipboard";
 import DebounceShowcase from "@/components/Containers/Debounce";
 import DebugShowcase from "@/components/Containers/Debug";
 import DocumentReadyShowCase from "@/components/Containers/DocumentReady";
+import DocumentTitleShowcase from "@/components/Containers/DocumentTitle";
 
 export default function Dashboard() {
   return (
