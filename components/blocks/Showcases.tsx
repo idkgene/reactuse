@@ -2,7 +2,6 @@ import MediaQueryShowcase from "@/components/blocks/MediaQuery";
 import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
 import HooksBlock from "@ui-showcase/HooksBlock";
-import HoverShowase from "@ui-showcase/Hover";
 import IOSToolbarStateShowcase from "@ui-showcase/IOSToolbarState";
 import IntersectionObserverShowcase from "@ui-showcase/IntersectionObserver";
 import IntervalShowcase from "@ui-showcase/Interval";
@@ -27,7 +26,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  HoverShowase,
   IOSToolbarStateShowcase,
   IntersectionObserverShowcase,
   IntervalShowcase,

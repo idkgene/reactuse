@@ -8,7 +8,6 @@ import {
 } from "@radix-ui/react-tooltip";
 import {
   HooksBlock,
-  HoverShowase,
   IOSToolbarStateShowcase,
   IntersectionObserverShowcase,
   IntervalShowcase,
@@ -49,6 +48,7 @@ import FaviconShowcase from "@/components/Containers/Favicon";
 // import FetchShowcase from "@/components/Containers/Fetch";
 import FirstMountStateShowcase from "@/components/Containers/FirstMountState";
 import GeolocationShowcase from "@/components/Containers/Geolocation";
+import HoverShowase from "@/components/Containers/Hover";
 
 export default function Dashboard() {
   return (
