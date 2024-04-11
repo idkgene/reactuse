@@ -1,4 +1,5 @@
-import { useGeolocation } from '@hooks/useGeolocation'
+import { useGeolocation } from "@hooks/useGeolocation";
+import styles from "./index.module.css";
 
 export default function GeolocationShowcase() {
   const {
@@ -12,17 +13,12 @@ export default function GeolocationShowcase() {
     speed,
     timestamp,
     error,
-  } = useGeolocation()
+  } = useGeolocation();
 
   return (
     <>
-      <div className="grid gap-3 p-4 border rounded-lg">
-        <h2
-          id="useGeolocation"
-          className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          useGeolocation
-        </h2>
+      <div className={styles.container}>
+        <h2 id="useGeolocation">useGeolocation</h2>
         {loading ? (
           <p>◌ Loading geolocation data...</p>
         ) : error ? (
@@ -41,5 +37,5 @@ export default function GeolocationShowcase() {
         )}
       </div>
     </>
-  )
+  );
 }

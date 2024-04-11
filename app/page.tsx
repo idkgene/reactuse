@@ -7,7 +7,6 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import {
-  GeolocationShowcase,
   HooksBlock,
   HoverShowase,
   IOSToolbarStateShowcase,
@@ -47,8 +46,9 @@ import DocumentReadyShowCase from "@/components/Containers/DocumentReady";
 import DocumentTitleShowcase from "@/components/Containers/DocumentTitle";
 import DragShowcase from "@/components/Containers/Drag";
 import FaviconShowcase from "@/components/Containers/Favicon";
-import FetchShowcase from "@/components/Containers/Fetch";
+// import FetchShowcase from "@/components/Containers/Fetch";
 import FirstMountStateShowcase from "@/components/Containers/FirstMountState";
+import GeolocationShowcase from "@/components/Containers/Geolocation";
 
 export default function Dashboard() {
   return (
@@ -112,7 +112,7 @@ export default function Dashboard() {
                 <DragShowcase />
                 <UseEffectOnceShowcase />
                 <FaviconShowcase />
-                <FetchShowcase />
+                {/* <FetchShowcase /> */}
                 <FirstMountStateShowcase />
                 <GeolocationShowcase />
                 <HoverShowase />

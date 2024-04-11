@@ -1,7 +1,6 @@
 import MediaQueryShowcase from "@/components/blocks/MediaQuery";
 import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
-import GeolocationShowcase from "@ui-showcase/Geolocation";
 import HooksBlock from "@ui-showcase/HooksBlock";
 import HoverShowase from "@ui-showcase/Hover";
 import IOSToolbarStateShowcase from "@ui-showcase/IOSToolbarState";
@@ -27,7 +26,6 @@ import WindowResizeShowcase from "@ui-showcase/WindowResize";
 import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
-  GeolocationShowcase,
   HooksBlock,
   HoverShowase,
   IOSToolbarStateShowcase,
