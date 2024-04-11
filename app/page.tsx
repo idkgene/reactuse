@@ -48,6 +48,7 @@ import DocumentReadyShowCase from "@/components/Containers/DocumentReady";
 import DocumentTitleShowcase from "@/components/Containers/DocumentTitle";
 import DragShowcase from "@/components/Containers/Drag";
 import FaviconShowcase from "@/components/Containers/Favicon";
+import FetchShowcase from "@/components/Containers/Fetch";
 
 export default function Dashboard() {
   return (
@@ -111,7 +112,7 @@ export default function Dashboard() {
                 <DragShowcase />
                 <UseEffectOnceShowcase />
                 <FaviconShowcase />
-                {/* <FetchShowcase /> */}
+                <FetchShowcase />
                 <FirstMountStateShowcase />
                 <GeolocationShowcase />
                 <HoverShowase />
