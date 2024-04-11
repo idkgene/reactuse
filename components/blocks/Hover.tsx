@@ -1,7 +1,9 @@
-import { useHover } from '@hooks/useHover'
+import { useHover } from "@hooks/useHover";
+import { useRef } from "react";
 
 export default function HoverShowase() {
-  const [hoverRef, isHovered] = useHover<HTMLElement | any>()
+  const hoverRef = useRef<HTMLDivElement>(null);
+  const isHovered = useHover();
 
   return (
     <>
@@ -28,5 +30,5 @@ export default function HoverShowase() {
         </div>
       </div>
     </>
-  )
+  );
 }
