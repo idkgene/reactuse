@@ -48,6 +48,7 @@ import PageLeaveShowcase from "@/components/Containers/PageLeave";
 import RectShowcase from "@/components/Containers/Rect";
 import ScriptShowcase from "@/components/Containers/Script";
 import SessionStorageShowcase from "@/components/Containers/SessionStorage";
+import ThrottleShowcase from "@/components/Containers/Throttle";
 
 export default function Dashboard() {
   return (
