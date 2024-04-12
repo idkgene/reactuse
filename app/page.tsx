@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import { HooksBlock, WindowSizeShowcase } from "@ui-showcase/Showcases";
+import { HooksBlock } from "@ui-showcase/Showcases";
 import { GithubIcon, SquareTerminal, Triangle } from "lucide-react";
 import { Suspense } from "react";
 import Spinner from "../components/blocks/Spinner";
