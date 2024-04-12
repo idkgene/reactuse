@@ -48,6 +48,7 @@ import MousePositionShowcase from "@/components/Containers/MousePosition";
 import NetworkState from "@/components/Containers/NetworkState";
 import OnClickOutsideShowcase from "@/components/Containers/OnClickOutside";
 import OrientationShowcase from "@/components/Containers/Orientation";
+import PageLeaveShowcase from "@/components/Containers/PageLeave";
 
 export default function Dashboard() {
   return (
