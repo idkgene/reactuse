@@ -48,6 +48,7 @@ import ThrottleShowcase from "@/components/Containers/Throttle";
 import UpdateEffectShowcase from "@/components/Containers/UpdateEffect";
 import UseEffectOnceShowcase from "@/components/Containers/EffectOnce";
 import UnmountShowcase from "@/components/Containers/Unmount";
+import WindowLoadShowcase from "@/components/Containers/WindowLoad";
 
 export default function Dashboard() {
   return (
