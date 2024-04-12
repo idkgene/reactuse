@@ -48,6 +48,7 @@ import OrientationShowcase from "@/components/Containers/Orientation";
 import PageLeaveShowcase from "@/components/Containers/PageLeave";
 import RectShowcase from "@/components/Containers/Rect";
 import ScriptShowcase from "@/components/Containers/Script";
+import SessionStorageShowcase from "@/components/Containers/SessionStorage";
 
 export default function Dashboard() {
   return (
@@ -144,7 +145,7 @@ export default function Dashboard() {
             <PageLeaveShowcase />
             <RectShowcase />
             <ScriptShowcase />
-            <SessioStorageShowcase />
+            <SessionStorageShowcase />
             <ThrottleShowcase />
             <UnmountShowcase />
             <UpdateEffectShowcase />
