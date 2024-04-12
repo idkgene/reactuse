@@ -1,4 +1,5 @@
 import { useIsomorphicLayoutEffect } from "@hooks/useIsomorphicLayoutEffect";
+import styles from "./index.module.css";
 
 export default function IsomorphicLayoutEffect() {
   useIsomorphicLayoutEffect(() => {
@@ -7,7 +8,7 @@ export default function IsomorphicLayoutEffect() {
 
   return (
     <>
-      <div>
+      <div className={styles.container}>
         <h2 id="useIsomorphicLayoutEffect">useIsomorphicLayoutEffect</h2>
         <p>Check console for effect trigger</p>
       </div>
