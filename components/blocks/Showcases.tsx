@@ -1,4 +1,3 @@
-import MediaQueryShowcase from "@/components/blocks/MediaQuery";
 import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
 import HooksBlock from "@ui-showcase/HooksBlock";
@@ -18,7 +17,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  MediaQueryShowcase,
   MousePositionShowcase,
   NetworkState,
   OnClickOutsideShowcase,
