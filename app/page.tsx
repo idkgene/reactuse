@@ -48,6 +48,7 @@ import RectShowcase from "@/components/Containers/Rect";
 import ScriptShowcase from "@/components/Containers/Script";
 import SessionStorageShowcase from "@/components/Containers/SessionStorage";
 import ThrottleShowcase from "@/components/Containers/Throttle";
+import UpdateEffectShowcase from "@/components/Containers/UpdateEffect";
 
 export default function Dashboard() {
   return (
