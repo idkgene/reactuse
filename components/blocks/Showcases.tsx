@@ -1,4 +1,3 @@
-import NetworkState from "@/components/blocks/NetworkState";
 import HooksBlock from "@ui-showcase/HooksBlock";
 import OnClickOutsideShowcase from "@ui-showcase/OnClickOutside";
 import OrientationShowcase from "@ui-showcase/Orientation";
@@ -16,7 +15,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  NetworkState,
   OnClickOutsideShowcase,
   OrientationShowcase,
   PageLeaveShowcase,
