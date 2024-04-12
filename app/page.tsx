@@ -48,6 +48,7 @@ import IsTouchDeviceShowcase from "@/components/Containers/IsTouchDevice";
 import IsVisibleShowcase from "@/components/Containers/IsVisible";
 import KeySequenceShowcase from "@/components/Containers/KeySequence";
 import ListShowcase from "@/components/Containers/List";
+import MediaQueryShowcase from "@/components/Containers/MediaQuery";
 
 export default function Dashboard() {
   return (
