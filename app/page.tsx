@@ -8,7 +8,6 @@ import {
 } from "@radix-ui/react-tooltip";
 import {
   HooksBlock,
-  SessioStorageShowcase,
   ThrottleShowcase,
   UnmountShowcase,
   UpdateEffectShowcase,
