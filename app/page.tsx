@@ -48,6 +48,7 @@ import IsVisibleShowcase from "@/components/Containers/IsVisible";
 import KeySequenceShowcase from "@/components/Containers/KeySequence";
 import ListShowcase from "@/components/Containers/List";
 import MediaQueryShowcase from "@/components/Containers/MediaQuery";
+import MousePositionShowcase from "@/components/Containers/MousePosition";
 
 export default function Dashboard() {
   return (
