@@ -8,7 +8,6 @@ import {
 } from "@radix-ui/react-tooltip";
 import {
   HooksBlock,
-  OrientationShowcase,
   PageLeaveShowcase,
   RectShowcase,
   ScriptShowcase,
@@ -48,6 +47,8 @@ import ListShowcase from "@/components/Containers/List";
 import MediaQueryShowcase from "@/components/Containers/MediaQuery";
 import MousePositionShowcase from "@/components/Containers/MousePosition";
 import NetworkState from "@/components/Containers/NetworkState";
+import OnClickOutsideShowcase from "@/components/Containers/OnClickOutside";
+import OrientationShowcase from "@/components/Containers/Orientation";
 
 export default function Dashboard() {
   return (

@@ -1,5 +1,4 @@
 import HooksBlock from "@ui-showcase/HooksBlock";
-import OrientationShowcase from "@ui-showcase/Orientation";
 import PageLeaveShowcase from "@ui-showcase/PageLeave";
 import RectShowcase from "@ui-showcase/Rect";
 import ScriptShowcase from "@ui-showcase/Script";
@@ -14,7 +13,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  OrientationShowcase,
   PageLeaveShowcase,
   RectShowcase,
   ScriptShowcase,
