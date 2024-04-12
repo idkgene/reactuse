@@ -48,6 +48,7 @@ import NetworkState from "@/components/Containers/NetworkState";
 import OnClickOutsideShowcase from "@/components/Containers/OnClickOutside";
 import OrientationShowcase from "@/components/Containers/Orientation";
 import PageLeaveShowcase from "@/components/Containers/PageLeave";
+import RectShowcase from "@/components/Containers/Rect";
 
 export default function Dashboard() {
   return (
