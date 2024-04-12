@@ -9,7 +9,6 @@ import {
 import {
   HooksBlock,
   UnmountShowcase,
-  UpdateEffectShowcase,
   UseEffectOnceShowcase,
   WindowLoadShowcase,
   WindowResizeShowcase,
