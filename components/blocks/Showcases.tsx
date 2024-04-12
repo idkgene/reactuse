@@ -1,4 +1,3 @@
-import MousePositionShowcase from "@/components/blocks/MousePosition";
 import NetworkState from "@/components/blocks/NetworkState";
 import HooksBlock from "@ui-showcase/HooksBlock";
 import OnClickOutsideShowcase from "@ui-showcase/OnClickOutside";
@@ -17,7 +16,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  MousePositionShowcase,
   NetworkState,
   OnClickOutsideShowcase,
   OrientationShowcase,

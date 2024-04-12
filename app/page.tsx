@@ -8,7 +8,6 @@ import {
 } from "@radix-ui/react-tooltip";
 import {
   HooksBlock,
-  MousePositionShowcase,
   NetworkState,
   OnClickOutsideShowcase,
   OrientationShowcase,
