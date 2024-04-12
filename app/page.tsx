@@ -48,6 +48,7 @@ import OnClickOutsideShowcase from "@/components/Containers/OnClickOutside";
 import OrientationShowcase from "@/components/Containers/Orientation";
 import PageLeaveShowcase from "@/components/Containers/PageLeave";
 import RectShowcase from "@/components/Containers/Rect";
+import ScriptShowcase from "@/components/Containers/Script";
 
 export default function Dashboard() {
   return (
