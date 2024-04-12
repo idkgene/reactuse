@@ -48,6 +48,7 @@ import SessionStorageShowcase from "@/components/Containers/SessionStorage";
 import ThrottleShowcase from "@/components/Containers/Throttle";
 import UpdateEffectShowcase from "@/components/Containers/UpdateEffect";
 import UseEffectOnceShowcase from "@/components/Containers/EffectOnce";
+import UnmountShowcase from "@/components/Containers/Unmount";
 
 export default function Dashboard() {
   return (
