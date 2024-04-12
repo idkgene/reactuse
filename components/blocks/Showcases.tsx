@@ -1,5 +1,4 @@
 import HooksBlock from "@ui-showcase/HooksBlock";
-import ScriptShowcase from "@ui-showcase/Script";
 import SessioStorageShowcase from "@ui-showcase/SessionStorage";
 import ThrottleShowcase from "@ui-showcase/Throttle";
 import UnmountShowcase from "@ui-showcase/Unmount";
@@ -11,7 +10,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  ScriptShowcase,
   SessioStorageShowcase,
   ThrottleShowcase,
   UnmountShowcase,
