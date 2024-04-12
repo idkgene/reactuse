@@ -1,5 +1,4 @@
 import HooksBlock from "@ui-showcase/HooksBlock";
-import ThrottleShowcase from "@ui-showcase/Throttle";
 import UnmountShowcase from "@ui-showcase/Unmount";
 import UpdateEffectShowcase from "@ui-showcase/UpdateEffect";
 import UseEffectOnceShowcase from "@ui-showcase/UseEffectOnce";
@@ -9,7 +8,6 @@ import WindowSizeShowcase from "@ui-showcase/WindowSize";
 
 export {
   HooksBlock,
-  ThrottleShowcase,
   UnmountShowcase,
   UpdateEffectShowcase,
   UseEffectOnceShowcase,
