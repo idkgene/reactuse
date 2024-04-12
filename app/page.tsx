@@ -48,6 +48,7 @@ import IOSToolbarStateShowcase from "@/components/Containers/IOSToolbarState";
 import IsomorphicLayoutEffect from "@/components/Containers/IsomorphicLayoutEffect";
 import IsTouchDeviceShowcase from "@/components/Containers/IsTouchDevice";
 import IsVisibleShowcase from "@/components/Containers/IsVisible";
+import KeySequenceShowcase from "@/components/Containers/KeySequence";
 
 export default function Dashboard() {
   return (
