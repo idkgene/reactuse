@@ -46,6 +46,7 @@ import UseEffectOnceShowcase from "@/components/Containers/EffectOnce";
 import UnmountShowcase from "@/components/Containers/Unmount";
 import WindowLoadShowcase from "@/components/Containers/WindowLoad";
 import WindowResizeShowcase from "@/components/Containers/WindowResize";
+import WindowSizeShowcase from "@/components/Containers/WindowSize";
 
 export default function Dashboard() {
   return (
