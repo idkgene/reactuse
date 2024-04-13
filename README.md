@@ -11,8 +11,8 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useConnectedDevice`](/docs//useConnectedDevice.md): A hook that returns information about the connected device, such as the device type, battery level, and signal strength.
 - [`useDebounce`](/docs/useDebounce.md): A hook that provides a debounced version of a value, which is updated only after a certain delay.  
 - [`useDebug`](/docs/useDebug.md): A hook that returns true if the current window URL contains the string `#debug` or if we're in development mode.
-- `useDocumentReadyState`: A hook that returns the document ready state, which is useful for detecting when the document is fully loaded.
-- `useDocumentTitle`: A hook that sets the document title based on a given string.
+- [`useDocumentReadyState`](/docs/useDocumentReadyState.md): A hook that returns the document ready state, which is useful for detecting when the document is fully loaded.
+- [`useDocumentTitle`](/docs/useDocumentTitle.md): A hook that sets the document title based on a given string.
 - `useDrag` - [UNFINISHED]
 - `useEffectOnce`: A hook that runs an effect only once, on the initial render.
 - `useEventListener`: A hook that adds an event listener to a specified target and removes it when the component unmounts.
