@@ -6,6 +6,7 @@ Welcome to the React Hooks Collection repository! This is a collection of custom
 
 Currently, the following hooks have been implemented and thoroughly (almost) tested:
 
+- [`useBattery`](/docs/useBattery.md): A hook that provides information about the battery level of the device.
 - [`useClipboard`](/docs/useClipboard.md): Simplifies clipboard operations, allowing you to easily copy and paste text.
 - `useDebounce`: A hook that provides a debounced version of a value, which is updated only after a certain delay.
 - `useDebug`: A hook that returns true if the current window URL contains the string `#debug` or if we're in development mode.
