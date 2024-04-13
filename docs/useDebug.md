@@ -5,7 +5,26 @@ A React Hook designed to determine if the current environment is in debug mode o
 ## Usage
 
 ```tsx
-Under Construction
+import { useDebug } from "./useDebug";
+
+function MyComponent() {
+  const isDebugMode = useDebug();
+
+  return (
+    <div>
+      <h1>My Component</h1>
+      {isDebugMode && (
+        <div>
+          <p>Debug information:</p>
+          <ul>
+            <li>Current URL: {window.location.href}</li>
+            <li>Environment: {process.env.NODE_ENV}</li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
 ```
 
 ## Reference
