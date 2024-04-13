@@ -9,14 +9,14 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useBattery`](/docs/useBattery.md): A hook that provides information about the battery level of the device.
 - [`useClipboard`](/docs/useClipboard.md): Simplifies clipboard operations, allowing you to easily copy and paste text.
 - [`useConnectedDevice`](/docs//useConnectedDevice.md): A hook that returns information about the connected device, such as the device type, battery level, and signal strength.
-- [`useDebounce`](/docs/useDebounce.md): A hook that provides a debounced version of a value, which is updated only after a certain delay.  
+- [`useDebounce`](/docs/useDebounce.md): A hook that provides a debounced version of a value, which is updated only after a certain delay.
 - [`useDebug`](/docs/useDebug.md): A hook that returns true if the current window URL contains the string `#debug` or if we're in development mode.
 - [`useDocumentReadyState`](/docs/useDocumentReadyState.md): A hook that returns the document ready state, which is useful for detecting when the document is fully loaded.
 - [`useDocumentTitle`](/docs/useDocumentTitle.md): A hook that sets the document title based on a given string.
 - [`useDrag`](/docs/useDrag.md): A hook that provides a convenient way to handle drag in React.
 - [`useEffectOnce`](/docs/useEffectOnce.md): A hook that runs an effect only once, on the initial render.
 - [`useEventListener`](/docs/useEventListener.md): A hook that adds an event listener to a specified target and removes it when the component unmounts.
-- `useFavicon`: A hook that sets the favicon of the document.
+- [`useFavicon`](/docs/useFavicon.md): A hook that sets the favicon of the document.
 - `useFirstMountState`: A hook that returns true if the component is being rendered for the first time.
 - `useFoucFix`: A hook that fixes the focus issue in Next JS.
 - `useGeolocation`: A hook that alows to get the current geolocation of the user.
