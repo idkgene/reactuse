@@ -2,16 +2,27 @@
 
 A handy React hook for dynamically updating the document title based on the provided input. 📄🔖
 
-## Usage 
+## Usage
 
 ```tsx
-Under Construction
+import { useDocumentTitle } from "./hooks/useDocumentTitle";
+
+function MyComponent() {
+  useDocumentTitle("My App - Dashboard");
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      {/* Component content */}
+    </div>
+  );
+}
 ```
 
-## Reference 
+## Reference
 
 ```tsx
 useDocumentTitle("New Page Title");
 ```
 
-- `title` _`string`_ - The new title to be set for the document. 
+- `title` _`string`_ - The new title to be set for the document.
