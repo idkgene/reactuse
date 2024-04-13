@@ -2,6 +2,29 @@
 
 A dynamic React module designed to facilitate event listening on specified target elements with customizable options. 🎧🔍
 
+## Usage
+
+```tsx
+import { useEventListener } from "./hooks/useEventListener";
+import { useRef } from "react";
+
+function MyComponent() {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEventListener("click", handleClick, buttonRef);
+
+  function handleClick(event: MouseEvent) {
+    console.log("Button clicked!", event);
+  }
+
+  return (
+    <div>
+      <button ref={buttonRef}>Click me</button>
+    </div>
+  );
+}
+```
+
 ## Reference
 
 ```tsx
