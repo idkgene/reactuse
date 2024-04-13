@@ -5,7 +5,33 @@ A versatile React hook that allows developers to debounce any value changes effo
 ## Usage
 
 ```tsx
-Under Construction
+import { useDebounce } from "./hooks/useDebounce";
+
+function MyComponent() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    // Perform search with the debounced search term
+    searchItems(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search..."
+      />
+      <p>Debounced Search Term: {debouncedSearchTerm}</p>
+    </div>
+  );
+}
 ```
 
 ## Reference
