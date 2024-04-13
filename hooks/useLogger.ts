@@ -6,6 +6,7 @@ type LoggerArgs = any[];
  * A custom hook that logs the mount and unmount events of a component.
  * @param name
  * @param args
+ * @returns void
  */
 export const useLogger = <T>(name: T, ...args: LoggerArgs) => {
   if (name === null) {
