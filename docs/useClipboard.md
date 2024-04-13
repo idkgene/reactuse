@@ -5,7 +5,24 @@ A cutting-edge React hook that empowers developers to effortlessly copy text to 
 ## Usage
 
 ```tsx
-Under Construction
+import { useClipboard } from "./hooks/useClipboard";
+
+function MyComponent() {
+  const [copiedText, copy] = useClipboard();
+
+  const handleCopy = () => {
+    copy("Hello, world!", () => {
+      console.log("Text copied to clipboard!");
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={handleCopy}>Copy Text</button>
+      <p>Copied Text: {copiedText}</p>
+    </div>
+  );
+}
 ```
 
 ## Reference
