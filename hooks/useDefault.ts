@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 /**
  * A custom hook that returns a state and a function to update it.
  * @param defaultValue
- * @returns
+ * @returns {[T, (newValue: T | null) => void]}
  */
 export const useDefault = <T>(defaultValue: T | null) => {
   const [state, setState] = useState<T | null>(() => defaultValue);
