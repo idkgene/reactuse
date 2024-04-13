@@ -5,7 +5,18 @@ A dynamic React hook that tracks the current `readyState` of the document ðŸ“„ðŸ
 ## Usage
 
 ```tsx
-Under Construction
+import { useDocumentReadyState } from "./hooks/useDocumentReadyState";
+
+function MyComponent() {
+  const readyState = useDocumentReadyState();
+
+  return (
+    <div>
+      <h1>My Component</h1>
+      <p>Document Ready State: {readyState}</p>
+    </div>
+  );
+}
 ```
 
 ## Reference
