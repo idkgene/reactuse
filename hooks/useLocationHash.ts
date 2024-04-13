@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 
+/**
+ * A custom hook that returns the current hash of the URL.
+ * @returns {string} The current hash of the URL.
+ */
 const useLocationHash = (): string => {
   const [hash, setHash] = useState(() => {
     if (typeof window !== 'undefined') {
