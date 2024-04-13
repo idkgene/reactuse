@@ -14,7 +14,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useDocumentReadyState`](/docs/useDocumentReadyState.md): A hook that returns the document ready state, which is useful for detecting when the document is fully loaded.
 - [`useDocumentTitle`](/docs/useDocumentTitle.md): A hook that sets the document title based on a given string.
 - [`useDrag`](/docs/useDrag.md): A hook that provides a convenient way to handle drag in React.
-- `useEffectOnce`: A hook that runs an effect only once, on the initial render.
+- [`useEffectOnce`](/docs/useEffectOnce.md): A hook that runs an effect only once, on the initial render.
 - `useEventListener`: A hook that adds an event listener to a specified target and removes it when the component unmounts.
 - `useFavicon`: A hook that sets the favicon of the document.
 - `useFirstMountState`: A hook that returns true if the component is being rendered for the first time.
