@@ -19,11 +19,11 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useFavicon`](/docs/useFavicon.md): A hook that sets the favicon of the document.
 - [`useFetch`](/docs/useFetch.md): A hook that simplifies fetching data from an API.
 - [`useFirstMountState`](/docs/useFirstMountState.md): A hook that returns true if the component is being rendered for the first time.
-- `useFoucFix`: A hook that fixes the focus issue in Next JS.
-- `useGeolocation`: A hook that alows to get the current geolocation of the user.
-- `useHover`: A hook that tracks the hover state of a given ref.
-- `useIdle`: A hook that tracks whether the user is idle or active based on mouse and keyboard events.
-- `useIntersectionObserver`: A hook that observes the intersection of a target element with an ancestor element or the viewport.
+- [`useFoucFix`](/docs/useFoucFix.md): A hook that fixes the focus issue in Next JS.
+- [`useGeolocation`](/docs/useGeolocation.md): A hook that alows to get the current geolocation of the user.
+- [`useHover`](/docs/useHover.md): A hook that tracks the hover state of a given ref.
+- [`useIdle`](/docs/useIdle.md): A hook that tracks whether the user is idle or active based on mouse and keyboard events.
+- [`useIntersectionObserver`](/docs/useIntersectionObserver.md): A hook that observes the intersection of a target element with an ancestor element or the viewport.
 - `useInterval`: A hook that sets up an interval and clears it after the component unmounts.
 - `useIOSToolbarState`: A hook that returns the current state of the iOS toolbar (visible or hidden).
 - `useIsClient`: A hook that returns true if the current window is a client-side window.
@@ -32,7 +32,11 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useIsVisible`: A hook that returns true if an element is visible within the viewport.
 - `useKeySequence`: A hook that listens for a sequence of keyboard events and triggers a callback when the sequence is completed.
 - `useList`: A hook that manages a list of items and provides convenience methods for adding, removing, and updating items.
+- `useLocationHash`: A hook that allows you to update the URL hash and listen for changes to the hash.
+- `useLogger`: A hook that logs messages to the console.
+- `useLongPress`: A hook that triggers a callback when a user long presses a given element.
 - `useMediaQuery`: A hook that returns true if a given media query matches the current viewport.
+- `useMousePosition`: A hook that returns the current mouse position.
 - [`useMouseWheel`](/docs/useMouseWheel.md): A hook that tracks the mouse wheel movement and provides information about the direction and amount of scrolling.
 - `useMousePosition`: A hook that returns the current mouse position.
 - [`useNetworkState`](/docs/useNetworkState.md): A hook that returns the current network state (online/offline).
