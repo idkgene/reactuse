@@ -69,7 +69,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useOrientation`](#useorientation)
     - [`usePageLeave`](#usepageleave)
     - [`useScript`](#usescript)
-    - [`useSessionStorage`](#usesessionstorage)
 
 ---
 
@@ -583,30 +582,6 @@ function MyComponent() {
   useScript("https://example.com/script.js");
 
   return <div>My Component</div>;
-}
-```
-
----
-
-#### `useSessionStorage`
-
-The `useSessionStorage` hook is a utility that provides a convenient way to interact with session storage. It allows you to store and retrieve data in the session storage of the browser.
-
-```tsx
-import { useSessionStorage } from "./hooks/useSessionStorage";
-
-function MyComponent() {
-  const [storedValue, setStoredValue] = useSessionStorage(
-    "my-key",
-    "initial-value"
-  );
-
-  return (
-    <div>
-      <p>Stored Value: {storedValue}</p>
-      <button onClick={() => setStoredValue("new-value")}>Set Value</button>
-    </div>
-  );
 }
 ```
 
