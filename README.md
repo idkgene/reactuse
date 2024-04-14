@@ -35,6 +35,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
   useOnClickOutside: A hook that triggers a callback when a click event occurs outside of a specified ref.
 - `useMousePosition`: A hook that returns the current mouse position.
 - `useNetworkState`: A hook that returns the current network state (online/offline).
+- [`useOnClickOutside`](/docs/useOnClickOutside.md): A hook that triggers a callback when a click event occurs outside of a specified ref.
 - [`useOrientation`](/docs/useOrientation.md): A hook that returns the current orientation of the device (portrait or landscape).
 - [`usePageLeave`](/docs/usePageLeave.md): A hook that triggers a callback when the user attempts to leave the current page.
 - [`usePreferredLanguage`](/docs/usePrefferedLanguage.md): A hook that returns the preferred language code of the browser.
