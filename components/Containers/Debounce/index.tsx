@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDebounce } from "@hooks/useDebounce";
-import { Input } from "@ui-components/input";
+import { Input } from "@/components/UI/input";
 import styles from "./index.module.css";
 
 export default function DebounceShowcase() {

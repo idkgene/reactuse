@@ -1,4 +1,4 @@
-import Alert from "@ui-components/alert";
+import Alert from "@/components/UI/alert";
 import styles from "./index.module.css";
 
 export default function KeySequenceShowcase() {

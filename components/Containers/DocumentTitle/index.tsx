@@ -1,6 +1,6 @@
 import React from "react";
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
-import { Input } from "@ui-components/input";
+import { Input } from "@/components/UI/input";
 import { useState } from "react";
 import styles from "./index.module.css";
 

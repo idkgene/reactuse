@@ -6,11 +6,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import { HooksBlock } from "@ui-showcase/Showcases";
+import { HooksBlock } from "@/components/Showcases";
 import { GithubIcon, SquareTerminal, Triangle } from "lucide-react";
 import { Suspense } from "react";
-import Spinner from "../components/blocks/Spinner";
-import { Button } from "../components/ui/button";
+import Spinner from "../components/Spinner";
+import { Button } from "../components/UI/button";
 import ClientShowcase from "@/components/Containers/Client";
 import ClipboardShowcase from "@/components/Containers/Clipboard";
 import DebounceShowcase from "@/components/Containers/Debounce";
@@ -47,6 +47,8 @@ import UnmountShowcase from "@/components/Containers/Unmount";
 import WindowLoadShowcase from "@/components/Containers/WindowLoad";
 import WindowResizeShowcase from "@/components/Containers/WindowResize";
 import WindowSizeShowcase from "@/components/Containers/WindowSize";
+import MyComponent from "@/components/Containers/Logger";
+import ComponentTest from "@/components/Containers/Default";
 
 export default function Dashboard() {
   return (
@@ -150,6 +152,8 @@ export default function Dashboard() {
             <WindowLoadShowcase />
             <WindowResizeShowcase />
             <WindowSizeShowcase />
+            <MyComponent prop1={"Hello"} prop2={"World"} />
+            <ComponentTest />
           </HooksBlock>
         </main>
       </div>

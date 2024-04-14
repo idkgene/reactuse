@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../ui/tooltip";
+} from "../../UI/tooltip";
 import styles from "./index.module.css";
 
 export default function IntervalShowcase() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "@ui-components/input";
+import { Input } from "@/components/UI/input";
 import { useState } from "react";
 import styles from "./index.module.css";
 

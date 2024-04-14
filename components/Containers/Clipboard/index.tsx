@@ -1,6 +1,6 @@
 import { useCopyToClipBoard } from "@hooks/useClipboard";
-import { Button } from "@ui-components/button";
-import { Input } from "@ui-components/input";
+import { Button } from "@/components/UI/button";
+import { Input } from "@/components/UI/input";
 import React from "react";
 import styles from "./index.module.css";
 
