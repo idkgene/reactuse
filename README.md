@@ -37,7 +37,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useNetworkState`: A hook that returns the current network state (online/offline).
 - `useOrientation`: A hook that returns the current orientation of the device (portrait or landscape).
 - `usePageLeave`: A hook that triggers a callback when the user attempts to leave the current page.
-- `useRect`: A hook that returns the current dimensions of a DOM element.
+- [`useRect`](/docs//useRect.md): A hook that returns the current dimensions of a DOM element.
 - [`useScript`](/docs/useScript.md): A hook that dynamically loads an external script.
 - [`useSessionStorage`](/docs/useSessionStorage.md): A hook that provides a convenient way to interact with session storage.
 - [`useThrottle`](/docs/useThrottle.md): A hook that throttles a value, ensuring that it is only updated at most once per specified duration.
