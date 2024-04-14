@@ -25,7 +25,7 @@ const MyComponent = () => {
 export function useIdle(ms?: number): boolean;
 ```
 
-## Under the hood
+## Under the Hood
 
 The useIdle hook utilizes React's `useState` and `useEffect` hooks to manage the idle state and set up event listeners. It listens for various user events such as `mousemove`, `mousedown`, `resize`, `keydown`, `touchstart`, and `wheel` to determine if the user is active.
 

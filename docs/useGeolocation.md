@@ -74,7 +74,7 @@ export function useGeolocation(): {
 };
 ```
 
-## Under the hood
+## Under the Hood
 
 The `useGeolocation` hook leverages React's `useEffect` hook to manage the geolocation data and updates. It first checks if the Geolocation API is supported by the browser. If not, it sets an error state and returns early. If supported, it defines success and error callback functions to handle the geolocation data and errors respectively.
 

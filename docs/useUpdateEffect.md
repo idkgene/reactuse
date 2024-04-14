@@ -33,7 +33,7 @@ const MyComponent = () => {
 export const useUpdateEffect: typeof useEffect;
 ```
 
-## Under the hood
+## Under the Hood
 
 The `useUpdateEffect` hook leverages the power of React's `useEffect` and `useRef` hooks to intelligently determine when to execute the effect function. By utilizing a ref to track the component's mount status, it ensures that the effect is only triggered after the initial render. 🎯
 

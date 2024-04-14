@@ -33,6 +33,6 @@ export function useOrientation(): {
 };
 ```
 
-## Under the hood
+## Under the Hood
 
 The `useOrientation` hook leverages React's `useLayoutEffect` and `useState` hooks to efficiently detect and update the device orientation state. It listens for the `change` event on the `window.screen.orientation` object, if available, or falls back to the `orientationchange` event on the window object for older browsers. The hook updates the orientation state whenever a change in the device orientation is detected, providing the current angle and orientation type.
