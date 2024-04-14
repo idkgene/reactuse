@@ -3,7 +3,7 @@
  * @param {string} title - The new title to set for the document.
  */
 
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 export function useDocumentTitle(title: string) {
   /**
@@ -12,7 +12,7 @@ export function useDocumentTitle(title: string) {
    */
   useEffect(() => {
     if (title) {
-      document.title = title
+      document.title = title;
     }
-  }, [title]) // Only re-run the effect if the `title` value changes
+  }, [title]); // Only re-run the effect if the `title` value changes
 }
