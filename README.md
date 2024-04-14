@@ -24,11 +24,11 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useHover`](/docs/useHover.md): A hook that tracks the hover state of a given ref.
 - [`useIdle`](/docs/useIdle.md): A hook that tracks whether the user is idle or active based on mouse and keyboard events.
 - [`useIntersectionObserver`](/docs/useIntersectionObserver.md): A hook that observes the intersection of a target element with an ancestor element or the viewport.
-- `useInterval`: A hook that sets up an interval and clears it after the component unmounts.
-- `useIOSToolbarState`: A hook that returns the current state of the iOS toolbar (visible or hidden).
-- `useIsClient`: A hook that returns true if the current window is a client-side window.
-- `useIsomorphicLayoutEffect`: A hook that resolves to useEffect on the server and useLayoutEffect on the client.
-- `useIsTouchDevice`: A hook that returns true if the current window is a touch device.
+- [`useInterval`](/docs/useInterval.md): A hook that sets up an interval and clears it after the component unmounts.
+- [`useIOSToolbarState`](/docs/useIOSToolbarState.md): A hook that returns the current state of the iOS toolbar (visible or hidden).
+- [`useIsClient`](/docs/useIsClient.md): A hook that returns true if the current window is a client-side window.
+- [`useIsomorphicLayoutEffect`](/docs/useIsomorphicLayoutEffect.md): A hook that resolves to useEffect on the server and useLayoutEffect on the client.
+- [`useIsTouchDevice`](/docs/useIsTouchDevice.md): A hook that returns true if the current window is a touch device.
 - `useIsVisible`: A hook that returns true if an element is visible within the viewport.
 - `useKeySequence`: A hook that listens for a sequence of keyboard events and triggers a callback when the sequence is completed.
 - `useList`: A hook that manages a list of items and provides convenience methods for adding, removing, and updating items.
