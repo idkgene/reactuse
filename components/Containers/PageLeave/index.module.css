@@ -1,5 +1,5 @@
 .container {
-  @apply "grid gap-3 p-4 border rounded-lg
+  @apply grid gap-3 p-4 border rounded-lg
 }
 
 .container h2 {
