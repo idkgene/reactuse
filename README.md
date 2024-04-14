@@ -40,7 +40,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useRect`: A hook that returns the current dimensions of a DOM element.
 - `useScript`: A hook that dynamically loads an external script.
 - `useSessionStorage`: A hook that provides a convenient way to interact with session storage.
-- `useThrottle`: A hook that throttles a value, ensuring that it is only updated at most once per specified duration.
+- [`useThrottle`](/docs/useThrottle.md): A hook that throttles a value, ensuring that it is only updated at most once per specified duration.
 - [`useUnmout`](/docs/useUnmout.md): A hook that triggers a callback when the component unmounts.
 - [`useUpdateEffect`](/docs/useUpdateEffect.md): A hook that runs an effect only when the dependencies change, skipping the initial render.
 - [`useWindowSize`](/docs/useWindowSize.md): A hook that returns the current size of the browser window.
