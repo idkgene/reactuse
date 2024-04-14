@@ -43,6 +43,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useThrottle`](/docs/useThrottle.md): A hook that throttles a value, ensuring that it is only updated at most once per specified duration.
 - [`useUnmout`](/docs/useUnmout.md): A hook that triggers a callback when the component unmounts.
 - [`useUpdateEffect`](/docs/useUpdateEffect.md): A hook that runs an effect only when the dependencies change, skipping the initial render.
+- `useWindowLoad`: A hook that returns a boolean value indicating whether the window has finished loading.
 - [`useWindowResize`](/docs/useWindowResize.md): A hook that returns the current size of the browser window.
 - [`useWindowSize`](/docs/useWindowSize.md): A hook that returns the current size of the browser window.
 
