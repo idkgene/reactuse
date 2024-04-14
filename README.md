@@ -68,8 +68,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useList`](#uselist)
     - [`useMediaQuery`](#usemediaquery)
     - [`useOnClickOutside`](#useonclickoutside)
-    - [`useOrientation`](#useorientation)
-    - [`usePageLeave`](#usepageleave)
 
 ---
 
@@ -512,8 +510,6 @@ function MyComponent() {
 
 ---
 
-#### `useOrientation`
-
 The `useOrientation` hook is a utility that provides the current orientation of the device or browser window. It returns an object containing the angle and type of the device orientation.
 
 ```tsx
@@ -528,24 +524,6 @@ function MyComponent() {
       <p>Device Type: {type}</p>
     </div>
   );
-}
-```
-
----
-
-#### `usePageLeave`
-
-The `usePageLeave` hook is a utility that triggers a callback when the user attempts to leave the current page. It provides a way to handle page transitions or perform cleanup tasks when the user navigates away from the page.
-
-```tsx
-import { usePageLeave } from "./hooks/usePageLeave";
-
-function MyComponent() {
-  usePageLeave(() => {
-    console.log("User has left the page");
-  });
-
-  return <div>Click the button to leave the page</div>;
 }
 ```
 
