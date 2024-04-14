@@ -6,14 +6,14 @@ This is a collection of custom React hooks that are designed to simplify and imp
 
 ## 🔋 Device and Browser
 
-- [useBattery](/docs/useBattery.md): Provides information about the battery level of the device.
-- [useConnectedDevice](/docs/useConnectedDevice.md): Returns information about the connected device, such as the device type, battery level, and signal strength.
-- [useGeolocation](/docs/useGeolocation.md): Retrieves the current geolocation of the user.
-- [useIsTouchDevice](/docs/useIsTouchDevice.md): Detects if the current window is a touch device.
-- [useMediaQuery](/docs/useMediaQuery.md): Checks if a given media query matches the current viewport.
-- [useNetworkState](/docs/useNetworkState.md): Returns the current network state (online/offline).
-- [useOrientation](/docs/useOrientation.md): Returns the current orientation of the device (portrait or landscape).
-- [usePreferredLanguage](/docs/usePrefferedLanguage.md): Returns the preferred language code of the browser.
+- [`useBattery`](/docs/useBattery.md): Provides information about the battery level of the device.
+- [`useDeviceOrientation`](/docs/useDeviceOrientation.md): Provides information about the device orientation.
+- [`useConnectedDevice`](/docs/useConnectedDevice.md): Returns information about the connected device, such as the device type, battery level, and signal strength.
+- [`useGeolocation`](/docs/useGeolocation.md): Retrieves the current geolocation of the user.
+- [`useIsTouchDevice`](/docs/useIsTouchDevice.md): Detects if the current window is a touch device.
+- [`useMediaQuery`](/docs/useMediaQuery.md): Checks if a given media query matches the current viewport.
+- [`useNetworkState`](/docs/useNetworkState.md): Returns the current network state (online/offline).
+- [`useOrientation`](/docs/useOrientation.md): Returns the current orientation of the device (portrait or landscape).
 
 ## 🖱️ User Interaction
 
