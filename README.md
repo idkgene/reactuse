@@ -69,7 +69,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`usePageLeave`](#usepageleave)
     - [`useScript`](#usescript)
     - [`useSessionStorage`](#usesessionstorage)
-    - [`useThrottle`](#usethrottle)
 
 ---
 
@@ -611,8 +610,6 @@ function MyComponent() {
 ```
 
 ---
-
-#### `useThrottle`
 
 The `useThrottle` hook is a utility that throttles the update of a value, ensuring that it is only updated at most once per specified duration. It allows you to limit the frequency of updates to a value, which can be useful in scenarios where you want to perform an action or update a state only once per user interaction.
 
