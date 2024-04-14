@@ -20,11 +20,10 @@
     "paths": {
       "@/*": ["./*"],
       "@hooks/*": ["./hooks/*"],
-      "@ui-components/*": ["./components/ui/*"],
-      "@ui-showcase/*": ["./components/blocks/*"],
+      "@ui-components/*": ["./components/UI/*"],
+      "@ui-containers": ["./components/Containers/*"],
       "@lib": ["./lib/utils.ts"],
       "@utils": ["./utils/utils.ts"]
-
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
