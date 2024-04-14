@@ -36,7 +36,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useMousePosition`: A hook that returns the current mouse position.
 - `useNetworkState`: A hook that returns the current network state (online/offline).
 - `useOrientation`: A hook that returns the current orientation of the device (portrait or landscape).
-- `usePageLeave`: A hook that triggers a callback when the user attempts to leave the current page.
+- [`usePageLeave`](/docs/usePageLeave.md): A hook that triggers a callback when the user attempts to leave the current page.
 - [`usePreferredLanguage`](/docs/usePrefferedLanguage.md): A hook that returns the preferred language code of the browser.
 - [`useRect`](/docs//useRect.md): A hook that returns the current dimensions of a DOM element.
 - [`useScript`](/docs/useScript.md): A hook that dynamically loads an external script.
