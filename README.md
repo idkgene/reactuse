@@ -42,7 +42,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useSessionStorage`: A hook that provides a convenient way to interact with session storage.
 - `useThrottle`: A hook that throttles a value, ensuring that it is only updated at most once per specified duration.
 - `useUnmount`: A hook that triggers a callback when the component unmounts.
-- `useUpdateEffect`: A hook that runs an effect only when the dependencies change, skipping the initial render.
+- [`useUpdateEffect`](/docs/useUpdateEffect.md): A hook that runs an effect only when the dependencies change, skipping the initial render.
 - [`useWindowSize`](/docs/useWindowSize.md): A hook that returns the current size of the browser window.
 
 ### Usage
@@ -71,7 +71,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useSessionStorage`](#usesessionstorage)
     - [`useThrottle`](#usethrottle)
     - [`useUnmout`](#useunmout)
-    - [`useUpdateEffect`](#useupdateeffect)
 
 ---
 
@@ -653,26 +652,3 @@ function MyComponent() {
 ```
 
 ---
-
-#### `useUpdateEffect`
-
-The `useUpdateEffect` hook is a utility that runs an effect function only when the dependencies change, skipping the initial render. It allows you to perform side effects or update state based on the values of the dependencies.
-
-```tsx
-import { useUpdateEffect } from "./hooks/useUpdateEffect";
-
-function MyComponent() {
-  const [count, setCount] = useState(0);
-
-  useUpdateEffect(() => {
-    console.log("Count has been updated");
-  }, [count]);
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-    </div>
-  );
-}
-```
