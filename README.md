@@ -70,7 +70,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useScript`](#usescript)
     - [`useSessionStorage`](#usesessionstorage)
     - [`useThrottle`](#usethrottle)
-    - [`useUnmout`](#useunmout)
 
 ---
 
@@ -630,24 +629,6 @@ function MyComponent() {
       <button onClick={() => setValue(value + 1)}>Increment</button>
     </div>
   );
-}
-```
-
----
-
-#### `useUnmout`
-
-The `useUnmout` hook is a utility that allows you to execute a function when a component is unmounted. It provides a way to clean up resources or perform cleanup tasks when a component is removed from the DOM.
-
-```tsx
-import { useUnmout } from "./hooks/useUnmout";
-
-function MyComponent() {
-  useUnmout(() => {
-    console.log("Component has been unmounted");
-  });
-
-  return <div>My Component</div>;
 }
 ```
 
