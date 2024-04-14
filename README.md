@@ -549,24 +549,3 @@ function MyComponent() {
 ```
 
 ---
-
-`useRect`
-
-The `useRect` hook is a utility that returns the current dimensions of a DOM element. It provides a `width` and `height` property that represent the width and height of the element, respectively.
-
-```tsx
-import { useRect } from "./hooks/useRect";
-
-function MyComponent() {
-  const { width, height } = useRect(document.getElementById("my-element"));
-
-  return (
-    <div>
-      <p>Element Width: {width}</p>
-      <p>Element Height: {height}</p>
-    </div>
-  );
-}
-```
-
----
