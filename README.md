@@ -68,7 +68,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useOnClickOutside`](#useonclickoutside)
     - [`useOrientation`](#useorientation)
     - [`usePageLeave`](#usepageleave)
-    - [`useScript`](#usescript)
 
 ---
 
@@ -566,22 +565,6 @@ function MyComponent() {
       <p>Element Height: {height}</p>
     </div>
   );
-}
-```
-
----
-
-#### `useScript`
-
-The `useScript` hook is a utility that dynamically loads an external script from a given URL. It allows you to load and execute scripts in your React components without having to use the `<script>` tag directly.
-
-```tsx
-import { useScript } from "./hooks/useScript";
-
-function MyComponent() {
-  useScript("https://example.com/script.js");
-
-  return <div>My Component</div>;
 }
 ```
 
