@@ -18,7 +18,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - [`useEventListener`](/docs/useEventListener.md): A hook that adds an event listener to a specified target and removes it when the component unmounts.
 - [`useFavicon`](/docs/useFavicon.md): A hook that sets the favicon of the document.
 - [`useFetch`](/docs/useFetch.md): A hook that simplifies fetching data from an API.
-- `useFirstMountState`: A hook that returns true if the component is being rendered for the first time.
+- [`useFirstMountState`](/docs/useFirstMountState.md): A hook that returns true if the component is being rendered for the first time.
 - `useFoucFix`: A hook that fixes the focus issue in Next JS.
 - `useGeolocation`: A hook that alows to get the current geolocation of the user.
 - `useHover`: A hook that tracks the hover state of a given ref.
