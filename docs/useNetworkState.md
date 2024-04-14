@@ -34,7 +34,3 @@ interface NetworkState {
  */
 export function useNetworkState(): NetworkState;
 ```
-
-## Under the hood
-
-The `useNetworkState` hook leverages React's `useState` and `useEffect` hooks to efficiently monitor and update the network state. It listens for the `online` and `offline` events to detect changes in the device's online status. Additionally, it utilizes the `navigator.connection` API, when available, to retrieve information about the network connection speed and type. The hook updates the network state whenever changes occur, providing the latest information to your components.

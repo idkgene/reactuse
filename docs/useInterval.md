@@ -25,11 +25,3 @@ const MyComponent = () => {
  */
 export function useInterval(callback: () => void, delay: number | null): void;
 ```
-
-## Under the hood
-
-The `useInterval` hook utilizes React's `useEffect` and `useRef` hooks to manage the interval and ensure that the latest callback function is always executed.
-
-The `useRef` hook is used to store the latest version of the callback function, which is updated whenever the callback changes using the `useIsomorphicLayoutEffect` hook.
-
-The `useEffect` hook is responsible for setting up and clearing the interval based on the provided `delay`. If the `delay` is `null` or `undefined`, the interval is not set.

@@ -31,9 +31,3 @@ height: number;
 */
   export const useWindowSize = (): WindowSize;
 ```
-
-## Under the Hood
-
-The `useWindowSize` hook leverages the power of React's `useState` and `useEffect` hooks to efficiently monitor changes in the window size. By attaching an event listener to the 'resize' event, it ensures that the component stays in sync with the latest window dimensions. 🚀
-
-With just a few lines of code, `useWindowSize` abstracts away the complexities of window size tracking, allowing you to focus on building responsive and adaptive user interfaces. Whether you need to adjust layouts, resize elements, or trigger specific behaviors based on the window size, this hook has got you covered. 💪

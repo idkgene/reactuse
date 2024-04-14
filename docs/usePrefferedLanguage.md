@@ -32,7 +32,3 @@ type LanguageCode = string;
  */
 const usePreferredLanguage = (): LanguageCode;
 ```
-
-## Under the Hood
-
-The `usePreferredLanguage` hook utilizes React's `useState` and `useEffect` hooks to manage the preferred language state and handle the language change event. It retrieves the preferred language code from the browser's `navigator.language` property and updates the state accordingly. The hook also listens for the `languagechange` event to detect any changes in the user's preferred language and updates the state in real-time.

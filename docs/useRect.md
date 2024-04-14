@@ -33,7 +33,3 @@ const MyComponent = () => {
  */
 export const useRect = (ref: MutableRefObject<HTMLElement | null>): DOMRect | null;
 ```
-
-## Under the Hood
-
-The `useRect` hook leverages the power of React's `useCallback`, `useLayoutEffect`, and `useState` hooks to efficiently observe and update the size and position of the specified HTML element. It utilizes the `ResizeObserver` API, when available, to detect changes in the element's dimensions and falls back to the `resize` event listener for older browsers. The hook returns the current size and position of the element as a `DOMRect` object or `null` if the element is not available.

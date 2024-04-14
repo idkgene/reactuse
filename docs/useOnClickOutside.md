@@ -36,7 +36,3 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
   mouseEvent: "mousedown" | "mouseup" = "mousedown"
 ): void;
 ```
-
-## Under the Hood
-
-The `useOnClickOutside` hook leverages the `useEventListener` hook to efficiently attach an event listener to the specified mouse event (`mousedown` or `mouseup`). When the event is triggered, the hook checks if the click occurred outside the referenced DOM element by comparing the click target with the element and its descendants. If the click is outside the element, the provided handler function is invoked.

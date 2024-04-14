@@ -40,15 +40,3 @@ export function useIntersectionObserver(
   options: Args
 ): IntersectionObserverEntry | undefined;
 ```
-
-## Under the hood
-
-The `useIntersectionObserver` hook leverages React's `useState` and `useEffect` hooks to manage the intersection entry state and set up the Intersection Observer.
-
-It first checks if the Intersection Observer API is supported by the browser. If not supported or if the observer is frozen (when `freezeOnceVisible` is set to `true` and the element has already intersected), the hook returns early.
-
-The hook then creates a new `IntersectionObserver` instance with the provided options and a callback function to update the intersection entry state. It observes the target element referenced by `elementRef`.
-
-The`useEffect` hook is used to set up the observer when the component mounts and to disconnect the observer when the component unmounts. It also triggers the effect whenever the `elementRef`, `threshold`, `root`, or `rootMargin` options change.
-
-Finally, the hook returns the current `IntersectionObserverEntry` object, which contains information about the intersection state of the target element, or `undefined` if the Intersection Observer API is not supported or if the observer is frozen.

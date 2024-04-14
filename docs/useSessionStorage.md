@@ -51,7 +51,3 @@ export function useSessionStorage(
   initialValue?: InitialValueType
 ): Readonly<[StoredValue, SetValue, RemoveValue]>;
 ```
-
-## Under the hood
-
-The `useSessionStorage` hook leverages React's `useState` hook to manage the stored value state. It retrieves the initial value from session storage using the provided key, falling back to the specified initial value if no stored value exists. The hook returns an array containing the stored value, a function to update the value, and a function to remove the value from session storage. It ensures proper JSON serialization and deserialization of the stored values and gracefully handles any errors that may occur during the process.

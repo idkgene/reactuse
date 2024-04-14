@@ -70,7 +70,3 @@ export function useFetch<TData = unknown>(
   options: UseFetchOptions<TData> = {}
 ): UseFetchResult<TData>;
 ```
-
-## Under the Hood
-
-The `useFetch` hook leverages React's `useState`, `useEffect`, and `useCallback` hooks to manage the fetching process and provide a seamless data fetching experience. It supports various HTTP client libraries, including Axios, Ky, Fetch API, and React Query, allowing you to choose the library that best fits your project's needs. The hook abstracts away the complexities of making HTTP requests and handling responses, providing a clean and intuitive interface for fetching data in your components.

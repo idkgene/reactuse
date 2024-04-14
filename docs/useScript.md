@@ -22,6 +22,3 @@ const MyComponent = () => {
  */
 export const useScript = (url: string) => void;
 ```
-
-Under the Hood
-The useScript hook leverages React's `useEffect` hook to dynamically create a `<script>` element and append it to the document's `<body>`. It sets the `src` attribute of the script to the provided URL and marks it as `async` for non-blocking execution. When the component unmounts, the hook removes the script element from the document to prevent memory leaks.

@@ -30,7 +30,3 @@ export function useIOSToolbarState(): {
   isVisible: boolean | undefined;
 };
 ```
-
-## Under the Hood
-
-The `useIOSToolbarState` hook utilizes React's `useState` and `useEffect` hooks to manage the visibility state of the iOS toolbar. It checks if the user is using iOS Safari and if the web app is running in standalone mode. If both conditions are met, it adds a scroll event listener to detect changes in the window height and updates the `isVisible` state accordingly. The event listener is removed when the component unmounts to prevent memory leaks.  

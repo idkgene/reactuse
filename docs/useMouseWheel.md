@@ -27,7 +27,3 @@ const MyComponent = () => {
  */
 const useMouseScrollDeltaY = (): number;
 ```
-
-## Under the Hood
-
-The `useMouseScrollDeltaY` hook utilizes React's `useState` and `useEffect` hooks to efficiently track and update the vertical scroll delta of the mouse wheel. It attaches a wheel event listener to the `window` object, capturing the `deltaY` value from the event object whenever the mouse wheel is scrolled. The hook updates the `deltaY` state with the latest scroll delta value, providing real-time updates to your components.

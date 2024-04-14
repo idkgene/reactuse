@@ -26,11 +26,3 @@ const MyComponent = () => {
  */
 export function useHover<T extends HTMLElement>(): [RefObject<T>, boolean];
 ```
-
-## Under the Hood
-
-The useHover hook utilizes React's `useRef` and `useState` hooks to manage the ref object and hover state respectively. It also leverages the `useEffect` hook to attach and remove event listeners for the `mouseenter` and `mouseleave` events on the target element.
-
-When the target element is hovered over, the `mouseenter` event is triggered, setting the hover state to `true`. Conversely, when the mouse leaves the target element, the `mouseleave` event is triggered, setting the hover state to `false`.
-
-The hook returns an array containing the ref object to be attached to the target element and the current hover state. This allows for easy integration and utilization of the hover functionality within your React components.

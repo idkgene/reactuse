@@ -73,13 +73,3 @@ export function useGeolocation(): {
   error: GeolocationPositionError | null;
 };
 ```
-
-## Under the Hood
-
-The `useGeolocation` hook leverages React's `useEffect` hook to manage the geolocation data and updates. It first checks if the Geolocation API is supported by the browser. If not, it sets an error state and returns early. If supported, it defines success and error callback functions to handle the geolocation data and errors respectively.
-
-The hook then calls the `watchPosition` method of the Geolocation API, passing the success and error callbacks along with options for high accuracy, timeout, and maximum age. This method continuously monitors the device's position and triggers the appropriate callback whenever the position changes.
-
-The hook extracts the relevant properties from the `position` object returned by the Geolocation API, such as latitude, longitude, accuracy, altitude, heading, and speed. It also keeps track of the loading state and any errors that may occur.
-
-Finally, the hook returns an object containing the geolocation data, loading state, and error state, which can be easily accessed and used within your React components.

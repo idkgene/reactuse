@@ -26,7 +26,3 @@ const MyComponent = () => {
  */
 export const usePageLeave = (onPageLeave: () => void, args: readonly any[] = []): void;
 ```
-
-## Under the Hood
-
-The `usePageLeave` hook leverages React's `useCallback` and `useEffect` hooks to efficiently handle the page leave event. It attaches a `mouseout` event listener to the `document` object and checks if the mouse has moved outside the page boundaries. When the user's mouse leaves the page, the provided `onPageLeave` callback function is invoked, allowing you to perform any necessary actions or cleanup tasks.
