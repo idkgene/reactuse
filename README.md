@@ -507,24 +507,3 @@ function MyComponent() {
   );
 }
 ```
-
----
-
-The `useOrientation` hook is a utility that provides the current orientation of the device or browser window. It returns an object containing the angle and type of the device orientation.
-
-```tsx
-import { useOrientation } from "./hooks/useOrientation";
-
-function MyComponent() {
-  const { angle, type } = useOrientation();
-
-  return (
-    <div>
-      <p>Device Orientation: {angle} degrees</p>
-      <p>Device Type: {type}</p>
-    </div>
-  );
-}
-```
-
----
