@@ -33,7 +33,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useList`: A hook that manages a list of items and provides convenience methods for adding, removing, and updating items.
 - `useMediaQuery`: A hook that returns true if a given media query matches the current viewport.
 - `useMousePosition`: A hook that returns the current mouse position.
-- `useNetworkState`: A hook that returns the current network state (online/offline).
+- [`useNetworkState`](/docs/useNetworkState.md): A hook that returns the current network state (online/offline).
 - [`useOnClickOutside`](/docs/useOnClickOutside.md): A hook that triggers a callback when a click event occurs outside of a specified ref.
 - [`useOrientation`](/docs/useOrientation.md): A hook that returns the current orientation of the device (portrait or landscape).
 - [`usePageLeave`](/docs/usePageLeave.md): A hook that triggers a callback when the user attempts to leave the current page.
