@@ -610,23 +610,3 @@ function MyComponent() {
 ```
 
 ---
-
-The `useThrottle` hook is a utility that throttles the update of a value, ensuring that it is only updated at most once per specified duration. It allows you to limit the frequency of updates to a value, which can be useful in scenarios where you want to perform an action or update a state only once per user interaction.
-
-```tsx
-import { useThrottle } from "./hooks/useThrottle";
-
-function MyComponent() {
-  const [value, setValue] = useState(0);
-  const throttledValue = useThrottle(value, 500);
-
-  return (
-    <div>
-      <p>Throttled Value: {throttledValue}</p>
-      <button onClick={() => setValue(value + 1)}>Increment</button>
-    </div>
-  );
-}
-```
-
----
