@@ -32,6 +32,7 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useKeySequence`: A hook that listens for a sequence of keyboard events and triggers a callback when the sequence is completed.
 - `useList`: A hook that manages a list of items and provides convenience methods for adding, removing, and updating items.
 - `useMediaQuery`: A hook that returns true if a given media query matches the current viewport.
+- [`useMouseWheel`](/docs/useMouseWheel.md): A hook that tracks the mouse wheel movement and provides information about the direction and amount of scrolling.
 - `useMousePosition`: A hook that returns the current mouse position.
 - [`useNetworkState`](/docs/useNetworkState.md): A hook that returns the current network state (online/offline).
 - [`useOnClickOutside`](/docs/useOnClickOutside.md): A hook that triggers a callback when a click event occurs outside of a specified ref.
