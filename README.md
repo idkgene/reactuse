@@ -72,7 +72,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useThrottle`](#usethrottle)
     - [`useUnmout`](#useunmout)
     - [`useUpdateEffect`](#useupdateeffect)
-    - [`useWindowSize`](#usewindowsize)
 
 ---
 
@@ -673,28 +672,6 @@ function MyComponent() {
     <div>
       <p>Count: {count}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
-    </div>
-  );
-}
-```
-
----
-
-#### `useWindowSize`
-
-The `useWindowSize` hook is a utility that returns the current size of the browser window. It provides an object containing the width and height of the window.
-
-```tsx
-import { useWindowSize } from "./hooks/useWindowSize";
-
-function MyComponent() {
-  const { width, height } = useWindowSize();
-
-  return (
-    <div>
-      <p>
-        Window Size: {width}x{height}
-      </p>
     </div>
   );
 }
