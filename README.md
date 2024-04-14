@@ -65,5 +65,5 @@ This is a collection of custom React hooks that are designed to simplify and imp
 
 ## 🎨 UI and Layout
 
-- [`useFocusFix`](/docs/useFocusFix.md): Fixes the focus issue in Next.js.
+- [`useFoucFix`](/docs/useFoucFix.md.md): Fixes the flash of content issue in Next.js.
 - [`useRect`](/docs/useRect.md): Returns the current dimensions of a DOM element.
