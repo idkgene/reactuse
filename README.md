@@ -32,7 +32,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
 - `useKeySequence`: A hook that listens for a sequence of keyboard events and triggers a callback when the sequence is completed.
 - `useList`: A hook that manages a list of items and provides convenience methods for adding, removing, and updating items.
 - `useMediaQuery`: A hook that returns true if a given media query matches the current viewport.
-  useOnClickOutside: A hook that triggers a callback when a click event occurs outside of a specified ref.
 - `useMousePosition`: A hook that returns the current mouse position.
 - `useNetworkState`: A hook that returns the current network state (online/offline).
 - [`useOnClickOutside`](/docs/useOnClickOutside.md): A hook that triggers a callback when a click event occurs outside of a specified ref.
@@ -68,7 +67,6 @@ Currently, the following hooks have been implemented and thoroughly (almost) tes
     - [`useKeySequence`](#usekeysequence)
     - [`useList`](#uselist)
     - [`useMediaQuery`](#usemediaquery)
-    - [`useOnClickOutside`](#useonclickoutside)
 
 ---
 
@@ -485,26 +483,3 @@ function MyComponent() {
 ```
 
 ---
-
-#### `useOnClickOutside`
-
-The `useOnClickOutside` hook is a utility that triggers a callback when a click event occurs outside of a specified ref.
-
-```tsx
-import { useRef } from "react";
-import { useOnClickOutside } from "./hooks/useOnClickOutside";
-
-function MyComponent() {
-  const ref = useRef(null);
-
-  useOnClickOutside(ref, () => {
-    console.log("Clicked outside the element");
-  });
-
-  return (
-    <div ref={ref}>
-      <h1>Click outside of this element</h1>
-    </div>
-  );
-}
-```
