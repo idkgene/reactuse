@@ -17,11 +17,11 @@ export const useLogger = <T>(name: T, ...args: LoggerArgs) => {
 
   useEffect(() => {
     console.log(`[${componentsName.current}] Mounted`, ...(args || []));
-
-    return () => {
-      console.log(`[${componentsName.current}] Unmounted`, ...(args || []));
-    };
   }, [componentsName, args]);
+
+  useEffect(() => {
+    console.log(`[${componentsName.current}] Updated`, ...(args || []));
+  }, [args]);
 
   useEffect(() => {
     console.log(`[${componentsName.current}] Updated`, ...(args || []));

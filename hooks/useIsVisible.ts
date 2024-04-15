@@ -7,43 +7,48 @@
  * @returns {UseIsVisibleReturn} An object containing a function to set the ref and a boolean indicating if the element is in view.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type UseIsVisibleArgs = {
-  root?: Element | Document | null
-  rootMargin?: string
-  threshold?: number
-  once?: boolean
-}
+  root?: Element | Document | null;
+  rootMargin?: string;
+  threshold?: number;
+  once?: boolean;
+};
 
 export type UseIsVisibleReturn = {
-  setRef: (node: HTMLElement | null) => void
-  inView: boolean
-}
+  setRef: (node: HTMLElement | null) => void;
+  inView: boolean;
+};
 
+/**
+ * A custom React hook that returns a ref and a boolean indicating if the element is in view.
+ * @param {UseIsVisibleArgs} options - An object containing options for the Intersection Observer.
+ * @returns {UseIsVisibleReturn} An object containing a function to set the ref and a boolean indicating if the element is in view.
+ */
 export function useIsVisible({
   root = null,
-  rootMargin = '0px',
+  rootMargin = "0px",
   threshold = 1.0,
   once = false,
 }: UseIsVisibleArgs): UseIsVisibleReturn {
-  const observer = useRef<IntersectionObserver | null>(null)
-  const ref = useRef<HTMLElement | null>(null)
-  const [inView, setInView] = useState(false)
+  const observer = useRef<IntersectionObserver | null>(null);
+  const ref = useRef<HTMLElement | null>(null);
+  const [inView, setInView] = useState(false);
 
   const setRef = useCallback((node: HTMLElement | null) => {
     if (!ref.current) {
-      ref.current = node
+      ref.current = node;
     }
-  }, [])
+  }, []);
 
   const callbackFunction = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries
-      setInView(entry.isIntersecting)
+      const [entry] = entries;
+      setInView(entry.isIntersecting);
     },
-    [],
-  )
+    []
+  );
 
   useEffect(() => {
     if (ref.current) {
@@ -51,21 +56,21 @@ export function useIsVisible({
         root,
         rootMargin,
         threshold,
-      })
-      observer.current.observe(ref.current)
+      });
+      observer.current.observe(ref.current);
     }
     return () => {
       if (observer.current) {
-        observer.current.disconnect()
+        observer.current.disconnect();
       }
-    }
-  }, [callbackFunction, root, rootMargin, threshold])
+    };
+  }, [callbackFunction, root, rootMargin, threshold]);
 
   useEffect(() => {
     if (once && inView) {
-      observer.current?.disconnect()
+      observer.current?.disconnect();
     }
-  }, [inView, once])
+  }, [inView, once]);
 
-  return { setRef, inView }
+  return { setRef, inView };
 }

@@ -6,10 +6,8 @@ useUnmount
  * @param {T} value - The value to be throttled.
  * @param {number} [ms=200] - The throttle delay in milliseconds.
  * @returns {T} The throttled value.
- *
- * @example
- * const throttledValue = useThrottle(value, 500);
  */
+
 export const useThrottle = <T>(value: T, ms: number = 200) => {
   const [state, setState] = useState<T>(value)
   const timeout = useRef<ReturnType<typeof setTimeout>>()

@@ -14,6 +14,7 @@ export interface UseKeySequenceOptions {
 }
 
 /**
+ * A custom React hook that allows you to detect key sequences.
  * @param {UseKeySequenceOptions} options - An object containing the options for the hook.
  * @returns {null} The hook does not return any value.
  */

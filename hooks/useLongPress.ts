@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
 
-/**
- * @interface LongPressOptions
- * @property {number} duration - The duration of the long press in milliseconds.
- * @default 500
- */
 interface LongPressOptions {
   duration?: number;
 }
@@ -14,6 +9,10 @@ interface LongPressOptions {
  * @param callback
  * @param options
  * @returns {onMouseDown: () => void, onMouseUp: () => void, onTouchStart: () => void, onTouchEnd: () => void}
+ * 
+ * @interface LongPressOptions
+ * @property {number} duration - The duration of the long press in milliseconds.
+ * @default 500 
  */
 const useLongPress = (
   callback: () => void,

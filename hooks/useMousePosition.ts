@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 
 /**
+ * A custom React hook that returns the current mouse position.
  * @returns {Object} An object containing the current mouse position.
  * @returns {number} position.x - The x-coordinate of the mouse position.
  * @returns {number} position.y - The y-coordinate of the mouse position.

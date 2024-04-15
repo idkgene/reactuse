@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
 /**
- * @returns The `useWindowLoad` custom hook returns a boolean value indicating whether the window has finished loading (`isLoaded`).
+
+ * @returns {boolean} A boolean indicating if the window has finished loading.
  */
 
 const useWindowLoad = () => {

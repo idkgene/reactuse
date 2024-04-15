@@ -1,9 +1,9 @@
+import { MutableRefObject, useCallback, useLayoutEffect, useState } from 'react'
+
 /**
  * @param {MutableRefObject<HTMLElement | null>} ref - The reference to the HTML element you want to observe.
  * @returns {DOMRect | null} - The size and position of the observed element, or null if the element is not available.
  */
-
-import { MutableRefObject, useCallback, useLayoutEffect, useState } from 'react'
 
 export const useRect = (ref: MutableRefObject<HTMLElement | null>) => {
   const [rect, setRect] = useState<DOMRect | null>(null)

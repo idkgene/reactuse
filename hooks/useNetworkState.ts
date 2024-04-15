@@ -1,28 +1,12 @@
 
 import { useEffect, useState } from 'react'
 
-/**
- * @interface NetworkState
- * @property {boolean} online - Whether the device is online or offline.
- * @property {number} speed - The current network download speed in Mbps.
- * @property {string} type - The current network connection type (e.g., 'wifi', '4g', '3g', 'unknown').
- */
 interface NetworkState {
   online: boolean
   speed: number
   type: string
 }
 
-/**
- * @interface NavigatorConnection
- * @extends Navigator
- * @property {object} connection - Information about the current network connection.
- * @property {number} connection.downlink - The current download speed in Mbps.
- * @property {string} connection.effectiveType - The current network connection type.
- * @property {function} [connection.onchange] - A callback function that is called when the network connection changes.
- * @property {function} connection.addEventListener - Adds an event listener for network connection changes.
- * @property {function} connection.removeEventListener - Removes an event listener for network connection changes.
- */
 interface NavigatorConnection extends Navigator {
   connection?: {
     downlink: number
@@ -34,7 +18,22 @@ interface NavigatorConnection extends Navigator {
 }
 
 /**
+ * A custom React hook which indicates the current network state.
  * @returns {NetworkState} An object representing the current network state.
+ * 
+ * @interface NetworkState
+ * @property {boolean} online - Whether the device is online or offline.
+ * @property {number} speed - The current network download speed in Mbps.
+ * @property {string} type - The current network connection type (e.g., 'wifi', '4g', '3g', 'unknown').
+ * 
+ * @interface NavigatorConnection
+ * @extends Navigator
+ * @property {object} connection - Information about the current network connection.
+ * @property {number} connection.downlink - The current download speed in Mbps.
+ * @property {string} connection.effectiveType - The current network connection type.
+ * @property {function} [connection.onchange] - A callback function that is called when the network connection changes.
+ * @property {function} connection.addEventListener - Adds an event listener for network connection changes.
+ * @property {function} connection.removeEventListener - Removes an event listener for network connection changes.
  */
 
 export function useNetworkState(): NetworkState {
