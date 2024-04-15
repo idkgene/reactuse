@@ -4,6 +4,11 @@
 
 import { useCallback, useEffect, useState } from 'react'
 
+/**
+ * A custom React hook that returns a boolean indicating if the device is a touch device.
+ * @returns {boolean} A boolean indicating if the device is a touch device.
+ */
+
 export const useIsTouchDevice = () => {
   const [isTouchDevice, setIsTouchDevice] = useState(false)
 
