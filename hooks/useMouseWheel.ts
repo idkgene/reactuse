@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
  * A custom React hook that returns the mouse scroll delta Y
  * @returns {number} The mouse scroll delta Y
  */
-const useMouseScrollDeltaY = (): number => {
+const useMouseWheel = (): number => {
   const [deltaY, setDeltaY] = useState<number>(0);
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const useMouseScrollDeltaY = (): number => {
   return deltaY;
 };
 
-export default useMouseScrollDeltaY;
+export default useMouseWheel;
