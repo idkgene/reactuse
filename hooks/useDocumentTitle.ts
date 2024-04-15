@@ -1,9 +1,10 @@
+
+import { useEffect } from "react";
+
 /**
  * @module useDocumentTitle
  * @param {string} title - The new title to set for the document.
  */
-
-import { useEffect } from "react";
 
 export function useDocumentTitle(title: string) {
   /**

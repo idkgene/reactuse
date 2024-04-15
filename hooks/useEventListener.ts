@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useEffect, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import React from "react";
 
 /**
  * @module useEventListener
@@ -13,8 +14,14 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
  *
  */
 export function useEventListener<
-  K extends keyof WindowEventMap | keyof HTMLElementEventMap | keyof MediaQueryListEventMap,
-  T extends HTMLElement | MediaQueryList | Window = HTMLElement | MediaQueryList | Window
+  K extends
+    | keyof WindowEventMap
+    | keyof HTMLElementEventMap
+    | keyof MediaQueryListEventMap,
+  T extends HTMLElement | MediaQueryList | Window =
+    | HTMLElement
+    | MediaQueryList
+    | Window
 >(
   eventName: K,
   handler: (event: Event) => void,
@@ -30,11 +37,15 @@ export function useEventListener<
   useEffect(() => {
     const targetElement: T | Window = element?.current ?? window;
 
-    if (targetElement && typeof targetElement.addEventListener === 'function') {
+    if (targetElement && typeof targetElement.addEventListener === "function") {
       targetElement.addEventListener(eventName, handlerRef.current, options);
 
       return () => {
-        targetElement.removeEventListener(eventName, handlerRef.current, options);
+        targetElement.removeEventListener(
+          eventName,
+          handlerRef.current,
+          options
+        );
       };
     }
   }, [eventName, element, options]);

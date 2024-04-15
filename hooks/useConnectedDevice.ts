@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
 
-/**
- * @interface Device
- * @property {string} deviceId - The unique identifier of the device.
- * @property {string} kind - The kind of device (e.g., 'audioinput' or 'videoinput').
- * @property {string} label - The label of the device.
- */
 interface Device {
   deviceId: string;
   kind: string;
@@ -16,7 +10,12 @@ interface Device {
  * A custom hook that returns an array of connected devices.
  * @param {Device[]} [devices=[]] - The initial list of connected devices.
  * @returns {Device[]} An array of connected devices.
- */
+ * 
+ * @interface Device
+ * @property {string} deviceId - The unique identifier of the device.
+ * @property {string} kind - The kind of device (e.g., 'audioinput' or 'videoinput').
+ * @property {string} label - The label of the device.
+  */
 const useConnectedDevices = (): Device[] => {
   const [devices, setDevices] = useState<Device[]>([]);
 

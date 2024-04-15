@@ -23,6 +23,25 @@ interface DragResult {
   position: { x: number; y: number }
 }
 
+/**
+ * @param {DragOptions} options - An object containing options for the useDrag hook.
+ * @param {onDragStart} options.onDragStart - A callback function that is called when the user starts dragging.
+ * @param {onDrag} options.onDrag - A callback function that is called while the user is dragging.
+ * @param {onDragEnd} options.onDragEnd - A callback function that is called when the user stops dragging.
+ * @returns {DragResult} An object containing the following properties:
+ * - `isDragging`: A boolean indicating whether the user is currently dragging.
+ * - `dragRef`: A reference to the HTML element that is being dragged.
+ * - `position`: An object containing the current position of the dragged element.
+ * - `handleMouseDown`: A function that is called when the user starts dragging.
+ * - `handleMouseMove`: A function that is called while the user is dragging.
+ * - `handleMouseUp`: A function that is called when the user stops dragging.
+ * - `handleTouchStart`: A function that is called when the user starts dragging using a touch device.
+ * - `handleTouchMove`: A function that is called while the user is dragging using a touch device.
+ * - `handleTouchEnd`: A function that is called when the user stops dragging using a touch device.
+ * - `handleMouseLeave`: A function that is called when the user leaves the dragged element.
+ * - `handleMouseEnter`: A function that is called when the user enters the dragged element.
+ */
+
 export function useDrag(options: DragOptions = {}): DragResult {
   const { onDragStart, onDrag, onDragEnd } = options
   const dragRef = useRef<HTMLDivElement>(null)

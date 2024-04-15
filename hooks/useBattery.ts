@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 
+/**
+ * @interface Battery
+ * @property {number} level - The current battery level, between 0 and 1.
+ * @property {boolean} charging - Whether the device is currently charging.
+ * @property {number} chargingTime - The amount of time the device has been charging, in seconds.
+ * @property {number} dischargingTime - The amount of time the device has been discharging, in seconds.
+ */
 interface Battery {
   level: number;
   charging: boolean;
@@ -7,6 +14,13 @@ interface Battery {
   dischargingTime: number;
 }
 
+/**
+ * @interface BatteryState
+ * @property {number | null} level - The current battery level, between 0 and 1.
+ * @property {boolean | null} charging - Whether the device is currently charging.
+ * @property {number | null} charginTime - The amount of time the device has been charging, in seconds.
+ * @property {number | null} dischargingTime - The amount of time the device has been discharging, in seconds.
+ */
 interface BatteryState {
   level: number | null;
   charging: boolean | null;

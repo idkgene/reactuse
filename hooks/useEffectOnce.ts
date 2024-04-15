@@ -1,10 +1,11 @@
+
+import { useEffect, useRef } from 'react'
+
 /**
  * @module useEffectOnce
  * @param {() => void | (() => void)} effect - The effect function to be executed once.
  * @returns {void}
  */
-
-import { useEffect, useRef } from 'react'
 
 export const useEffectOnce = (effect: () => void | (() => void)) => {
   const effectCalled = useRef(false)

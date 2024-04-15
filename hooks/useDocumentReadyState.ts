@@ -1,9 +1,15 @@
+
+import { useEffect, useState } from 'react'
+
 /**
  * @module useDocumentReadyState
  * @returns {DocumentReadyState} The current readyState of the document.
+ * 
+ * @typedef {DocumentReadyState} DocumentReadyState
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState
  */
 
-import { useEffect, useState } from 'react'
+type DocumentReadyState = "complete" | "interactive" | "loading"
 
 export function useDocumentReadyState(): DocumentReadyState {
   const [readyState, setReadyState] = useState<DocumentReadyState>('loading')
