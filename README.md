@@ -2,6 +2,8 @@
 
 # 📚 React Hooks Collection
 
+> ## ~ 10% test covered (in development)
+
 This is a collection of custom React hooks that are designed to simplify and improve your React development experience. These hooks provide reusable and effective solutions to problems and patterns found in React applications.
 
 ## 🔋 Device and Browser

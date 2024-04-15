@@ -1,52 +1,57 @@
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from "react";
+
+interface OrientationState {
+  angle: number;
+  type: string;
+}
 
 /**
- * 
- * @returns {Object} An object containing the current mouse position.
- * @returns {number} position.x - The x-coordinate of the mouse position.
- * @returns {number} position.y - The y-coordinate of the mouse position.
+ * @returns {Object} An object containing the current orientation state.
+ * @returns {number} orientation.angle - The angle of the device orientation.
+ * @returns {string} orientation.type - The type of the device orientation.
  */
-export function useOrientation() {
-  const [orientation, setOrientation] = useState({
+export function useOrientation(): OrientationState {
+  const [orientation, setOrientation] = useState<OrientationState>({
     angle: 0,
-    type: 'landscape-primary',
-  })
+    type: "landscape-primary",
+  });
 
   useLayoutEffect(() => {
     const handleChange = () => {
-      const { angle, type } = window.screen.orientation
+      const angle = window.screen.orientation?.angle ?? 0;
+      const type = window.screen.orientation?.type ?? "landscape-primary";
       setOrientation({
         angle,
         type,
-      })
-    }
+      });
+    };
 
-    const handle_orientationchange = () => {
+    const handleOrientationChange = () => {
       setOrientation({
-        type: 'UNKNOWN',
+        type: "UNKNOWN",
         angle: window.orientation,
-      })
-    }
+      });
+    };
 
     if (window.screen?.orientation) {
-      handleChange()
-      window.screen.orientation.addEventListener('change', handleChange)
+      handleChange();
+      window.screen.orientation.addEventListener("change", handleChange);
     } else {
-      handle_orientationchange()
-      window.addEventListener('orientationchange', handle_orientationchange)
+      handleOrientationChange();
+      window.addEventListener("orientationchange", handleOrientationChange);
     }
 
     return () => {
       if (window.screen?.orientation) {
-        window.screen.orientation.removeEventListener('change', handleChange)
+        window.screen.orientation.removeEventListener("change", handleChange);
       } else {
         window.removeEventListener(
-          'orientationchange',
-          handle_orientationchange,
-        )
+          "orientationchange",
+          handleOrientationChange
+        );
       }
-    }
-  }, [])
+    };
+  }, []);
 
-  return orientation
+  return orientation;
 }
