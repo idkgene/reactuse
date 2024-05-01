@@ -1,4 +1,4 @@
-import { useUpdateEffect } from "@hooks/useUpdateEffect";
+import { useUpdateEffect } from "../../../hooks/useUpdateEffect";
 import { useCallback, useState } from "react";
 import styles from "./index.module.css";
 

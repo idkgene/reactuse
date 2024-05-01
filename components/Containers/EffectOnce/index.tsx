@@ -1,4 +1,4 @@
-import { useEffectOnce } from "@hooks/useEffectOnce";
+import { useEffectOnce } from "../../../hooks/useEffectOnce";
 import styles from "./index.module.css";
 
 export default function UseEffectOnceShowcase() {

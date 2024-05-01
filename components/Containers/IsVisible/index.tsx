@@ -1,4 +1,4 @@
-import { useIsVisible } from "@hooks/useIsVisible";
+import { useIsVisible } from "../../../hooks/useIsVisible";
 import styles from "./index.module.css";
 
 export default function IsVisibleShowcase() {

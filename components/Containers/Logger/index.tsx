@@ -1,4 +1,4 @@
-import { useLogger } from "@/hooks/useLogger";
+import { useLogger } from "../../../hooks/useLogger";
 
 const MyComponent = ({ prop1, prop2 }) => {
   useLogger("MyComponent", prop1, prop2);

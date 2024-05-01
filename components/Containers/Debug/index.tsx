@@ -1,4 +1,4 @@
-import { useDebug } from "@hooks/useDebug";
+import { useDebug } from "../../../hooks/useDebug";
 import styles from "./index.module.css";
 
 export default function DebugShowcase() {

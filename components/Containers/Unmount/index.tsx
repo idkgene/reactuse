@@ -1,4 +1,4 @@
-import useUnmount from "@/hooks/useUnmout";
+import useUnmount from "../../../hooks/useUnmout";
 import styles from "./index.module.css";
 
 export default function UnmountShowcase() {

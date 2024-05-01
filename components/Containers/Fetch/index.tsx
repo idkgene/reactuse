@@ -1,4 +1,4 @@
-import { useFetch } from "@hooks/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
 import styles from "./index.module.css";
 
 export default function FetchShowcase() {

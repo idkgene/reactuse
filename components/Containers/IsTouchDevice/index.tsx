@@ -1,4 +1,4 @@
-import { useIsTouchDevice } from "@hooks/useIsTouchDevice";
+import { useIsTouchDevice } from "../../../hooks/useIsTouchDevice";
 import styles from "./index.module.css";
 
 export default function IsTouchDeviceShowcase() {

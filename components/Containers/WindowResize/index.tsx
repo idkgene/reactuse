@@ -1,4 +1,4 @@
-import useWindowResize from "@hooks/useWindowResize";
+import useWindowResize from "../../../hooks/useWindowResize";
 import styles from "./index.module.css";
 
 export default function WindowResizeShowcase() {

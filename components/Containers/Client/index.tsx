@@ -1,4 +1,4 @@
-import { useIsClient } from "@hooks/useIsClient";
+import { useIsClient } from "../../../hooks/useIsClient";
 import styles from "./index.module.css";
 
 export default function ClientShowcase() {

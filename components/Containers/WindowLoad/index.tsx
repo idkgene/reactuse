@@ -1,4 +1,4 @@
-import useWindowLoad from "@hooks/useWindowLoad";
+import useWindowLoad from "../../../hooks/useWindowLoad";
 import styles from "./index.module.css";
 
 export default function WindowLoadShowcase() {

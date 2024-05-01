@@ -1,4 +1,4 @@
-import { useIdle } from "@hooks/useIdle";
+import { useIdle } from "../../../hooks/useIdle";
 import styles from "./index.module.css";
 
 export default function IdleShowcase() {

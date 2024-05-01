@@ -1,4 +1,4 @@
-import { useRect } from "@/hooks/useRect";
+import { useRect } from "../../../hooks/useRect";
 import { useEffect, useRef, useState } from "react";
 import styles from "./index.module.css";
 

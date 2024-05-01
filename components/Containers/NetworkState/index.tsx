@@ -1,4 +1,4 @@
-import { useNetworkState } from "@/hooks/useNetworkState";
+import { useNetworkState } from "../../../hooks/useNetworkState";
 import styles from "./index.module.css";
 
 export default function NetworkState() {

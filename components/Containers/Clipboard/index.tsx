@@ -1,6 +1,6 @@
-import { useCopyToClipBoard } from "@hooks/useClipboard";
-import { Button } from "@/components/UI/button";
-import { Input } from "@/components/UI/input";
+import { useCopyToClipBoard } from "../../../hooks/useClipboard";
+import { Button } from "../../UI/button";
+import { Input } from "../../UI/input";
 import React from "react";
 import Section from "../Section/Section";
 

@@ -1,6 +1,6 @@
-import { useList } from "@hooks/useList";
+import { useList } from "../../../hooks/useList";
 import styles from "./index.module.css";
-import { Button } from "@/components/UI/button";
+import { Button } from "../../UI/button";
 
 export default function ListShowcase() {
   const [list, { set, push, removeAt, insertAt, updateAt, clear }] =

@@ -1,4 +1,4 @@
-import { useIsomorphicLayoutEffect } from "@hooks/useIsomorphicLayoutEffect";
+import { useIsomorphicLayoutEffect } from "../../../hooks/useIsomorphicLayoutEffect";
 import styles from "./index.module.css";
 
 export default function IsomorphicLayoutEffect() {

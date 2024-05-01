@@ -1,5 +1,5 @@
 import useThrottle from "@hooks/useThrottle";
-import { Input } from "@/components/UI/input";
+import { Input } from "../../UI/input";
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
 

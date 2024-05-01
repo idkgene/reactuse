@@ -1,5 +1,5 @@
 import React from "react";
-import { useDefault } from "@hooks/useDefault";
+import { useDefault } from "../../../hooks/useDefault";
 
 const ComponentTest = () => {
   const [count, setCount] = useDefault(0);

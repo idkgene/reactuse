@@ -1,4 +1,4 @@
-import useMousePosition from "@hooks/useMousePosition";
+import useMousePosition from "../../../hooks/useMousePosition";
 import styles from "./index.module.css";
 
 export default function MousePositionShowcase() {

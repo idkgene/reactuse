@@ -1,4 +1,4 @@
-import { useIOSToolbarState } from "@hooks/useIOSToolbarState";
+import { useIOSToolbarState } from "../../../hooks/useIOSToolbarState";
 import styles from "./index.module.css";
 
 export default function IOSToolbarStateShowcase() {

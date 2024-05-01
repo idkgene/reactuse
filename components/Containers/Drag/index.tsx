@@ -1,4 +1,4 @@
-import { useDrag } from "@hooks/useDrag";
+import { useDrag } from "../../../hooks/useDrag";
 import styles from "./index.module.css";
 
 export default function DragShowcase() {

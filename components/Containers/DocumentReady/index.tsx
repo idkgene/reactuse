@@ -1,4 +1,4 @@
-import { useDocumentReadyState } from "@hooks/useDocumentReadyState";
+import { useDocumentReadyState } from "../../../hooks/useDocumentReadyState";
 import styles from "./index.module.css";
 
 export default function DocumentReadyShowCase() {

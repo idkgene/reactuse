@@ -1,4 +1,4 @@
-import { useFirstMountState } from "@hooks/useFirstMountState";
+import { useFirstMountState } from "../../../hooks/useFirstMountState";
 import styles from "./index.module.css";
 
 export default function FirstMountStateShowcase() {

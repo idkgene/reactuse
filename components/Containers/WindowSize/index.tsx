@@ -1,4 +1,4 @@
-import { useWindowSize } from "@/hooks/useWindowSize";
+import { useWindowSize } from "../../..//hooks/useWindowSize";
 import styles from "./index.module.css";
 
 export default function WindowSizeShowcase() {
