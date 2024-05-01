@@ -1,6 +1,7 @@
 import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import styles from "./index.module.css";
+import { Button } from "@/components/UI/button";
 
 export default function IntersectionObserverShowcase() {
   const observerRef = useRef<HTMLDivElement>(null);
@@ -18,16 +19,22 @@ export default function IntersectionObserverShowcase() {
     }
   }, [entry]);
 
+  const clearConsole = useCallback(() => {
+    console.clear();
+  }, []);
+
   return (
     <>
       <div className={styles.container}>
         <h2 id="useIntersectionObserver">useIntersectionObserver</h2>
         <div ref={observerRef}>
           <p>
-            ⬇️ Scroll this element into view to see it logged to the console. l
-            this element into view to see it logged to the console.
+            ⬇️ Scroll this element into view to see it logged to the console.
           </p>
         </div>
+        <Button className="w-fit" onClick={clearConsole}>
+          Clear console
+        </Button>
       </div>
     </>
   );

@@ -6,7 +6,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import { HooksBlock } from "@/components/Showcases";
 import { GithubIcon, SquareTerminal, Triangle } from "lucide-react";
 import { Suspense } from "react";
 import Spinner from "../components/Spinner";
@@ -18,7 +17,6 @@ import DebugShowcase from "@/components/Containers/Debug";
 import DocumentReadyShowCase from "@/components/Containers/DocumentReady";
 import DocumentTitleShowcase from "@/components/Containers/DocumentTitle";
 import DragShowcase from "@/components/Containers/Drag";
-import FaviconShowcase from "@/components/Containers/Favicon";
 // import FetchShowcase from "@/components/Containers/Fetch";
 import FirstMountStateShowcase from "@/components/Containers/FirstMountState";
 import GeolocationShowcase from "@/components/Containers/Geolocation";
@@ -29,17 +27,13 @@ import IOSToolbarStateShowcase from "@/components/Containers/IOSToolbarState";
 import IsomorphicLayoutEffect from "@/components/Containers/IsomorphicLayoutEffect";
 import IsTouchDeviceShowcase from "@/components/Containers/IsTouchDevice";
 import IsVisibleShowcase from "@/components/Containers/IsVisible";
-import KeySequenceShowcase from "@/components/Containers/KeySequence";
 import ListShowcase from "@/components/Containers/List";
 import MediaQueryShowcase from "@/components/Containers/MediaQuery";
 import MousePositionShowcase from "@/components/Containers/MousePosition";
 import NetworkState from "@/components/Containers/NetworkState";
-import OnClickOutsideShowcase from "@/components/Containers/OnClickOutside";
 import OrientationShowcase from "@/components/Containers/Orientation";
-import PageLeaveShowcase from "@/components/Containers/PageLeave";
 import RectShowcase from "@/components/Containers/Rect";
 import ScriptShowcase from "@/components/Containers/Script";
-import SessionStorageShowcase from "@/components/Containers/SessionStorage";
 import ThrottleShowcase from "@/components/Containers/Throttle";
 import UpdateEffectShowcase from "@/components/Containers/UpdateEffect";
 import UseEffectOnceShowcase from "@/components/Containers/EffectOnce";
@@ -47,8 +41,8 @@ import UnmountShowcase from "@/components/Containers/Unmount";
 import WindowLoadShowcase from "@/components/Containers/WindowLoad";
 import WindowResizeShowcase from "@/components/Containers/WindowResize";
 import WindowSizeShowcase from "@/components/Containers/WindowSize";
-import MyComponent from "@/components/Containers/Logger";
 import ComponentTest from "@/components/Containers/Default";
+import HooksBlock from "@/components/HooksBlock";
 
 export default function Dashboard() {
   return (
@@ -111,7 +105,6 @@ export default function Dashboard() {
                 <DocumentTitleShowcase />
                 <DragShowcase />
                 <UseEffectOnceShowcase />
-                <FaviconShowcase />
                 {/* <FetchShowcase /> */}
                 <FirstMountStateShowcase />
                 <GeolocationShowcase />
@@ -130,29 +123,24 @@ export default function Dashboard() {
                 <IsomorphicLayoutEffect />
                 <IsTouchDeviceShowcase />
                 <IsVisibleShowcase />
-                <KeySequenceShowcase />
                 <ListShowcase />
                 <MediaQueryShowcase />
                 <MousePositionShowcase />
                 <NetworkState />
-                <OnClickOutsideShowcase />
               </Suspense>
             </HooksBlock>
           </Suspense>
 
           <HooksBlock title="Hooks Block 3">
             <OrientationShowcase />
-            <PageLeaveShowcase />
             <RectShowcase />
             <ScriptShowcase />
-            <SessionStorageShowcase />
             <ThrottleShowcase />
             <UnmountShowcase />
             <UpdateEffectShowcase />
             <WindowLoadShowcase />
             <WindowResizeShowcase />
             <WindowSizeShowcase />
-            <MyComponent prop1={"Hello"} prop2={"World"} />
             <ComponentTest />
           </HooksBlock>
         </main>

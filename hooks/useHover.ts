@@ -4,29 +4,28 @@
  * @returns {[RefObject<T>, boolean]} An array containing a ref object to attach to the target element, and a boolean indicating the hover state.
  */
 
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { RefObject, useEffect, useState } from "react";
 
-export function useHover<T extends HTMLElement>(): [RefObject<T>, boolean] {
-  const [hovering, setHovering] = useState(false)
-  const ref = useRef<T>(null)
+export function useHover(ref: RefObject<HTMLElement>): boolean {
+  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
-    const node = ref.current
+    const node = ref.current;
 
-    if (!node) return
+    if (!node) return;
 
-    const handleMouseEnter = () => setHovering(true)
-    const handleMouseLeave = () => setHovering(false)
+    const handleMouseEnter = () => setHovering(true);
+    const handleMouseLeave = () => setHovering(false);
 
     // Add event listeners to the node
-    node.addEventListener('mouseenter', handleMouseEnter)
-    node.addEventListener('mouseleave', handleMouseLeave)
+    node.addEventListener("mouseenter", handleMouseEnter);
+    node.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      node.removeEventListener('mouseenter', handleMouseEnter)
-      node.removeEventListener('mouseleave', handleMouseLeave)
-    }
-  }, [ref])
+      node.removeEventListener("mouseenter", handleMouseEnter);
+      node.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [ref]);
 
-  return [ref, hovering]
+  return hovering;
 }

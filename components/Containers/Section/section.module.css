@@ -1,0 +1,7 @@
+.c {
+  @apply grid gap-3 p-4 border rounded-lg
+}
+
+.h {
+  @apply text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+}

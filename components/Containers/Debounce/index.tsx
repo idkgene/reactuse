@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDebounce } from "@hooks/useDebounce";
 import { Input } from "@/components/UI/input";
 import styles from "./index.module.css";
+import Section from "../Section/section";
 
 export default function DebounceShowcase() {
   const [inputValue, setInputValue] = useState<string>("");
@@ -9,8 +10,7 @@ export default function DebounceShowcase() {
 
   return (
     <>
-      <div className={styles.container}>
-        <h2 id="useDeboune">useDebounce</h2>
+      <Section title="useDebounce">
         <Input
           className="mt-3"
           type="text"
@@ -20,8 +20,10 @@ export default function DebounceShowcase() {
           placeholder="Type something"
           aria-describedby="debouncedValue"
         />
-        <p id="debouncedValue">Debounced value: {debouncedValue}</p>
-      </div>
+        <p id="debouncedValue" className={styles.p}>
+          Debounced value: {debouncedValue}
+        </p>
+      </Section>
     </>
   );
 }

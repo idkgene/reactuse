@@ -7,7 +7,7 @@ export default function IsVisibleShowcase() {
   return (
     <>
       <div className={styles.container}>
-        <h2>useIntersectionObserver</h2>
+        <h2>useIsVisible</h2>
         <div ref={setRef}>
           {inView ? (
             <p>✅ The heading is current in view!</p>

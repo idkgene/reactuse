@@ -3,8 +3,8 @@ import { useRef } from "react";
 import styles from "./index.module.css";
 
 export default function HoverShowase() {
-  const hoverRef = useRef<HTMLDivElement>(null);
-  const isHovered = useHover();
+  const hoverRef = useRef(null);
+  const isHovered = useHover(hoverRef);
 
   return (
     <>

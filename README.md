@@ -27,7 +27,6 @@ This is a collection of custom React hooks that are designed to simplify and imp
 - [`useMousePosition`](/docs/useMousePosition.md): Returns the current mouse position.
 - [`useMouseWheel`](/docs/useMouseWheel.md): Tracks the mouse wheel movement.
 - [`useOnClickOutside`](/docs/useOnClickOutside.md): Triggers a callback when a click event occurs outside of a specified ref.
-- [`usePageLeave`](/docs/usePageLeave.md): Triggers a callback when the user attempts to leave the current page.
 
 ## ⚙️ Lifecycle and State
 
@@ -46,7 +45,6 @@ This is a collection of custom React hooks that are designed to simplify and imp
 
 - [`useDocumentReadyState`](/docs/useDocumentReadyState.md): Returns the document ready state.
 - [`useDocumentTitle`](/docs/useDocumentTitle.md): Sets the document title based on a given string.
-- [`useFavicon`](/docs/useFavicon.md): Sets the favicon of the document.
 - [`useIOSToolbarState`](/docs/useIOSToolbarState.md): Returns the current state of the iOS toolbar (visible or hidden).
 - [`useWindowLoad`](/docs/useWindowLoad.md): Returns a boolean indicating whether the window has finished loading.
 - [`useWindowResize`](/docs/useWindowResize.md): Returns the current size of the browser window.
@@ -56,10 +54,6 @@ This is a collection of custom React hooks that are designed to simplify and imp
 
 - [`useFetch`](/docs/useFetch.md): Simplifies fetching data from an API.
 - [`useScript`](/docs/useScript.md): Dynamically loads an external script.
-
-## 💾 Storage
-
-- [`useSessionStorage`](/docs/useSessionStorage.md): Provides a convenient way to interact with session storage.
 
 ## 🐛 Debugging
 
