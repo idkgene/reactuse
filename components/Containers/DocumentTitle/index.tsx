@@ -1,8 +1,8 @@
 import React from "react";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
-import { Input } from "../../UI/input";
 import { useState } from "react";
 import styles from "./index.module.css";
+import { Input } from "@/components/UI/input";
 
 export default function DocumentTitleShowcase() {
   const [title, setTitle] = useState<string>("");
