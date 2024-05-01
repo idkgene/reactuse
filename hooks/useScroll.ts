@@ -1,27 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-const useScroll = () => {
-  const [isScrolling, setIsScrolling] = useState(false);
+/**
+ * A custom React hook that returns a boolean indicating whether the user is currently scrolling.
+ * @module useScroll
+ * @returns {boolean} - A boolean indicating whether the user is currently scrolling.
+ * 
+ * @example
+ * const isScrolling = useScroll();
+ * if (isScrolling) {
+ *   // Do something while scrolling
+ * }
+ */
+const useScroll = (): boolean => {
+  const [isScrolling, setIsScrolling] = useState<boolean>(false);
+
+  const handleScroll = useCallback(() => {
+    setIsScrolling(true);
+  }, []);
 
   useEffect(() => {
-    let timeoutId = null;
+    let timeoutId: NodeJS.Timeout | null = null;
 
-    const handleScroll = () => {
-      setIsScrolling(true);
-
-      clearTimeout(timeoutId);
+    const debounceScroll = () => {
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
       timeoutId = setTimeout(() => {
         setIsScrolling(false);
       }, 100);
     };
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", debounceScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeoutId);
+      window.removeEventListener("scroll", debounceScroll);
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
     };
-  }, []);
+  }, [handleScroll]);
 
   return isScrolling;
 };
