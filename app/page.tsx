@@ -9,7 +9,6 @@ import {
 import { GithubIcon, SquareTerminal, Triangle } from "lucide-react";
 import { Suspense } from "react";
 import Spinner from "../components/Spinner";
-import { Button } from "../components/UI/button";
 import ClientShowcase from "@/components/Containers/Client";
 import ClipboardShowcase from "@/components/Containers/Clipboard";
 import DebounceShowcase from "@/components/Containers/Debounce";
@@ -43,6 +42,7 @@ import WindowResizeShowcase from "@/components/Containers/WindowResize";
 import WindowSizeShowcase from "@/components/Containers/WindowSize";
 import ComponentTest from "@/components/Containers/Default";
 import HooksBlock from "@/components/HooksBlock";
+import { Button } from "@/components/UI/button";
 
 export default function Dashboard() {
   return (

@@ -1,7 +1,7 @@
 import { useIntersectionObserver } from "../../../hooks/useIntersectionObserver";
 import { useCallback, useEffect, useRef } from "react";
 import styles from "./index.module.css";
-import { Button } from "../../UI/button";
+import { Button } from "@/components/UI/button";
 
 export default function IntersectionObserverShowcase() {
   const observerRef = useRef<HTMLDivElement>(null);

@@ -1,8 +1,8 @@
 import { useCopyToClipBoard } from "../../../hooks/useClipboard";
-import { Button } from "../../UI/button";
-import { Input } from "../../UI/input";
 import React from "react";
 import Section from "../Section/Section";
+import { Button } from "@/components/UI/button";
+import { Input } from "@/components/UI/input";
 
 export default function ClipboardShowcase() {
   const [inputText, setInputText] = React.useState<string>("");
