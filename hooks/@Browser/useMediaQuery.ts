@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useIsClient } from './useIsClient'
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useIsClient } from "../useIsClient";
 
 /**
  * A custom React hook that returns the current match state of a media query.
@@ -7,39 +7,39 @@ import { useIsClient } from './useIsClient'
  * @returns {boolean | undefined} The current match state of the media query, or undefined if the browser does not support the MediaQueryList API or if the hook is executed on the server-side.
  */
 export const useMediaQuery = (queryString: string) => {
-  const isClient = useIsClient()
+  const isClient = useIsClient();
 
   const mediaQuery = useMemo(() => {
     if (isClient) {
       try {
-        return window.matchMedia(queryString)
+        return window.matchMedia(queryString);
       } catch (error) {
-        if (process.env.NODE_ENV !== 'production') {
-          console.error(error)
+        if (process.env.NODE_ENV !== "production") {
+          console.error(error);
         }
       }
     }
 
-    return null
-  }, [queryString, isClient])
+    return null;
+  }, [queryString, isClient]);
 
-  const [isMatch, setIsMatch] = useState(undefined)
+  const [isMatch, setIsMatch] = useState(undefined);
 
   const onChange = useCallback(({ matches }: any) => {
-    setIsMatch(matches)
-  }, [])
+    setIsMatch(matches);
+  }, []);
 
   useEffect(() => {
     if (mediaQuery) {
-      onChange(mediaQuery)
+      onChange(mediaQuery);
 
-      mediaQuery.addEventListener('change', onChange, { passive: true })
+      mediaQuery.addEventListener("change", onChange, { passive: true });
 
       return () => {
-        mediaQuery.removeEventListener('change', onChange)
-      }
+        mediaQuery.removeEventListener("change", onChange);
+      };
     }
-  }, [mediaQuery, onChange, isClient])
+  }, [mediaQuery, onChange, isClient]);
 
-  return isMatch
-}
+  return isMatch;
+};

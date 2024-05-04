@@ -1,4 +1,4 @@
-import { useMediaQuery } from "../../../hooks/useMediaQuery";
+import { useMediaQuery } from "../../../hooks/@Browser/useMediaQuery";
 import styles from "./index.module.css";
 
 export default function MediaQueryShowcase() {

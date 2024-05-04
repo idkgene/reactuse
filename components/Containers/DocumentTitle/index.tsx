@@ -1,5 +1,5 @@
 import React from "react";
-import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
+import { useDocumentTitle } from "../../../hooks/@Browser/useDocumentTitle";
 import { useState } from "react";
 import styles from "./index.module.css";
 import { Input } from "@/components/UI/input";

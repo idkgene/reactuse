@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useScript from "../../../hooks/useScript";
+import useScript from "../../../hooks/@Browser/useScript";
 import styles from "./index.module.css";
 
 export default function ScriptShowcase() {
