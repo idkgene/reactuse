@@ -6,6 +6,8 @@ import { Input } from "@/components/UI/input";
 import GithubIcon from "../public/github.svg";
 import TelegramIcon from "../public/telegram.svg";
 import { motion } from "framer-motion";
+import { Footer } from "@/components/Common/Footer";
+import { Hero } from "@/components/Common/Hero";
 
 export default function Home() {
   return (
@@ -113,26 +115,7 @@ export default function Home() {
           </div>
           <div className="order-1 lg:order-2">
             <div className="relative my-0 mx-auto size-[320px] sm:size-[392px] lg:size-full lg:-translate-x-[32px] lg:-translate-y-[32px] lg:flex lg:justify-center lg:items-center">
-              <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px] blur-[72px]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient( -45deg, #41b88380 30%, #35495e80 )",
-                }}
-              ></div>
-              <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px]"
-                whileHover={{ rotate: 180, scale: 0.9 }}
-                transition={{ ease: [0.08, 0.52, 0.52, 1], duration: 0.7 }}
-              >
-                <Image
-                  src={ReactLogo}
-                  alt="ReactUse"
-                  width={192}
-                  height={192}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px]"
-                />
-              </motion.div>
+              <Hero />
             </div>
           </div>
         </div>
@@ -218,9 +201,7 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <footer className="max-w-[1152px] mx-auto text-center text-[14px] leading-[24px] font-medium text-[rgba(255,255,245,.6)]">
-        Released under the MIT License.
-      </footer>
+      <Footer />
     </>
   );
 }

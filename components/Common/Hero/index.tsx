@@ -7,12 +7,14 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <div ref={ref} {...props}>
       <div
+        ref={ref}
+        {...props}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px] blur-[72px]"
         style={{
           backgroundImage:
             "linear-gradient( -45deg, #41b88380 30%, #35495e80 )",
         }}
-      />
+      ></div>
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px]"
         whileHover={{ rotate: 180, scale: 0.9 }}
@@ -26,9 +28,6 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px]"
         />
       </motion.div>
-      <h1>ReactUse</h1>
-      <p>A collection of utilities for React and Next</p>
-      <p>A collection of basic utilities for working with React and Next JS</p>
     </div>
   );
 });
