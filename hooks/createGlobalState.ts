@@ -1,21 +1,46 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-export const createGlobalState = (initialState) => {
-  let globalState = initialState;
-  const listeners = new Set();
+type SetStateAction<S> = S | ((prevState: S) => S);
 
-  const useGlobalState = () => {
-    const [state, setState] = useState(globalState);
+export const createGlobalState = <S>(initialState: S | (() => S)) => {
+  let globalState: S;
+  const listeners = new Set<(state: S) => void>();
 
-    const dispatch = useCallback((newState) => {
-      globalState = typeof newState === 'function' ? newState(globalState) : newState;
+  if (typeof initialState === 'function') {
+    globalState = (initialState as () => S)();
+  } else {
+    globalState = initialState;
+  }
+
+  const useGlobalState = (): [S, (action: SetStateAction<S>) => void] => {
+    const [state, setState] = useState<S>(globalState);
+
+    const dispatch = useCallback((action: SetStateAction<S>) => {
+      if (action === null || action === undefined) {
+        console.warn('Dispatched action is null or undefined. Ignoring the dispatch.');
+        return;
+      }
+
+      const newState = typeof action === 'function' ? (action as (prevState: S) => S)(globalState) : action;
+
+      if (newState === null || newState === undefined) {
+        console.warn('Dispatched action resulted in null or undefined state. Ignoring the dispatch.');
+        return;
+      }
+
+      globalState = newState;
       listeners.forEach((listener) => listener(globalState));
     }, []);
 
     useEffect(() => {
-      listeners.add(setState);
+      const listener = (state: S) => {
+        setState(state);
+      };
+
+      listeners.add(listener);
+
       return () => {
-        listeners.delete(setState);
+        listeners.delete(listener);
       };
     }, []);
 
