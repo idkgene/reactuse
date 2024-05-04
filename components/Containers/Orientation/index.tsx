@@ -1,4 +1,4 @@
-import { useOrientation } from "../../../hooks/useOrientation";
+import { useOrientation } from "../../../hooks/@Browser/useOrientation";
 import styles from "./index.module.css";
 
 export default function OrientationShowcase() {

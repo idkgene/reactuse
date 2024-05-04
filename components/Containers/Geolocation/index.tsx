@@ -1,4 +1,4 @@
-import { useGeolocation } from "../../../hooks/useGeolocation";
+import { useGeolocation } from "../../../hooks/@Sensors/useGeolocation";
 import styles from "./index.module.css";
 
 export default function GeolocationShowcase() {
