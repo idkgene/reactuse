@@ -5,13 +5,15 @@ type PrecisionOptions = {
   value: number;
 };
 
+type FormattedValue = number;
+
 /**
  * @function formatNumber
  * @param {number} value - The value to be formatted.
  * @param {number} precision - The precision of the formatted value.
  * @returns {number} The formatted value.
  */
-const formatNumber = (value: number, precision: number) => {
+const formatNumber = (value: number, precision: number): FormattedValue => {
   return Number(value.toFixed(precision));
 };
 
