@@ -10,7 +10,7 @@ const useRound = () => {
 
   const roundNumber = useCallback((number: number) => {
     if (typeof number !== "number") {
-      console.error("useRound: Input must be a number");
+      console.error("useRound: Input must be a number otherwise it'll return NaN");
       return;
     }
     setResult(Math.round(number));
