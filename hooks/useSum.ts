@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useSum = (array: number[]): number => {
+export const useSum = (array: number[]): number => {
   const [sum, setSum] = useState<number>(0);
 
   useEffect(() => {
@@ -15,5 +15,3 @@ const useSum = (array: number[]): number => {
 
   return sum;
 };
-
-export { useSum };

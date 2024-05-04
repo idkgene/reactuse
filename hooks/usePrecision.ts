@@ -22,7 +22,7 @@ const formatNumber = (value: number, precision: number): FormattedValue => {
  * @param {PrecisionOptions} { precision, value } - The precision and value to be formatted.
  * @returns {number} The formatted value.
  */
-const usePrecision = ({ precision, value }: PrecisionOptions) => {
+export const usePrecision = ({ precision, value }: PrecisionOptions) => {
   const [formattedValue, setFormattedValue] = useState<number>(
     formatNumber(value, precision),
   );
@@ -33,5 +33,3 @@ const usePrecision = ({ precision, value }: PrecisionOptions) => {
 
   return formattedValue;
 };
-
-export default usePrecision;

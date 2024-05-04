@@ -15,7 +15,7 @@ type WindowSize = {
  * @property {number} outherWidth - The outher width of the window.
  * @returns An object containing the current window size information.
  */
-const useWindowResize = () => {
+export const useWindowResize = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>({
     innerWidth: 0,
     innerHeight: 0,
@@ -51,5 +51,3 @@ const useWindowResize = () => {
 
   return windowSize;
 };
-
-export default useWindowResize;

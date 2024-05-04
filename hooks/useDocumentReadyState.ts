@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 
 type DocumentReadyState = "complete" | "interactive" | "loading"
 
-export function useDocumentReadyState(): DocumentReadyState {
+export const useDocumentReadyState = (): DocumentReadyState => {
   const [readyState, setReadyState] = useState<DocumentReadyState>('loading')
 
   useEffect(() => {

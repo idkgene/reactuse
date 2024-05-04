@@ -13,7 +13,7 @@ import React from "react";
  * @returns {void}
  *
  */
-export function useEventListener<
+export const useEventListener = <
   K extends
     | keyof WindowEventMap
     | keyof HTMLElementEventMap
@@ -21,13 +21,13 @@ export function useEventListener<
   T extends HTMLElement | MediaQueryList | Window =
     | HTMLElement
     | MediaQueryList
-    | Window
+    | Window,
 >(
   eventName: K,
   handler: (event: Event) => void,
   element?: React.RefObject<T>,
-  options?: boolean | AddEventListenerOptions
-) {
+  options?: boolean | AddEventListenerOptions,
+) => {
   const handlerRef = useRef(handler);
 
   useIsomorphicLayoutEffect(() => {
@@ -44,9 +44,9 @@ export function useEventListener<
         targetElement.removeEventListener(
           eventName,
           handlerRef.current,
-          options
+          options,
         );
       };
     }
   }, [eventName, element, options]);
-}
+};

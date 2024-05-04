@@ -16,7 +16,7 @@ interface Device {
  * @property {string} kind - The kind of device (e.g., 'audioinput' or 'videoinput').
  * @property {string} label - The label of the device.
   */
-const useConnectedDevices = (): Device[] => {
+export const useConnectedDevices = (): Device[] => {
   const [devices, setDevices] = useState<Device[]>([]);
 
   useEffect(() => {
@@ -63,5 +63,3 @@ const useConnectedDevices = (): Device[] => {
 
   return devices;
 };
-
-export default useConnectedDevices;

@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react'
  * @returns {[T[], { set: (l: T[]) => void, push: (element: T) => void, removeAt: (index: number) => void, insertAt: (index: number, element: T) => void, updateAt: (index: number, element: T) => void, clear: () => void }]} An array containing the list and an object with utility functions to manage the list.
  */
 
-export function useList<T>(defaultList: T[] = []): [
+export const useList = <T>(defaultList: T[] = []): [
   T[],
   {
     set: (l: T[]) => void
@@ -16,7 +16,7 @@ export function useList<T>(defaultList: T[] = []): [
     updateAt: (index: number, element: T) => void
     clear: () => void
   },
-] {
+] => {
   const [list, setList] = useState(defaultList)
 
   /**

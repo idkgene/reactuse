@@ -33,7 +33,7 @@ interface BatteryState {
  *
  * @returns {BatteryState} An object containing the current battery state.
  */
-const useBattery = (): BatteryState => {
+export const useBattery = (): BatteryState => {
   const [batteryState, setBatteryState] = useState<BatteryState>({
     level: null,
     charging: null,
@@ -78,5 +78,3 @@ const useBattery = (): BatteryState => {
 
   return batteryState;
 };
-
-export default useBattery;

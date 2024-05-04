@@ -14,7 +14,7 @@
 
 import { useEffect, useState } from "react";
 
-export function useGeolocation() {
+export const useGeolocation = () => {
   const [position, setPosition] = useState<GeolocationPosition | null>(null);
   const [error, setError] = useState<GeolocationPositionError | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

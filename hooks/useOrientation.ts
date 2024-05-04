@@ -6,11 +6,13 @@ interface OrientationState {
 }
 
 /**
- * @returns {Object} An object containing the current orientation state.
- * @returns {number} orientation.angle - The angle of the device orientation.
- * @returns {string} orientation.type - The type of the device orientation.
+ * A custom React hook that returns the current orientation of the screen.
+ * @returns {OrientationState} The current orientation of the screen.
+ * @returns {number} angle - The current orientation angle.
+ * @returns {string} type - The current orientation type.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
  */
-export function useOrientation(): OrientationState {
+export const useOrientation = (): OrientationState => {
   const [orientation, setOrientation] = useState<OrientationState>({
     angle: 0,
     type: "landscape-primary",

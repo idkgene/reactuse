@@ -16,7 +16,7 @@ type UseMeasureReturn = {
  * A custom hook that returns the height and width of an element, as well as a reference to the element.
  * @returns {UseMeasureReturn} An object containing the height and width of the element, as well as a reference to the element.
  */
-const useMeasure = (): UseMeasureReturn => {
+export const useMeasure = (): UseMeasureReturn => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const ref = useRef<HTMLElement | null>(null);
@@ -50,7 +50,7 @@ type UseSizeReturn = {
  * A custom hook that returns the size of an element, as well as a reference to the element.
  * @returns {UseSizeReturn} An object containing the size of the element, as well as a reference to the element.
  */
-const useSize = (): UseSizeReturn => {
+export const useSize = (): UseSizeReturn => {
   const [size, setSize] = useState<{ height: number; width: number }>({
     height: 0,
     width: 0,
@@ -71,5 +71,3 @@ const useSize = (): UseSizeReturn => {
     ref,
   };
 };
-
-export default { useSize, useMeasure };

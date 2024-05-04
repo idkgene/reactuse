@@ -6,8 +6,7 @@ import { useIsClient } from './useIsClient'
  * @param {string} queryString - The media query string to be checked.
  * @returns {boolean | undefined} The current match state of the media query, or undefined if the browser does not support the MediaQueryList API or if the hook is executed on the server-side.
  */
-
-export function useMediaQuery(queryString: string) {
+export const useMediaQuery = (queryString: string) => {
   const isClient = useIsClient()
 
   const mediaQuery = useMemo(() => {

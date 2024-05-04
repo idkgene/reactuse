@@ -4,14 +4,14 @@ import { useState, useEffect, useCallback } from "react";
  * A custom React hook that returns a boolean indicating whether the user is currently scrolling.
  * @module useScroll
  * @returns {boolean} - A boolean indicating whether the user is currently scrolling.
- * 
+ *
  * @example
  * const isScrolling = useScroll();
  * if (isScrolling) {
  *   // Do something while scrolling
  * }
  */
-const useScroll = (): boolean => {
+export const useScroll = (): boolean => {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
 
   const handleScroll = useCallback(() => {
@@ -44,5 +44,3 @@ const useScroll = (): boolean => {
 
   return isScrolling;
 };
-
-export default useScroll;

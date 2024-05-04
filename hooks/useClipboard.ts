@@ -13,10 +13,10 @@ import { useCallback, useState } from "react";
 type CopiedValue = string | null;
 type CopyFn = (text: string) => Promise<boolean>;
 
-export function useCopyToClipBoard(
+export const useCopyToClipBoard =(
   copiedValue: CopiedValue = null,
   copyFn?: CopyFn
-): [CopiedValue, CopyFn] {
+): [CopiedValue, CopyFn] => {
   const [copiedText, setCopiedText] = useState<CopiedValue>(copiedValue);
 
   /**

@@ -6,7 +6,7 @@ type LanguageCode = string;
  * A custom hook that returns the preferred language code of the browser.
  * @returns {LanguageCode} The preferred language code of the browser.
  */
-const usePreferredLanguage = (): LanguageCode => {
+export const usePreferredLanguage = (): LanguageCode => {
   const [preferredLanguage, setPreferredLanguage] =
     useState<LanguageCode>("en");
 
@@ -34,5 +34,3 @@ const usePreferredLanguage = (): LanguageCode => {
 
   return preferredLanguage;
 };
-
-export default usePreferredLanguage;

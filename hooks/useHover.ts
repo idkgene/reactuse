@@ -6,7 +6,7 @@
 
 import { RefObject, useEffect, useState } from "react";
 
-export function useHover(ref: RefObject<HTMLElement>): boolean {
+export const useHover = (ref: RefObject<HTMLElement>): boolean => {
   const [hovering, setHovering] = useState(false);
 
   useEffect(() => {

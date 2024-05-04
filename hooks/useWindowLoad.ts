@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
  * @returns {boolean} A boolean indicating if the window has finished loading.
  */
 
-const useWindowLoad = () => {
+export const useWindowLoad = () => {
   // State variable to track if the window has finished loading
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -32,5 +32,3 @@ const useWindowLoad = () => {
 
   return isLoaded;
 };
-
-export default useWindowLoad;

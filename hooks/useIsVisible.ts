@@ -26,12 +26,12 @@ export type UseIsVisibleReturn = {
  * @param {UseIsVisibleArgs} options - An object containing options for the Intersection Observer.
  * @returns {UseIsVisibleReturn} An object containing a function to set the ref and a boolean indicating if the element is in view.
  */
-export function useIsVisible({
+export const useIsVisible = ({
   root = null,
   rootMargin = "0px",
   threshold = 1.0,
   once = false,
-}: UseIsVisibleArgs): UseIsVisibleReturn {
+}: UseIsVisibleArgs): UseIsVisibleReturn => {
   const observer = useRef<IntersectionObserver | null>(null);
   const ref = useRef<HTMLElement | null>(null);
   const [inView, setInView] = useState(false);

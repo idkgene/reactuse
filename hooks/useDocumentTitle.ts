@@ -6,7 +6,7 @@ import { useEffect } from "react";
  * @param {string} title - The new title to set for the document.
  */
 
-export function useDocumentTitle(title: string) {
+export const useDocumentTitle = (title: string) => {
   /**
    * @param {string} title - The new title to set for the document.
    * @returns {void}

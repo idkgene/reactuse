@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
  * @returns {number} position.x - The x-coordinate of the mouse position.
  * @returns {number} position.y - The y-coordinate of the mouse position.
  */
-const useMousePosition = () => {
+export const useMousePosition = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -24,5 +24,3 @@ const useMousePosition = () => {
 
   return position;
 };
-
-export default useMousePosition;

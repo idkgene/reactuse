@@ -6,15 +6,15 @@
 import { useMemo } from "react";
 import { useIsClient } from "./useIsClient";
 
-export function useDebug() {
+export const useDebug = () => {
   const isClient = useIsClient();
 
   const debug = useMemo(() => {
     if (isClient) {
-      const hasDebugHash = window.location.hash.includes('#debug');
-      const isDevelopment = process.env.NODE_ENV === 'development';
+      const hasDebugHash = window.location.hash.includes("#debug");
+      const isDevelopment = process.env.NODE_ENV === "development";
 
-      const isNotProduction = !window.location.hash.includes('#production');
+      const isNotProduction = !window.location.hash.includes("#production");
 
       return (hasDebugHash || isDevelopment) && isNotProduction;
     }
@@ -23,4 +23,4 @@ export function useDebug() {
   }, [isClient]);
 
   return debug;
-}
+};

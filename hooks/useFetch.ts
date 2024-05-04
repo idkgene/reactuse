@@ -39,10 +39,10 @@ interface UseFetchResult<TData> {
  * - `refetch`: A function that can be called to refetch the data.
  */
 
-export function useFetch<TData = unknown>(
+export const useFetch = <TData = unknown> (
   url: string,
   options: UseFetchOptions<TData> = {}
-): UseFetchResult<TData> {
+): UseFetchResult<TData> => {
   const {
     library = "axios",
     queryKey,

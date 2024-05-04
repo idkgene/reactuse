@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
  * @module useTyping
  * @returns {boolean} - True if the user is typing, false otherwise
  */
-const useTyping = (): boolean => {
+export const useTyping = (): boolean => {
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
@@ -28,5 +28,3 @@ const useTyping = (): boolean => {
 
   return isTyping;
 };
-
-export default useTyping;

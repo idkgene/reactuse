@@ -18,5 +18,3 @@ export const useScript = (url: string) => {
     }
   }, [url])
 }
-
-export default useScript

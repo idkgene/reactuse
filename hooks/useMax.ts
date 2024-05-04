@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
  * @param {number[]} numbers - An array of numbers.
  * @returns {[number, (newNumbers: number[]) => void]} An array containing the maximum value and a function to update the maximum value.
  */
-const useMax = (numbers: number[]) => {
+export const useMax = (numbers: number[]) => {
   const [max, setMax] = useState<number>(Math.max(...numbers));
 
   const updateMax = useCallback((newNumbers: number[]) => {
@@ -18,5 +18,3 @@ const useMax = (numbers: number[]) => {
 
   return [max, updateMax];
 };
-
-export { useMax };

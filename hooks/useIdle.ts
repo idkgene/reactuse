@@ -7,7 +7,7 @@
 import { throttle } from '@/utils/utils';
 import { useEffect, useState } from 'react';
 
-export function useIdle(ms = 1000 * 60) {
+export const setIdle = (ms = 1000 * 60) => {
   const [idle, setIdle] = useState(false)
 
   useEffect(() => {

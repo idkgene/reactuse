@@ -5,7 +5,7 @@
 
 import { useEffect, useRef } from 'react'
 
-export function useFirstMountState(): boolean {
+export const useFirstMountState = (): boolean => {
   const isFirst = useRef(true)
 
   useEffect(() => {

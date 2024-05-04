@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const useProjection = (value, domainFrom, domainTo) => {
+export const useProjection = (value, domainFrom, domainTo) => {
   const [projectedValue, setProjectedValue] = useState(null);
 
   useEffect(() => {
@@ -11,5 +11,3 @@ const useProjection = (value, domainFrom, domainTo) => {
 
   return projectedValue;
 };
-
-export default useProjection;

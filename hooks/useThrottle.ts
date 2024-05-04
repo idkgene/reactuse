@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import useUnmount from "./useUnmout";
-useUnmount
+import { useUnmount } from "./useUnmout";
 
 /**
  * @param {T} value - The value to be throttled.
@@ -39,5 +38,3 @@ export const useThrottle = <T>(value: T, ms: number = 200) => {
 
   return state
 }
-
-export default useThrottle

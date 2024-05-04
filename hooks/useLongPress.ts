@@ -8,13 +8,9 @@ interface LongPressOptions {
  * A custom React hook that handles long press events.
  * @param callback
  * @param options
- * @returns {onMouseDown: () => void, onMouseUp: () => void, onTouchStart: () => void, onTouchEnd: () => void}
- * 
- * @interface LongPressOptions
- * @property {number} duration - The duration of the long press in milliseconds.
- * @default 500 
+ * @returns {onMouseDown: () => void, onMouseUp: () => void, onTouchStart: () => void, onTouchEnd: () => void} 
  */
-const useLongPress = (
+export const useLongPress = (
   callback: () => void,
   options: LongPressOptions = {}
 ): {
@@ -55,5 +51,3 @@ const useLongPress = (
     onTouchEnd: cancelPressTimer,
   };
 };
-
-export default useLongPress;

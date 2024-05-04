@@ -5,7 +5,7 @@ import { useState, useCallback } from "react";
  * @param {number} number - The number to be rounded.
  * @returns {[number | null, (number: number) => void]} An array containing the rounded number and a function to round the number.
  */
-const useRound = () => {
+export const useRound = () => {
   const [result, setResult] = useState<number>(0);
 
   const roundNumber = useCallback((number: number) => {
@@ -18,5 +18,3 @@ const useRound = () => {
 
   return [result, roundNumber];
 };
-
-export { useRound };

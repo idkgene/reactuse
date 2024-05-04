@@ -13,5 +13,3 @@ export const useUnmount = (fn: () => void) => {
 
   useEffectOnce(() => () => fnRef.current())
 }
-
-export default useUnmount

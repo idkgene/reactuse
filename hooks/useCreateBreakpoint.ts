@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useBreakpoint = (breakpoint) => {
+export const useBreakpoint = (breakpoint: number) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isBreakpointCrossed, setIsBreakpointCrossed] = useState(false);
 
@@ -22,5 +22,3 @@ const useBreakpoint = (breakpoint) => {
 
   return { windowWidth, isBreakpointCrossed };
 };
-
-export default useBreakpoint;

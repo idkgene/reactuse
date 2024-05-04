@@ -42,7 +42,7 @@ interface DragResult {
  * - `handleMouseEnter`: A function that is called when the user enters the dragged element.
  */
 
-export function useDrag(options: DragOptions = {}): DragResult {
+export const useDrag = (options: DragOptions = {}): DragResult => {
   const { onDragStart, onDrag, onDragEnd } = options
   const dragRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState(false)
