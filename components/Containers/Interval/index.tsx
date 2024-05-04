@@ -1,4 +1,4 @@
-import { useInterval } from "../../../hooks/useInterval";
+import { useInterval } from "../../../hooks/@Animation/useInterval";
 import { Info } from "lucide-react";
 import { useState } from "react";
 import {

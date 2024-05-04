@@ -1,4 +1,4 @@
-import { useIntersectionObserver } from "../../../hooks/useIntersectionObserver";
+import { useIntersectionObserver } from "../../../hooks/@Elements/useIntersectionObserver";
 import { useCallback, useEffect, useRef } from "react";
 import styles from "./index.module.css";
 import { Button } from "@/components/UI/button";

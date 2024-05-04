@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useEventListener } from "../useEventListener";
+import { useEventListener } from "../@Browser/useEventListener";
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 
 interface WindowSize {

@@ -1,9 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { WixMadeForDisplayVariable } from "./fonts";
 
 export const metadata: Metadata = {
   title: "React Hooks Collection",
@@ -18,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${WixMadeForDisplayVariable.className} m-0 w-full min-w-[320px] min-h-[100vh] bg-[#1b1b1f] leading-[24px] text-[16px] font-normal text-[rgba(255,255,245,.86)] text-[#1b1b1f];
+`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
