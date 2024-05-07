@@ -1,0 +1,23 @@
+.content {
+  @apply hidden xl:flex xl:items-center before:mr-2 before:w-px before:h-6 before:bg-[#2e2e32] before:content-['']
+}
+
+.content > button {
+  @apply relative rounded-[11px] block w-10 h-[22px] shrink-0 border-[#3c3f44] border-solid border bg-[rgba(101,117,133,.16)] transition-colors
+}
+
+.content > button > span {
+  @apply absolute top-px left-px size-[18px] rounded-[50%] bg-[#000000] shadow-[0_1px_2px_rgba(0,0,0,.04),_0_1px_2px_rgba(0,0,0,.06)] transition-all translate-x-[18px]
+}
+
+.circle {
+  @apply relative block size-[18px] rounded-[50%] overflow-hidden
+}
+
+.iconInactive {
+  @apply opacity-0 absolute top-[3px] left-[3px] size-[12px] text-[rgba(255,255,245,.86)]
+}
+
+.icon {
+  @apply absolute top-[3px] left-[3px] size-[12px] text-[#ffffff]
+}
