@@ -1,0 +1,15 @@
+.content {
+  @apply bg-[#202127] border border-solid border-[#202127] rounded-[12px] transition-colors
+}
+
+.article {
+  @apply flex flex-col p-6 h-full
+}
+
+.article > div {
+  @apply flex items-center justify-center mb-5 bg-[rgba(101,117,133,.16)] size-12 text-[24px] transition-colors rounded-md
+}
+
+.article > h2 {
+  @apply text-base font-semibold
+}

@@ -1,5 +1,5 @@
-import React, {,
-} from "react";
+import React from "react";
+import styles from "./index.module.css";
 
 interface BenefitsProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ interface BenefitsProps {
 
 const Benefits = React.forwardRef<HTMLDivElement, BenefitsProps>(
   (props, ref) => {
-    return <div className="grid gap-2 grid-cols-3" ref={ref} {...props}></div>;
+    return <div className={styles.container} ref={ref} {...props}></div>;
   }
 );
 

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./index.module.css";
 
 interface BenefitsProps {
   icon: React.ReactNode;
@@ -9,15 +10,10 @@ interface BenefitsProps {
 const BenefitsItem = React.forwardRef<HTMLDivElement, BenefitsProps>(
   ({ icon, heading, paragraph }, ref) => {
     return (
-      <div
-        className="bg-[#202127] border border-solid border-[#202127] rounded-[12px] transition-colors"
-        ref={ref}
-      >
-        <article className="flex flex-col p-6 h-full">
-          <div className="flex items-center justify-center mb-5 bg-[rgba(101,117,133,.16)] size-12 text-[24px] transition-colors rounded-md">
-            {icon}
-          </div>
-          <h2 className="text-base font-semibold">{heading}</h2>
+      <div className={styles.content} ref={ref}>
+        <article className={styles.article}>
+          <div>{icon}</div>
+          <h2>{heading}</h2>
           <p>{paragraph}</p>
         </article>
       </div>
