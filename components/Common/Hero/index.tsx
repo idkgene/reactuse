@@ -23,8 +23,8 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
         <Image
           src={ReactLogo}
           alt="ReactUse"
-          width={192}
-          height={192}
+          width={256}
+          height={256}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:max-w-[256px] sm:max-h-[256px] lg:max-w-[320px] lg:max-h-[320px]"
         />
       </motion.div>
