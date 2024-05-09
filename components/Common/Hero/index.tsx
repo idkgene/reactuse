@@ -12,7 +12,7 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
       style={{
         marginTop: "calc((64px + var(--vp-layout-top-height, 0px))* -1)",
         padding:
-          "calc(64px + var(--vp-layout-top-height, 0px) + 48px) 24px 48px;",
+          "calc(64px + var(--vp-layout-top-height, 0px) + 48px) 24px 48px",
       }}
     >
       <div className="container flex flex-col mx-auto lg:flex-row text-center lg:text-left">
