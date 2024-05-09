@@ -4,9 +4,39 @@ import "./globals.css";
 import { WixMadeForDisplayVariable } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "React Hooks Collection",
+  metadataBase: new URL("https://reactuse.vercel.app"),
+  title: {
+    default: "ReactUse",
+    template: "%s | ReactUse",
+  },
   description:
     "A collection of custom React hooks that are designed to simplify and improve your React development experience.",
+  openGraph: {
+    title: "ReactUse",
+    description:
+      "A collection of custom React hooks that are designed to simplify and improve your React development experience.",
+    url: "https://reactuse.vercel.app",
+    siteName: "ReactUse",
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: "ReactUse",
+    card: "summary_large_image",
+    description:
+      "A collection of custom React hooks that are designed to simplify and improve your React development experience.",
+  },
 };
 
 export default function RootLayout({
