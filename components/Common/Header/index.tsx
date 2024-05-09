@@ -1,22 +1,38 @@
 import * as React from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import ReactLogo from "../../../public/react-icon.svg";
-import { Input } from "@/components/UI/input";
-import TelegramIcon from "../../../public/telegram.svg";
-import Toggle from "../Toggle";
 import Link from "next/link";
-import { ChevronDown, GithubIcon, Sun, Moon, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import ThemeToggle from "../Toggle";
+import { GithubIcon } from "../Icons/Github/icon";
+import { TelegramIcon } from "../Icons/Telegram/icon";
+import { DiscordIcon } from "../Icons/Discord/icon";
 
 export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <Link href="/main" className="sr-only">
         Skip to Main
       </Link>
       <header
-        className="top-0 left-0 w-full pointer-events-none transition-colors z-30 lg:fixed"
+        className={`top-0 left-0 w-full pointer-events-none transition-colors z-30 lg:fixed ${
+          isScrolled ? "bg-[#1b1b1f]" : ""
+        }`}
         ref={ref}
         {...props}
       >
@@ -95,34 +111,16 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
                       Main Navigation
                     </span>
                     <Link
-                      href="/"
+                      href="/guide"
                       className="flex items-center p-0 px-3 text-sm leading-[64px] font-medium transition-colors text-[rgba(255,255,245,.86)]"
                     >
-                      Playground
+                      Guide
                     </Link>
                     <Link
-                      href="/"
+                      href="/hooks"
                       className="flex items-center p-0 px-3 text-sm leading-[64px] font-medium transition-colors text-[rgba(255,255,245,.86)]"
                     >
-                      Playground
-                    </Link>
-                    <Link
-                      href="/"
-                      className="flex items-center p-0 px-3 text-sm leading-[64px] font-medium transition-colors text-[rgba(255,255,245,.86)]"
-                    >
-                      Playground
-                    </Link>
-                    <Link
-                      href="/"
-                      className="flex items-center p-0 px-3 text-sm leading-[64px] font-medium transition-colors text-[rgba(255,255,245,.86)]"
-                    >
-                      Playground
-                    </Link>
-                    <Link
-                      href="/"
-                      className="flex items-center p-0 px-3 text-sm leading-[64px] font-medium transition-colors text-[rgba(255,255,245,.86)]"
-                    >
-                      Playground
+                      Hooks
                     </Link>
                   </nav>
                   <ThemeToggle />
@@ -144,7 +142,8 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
                       className="flex items-center justify-center size-9 transition-colors rgba(235,235,245,.6)"
                     >
                       <span className="size-5 fill-current">
-                        <GithubIcon />
+                        {" "}
+                        <DiscordIcon />
                       </span>
                     </Link>
                     <Link
@@ -153,7 +152,7 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
                     >
                       <span className="size-5 fill-current">
                         {" "}
-                        <GithubIcon />
+                        <TelegramIcon fill="rgba(235,235,245,.6)" />
                       </span>
                     </Link>
                   </div>
@@ -188,7 +187,9 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
           <div id="divider" className="w-full h-px">
             <div
               id="divider-line"
-              className="w-full h-px transition-colors"
+              className={`w-full h-px transition-colors ${
+                isScrolled ? "bg-[#2e2e32]" : "bg-transparent"
+              }`}
             ></div>
           </div>
         </div>
