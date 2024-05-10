@@ -1,39 +1,19 @@
-import * as React from "react";
+import React from "react";
+import type { SVGProps } from "react";
 
-export const TelegramIcon = React.forwardRef<
-  SVGSVGElement,
-  React.SVGProps<SVGSVGElement> & {
-    size?: number;
-    fill?: string;
-    className?: string;
-    stroke?: string;
-  }
->((props, ref) => {
-  const { size = 24, fill, className, stroke } = props;
+export function TelegramIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      {...props}
-      ref={ref}
-      width={size}
-      className={className}
-      height={size}
-      fill={fill}
-      stroke={stroke}
       xmlns="http://www.w3.org/2000/svg"
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      {...props}
     >
-      <g clipPath="url(#a)">
-        <path
-          d="M11.944 0a12 12 0 1 0 .112 24 12 12 0 0 0-.112-24zm4.962 7.224c.1-.002.321.023.465.14.096.083.157.2.171.325.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
-          fill={fill}
-        />
-      </g>
-      <defs>
-        <clipPath id="a">
-          <path fill="#fff" d="M0 0h24v24H0z" />
-        </clipPath>
-      </defs>
+      <path
+        fill="currentColor"
+        d="m20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001l-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15l4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434"
+      ></path>
     </svg>
   );
-});
-
-TelegramIcon.displayName = "TelegramIcon";
+}
