@@ -1,0 +1,147 @@
+.nav {
+  @apply top-0 left-0 w-full pointer-events-none
+  transition-colors z-30 lg:fixed
+}
+
+.navbar {
+  @apply relative whitespace-nowrap
+  transition-colors h-16
+}
+
+.wrapper {
+  @apply pt-0 pl-2 pb-0 pr-6 
+}
+
+.container {
+  @apply flex justify-between my-0
+  mx-auto max-w-[calc(1440px-64px)]
+  h-16 pointer-events-none
+}
+
+.title {
+  @apply pointer-events-none shrink-0
+  transition-colors h-[calc(64px-1px)]
+}
+
+.logoLink {
+  @apply flex items-center border-b border-solid
+  border-transparent w-full h-16 text-base font-semibold
+  transition-opacity text-[rgba(255,255,245,.86)]
+}
+
+.logoString {
+  @apply pointer-events-auto
+}
+
+.content {
+  @apply pointer-events-none grow
+}
+
+.contentBody {
+  @apply flex justify-end items-center
+  transition-colors h-16
+}
+
+.search {
+  @apply flex items-center md:grow
+  md:pl-6 lg:pl-8
+} 
+
+.docsearchBtn {
+  @apply flex justify-center items-center
+  m-0 p-0 h-12 w-[55px] bg-transparent
+  transition-colors md:justify-start md:border
+  md:border-solid md:border-transparent md:rounded-[8px]
+  md:pt-0 md:pl-[10px] md:pb-[0px] md:pr-[12px] md:w-full
+  md:h-10 md:bg-[#161618]
+}
+
+.docsearchContainer {
+  @apply flex items-center
+}
+
+.docsearchIcon {
+  @apply relative w-4 h-4 fill-current
+  transition-colors text-[#rgba(255,255,245,.86)]
+  md:top-px md:mr-2 md:w-[14px] md:h-[14px]
+  md:text-[rgba(235,235,245,.6)]
+}
+
+.docsearchPlaceholder {
+  @apply hidden mt-0.5 pr-4 text-[13px]
+  font-medium text-[rgba(235,235,245,.6)]
+  transition-colors md:inline-block
+}
+
+.keys {
+  @apply min-w-[auto] hidden md:flex md:items-center
+}
+
+.afterBtnKey {
+  @apply !text-[0px] block mt-0.5 border-y border-l
+  border-solid border-[#2e2e32] rounded-l-[4px]
+  pl-1.5 min-w-0 w-auto h-[22px] leading-[22px]
+  font-medium transition-colors after:content-['Ctrl']
+  after:text-[12px] after:tracking-normal
+  after:text-[rgba(235,235,245,.6)]
+}
+
+.btnKey {
+  @apply block mt-0.5 border-solid border-[#2e2e32]
+  pl-0.5 min-w-0 w-auto h-[22px] leading-[22px] font-medium
+  transition-colors border-r border-y border-r-[#2e2e32]
+  border-l-[none] rounded-r-[4px] pr-1.5 text-[12px]
+  text-[rgba(235,235,245,.6)]
+}
+
+.navbarMenu {
+  @apply hidden md:flex
+}
+
+.navbarMenuLink {
+  @apply flex items-center p-0 px-3 text-sm leading-[64px]
+  font-medium transition-colors text-[rgba(255,255,245,.86)]
+}
+
+.socials {
+  @apply -mr-2 hidden xl:flex xl:items-center before:ml-4
+  before:mr-2 before:w-px before:h-6 before:bg-[#2e2e32]
+  before:content-['']
+}
+
+.socialsLink {
+  @apply flex items-center justify-center size-9
+  transition-colors text-[rgba(235,235,245,.6)]
+}
+
+.socialsLinkIcon {
+  @apply size-5 fill-current hover:fill-slate-500 hover:bg-slate-500
+}
+
+.mobileNav {
+  @apply md:hidden w-12 h-16
+}
+
+.mobileMenuIcon {
+  @apply relative h-[14px] w-4
+}
+
+.mobileMenuIconTop {
+  @apply top-0 left-0 absolute w-4 h-0.5 transition-colors bg-[rgba(255,255,245,.86)] translate-x-0 translate-y-0
+}
+
+.mobileMenuIconMiddle {
+  @apply top-1.5 left-0 absolute w-4 h-0.5 transition-colors bg-[rgba(255,255,245,.86)]
+}
+
+.mobileMenuIconBottom {
+  @apply top-3 left-0 absolute w-4 h-0.5 transition-colors bg-[rgba(255,255,245,.86)]
+}
+
+.divider {
+  @apply w-full h-px
+}
+
+.dividerLine {
+  @apply w-full h-px transition-colors
+}
