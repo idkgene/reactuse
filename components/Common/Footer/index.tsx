@@ -1,7 +1,4 @@
 import * as React from "react";
-import Image from "next/image";
-import GithubIcon from "../public/github.svg";
-import TelegramIcon from "../public/telegram.svg";
 
 export const Footer = React.forwardRef<HTMLElement>((props, ref) => {
   return (

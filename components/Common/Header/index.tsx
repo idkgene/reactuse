@@ -1,7 +1,5 @@
 "use client";
 import * as React from "react";
-import Image from "next/image";
-import ReactLogo from "../../../public/react-icon.svg";
 import Link from "next/link";
 import ThemeToggle from "../Toggle";
 import { GithubIcon } from "../Icons/Github/icon";
