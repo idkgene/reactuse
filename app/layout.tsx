@@ -1,25 +1,26 @@
-import React from "react";
-import type { Metadata } from "next";
-import "./globals.css";
-import { WixMadeForDisplayVariable } from "./fonts";
-import { Navigation } from "@/components/Common/Header";
+import React from 'react'
+import type { Metadata } from 'next'
+import './globals.css'
+import { WixMadeForDisplayVariable } from './fonts'
+import { Navigation } from '@/components/Common/Header'
+import { Footer } from '@/components/Common/Footer'
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://reactuse.vercel.app"),
+  metadataBase: new URL('https://reactuse.vercel.app'),
   title: {
-    default: "ReactUse",
-    template: "%s | ReactUse",
+    default: 'ReactUse',
+    template: '%s | ReactUse',
   },
   description:
-    "A collection of custom React hooks that are designed to simplify and improve your React development experience.",
+    'A collection of custom React hooks that are designed to simplify and improve your React development experience.',
   openGraph: {
-    title: "ReactUse",
+    title: 'ReactUse',
     description:
-      "A collection of custom React hooks that are designed to simplify and improve your React development experience.",
-    url: "https://reactuse.vercel.app",
-    siteName: "ReactUse",
-    locale: "en_US",
-    type: "website",
+      'A collection of custom React hooks that are designed to simplify and improve your React development experience.',
+    url: 'https://reactuse.vercel.app',
+    siteName: 'ReactUse',
+    locale: 'en_US',
+    type: 'website',
   },
   robots: {
     index: true,
@@ -27,23 +28,23 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   twitter: {
-    title: "ReactUse",
-    card: "summary_large_image",
+    title: 'ReactUse',
+    card: 'summary_large_image',
     description:
-      "A collection of custom React hooks that are designed to simplify and improve your React development experience.",
+      'A collection of custom React hooks that are designed to simplify and improve your React development experience.',
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -53,7 +54,8 @@ export default function RootLayout({
       >
         <Navigation />
         {children}
+        <Footer />
       </body>
     </html>
-  );
+  )
 }
