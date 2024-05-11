@@ -1,27 +1,27 @@
 // Sidebar.tsx
-import styles from "../../../app/guide/Layout.module.css";
+import styles from '../../../app/guide/Layout.module.css'
 
 export const Sidebar = () => {
   const guideItems = [
-    { text: "Get Started", href: "get-started" },
-    { text: "Best Practices", href: "best-practices" },
-    { text: "Configurations", href: "configurations" },
-    { text: "Contributing", href: "contributing" },
-  ];
+    { text: 'Get Started', href: '/guide' },
+    { text: 'Best Practices', href: '/guide/best-practice' },
+    { text: 'Configurations', href: '/guide/config' },
+    { text: 'Contributing', href: '/guide/contributing' },
+  ]
 
   const coreFunctionsItems = [
-    { text: "State", href: "state" },
-    { text: "Elements", href: "elements" },
-    { text: "Browser", href: "browser" },
-    { text: "Sensors", href: "sensors" },
-    { text: "Network", href: "network" },
-    { text: "Animation", href: "animation" },
-    { text: "Component", href: "component" },
-    { text: "Watch", href: "watch" },
-    { text: "Array", href: "array" },
-    { text: "Time", href: "time" },
-    { text: "Utilities", href: "utilities" },
-  ];
+    { text: 'State', href: 'state' },
+    { text: 'Elements', href: 'elements' },
+    { text: 'Browser', href: 'browser' },
+    { text: 'Sensors', href: 'sensors' },
+    { text: 'Network', href: 'network' },
+    { text: 'Animation', href: 'animation' },
+    { text: 'Component', href: 'component' },
+    { text: 'Watch', href: 'watch' },
+    { text: 'Array', href: 'array' },
+    { text: 'Time', href: 'time' },
+    { text: 'Utilities', href: 'utilities' },
+  ]
   return (
     <aside className={styles.sidebar}>
       <div id="curtain" className={styles.curtain}></div>
@@ -128,5 +128,5 @@ export const Sidebar = () => {
         </div>
       </nav>
     </aside>
-  );
-};
+  )
+}
