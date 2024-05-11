@@ -1,7 +1,7 @@
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react'
 
 interface UseLastChangedOptions {
-  initialValue?: number;
+  initialValue?: number
 }
 
 /**
@@ -13,14 +13,14 @@ interface UseLastChangedOptions {
  */
 export function useLastChanged<T>(
   source: T,
-  options: UseLastChangedOptions = {},
+  options: UseLastChangedOptions = {}
 ): React.MutableRefObject<number | null> {
-  const { initialValue = null } = options;
-  const lastChanged = useRef<number | null>(initialValue);
+  const { initialValue = null } = options
+  const lastChanged = useRef<number | null>(initialValue)
 
   useEffect(() => {
-    lastChanged.current = Date.now();
-  }, [source]);
+    lastChanged.current = Date.now()
+  }, [source])
 
-  return lastChanged;
+  return lastChanged
 }
