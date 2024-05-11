@@ -54,7 +54,7 @@
   @apply inline-block border border-solid text-center
   font-semibold whitespace-nowrap transition-colors
   rounded-[20px] py-0 px-5 leading-[38px] text-[14px]
-  border-blue-500 bg-blue-500
+  border-blue-500 bg-blue-500 hover:bg-blue-600
 }
 
 .actionRegular {
@@ -62,7 +62,7 @@
   font-semibold whitespace-nowrap transition-colors
   rounded-[20px] py-0 px-5 leading-[38px] text-[14px]
   border-transparent text-[#rgba(255,255,245,.86)]
-  bg-[#32363f]
+  bg-[#32363f] hover:bg-gray-700
 }
 
 .image {

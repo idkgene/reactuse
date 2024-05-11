@@ -1,8 +1,8 @@
-import * as React from "react";
-import Image from "next/image";
-import ReactLogo from "../../../public/react-icon.svg";
-import { motion } from "framer-motion";
-import styles from "./index.module.css";
+import * as React from 'react'
+import Image from 'next/image'
+import ReactLogo from '../../../public/react-icon.svg'
+import { motion } from 'framer-motion'
+import styles from './index.module.css'
 
 export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
@@ -10,9 +10,9 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
       ref={ref}
       {...props}
       style={{
-        marginTop: "calc((64px + var(--vp-layout-top-height, 0px))* -1)",
+        marginTop: 'calc((64px + var(--vp-layout-top-height, 0px))* -1)',
         padding:
-          "calc(64px + var(--vp-layout-top-height, 0px) + 48px) 24px 48px",
+          'calc(64px + var(--vp-layout-top-height, 0px) + 48px) 24px 48px',
       }}
     >
       <div className={`${styles.container} container`}>
@@ -49,14 +49,14 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
             </div>
           </div>
         </div>
-        <div id="image" className={styles.image} style={{ margin: "auto" }}>
+        <div id="image" className={styles.image} style={{ margin: 'auto' }}>
           <div id="image-container" className={styles.imageContainer}>
             <div
               id="image-bg"
               className={styles.imageBg}
               style={{
                 backgroundImage:
-                  "linear-gradient( -45deg, #166271 30%, #35495e80 )",
+                  'linear-gradient( -45deg, #166271 30%, #35495e80 )',
               }}
             ></div>
 
@@ -76,7 +76,7 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
         </div>
       </div>
     </div>
-  );
-});
+  )
+})
 
-Hero.displayName = "Hero";
+Hero.displayName = 'Hero'
