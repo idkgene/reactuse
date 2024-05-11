@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { WixMadeForDisplayVariable } from "./fonts";
+import { Navigation } from "@/components/Common/Header";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://reactuse.vercel.app"),
@@ -47,9 +48,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${WixMadeForDisplayVariable.className} m-0 w-full min-w-[320px] min-h-[100vh] bg-[#1b1b1f] leading-[24px] text-[16px] font-normal text-[rgba(255,255,245,.86)] text-[#1b1b1f];
+        className={`${WixMadeForDisplayVariable.className} box-border m-0 w-full min-w-[320px] min-h-[100vh] bg-[#1b1b1f] leading-[24px] text-[16px] font-normal text-[rgba(255,255,245,.86)] text-[#1b1b1f];
 `}
       >
+        <Navigation />
         {children}
       </body>
     </html>
