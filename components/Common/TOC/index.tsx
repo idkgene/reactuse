@@ -1,40 +1,46 @@
 // TableOfContents.tsx
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from 'react'
+import * as React from 'react'
 
 interface Heading {
-  text: string;
-  level: number;
-  id: string;
+  text: string
+  level: number
+  id: string
 }
 
 interface TableOfContentsProps {
-  contentId: string;
+  contentId: string
 }
 
 export const TableOfContents: React.FC<TableOfContentsProps> = ({
   contentId,
 }) => {
-  const [headings, setHeadings] = useState<Heading[]>([]);
+  const [headings, setHeadings] = useState<Heading[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const contentElement = document.getElementById(contentId);
-    if (contentElement) {
-      const headers = Array.from(
-        contentElement.querySelectorAll<HTMLHeadingElement>(
-          "h2, h3, h4, h5, h6"
+    const fetchData = async () => {
+      const contentElement = document.getElementById(contentId)
+      if (contentElement) {
+        const headers = Array.from(
+          contentElement.querySelectorAll<HTMLHeadingElement>(
+            'h2, h3, h4, h5, h6'
+          )
         )
-      );
-      const headingData: Heading[] = headers
-        .map((header) => ({
-          text: header.textContent ?? "",
-          level: parseInt(header.tagName.slice(1)),
-          id: header.id,
-        }))
-        .filter((heading) => heading.text.trim() !== "");
-      setHeadings(headingData);
+        const headingData: Heading[] = headers
+          .map((header) => ({
+            text: header.textContent ?? '',
+            level: parseInt(header.tagName.slice(1)),
+            id: header.id,
+          }))
+          .filter((heading) => heading.text.trim() !== '')
+        setHeadings(headingData)
+      }
+      setIsLoading(false)
     }
-  }, [contentId]);
+
+    fetchData()
+  }, [contentId])
 
   return (
     <div className="table-of-contents relative hidden order-2 grow pl-8 w-full max-w-[256px] xl:block">
@@ -56,21 +62,25 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
               <h2 className="text-[14px] font-semibold leading-[32px]">
                 On this page
               </h2>
-              {headings.map((heading) => (
-                <li key={heading.id} className="list-none">
-                  <a
-                    href={`#${heading.id}`}
-                    className="leading-[32px] text-[14px] transition-colors text-ellipsis overflow-hidden whitespace-nowrap text-[rgba(235,235,245,.6)] hover:text-white"
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                headings.map((heading) => (
+                  <li key={heading.id} className="list-none">
+                    <a
+                      href={`#${heading.id}`}
+                      className="leading-[32px] text-[14px] transition-colors text-ellipsis overflow-hidden whitespace-nowrap text-[rgba(235,235,245,.6)] hover:text-white"
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))
+              )}
             </div>
           </div>
           <div id="spacer" className="grow"></div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
