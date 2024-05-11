@@ -1,18 +1,20 @@
-import React from "react";
+import React from 'react'
 
 type ParagraphProps = {
-  children: React.ReactNode;
-} & React.HTMLAttributes<HTMLParagraphElement>;
+    children: React.ReactNode
+} & React.HTMLAttributes<HTMLParagraphElement>
 
 const MarkdownParagraph = React.forwardRef<
-  HTMLParagraphElement,
-  ParagraphProps
+    HTMLParagraphElement,
+    ParagraphProps
 >(({ children, ...props }, ref) => {
-  return (
-    <p ref={ref} {...props} className="mt-0 mb-4">
-      {children}
-    </p>
-  );
-});
+    return (
+        <p ref={ref} {...props} className="mt-0 mb-4">
+            {children}
+        </p>
+    )
+})
 
-export { MarkdownParagraph };
+MarkdownParagraph.displayName = 'MarkdownParagraph'
+
+export { MarkdownParagraph }
