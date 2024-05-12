@@ -1,19 +1,22 @@
+import { useEffect } from 'react'
 
-import { useEffect } from "react";
+interface UseDocumentTitleOptions {
+  initialTitle?: string
+  formatter?: (title: string) => string
+}
 
-/**
- * @module useDocumentTitle
- * @param {string} title - The new title to set for the document.
- */
+export function useDocumentTitle(
+  title: string,
+  options: UseDocumentTitleOptions = {}
+) {
+  const { initialTitle, formatter } = options
 
-export const useDocumentTitle = (title: string) => {
-  /**
-   * @param {string} title - The new title to set for the document.
-   * @returns {void}
-   */
   useEffect(() => {
-    if (title) {
-      document.title = title;
+    const formattedTitle = formatter ? formatter(title) : title
+    if (formattedTitle) {
+      document.title = formattedTitle
+    } else if (initialTitle) {
+      document.title = initialTitle
     }
-  }, [title]); // Only re-run the effect if the `title` value changes
+  }, [title, initialTitle, formatter])
 }
