@@ -1,43 +1,39 @@
-/**
- * @module useCopyToClipBoard
- * @param {string|null} [copiedValue=null] - The initial value of the copied text. Defaults to null.
- * @param {CopyFn} [copyFn] - A custom copy function to use instead of the default implementation.
- * @returns {[CopiedValue, CopyFn]} An array containing the current copied value and a copy function.
- *
- * @typedef {string|null} CopiedValue - The type representing the value of the copied text.
- * @typedef {(text: string) => Promise<boolean>} CopyFn - The type representing the copy function.
- */
+import { useCallback, useState } from 'react'
 
-import { useCallback, useState } from "react";
+type CopyFn = (text: string) => Promise<boolean>
 
-type CopiedValue = string | null;
-type CopyFn = (text: string) => Promise<boolean>;
-
-export const useCopyToClipBoard =(
-  copiedValue: CopiedValue = null,
+interface UseCopyToClipboardOptions {
+  initialValue?: string | null
   copyFn?: CopyFn
-): [CopiedValue, CopyFn] => {
-  const [copiedText, setCopiedText] = useState<CopiedValue>(copiedValue);
+}
 
-  /**
-   * @param {string} text - The text to be copied to the clipboard.
-   * @returns {Promise<boolean>} A promise that resolves to `true` if the copy operation was successful, or `false` otherwise.
-   */ const copy: CopyFn = useCallback(async (text) => {
+interface UseCopyToClipboardReturn {
+  copiedValue: string | null
+  copy: CopyFn
+}
+
+export function useCopyToClipboard(
+  options: UseCopyToClipboardOptions = {}
+): UseCopyToClipboardReturn {
+  const { initialValue = null, copyFn } = options
+  const [copiedValue, setCopiedValue] = useState<string | null>(initialValue)
+
+  const copy: CopyFn = useCallback(async (text) => {
     if (navigator?.clipboard) {
       try {
-        await navigator.clipboard.writeText(text);
-        setCopiedText(text);
-        return true;
+        await navigator.clipboard.writeText(text)
+        setCopiedValue(text)
+        return true
       } catch (error) {
-        console.warn("useClipboard: Copy failed", error);
-        setCopiedText(null);
-        return false;
+        console.warn('useClipboard: Copy failed', error)
+        setCopiedValue(null)
+        return false
       }
     } else {
-      console.warn("CuseClipboard: lipboard not supported");
-      return false;
+      console.warn('useClipboard: Clipboard not supported')
+      return false
     }
-  }, []);
+  }, [])
 
-  return [copiedText, copyFn || copy];
+  return { copiedValue, copy: copyFn || copy }
 }
