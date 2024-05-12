@@ -1,21 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react'
 
-type MaybeRefOrGetter<T> = T | (() => T);
+type NumberOrGetter = number | (() => number)
 
-export const useAverage = (...args: MaybeRefOrGetter<number>[]): number => {
+export const useAverage = (...args: NumberOrGetter[]): number => {
   const [averageValue, setAverageValue] = useState(() => {
-    const values = args.map((arg) => typeof arg === "function" ? arg() : arg);
-    return values.reduce((sum, value) => sum + value, 0) / values.length;
-  });
+    const values = args.map((arg) => (typeof arg === 'function' ? arg() : arg))
+    const sum = values.reduce((acc, value) => acc + value, 0)
+    return values.length > 0 ? sum / values.length : 0
+  })
 
   const updateValues = useCallback((newValues: number[]) => {
-    setAverageValue(newValues.reduce((sum, value) => sum + value, 0) / newValues.length);
-  }, []);
+    const sum = newValues.reduce((acc, value) => acc + value, 0)
+    setAverageValue(newValues.length > 0 ? sum / newValues.length : 0)
+  }, [])
 
   useEffect(() => {
-    const values = args.map((arg) => typeof arg === "function" ? arg() : arg);
-    updateValues(values);
-  }, [args, updateValues]);
+    const values = args.map((arg) => (typeof arg === 'function' ? arg() : arg))
+    updateValues(values)
+  }, [args, updateValues])
 
-  return averageValue;
-};
+  return averageValue
+}

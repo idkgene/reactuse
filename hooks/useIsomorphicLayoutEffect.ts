@@ -2,7 +2,14 @@
  * @returns {typeof useEffect | typeof useLayoutEffect} The appropriate effect hook based on the environment.
  */
 
-import { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 
-export const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+export const useIsomorphicLayoutEffect = (
+  effect: React.EffectCallback,
+  deps?: React.DependencyList
+): void => {
+  const effectToUse =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+  effectToUse(effect, deps);
+};
