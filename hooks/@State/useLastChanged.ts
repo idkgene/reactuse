@@ -1,26 +1,28 @@
 import React, { useRef, useEffect } from 'react'
 
-interface UseLastChangedOptions {
-  initialValue?: number
+interface UseLastChangedOptions<T> {
+  initialValue?: number | null;
+  equalityFn?: (prev: T, next: T) => boolean;
 }
 
-/**
- * A custom React hook that returns a reference to the last time a value was changed.
- * @template T - The type of the value.
- * @param {T} source - The value to check for changes.
- * @param {UseLastChangedOptions} [options] - Options for the hook.
- * @returns {React.MutableRefObject<number | null>} A reference to the last time the value was changed.
- */
 export function useLastChanged<T>(
   source: T,
-  options: UseLastChangedOptions = {}
+  options: UseLastChangedOptions<T> = {}
 ): React.MutableRefObject<number | null> {
-  const { initialValue = null } = options
-  const lastChanged = useRef<number | null>(initialValue)
+  const { initialValue = null, equalityFn } = options;
+  const lastChanged = useRef<number | null>(initialValue);
+  const prevSource = useRef<T>(source);
 
   useEffect(() => {
-    lastChanged.current = Date.now()
-  }, [source])
+    const isEqual = equalityFn
+      ? equalityFn(prevSource.current, source)
+      : prevSource.current === source;
 
-  return lastChanged
+    if (!isEqual) {
+      lastChanged.current = Date.now();
+      prevSource.current = source;
+    }
+  }, [source, equalityFn]);
+
+  return lastChanged;
 }
