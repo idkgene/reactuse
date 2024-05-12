@@ -1,26 +1,28 @@
-
 import { useEffect, useState } from 'react'
 
-/**
- * @module useDocumentReadyState
- * @returns {DocumentReadyState} The current readyState of the document.
- * 
- * @typedef {DocumentReadyState} DocumentReadyState
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState
- */
+type DocumentReadyState = 'complete' | 'interactive' | 'loading'
 
-type DocumentReadyState = "complete" | "interactive" | "loading"
+interface UseDocumentReadyStateOptions {
+  initialReadyState?: DocumentReadyState
+  onReadyStateChange?: (readyState: DocumentReadyState) => void
+}
 
-export const useDocumentReadyState = (): DocumentReadyState => {
-  const [readyState, setReadyState] = useState<DocumentReadyState>('loading')
+export function useDocumentReadyState(
+  options: UseDocumentReadyStateOptions = {}
+): DocumentReadyState {
+  const { initialReadyState = 'loading', onReadyStateChange } = options
+  const [readyState, setReadyState] =
+    useState<DocumentReadyState>(initialReadyState)
 
   useEffect(() => {
     const onStateChange = () => {
-      setReadyState(document.readyState as DocumentReadyState)
+      const newReadyState = document.readyState as DocumentReadyState
+      setReadyState(newReadyState)
+      onReadyStateChange?.(newReadyState)
     }
 
     if (document.readyState !== 'loading') {
-      setReadyState(document.readyState as DocumentReadyState)
+      onStateChange()
     } else {
       document.addEventListener('readystatechange', onStateChange)
     }
@@ -28,7 +30,7 @@ export const useDocumentReadyState = (): DocumentReadyState => {
     return () => {
       document.removeEventListener('readystatechange', onStateChange)
     }
-  }, []) // Empty dependency array ensures the effect runs only once
+  }, [onReadyStateChange])
 
   return readyState
 }
