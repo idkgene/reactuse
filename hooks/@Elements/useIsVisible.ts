@@ -1,12 +1,3 @@
-/**
- * @param {UseIsVisibleArgs} options - An object containing options for the Intersection Observer.
- * @param {Element | Document | null} [options.root=null] - The root element to use as the intersection root for the observer.
- * @param {string} [options.rootMargin='0px'] - A string describing a set of offsets to add to the root's bounding box when calculating intersections.
- * @param {number} [options.threshold=1.0] - A numberor an array of numbers representing the percentage of the target element's visibility that should trigger the observer callback.
- * @param {boolean} [options.once=false] - A boolean indicating whether the observer should disconnect after the first intersection.
- * @returns {UseIsVisibleReturn} An object containing a function to set the ref and a boolean indicating if the element is in view.
- */
-
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type UseIsVisibleArgs = {
@@ -21,11 +12,6 @@ export type UseIsVisibleReturn = {
   inView: boolean;
 };
 
-/**
- * A custom React hook that returns a ref and a boolean indicating if the element is in view.
- * @param {UseIsVisibleArgs} options - An object containing options for the Intersection Observer.
- * @returns {UseIsVisibleReturn} An object containing a function to set the ref and a boolean indicating if the element is in view.
- */
 export const useIsVisible = ({
   root = null,
   rootMargin = "0px",

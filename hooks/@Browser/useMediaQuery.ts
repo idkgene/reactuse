@@ -1,45 +1,45 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useIsClient } from "../useIsClient";
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useIsClient } from '../useIsClient'
 
-/**
- * A custom React hook that returns the current match state of a media query.
- * @param {string} queryString - The media query string to be checked.
- * @returns {boolean | undefined} The current match state of the media query, or undefined if the browser does not support the MediaQueryList API or if the hook is executed on the server-side.
- */
-export const useMediaQuery = (queryString: string) => {
-  const isClient = useIsClient();
+type MediaQueryEvent = {
+  matches: boolean
+  media: string
+}
 
-  const mediaQuery = useMemo(() => {
+export function useMediaQuery(queryString: string): boolean | undefined {
+  const isClient = useIsClient()
+
+  const mediaQuery: MediaQueryList | null = useMemo(() => {
     if (isClient) {
       try {
-        return window.matchMedia(queryString);
+        return window.matchMedia(queryString)
       } catch (error) {
-        if (process.env.NODE_ENV !== "production") {
-          console.error(error);
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Error creating `MediaQueryList`:', error)
         }
       }
     }
 
-    return null;
-  }, [queryString, isClient]);
+    return null
+  }, [queryString, isClient])
 
-  const [isMatch, setIsMatch] = useState(undefined);
+  const [isMatch, setIsMatch] = useState<boolean | undefined>(undefined)
 
-  const onChange = useCallback(({ matches }: any) => {
-    setIsMatch(matches);
-  }, []);
+  const onChange = useCallback((event: MediaQueryEvent) => {
+    setIsMatch(event.matches)
+  }, [])
 
   useEffect(() => {
     if (mediaQuery) {
-      onChange(mediaQuery);
+      setIsMatch(mediaQuery.matches)
 
-      mediaQuery.addEventListener("change", onChange, { passive: true });
+      mediaQuery.addEventListener('change', onChange)
 
       return () => {
-        mediaQuery.removeEventListener("change", onChange);
+        mediaQuery.removeEventListener('change', onChange)
       };
     }
-  }, [mediaQuery, onChange, isClient]);
+  }, [mediaQuery, onChange]);
 
   return isMatch;
-};
+}

@@ -1,27 +1,20 @@
+import { useEffect } from 'react'
 
-import { useEffect, useRef } from 'react'
+interface UseEffectOnceOptions {
+  effect: () => void | (() => void)
+}
 
-/**
- * @module useEffectOnce
- * @param {() => void | (() => void)} effect - The effect function to be executed once.
- * @returns {void}
- */
-
-export const useEffectOnce = (effect: () => void | (() => void)) => {
-  const effectCalled = useRef(false)
+export function useEffectOnce(options: UseEffectOnceOptions) {
+  const { effect } = options
 
   useEffect(() => {
-    if (!effectCalled.current) {
-      const destroyFn = effect()
+    const destroyFn = effect()
 
-      effectCalled.current = true
-
-      return () => {
-        if (destroyFn && typeof destroyFn === 'function') {
-          destroyFn()
-        }
+    return () => {
+      if (destroyFn && typeof destroyFn === 'function') {
+        destroyFn()
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Empty dependency array ensures the effect runs only once
+  }, [])
 }

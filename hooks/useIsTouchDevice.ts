@@ -1,7 +1,3 @@
-/**
- * @returns {boolean} A boolean indicating if the device is a touch device.
- */
-
 import { useCallback, useEffect, useState } from 'react'
 
 /**
@@ -9,7 +5,15 @@ import { useCallback, useEffect, useState } from 'react'
  * @returns {boolean} A boolean indicating if the device is a touch device.
  */
 
-export const useIsTouchDevice = () => {
+interface UseIsTouchDeviceOptions {
+  onTouchDeviceChange?: (isTouchDevice: boolean) => void
+  eventListeners?: ('resize' | 'orientationchange' | string)[]
+}
+
+export function useIsTouchDevice(
+  options: UseIsTouchDeviceOptions = {}
+): boolean {
+  const { onTouchDeviceChange, eventListeners = ['resize'] } = options
   const [isTouchDevice, setIsTouchDevice] = useState(false)
 
   const check = useCallback(() => {
@@ -22,31 +26,34 @@ export const useIsTouchDevice = () => {
       if (mediaQueryList && mediaQueryList.media === '(pointer:coarse)') {
         hasTouchScreen = !!mediaQueryList.matches
       } else {
-
         const UA = window.navigator.userAgent
         hasTouchScreen =
-          /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+          /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+          /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
       }
     }
-    if (hasTouchScreen) {
-      setIsTouchDevice(true)
-    } else {
-      setIsTouchDevice(false)
-    }
-  }, [])
 
-  const onResize = useCallback(() => {
-    check()
-  }, [check])
+    const newIsTouchDevice = hasTouchScreen
+    if (newIsTouchDevice !== isTouchDevice) {
+      setIsTouchDevice(newIsTouchDevice)
+      onTouchDeviceChange?.(newIsTouchDevice)
+    }
+  }, [isTouchDevice, onTouchDeviceChange])
+
+  const onResize = useCallback(check, [check])
 
   useEffect(() => {
     onResize()
-    window.addEventListener('resize', onResize, { passive: true })
+    eventListeners.forEach((eventName) => {
+      window.addEventListener(eventName, onResize, { passive: true })
+    })
 
     return () => {
-      window.removeEventListener('resize', onResize)
+      eventListeners.forEach((eventName) => {
+        window.removeEventListener(eventName, onResize)
+      })
     }
-  }, [onResize])
+  }, [onResize, eventListeners])
 
   return isTouchDevice
 }

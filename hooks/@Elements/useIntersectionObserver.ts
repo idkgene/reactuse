@@ -8,10 +8,10 @@
  * @returns {IntersectionObserverEntry | undefined} An object representing the current intersection information for the target element, or undefined if the Intersection Observer API is not supported or if the observer is frozen.
  */
 
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from 'react'
 
 interface Args extends IntersectionObserverInit {
-  freezeOnceVisible?: boolean;
+  freezeOnceVisible?: boolean
 }
 
 export const useIntersectionObserver = (
@@ -19,37 +19,44 @@ export const useIntersectionObserver = (
   {
     threshold = 0,
     root = null,
-    rootMargin = "0%",
+    rootMargin = '0%',
     freezeOnceVisible = false,
   }: Args
 ): IntersectionObserverEntry | undefined => {
-  const [entry, setEntry] = useState<IntersectionObserverEntry>();
+  const [entry, setEntry] = useState<IntersectionObserverEntry>()
 
-  const frozen = entry?.isIntersecting && freezeOnceVisible;
+  const frozen = entry?.isIntersecting && freezeOnceVisible
 
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
-    setEntry(entry);
-  };
+    setEntry(entry)
+  }
 
   useEffect(() => {
-    const node = elementRef?.current;
+    const node = elementRef?.current
 
     const hasIOSupport =
-      typeof window !== "undefined" && !!window.IntersectionObserver;
+      typeof window !== 'undefined' && !!window.IntersectionObserver
 
-    if (!hasIOSupport || frozen || !node) return;
+    if (!hasIOSupport || frozen || !node) return
 
-    const observerParams = { threshold, root, rootMargin };
+    const observerParams = { threshold, root, rootMargin }
 
-    const observer = new IntersectionObserver(updateEntry, observerParams);
+    const observer = new IntersectionObserver(updateEntry, observerParams)
 
-    observer.observe(node);
+    observer.observe(node)
 
     return () => {
-      observer.disconnect();
-    };
-  }, [elementRef, JSON.stringify(threshold), root, rootMargin, frozen]);
+      observer.disconnect()
+    }
+  }, [
+    elementRef,
+    JSON.stringify(threshold),
+    root,
+    rootMargin,
+    frozen,
+    threshold,
+  ])
   // Note: JSON.stringify(threshold) is used to trigger the effect when the threshold array changes
 
-  return entry;
+  return entry
 }

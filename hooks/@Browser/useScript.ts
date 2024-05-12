@@ -4,16 +4,16 @@ import { useEffect } from "react";
  * @param {string} url - The URL of the script to be loaded.
  */
 
-export const useScript = (url: string) => {
+export function useScript(url: string): void {
   useEffect(() => {
-    const script = document.createElement('script')
+    const script: HTMLScriptElement = document.createElement('script')
 
     script.src = url
     script.async = true
 
     document.body.appendChild(script)
 
-    return () => {
+    return (): void => {
       document.body.removeChild(script)
     }
   }, [url])

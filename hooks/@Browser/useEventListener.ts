@@ -2,31 +2,33 @@ import { useEffect, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 import React from "react";
 
-/**
- * @module useEventListener
- * @template K - The event name type.
- * @template T - The target element type.
- * @param {K} eventName - The name of the event to listen for.
- * @param {(event: Event) => void} handler - The event handler function.
- * @param {RefObject<T>} [element] - A reference to the target element. If not provided, defaults to the window object.
- * @param {boolean | AddEventListenerOptions} [options] - Optional options to pass to the addEventListener method.
- * @returns {void}
- *
- */
-export const useEventListener = <
-  K extends
-    | keyof WindowEventMap
-    | keyof HTMLElementEventMap
-    | keyof MediaQueryListEventMap,
-  T extends HTMLElement | MediaQueryList | Window =
-    | HTMLElement
-    | MediaQueryList
-    | Window,
->(
+type WindowEventName = keyof WindowEventMap;
+type HTMLElementEventName = keyof HTMLElementEventMap;
+type MediaQueryListEventName = keyof MediaQueryListEventMap;
+
+type EventName = WindowEventName | HTMLElementEventName | MediaQueryListEventName;
+
+type TargetElement<K extends EventName> = K extends WindowEventName
+  ? Window
+  : K extends HTMLElementEventName
+  ? HTMLElement
+  : K extends MediaQueryListEventName
+  ? MediaQueryList
+  : never;
+
+type EventListenerOptions<K extends EventName> = K extends WindowEventName | MediaQueryListEventName
+  ? boolean | AddEventListenerOptions
+  : boolean | AddEventListenerOptions | undefined;
+
+type EventListenerElement<K extends EventName> = TargetElement<K> | React.RefObject<TargetElement<K>>;
+
+type EventHandler<K extends EventName> = (event: TargetElement<K> extends Window ? WindowEventMap[K] : TargetElement<K> extends HTMLElement ? HTMLElementEventMap[K] : MediaQueryListEventMap[K]) => void;
+
+export const useEventListener = <K extends EventName>(
   eventName: K,
-  handler: (event: Event) => void,
-  element?: React.RefObject<T>,
-  options?: boolean | AddEventListenerOptions,
+  handler: EventHandler<K>,
+  element?: EventListenerElement<K>,
+  options?: EventListenerOptions<K>,
 ) => {
   const handlerRef = useRef(handler);
 
@@ -35,17 +37,13 @@ export const useEventListener = <
   }, [handler]);
 
   useEffect(() => {
-    const targetElement: T | Window = element?.current ?? window;
+    const targetElement = (element as React.RefObject<TargetElement<K>>)?.current ?? window;
 
     if (targetElement && typeof targetElement.addEventListener === "function") {
-      targetElement.addEventListener(eventName, handlerRef.current, options);
+      targetElement.addEventListener(eventName, handlerRef.current as EventListener, options);
 
       return () => {
-        targetElement.removeEventListener(
-          eventName,
-          handlerRef.current,
-          options,
-        );
+        targetElement.removeEventListener(eventName, handlerRef.current as EventListener, options);
       };
     }
   }, [eventName, element, options]);

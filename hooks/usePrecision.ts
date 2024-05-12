@@ -1,35 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
 type PrecisionOptions = {
-  precision: number;
-  value: number;
-};
+  precision: number
+  value: number
+}
 
-type FormattedValue = number;
+type FormattedValue = number
 
-/**
- * @function formatNumber
- * @param {number} value - The value to be formatted.
- * @param {number} precision - The precision of the formatted value.
- * @returns {number} The formatted value.
- */
 const formatNumber = (value: number, precision: number): FormattedValue => {
-  return Number(value.toFixed(precision));
-};
+  return Number(value.toFixed(precision))
+}
 
-/**
- * A custom React hook that sets the precision of a number.
- * @param {PrecisionOptions} { precision, value } - The precision and value to be formatted.
- * @returns {number} The formatted value.
- */
-export const usePrecision = ({ precision, value }: PrecisionOptions) => {
-  const [formattedValue, setFormattedValue] = useState<number>(
-    formatNumber(value, precision),
-  );
+type UsePrecisionReturn = FormattedValue
+
+export const usePrecision = ({
+  precision,
+  value,
+}: PrecisionOptions): UsePrecisionReturn => {
+  const [formattedValue, setFormattedValue] = useState<FormattedValue>(() =>
+    formatNumber(value, precision)
+  )
 
   useEffect(() => {
-    setFormattedValue(formatNumber(value, precision));
-  }, [precision, value]);
+    setFormattedValue(formatNumber(value, precision))
+  }, [precision, value])
 
-  return formattedValue;
-};
+  return formattedValue
+}

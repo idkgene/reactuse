@@ -1,12 +1,22 @@
 import { MutableRefObject, useCallback, useLayoutEffect, useState } from 'react'
 
-/**
- * @param {MutableRefObject<HTMLElement | null>} ref - The reference to the HTML element you want to observe.
- * @returns {DOMRect | null} - The size and position of the observed element, or null if the element is not available.
- */
+interface RectResult {
+  x: number
+  y: number
+  width: number
+  height: number
+  top: number
+  right: number
+  bottom: number
+  left: number
+}
 
-export const useRect = (ref: MutableRefObject<HTMLElement | null>) => {
-  const [rect, setRect] = useState<DOMRect | null>(null)
+type UseRectReturn = RectResult | null
+
+export const useRect = <T extends HTMLElement>(
+  ref: MutableRefObject<T | null>
+): UseRectReturn => {
+  const [rect, setRect] = useState<UseRectReturn>(null)
 
   const handleResize = useCallback(() => {
     if (!ref.current) {
@@ -14,7 +24,9 @@ export const useRect = (ref: MutableRefObject<HTMLElement | null>) => {
       return
     }
 
-    setRect(ref.current.getBoundingClientRect())
+    const { x, y, width, height, top, right, bottom, left } =
+      ref.current.getBoundingClientRect()
+    setRect({ x, y, width, height, top, right, bottom, left })
   }, [ref])
 
   useLayoutEffect(() => {

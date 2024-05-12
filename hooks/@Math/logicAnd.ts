@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react'
 
-type MaybeRefOrGetter<T> = T | (() => T);
+type MaybeRefOrGetter<T> = T | (() => T)
 
 /**
  * `AND` conditions for refs
@@ -8,32 +8,20 @@ type MaybeRefOrGetter<T> = T | (() => T);
  * @param {...MaybeRefOrGetter<boolean>[]} args - The refs or getters to be ANDed together.
  * @returns {[boolean, (newValues: boolean[]) => void]} - An array containing the result of the AND operation and a function to update the values.
  */
-export const logicAnd = (
+export function useLogicAnd(
   ...args: MaybeRefOrGetter<boolean>[]
-): [boolean, (newValues: boolean[]) => void] => {
-  const [values, setValues] = useState<boolean[]>(
-    args.map((arg) => {
-      if (typeof arg === "function") {
-        return arg();
-      }
-      return arg;
-    }),
-  );
+): [boolean, (newValues: boolean[]) => void] {
+  const [values, setValues] = useState<boolean[]>(() =>
+    args.map((arg) => (typeof arg === 'function' ? arg() : arg))
+  )
 
   const updateValues = useCallback((newValues: boolean[]) => {
-    setValues(newValues);
-  }, []);
+    setValues(newValues)
+  }, [])
 
   useEffect(() => {
-    updateValues(
-      args.map((arg) => {
-        if (typeof arg === "function") {
-          return arg();
-        }
-        return arg;
-      }),
-    );
-  }, [args, updateValues]);
+    updateValues(args.map((arg) => (typeof arg === 'function' ? arg() : arg)))
+  }, [args, updateValues])
 
-  return [values.every((value) => value), updateValues];
-};
+  return [values.every(Boolean), updateValues]
+}

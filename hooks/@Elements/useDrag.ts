@@ -2,60 +2,37 @@
 
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
+interface Position {
+  x: number
+  y: number
+}
+
 interface DragOptions {
-  onDragStart?: (
-    event: MouseEvent | TouchEvent,
-    position: { x: number; y: number },
-  ) => void
-  onDrag?: (
-    event: MouseEvent | TouchEvent,
-    position: { x: number; y: number },
-  ) => void
-  onDragEnd?: (
-    event: MouseEvent | TouchEvent,
-    position: { x: number; y: number },
-  ) => void
+  onDragStart?: (event: MouseEvent | TouchEvent, position: Position) => void
+  onDrag?: (event: MouseEvent | TouchEvent, position: Position) => void
+  onDragEnd?: (event: MouseEvent | TouchEvent, position: Position) => void
 }
 
 interface DragResult {
   isDragging: boolean
   dragRef: RefObject<HTMLDivElement>
-  position: { x: number; y: number }
+  position: Position
 }
 
-/**
- * @param {DragOptions} options - An object containing options for the useDrag hook.
- * @param {onDragStart} options.onDragStart - A callback function that is called when the user starts dragging.
- * @param {onDrag} options.onDrag - A callback function that is called while the user is dragging.
- * @param {onDragEnd} options.onDragEnd - A callback function that is called when the user stops dragging.
- * @returns {DragResult} An object containing the following properties:
- * - `isDragging`: A boolean indicating whether the user is currently dragging.
- * - `dragRef`: A reference to the HTML element that is being dragged.
- * - `position`: An object containing the current position of the dragged element.
- * - `handleMouseDown`: A function that is called when the user starts dragging.
- * - `handleMouseMove`: A function that is called while the user is dragging.
- * - `handleMouseUp`: A function that is called when the user stops dragging.
- * - `handleTouchStart`: A function that is called when the user starts dragging using a touch device.
- * - `handleTouchMove`: A function that is called while the user is dragging using a touch device.
- * - `handleTouchEnd`: A function that is called when the user stops dragging using a touch device.
- * - `handleMouseLeave`: A function that is called when the user leaves the dragged element.
- * - `handleMouseEnter`: A function that is called when the user enters the dragged element.
- */
-
-export const useDrag = (options: DragOptions = {}): DragResult => {
+export function useDrag(options: DragOptions = {}): DragResult   {
   const { onDragStart, onDrag, onDragEnd } = options
   const dragRef = useRef<HTMLDivElement>(null)
-  const [isDragging, setIsDragging] = useState(false)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState<boolean>(false)
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 })
 
   const handleMouseDown = useCallback(
     (event: MouseEvent) => {
-      if (event.button !== 0) return // Left mouse button is 0
+      if (event.button !== 0) return
       setIsDragging(true)
       setPosition({ x: event.clientX, y: event.clientY })
       onDragStart?.(event, { x: event.clientX, y: event.clientY })
     },
-    [onDragStart],
+    [onDragStart]
   )
 
   const handleMouseMove = useCallback(
@@ -64,7 +41,7 @@ export const useDrag = (options: DragOptions = {}): DragResult => {
       setPosition({ x: event.clientX, y: event.clientY })
       onDrag?.(event, { x: event.clientX, y: event.clientY })
     },
-    [isDragging, onDrag],
+    [isDragging, onDrag]
   )
 
   const handleMouseUp = useCallback(
@@ -73,7 +50,7 @@ export const useDrag = (options: DragOptions = {}): DragResult => {
       setIsDragging(false)
       onDragEnd?.(event, { x: event.clientX, y: event.clientY })
     },
-    [onDragEnd],
+    [onDragEnd]
   )
 
   const handleTouchStart = useCallback(
@@ -85,7 +62,7 @@ export const useDrag = (options: DragOptions = {}): DragResult => {
         y: event.touches[0].clientY,
       })
     },
-    [onDragStart],
+    [onDragStart]
   )
 
   const handleTouchMove = useCallback(
@@ -97,7 +74,7 @@ export const useDrag = (options: DragOptions = {}): DragResult => {
         y: event.touches[0].clientY,
       })
     },
-    [isDragging, onDrag],
+    [isDragging, onDrag]
   )
 
   const handleTouchEnd = useCallback(
@@ -108,7 +85,7 @@ export const useDrag = (options: DragOptions = {}): DragResult => {
         y: event.changedTouches[0].clientY,
       })
     },
-    [onDragEnd],
+    [onDragEnd]
   )
 
   useEffect(() => {
