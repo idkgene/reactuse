@@ -33,6 +33,8 @@ test/development/basic/legacy-decorators/**/*
 test/production/emit-decorator-metadata/**/*.js
 test/e2e/app-dir/rsc-errors/app/swc/use-client/page.js
 test-timings.json
+__tests__/**
+tests/** */
 packages/next-swc/crates/**
 bench/nested-deps/**
 bench/nested-deps-app-router/**
