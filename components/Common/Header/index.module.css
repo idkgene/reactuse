@@ -1,15 +1,17 @@
 .nav {
-  @apply top-0 left-0 w-full pointer-events-none
-  transition-colors z-30 lg:fixed
+  @apply top-0 left-0 w-full z-30 lg:fixed
+  transition-colors pointer-events-none
 }
 
 .navbar {
-  @apply relative whitespace-nowrap
-  transition-colors h-16
+  @apply relative h-16
+  transition-colors 
+  whitespace-nowrap
 }
 
 .wrapper {
-  @apply pt-0 pl-2 pb-0 pr-6 
+  @apply pt-0 pl-2
+  pb-0 pr-6 
 }
 
 .container {
@@ -24,9 +26,11 @@
 }
 
 .logoLink {
-  @apply flex items-center border-b border-solid
-  border-transparent w-full h-16 text-base font-semibold
-  transition-opacity text-[rgba(255,255,245,.86)]
+  @apply flex items-center border-b
+  border-solid w-full h-16 text-base
+  border-transparent font-semibold
+  transition-opacity text-[hsl(240,6%,25%)]
+  dark:text-[hsla(60,100%,98%,1)]
 }
 
 .logoString {
@@ -48,12 +52,12 @@
 } 
 
 .docsearchBtn {
-  @apply flex justify-center items-center
-  m-0 p-0 h-12 w-[55px] bg-transparent
-  transition-colors md:justify-start md:border
-  md:border-solid md:border-transparent md:rounded-[8px]
-  md:pt-0 md:pl-[10px] md:pb-[0px] md:pr-[12px] md:w-full
-  md:h-10 md:bg-[#161618]
+  @apply flex justify-center items-center m-0 p-0
+  h-12 w-[55px] bg-transparent transition-colors
+  md:justify-start md:border md:border-solid 
+  md:border-transparent md:rounded-[8px] md:pt-0 md:pb-0
+  md:pl-[10px] md:pr-[12px] md:w-full md:h-10 
+  md:dark:bg-[hsl(240,4%,9%)] md:bg-[hsl(240,6%,97%)]
 }
 
 .docsearchContainer {
@@ -62,14 +66,14 @@
 
 .docsearchIcon {
   @apply relative w-4 h-4 fill-current
-  transition-colors text-[#rgba(255,255,245,.86)]
+  transition-colors text-[hsl(240,6%,25%)] dark:text-[hsla(60,100%,98%,1)]
   md:top-px md:mr-2 md:w-[14px] md:h-[14px]
-  md:text-[rgba(235,235,245,.6)]
+  md:text-[hsla(240,6%,25%,1)] md:dark:text-[hsla(240,33%,94%,1)]
 }
 
 .docsearchPlaceholder {
   @apply hidden mt-0.5 pr-4 text-[13px]
-  font-medium text-[rgba(235,235,245,.6)]
+  font-medium text-[hsla(240,6%,25%,1)] dark:text-[hsla(240,33%,94%,1)]
   transition-colors md:inline-block
 }
 
@@ -79,19 +83,19 @@
 
 .afterBtnKey {
   @apply !text-[0px] block mt-0.5 border-y border-l
-  border-solid border-[#2e2e32] rounded-l-[4px]
+  border-solid border-[hsl(240,2%,89%)] dark:border-[#2e2e32] rounded-l-[4px]
   pl-1.5 min-w-0 w-auto h-[22px] leading-[22px]
   font-medium transition-colors after:content-['Ctrl']
   after:text-[12px] after:tracking-normal
-  after:text-[rgba(235,235,245,.6)]
+  after:text-[rgba(60,60,67,0.78)] after:dark:text-[hsla(240,33%,94%,1)]
 }
 
 .btnKey {
-  @apply block mt-0.5 border-solid border-[#2e2e32]
+  @apply block mt-0.5 border-solid border-[hsl(240,2%,89%)] dark:border-[hsl(240,4%,19%)]
   pl-0.5 min-w-0 w-auto h-[22px] leading-[22px] font-medium
-  transition-colors border-r border-y border-r-[#2e2e32]
+  transition-colors border-r border-y 
   border-l-[none] rounded-r-[4px] pr-1.5 text-[12px]
-  text-[rgba(235,235,245,.6)]
+  text-[hsla(240,6%,25%,1)] dark:text-[hsla(240,33%,94%,1)]
 }
 
 .navbarMenu {
@@ -100,18 +104,18 @@
 
 .navbarMenuLink {
   @apply flex items-center p-0 px-3 text-sm leading-[64px]
-  font-medium transition-colors text-[rgba(255,255,245,.86)]
+  font-medium transition-colors text-[hsl(240,6%,25%)] dark:text-[hsla(60,100%,98%,1)]
 }
 
 .socials {
   @apply -mr-2 hidden xl:flex xl:items-center before:ml-4
-  before:mr-2 before:w-px before:h-6 before:bg-[#2e2e32]
+  before:mr-2 before:w-px before:h-6 before:bg-[hsl(240,2%,89%)] dark:before:bg-[hsl(240,4%,19%)]
   before:content-['']
 }
 
 .socialsLink {
   @apply flex items-center justify-center size-9
-  transition-colors text-[rgba(235,235,245,.6)]
+  transition-colors text-[hsla(240,33%,94%,1)]
 }
 
 .socialsLinkIcon {
@@ -127,15 +131,18 @@
 }
 
 .mobileMenuIconTop {
-  @apply top-0 left-0 absolute w-4 h-0.5 transition-colors bg-[rgba(255,255,245,.86)] translate-x-0 translate-y-0
+  @apply top-0 left-0 absolute w-4 h-0.5 transition-colors
+  bg-[hsla(60,100%,98%,1)] translate-x-0 translate-y-0
 }
 
 .mobileMenuIconMiddle {
-  @apply top-1.5 left-0 absolute w-4 h-0.5 transition-colors bg-[rgba(255,255,245,.86)]
+  @apply top-1.5 left-0 absolute w-4 h-0.5
+  transition-colors bg-[hsla(60,100%,98%,1)]
 }
 
 .mobileMenuIconBottom {
-  @apply top-3 left-0 absolute w-4 h-0.5 transition-colors bg-[rgba(255,255,245,.86)]
+  @apply top-3 left-0 absolute w-4 h-0.5
+  transition-colors bg-[hsla(60,100%,98%,1)]
 }
 
 .divider {
