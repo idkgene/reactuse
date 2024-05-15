@@ -1,39 +1,44 @@
-"use client";
-import * as React from "react";
-import Link from "next/link";
-import ThemeToggle from "../Toggle";
-import { GithubIcon } from "../Icons/Github/icon";
-import { TelegramIcon } from "../Icons/Telegram/icon";
-import { DiscordIcon } from "../Icons/Discord/icon";
-import styles from "./index.module.css";
-import { Searchbar } from "./Search";
-import { ReactUseLogo } from "./Logo";
+'use client'
+import * as React from 'react'
+import Link from 'next/link'
+import { ThemeToggle } from '../Toggle'
+import { GithubIcon } from '../Icons/Github/icon'
+import { TelegramIcon } from '../Icons/Telegram/icon'
+import { DiscordIcon } from '../Icons/Discord/icon'
+import styles from './index.module.css'
+import { Searchbar } from './Search'
+import { ReactUseLogo } from './Logo'
 
 export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
-  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false)
+  const [mobileNavExpanded, setMobileNavExpanded] = React.useState(false)
 
   React.useEffect(() => {
     const handleScroll = () => {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      setIsScrolled(scrollTop > 0);
-    };
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      setIsScrolled(scrollTop > 0)
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  const toggleMobileNav = () => {
+    setMobileNavExpanded(!mobileNavExpanded)
+  }
 
   return (
     <>
-      <Link href="/main" className="sr-only">
+      <Link href="#main" className="sr-only">
         Skip to Main
       </Link>
       <header
-        className={`${styles.nav} ${isScrolled ? "bg-[#1b1b1f]" : ""}`}
+        className={`${styles.nav} ${isScrolled ? 'bg-[#fff] dark:bg-[#1b1b1f]' : ''}`}
         ref={ref}
         {...props}
+        role="navigation"
       >
         <div className={styles.navbar}>
           <div className={styles.wrapper}>
@@ -59,31 +64,44 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
                   </nav>
                   <ThemeToggle />
                   <div className={styles.socials}>
-                    <Link href="example.com" className={styles.socialsLink}>
+                    <Link
+                      href="example.com"
+                      className={styles.socialsLink}
+                      aria-label="Visit our GitHub"
+                    >
                       <span className={styles.socialsLinkIcon}>
-                        {" "}
+                        {' '}
                         <GithubIcon />
                       </span>
                     </Link>
-                    <Link href="example.com" className={styles.socialsLink}>
+                    <Link
+                      href="example.com"
+                      className={styles.socialsLink}
+                      aria-label="Visit our Discord"
+                    >
                       <span className={styles.socialsLinkIcon}>
-                        {" "}
+                        {' '}
                         <DiscordIcon />
                       </span>
                     </Link>
-                    <Link href="example.com" className={styles.socialsLink}>
+                    <Link
+                      href="example.com"
+                      className={styles.socialsLink}
+                      aria-label="Visit our Telegram"
+                    >
                       <span className={styles.socialsLinkIcon}>
-                        {" "}
+                        {' '}
                         <TelegramIcon fill="rgba(235,235,245,.6)" />
                       </span>
                     </Link>
                   </div>
                   <button
                     type="button"
-                    aria-label="Mobile Navigation"
-                    aria-expanded="false"
-                    aria-controls=""
+                    aria-label="Toggle Mobile Navigation"
+                    aria-expanded={mobileNavExpanded}
+                    aria-controls="navbar-menu"
                     className={styles.mobileNav}
+                    onClick={toggleMobileNav}
                   >
                     <span className={`${styles.mobileMenuIcon} container`}>
                       <span
@@ -93,12 +111,12 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
                       <span
                         id="mid"
                         className={styles.mobileMenuIconMiddle}
-                        style={{ transform: "translate(8px)" }}
+                        style={{ transform: 'translate(8px)' }}
                       ></span>
                       <span
                         id="bottom"
                         className={styles.mobileMenuIconBottom}
-                        style={{ transform: "translate(4px)" }}
+                        style={{ transform: 'translate(4px)' }}
                       ></span>
                     </span>
                   </button>
@@ -109,14 +127,16 @@ export const Navigation = React.forwardRef<HTMLElement>((props, ref) => {
           <div className={styles.divider}>
             <div
               className={`${styles.dividerLine} ${
-                isScrolled ? "bg-[#2e2e32]" : "bg-transparent"
+                isScrolled
+                  ? 'bg-[rgb(226,226,227)] dark:bg-[#2e2e32]'
+                  : 'bg-transparent'
               }`}
             ></div>
           </div>
         </div>
       </header>
     </>
-  );
-});
+  )
+})
 
-Navigation.displayName = "Navigation";
+Navigation.displayName = 'Navigation'
