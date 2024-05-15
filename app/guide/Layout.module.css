@@ -19,6 +19,30 @@
   lg:h-16 lg:bg-[#161618]
 }
 
+.group {
+  @apply border-t border-solid border-[#2e2e32] pt-[10px] lg:pt-[10px] lg:w-[calc(272px-64px)]
+}
+
+.sidebarItem {
+  @apply pb-6
+}
+
+.item  {
+  @apply touch-manipulation relative flex w-full
+}
+
+.indicator {
+  @apply absolute top-1.5 bottom-1.5 -left-[17px] w-0.5 rounded-[2px] transition-colors
+}
+
+.link {
+  @apply flex items-center grow py-1 px-0 leading-[24p] text-[14px] transition-colors font-medium text-[rgba(235,235,245,.6)] hover:text-[#fff] hover:underline
+}
+
+.text {
+  @apply grow py-1 leading-[24px] text-[14px] transition-colors font-bold text-[rgba(255,255,245,.86)]
+}
+
 .content {
   @apply grow shrink-0 w-full
   my-auto mx-0 lg:pt-16 m-0
