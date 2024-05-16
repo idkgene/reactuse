@@ -1,0 +1,32 @@
+.content {
+  @apply w-full p-2 sm:w-1/2
+  md:w-[calc(100%/3)]
+}
+
+.feature {
+  @apply transition-colors h-full
+  rounded-[12px] block border border-solid
+  border-[#f6f6f7] dark:border-[#202127]
+  bg-[#f6f6f7] dark:bg-[#202127]
+}
+
+.box {
+  @apply flex flex-col p-6 h-full
+}
+
+.icon {
+  @apply flex justify-center items-center mb-5
+  rounded-md select-none size-12 text-2xl
+  transition-colors bg-[rgba(101,117,133,.16)]
+}
+
+.title {
+  @apply text-base font-semibold
+  select-none text-[#3c3c43]
+}
+
+.details {
+  @apply grow pt-2 text-sm leading-[24px]
+  select-none font-medium text-[#3c3c43c7]
+  dark:text-[rgba(235,235,245,.6)]
+}
