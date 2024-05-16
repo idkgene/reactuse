@@ -1,6 +1,6 @@
 <h3 align="center">📚 React Use</h3>
 
-<p align="center">VueUse is absurdly cool. Let's see how far can we take it in React?</p>
+<p align="center">VueUse is absurdly cool. Let's see how far can we take it using modern React and Next JS?</p>
 
 <h2>🚀 Features</h2>
 
@@ -12,19 +12,19 @@
 - 🌎 No bundler required: Usable via CDN;
 - 🔩 Flexible: Configurable event filters and targets;
 
-<h2>Usage</h2>
+## 🧩 Usage
 
 ```ts
 // to be done
 ```
 
-<p>Refer to functions list or documentations for more details.</p>
+Refer to functions list or documentations for more details.
 
-<h2>📦 Install</h2>
+📦 Install
 
 // to be done
 
-### CDN
+### 🌐 CDN
 
 ```html
 // to be done
@@ -32,7 +32,7 @@
 
 //
 
-## Contribue
+## 🌱 Contribute
 
 See the Contributing Guide
 
@@ -40,11 +40,10 @@ See the Contributing Guide
 
 This project is heavily inspired by the following awesome projects.
 
-streamich/react-use
+- [streamich/react-use](https://github.com/streamich/react-use)
+- [vueuse/vueuse](https://github.com/vueuse/vueuse)
 
-antfu/vueuse
-
-## 👨‍🚀 Contributors
+## 🤝 Contributors
 
 //
 
