@@ -1,6 +1,6 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
   @layer base {
     :root {
@@ -36,7 +36,7 @@
     }
 
     .dark {
-      --background: 224 71.4% 4.1%;
+      --background: 0 0% 9%;
       --foreground: 210 20% 98%;
 
       --card: 224 71.4% 4.1%;
@@ -73,4 +73,38 @@
     body {
       @apply bg-background text-foreground;
     }
+  }
+
+  .token {
+    position: relative;
+  }
+
+  .token.keyword {
+    color: hsla( 275,80%,71% ,1)
+  }
+
+  .token.punctuation {
+    color: hsla( 0,0%,93% ,1)
+  }
+
+  .token.function {
+    color: hsla( 0,0%,93% ,1);
+  }
+
+  .token.operator {
+    color: #B8A965;
+  }
+
+  .token.tag.punctuation {
+    color: hsla( 0,0%,93% ,1)
+  }
+
+  .token.tag {
+    color: hsla( 131,43%,57% ,1);
+  }
+
+  .line-numbers .line-numbers-rows {
+    border-right: none !important;
+    color: hsla( 0,0%,53% ,1);
+    font-family: monospace;
   }

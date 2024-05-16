@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${WixMadeForDisplayVariable.className} box-border m-0 w-full min-w-[320px] min-h-[100vh] bg-[#1b1b1f] leading-[24px] text-[16px] font-normal text-[rgba(255,255,245,.86)] text-[#1b1b1f];
+        className={`${WixMadeForDisplayVariable.className} box-border m-0 w-full min-w-[320px] min-h-[100vh] leading-[24px] text-[16px] font-normal dark:text-[rgba(255,255,245,.86)] text-[#3c3c43];
 `}
       >
         <Navigation />

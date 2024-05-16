@@ -3,17 +3,21 @@ import Image from 'next/image'
 import ReactLogo from '../../../public/react-icon.svg'
 import { motion } from 'framer-motion'
 import styles from './index.module.css'
+import Link from 'next/link'
 
 export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <div
       ref={ref}
       {...props}
+      className="p-0"
       style={{
         marginTop: 'calc((64px + var(--vp-layout-top-height, 0px))* -1)',
         padding:
           'calc(64px + var(--vp-layout-top-height, 0px) + 48px) 24px 48px',
       }}
+      aria-labelledby="name"
+      role="banner"
     >
       <div className={`${styles.container} container`}>
         <div className={styles.main}>
@@ -30,33 +34,47 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
           </p>
           <div id="actions" className={styles.actions}>
             <div id="action" className={styles.action}>
-              <a href="/guide" className={styles.actionBrand}>
+              <Link
+                href="/guide"
+                className={styles.actionBrand}
+                aria-label="Get started with ReactUse"
+              >
                 Get Started
-              </a>
+              </Link>
             </div>
             <div id="action" className={styles.action}>
-              <a href="/hooks" className={styles.actionRegular}>
+              <Link
+                href="/hooks"
+                className={styles.actionRegular}
+                aria-label="Explore ReactUse hooks"
+              >
                 Hooks
-              </a>
+              </Link>
             </div>
             <div id="action" className={styles.action}>
-              <a
+              <Link
                 href="https://github.com/changeelog/react-hooks"
                 className={styles.actionRegular}
+                aria-label="View ReactUse on GitHub"
               >
                 View on Github
-              </a>
+              </Link>
             </div>
           </div>
         </div>
-        <div id="image" className={styles.image} style={{ margin: 'auto' }}>
+        <div
+          id="image"
+          className={styles.image}
+          style={{ margin: 'auto' }}
+          aria-hidden="true"
+        >
           <div id="image-container" className={styles.imageContainer}>
             <div
               id="image-bg"
               className={styles.imageBg}
               style={{
                 backgroundImage:
-                  'linear-gradient( -45deg, #166271 30%, #35495e80 )',
+                  'linear-gradient( -45deg, #61DAFB 30%, #13131310 )',
               }}
             ></div>
 
@@ -66,9 +84,7 @@ export const Hero = React.forwardRef<HTMLDivElement>((props, ref) => {
             >
               <Image
                 src={ReactLogo}
-                alt="ReactUse"
-                width={256}
-                height={256}
+                alt="ReactUse Logo"
                 className={styles.logo}
               />
             </motion.div>
