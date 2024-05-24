@@ -1,20 +1,70 @@
-import { useEffect, useRef } from 'react'
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-export function useInterval(callback: () => void, delay: number | null) {
-  const savedCallback = useRef<() => void>(callback)
+interface UseIntervalOptions {
+  /**
+   * Выполнить обновление сразу после вызова
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * Callback-функция, вызываемая на каждом интервале
+   */
+  callback?: (count: number) => void
+}
 
-  useIsomorphicLayoutEffect(() => {
+interface UseIntervalControls {
+  counter: number
+  reset: () => void
+  pause: () => void
+  resume: () => void
+}
+
+/**
+ * Реактивный счетчик, увеличивающийся на каждом интервале
+ *
+ * @param interval - Интервал в миллисекундах
+ * @param options - Опции хука
+ */
+export function useInterval(
+  interval: number,
+  options?: UseIntervalOptions
+): UseIntervalControls {
+  const { immediate = true, callback } = options || {}
+
+  const [counter, setCounter] = useState(0)
+  const [isRunning, setIsRunning] = useState(immediate)
+  const savedCallback = useRef<(count: number) => void>()
+
+  useEffect(() => {
     savedCallback.current = callback
   }, [callback])
 
+  const reset = useCallback(() => {
+    setCounter(0)
+  }, [])
+
+  const pause = useCallback(() => {
+    setIsRunning(false)
+  }, [])
+
+  const resume = useCallback(() => {
+    setIsRunning(true)
+  }, [])
+
   useEffect(() => {
-    if (delay === null) {
+    if (!isRunning) {
       return
     }
 
-    const id = setInterval(() => savedCallback.current(), delay)
+    const id = setInterval(() => {
+      const newCounter = counter + 1
+      setCounter(newCounter)
+      savedCallback.current?.(newCounter)
+    }, interval)
 
     return () => clearInterval(id)
-  }, [delay])
+  }, [interval, isRunning])
+
+  return { counter, reset, pause, resume }
 }

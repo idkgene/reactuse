@@ -2,8 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import './globals.css'
 import { WixMadeForDisplayVariable } from './fonts'
-import { Navigation } from '@/components/Common/Header'
-import { Footer } from '@/components/Common/Footer'
+import { ThemeProvider } from 'next-themes'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://reactuse.vercel.app'),
@@ -47,14 +46,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${WixMadeForDisplayVariable.className} box-border m-0 w-full min-w-[320px] min-h-[100vh] leading-[24px] text-[16px] font-normal dark:text-[rgba(255,255,245,.86)] text-[#3c3c43];
 `}
       >
-        <Navigation />
-        {children}
-        <Footer />
+        <ThemeProvider
+          disableTransitionOnChange
+          defaultTheme="light"
+          attribute="class"
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

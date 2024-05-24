@@ -1,110 +1,313 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 224 71.4% 4.1%;
-
-      --card: 0 0% 100%;
-      --card-foreground: 224 71.4% 4.1%;
-
-      --popover: 0 0% 100%;
-      --popover-foreground: 224 71.4% 4.1%;
-
-      --primary: 220.9 39.3% 11%;
-      --primary-foreground: 210 20% 98%;
-
-      --secondary: 220 14.3% 95.9%;
-      --secondary-foreground: 220.9 39.3% 11%;
-
-      --muted: 220 14.3% 95.9%;
-      --muted-foreground: 220 8.9% 46.1%;
-
-      --accent: 220 14.3% 95.9%;
-      --accent-foreground: 220.9 39.3% 11%;
-
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 20% 98%;
-
-      --border: 220 13% 91%;
-      --input: 220 13% 91%;
-      --ring: 224 71.4% 4.1%;
-
-      --radius: 0.5rem;
+ 
+@layer base {
+     :root {
+         --background: 0 0% 100%;
+         --foreground: 224 71.4% 4.1%;
+         --card: 240 5.9% 96.7%;
+         --card-foreground: 223 14% 61%;
+         --popover: 0 0% 100%;
+         --popover-foreground: 224 71.4% 4.1%;
+         --primary: 220.9 39.3% 11%;
+         --primary-foreground: 210 20% 98%;
+         --secondary: 220 14.3% 95.9%;
+         --secondary-foreground: 220.9 39.3% 11%;
+         --muted: 220 14.3% 95.9%;
+         --muted-foreground: 220 8.9% 46.1%;
+         --accent: 220 14.3% 95.9%;
+         --accent-foreground: 220.9 39.3% 11%;
+         --destructive: 0 84.2% 60.2%;
+         --destructive-foreground: 210 20% 98%;
+         --border: 220 13% 91%;
+         --input: 220 13% 91%;
+         --ring: 224 71.4% 4.1%;
+         --radius: 0.5rem;
+         --text-main: #3c3c43;
+         --text-muted: #3c3c43c7;
     }
 
-    .dark {
-      --background: 0 0% 9%;
-      --foreground: 210 20% 98%;
-
-      --card: 224 71.4% 4.1%;
-      --card-foreground: 210 20% 98%;
-
-      --popover: 224 71.4% 4.1%;
-      --popover-foreground: 210 20% 98%;
-
-      --primary: 210 20% 98%;
-      --primary-foreground: 220.9 39.3% 11%;
-
-      --secondary: 215 27.9% 16.9%;
-      --secondary-foreground: 210 20% 98%;
-
-      --muted: 215 27.9% 16.9%;
-      --muted-foreground: 217.9 10.6% 64.9%;
-
-      --accent: 215 27.9% 16.9%;
-      --accent-foreground: 210 20% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 210 20% 98%;
-
-      --border: 215 27.9% 16.9%;
-      --input: 215 27.9% 16.9%;
-      --ring: 216 12.2% 83.9%;
+     .dark {
+         --background: 240 7% 11%;
+         --foreground: 210 20% 98%;
+         --card: 231 10% 14%;
+         --card-foreground: 210 14% 46%;
+         --popover: 224 71.4% 4.1%;
+         --popover-foreground: 210 20% 98%;
+         --primary: 210 20% 98%;
+         --primary-foreground: 220.9 39.3% 11%;
+         --secondary: 215 27.9% 16.9%;
+         --secondary-foreground: 210 20% 98%;
+         --muted: 215 27.9% 16.9%;
+         --muted-foreground: 217.9 10.6% 64.9%;
+         --accent: 215 27.9% 16.9%;
+         --accent-foreground: 210 20% 98%;
+         --destructive: 0 62.8% 30.6%;
+         --destructive-foreground: 210 20% 98%;
+         --border: 215 27.9% 16.9%;
+         --input: 215 27.9% 16.9%;
+         --ring: 216 12.2% 83.9%;
+         --text-main: #fffff5db;
+         --text-muted: #ebebf599;
     }
-  }
+}
 
-  @layer base {
-    * {
-      @apply border-border;
+ @layer base {
+     * {
+         @apply border-border;
     }
-    body {
-      @apply bg-background text-foreground;
+     body {
+         @apply bg-background text-foreground;
     }
-  }
+}
 
-  .token {
-    position: relative;
-  }
+ .token {
+     position: relative 
+}
 
-  .token.keyword {
-    color: hsla( 275,80%,71% ,1)
-  }
+.token.cdata,.token.comment,.token.doctype,.token.prolog {
+     color: var(--accents-5) 
+}
 
-  .token.punctuation {
-    color: hsla( 0,0%,93% ,1)
-  }
+.token.namespace {
+     opacity: .7 
+}
 
-  .token.function {
-    color: hsla( 0,0%,93% ,1);
-  }
+.token.attr-value,.token.boolean,.token.constant,.token.string,.token.symbol,.token.url,.token.variable {
+     color: #62C073 
+}
 
-  .token.operator {
-    color: #B8A965;
-  }
+.language-autohotkey .token.selector,.language-json .token.boolean,.token.atrule,code[class*=language-css] {
+     font-weight: 600 
+}
 
-  .token.tag.punctuation {
-    color: hsla( 0,0%,93% ,1)
-  }
+.language-json .token.boolean {
+     color: var(--geist-success) 
+}
 
-  .token.tag {
-    color: hsla( 131,43%,57% ,1);
-  }
+.token.keyword {
+     color: hsla( 341,90%,67% ,1) 
+}
 
-  .line-numbers .line-numbers-rows {
-    border-right: none !important;
-    color: hsla( 0,0%,53% ,1);
-    font-family: monospace;
-  }
+.token.tag.attr-value {
+     color: var(--ds-blue-900) 
+}
+
+.token.class-name,.token.number,.token.tag {
+     color: #62C073 
+}
+
+.language-autohotkey .token.tag {
+     color: #9a050f 
+}
+
+.language-autohotkey .token.keyword,.token.selector {
+     color: #F75F8F 
+}
+
+.token.bold,.token.important {
+     font-weight: 700 
+}
+
+.token.italic {
+     font-style: italic 
+}
+
+.token.deleted {
+     color: #FF6166 
+}
+
+.token.inserted {
+     color: #52A8FF;
+}
+
+.language-json .token.property,.language-markdown .token.title {
+     color: #EDEDED;
+}
+
+.language-markdown .token.code {
+     color: #52A8FF;
+     font-weight: 400 
+}
+
+.language-markdown .token.hr,.language-markdown .token.list {
+     color: #A1A1A1 
+}
+
+.language-markdown .token.url {
+     color: #F75F8F 
+}
+
+.token.selector {
+     color: #62C073 
+}
+
+.token.entity,.token.property {
+     color: #FF6166 
+}
+
+.token.attr-name,.token.function,.token.regex {
+     color: hsla( 275,80%,71% ,1) 
+}
+
+.token.operator,.token.punctuation,.token.tag.script {
+     color: hsla( 0,0%,93% ,1) 
+}
+
+.token.tag.script.string {
+     color: #52A8FF;
+}
+
+.token.directive.tag .tag {
+     background: #FF6166;
+     color: #A1A1A1 
+}
+
+.code-block_pre___OLfy.code-block_pure__58XFK {
+     background: transparent 
+}
+
+.code-block_noLineNumbers__jjjKl:before {
+     content: none!important 
+}
+
+.spinner_wrapper, .spinner {
+     --spinner-size: 20px;
+     height: var(--spinner-size, 20px);
+     width: var(--spinner-size, 20px);
+}
+
+.spinner {
+     position: relative;
+     top: 50%;
+     left: 50%;
+}
+
+.spinner_bar {
+     animation: spinner_spin 1.2s linear infinite;
+     background: hsla( 0,0%,56% ,1);
+     border-radius: 5px;
+     height: 8%;
+     left: -10%;
+     position: absolute;
+     top: -3.9%;
+     width: 24%;
+}
+
+.spinner_bar:first-child{
+     animation-delay: -1.2s;
+     transform: rotate(.0001deg) translate(146%);
+}
+
+.spinner_bar:nth-child(2) {
+     animation-delay: -1.1s;
+     transform: rotate(30deg) translate(146%);
+}
+ 
+.spinner_bar:nth-child(3) {
+     animation-delay: -1s;
+     transform: rotate(60deg) translate(146%);
+}
+
+.spinner_bar:nth-child(4) {
+     animation-delay: -.9s;
+     transform: rotate(90deg) translate(146%);
+}
+
+.spinner_bar:nth-child(5) {
+     animation-delay: -.8s;
+     transform: rotate(120deg) translate(146%);
+}
+ .spinner_bar:nth-child(6) {
+     animation-delay: -.7s;
+     transform: rotate(150deg) translate(146%);
+}
+ .spinner_bar:nth-child(7) {
+     animation-delay: -.6s;
+     transform: rotate(180deg) translate(146%);
+}
+ 
+.spinner_bar:nth-child(8) {
+     animation-delay: -.5s;
+     transform: rotate(210deg) translate(146%);
+}
+ 
+.spinner_bar:nth-child(9) {
+     animation-delay: -.4s;
+     transform: rotate(240deg) translate(146%);
+}
+ 
+.spinner_bar:nth-child(10) {
+     animation-delay: -.3s;
+     transform: rotate(270deg) translate(146%);
+}
+ 
+.spinner_bar:nth-child(11) {
+     animation-delay: -.2s;
+     transform: rotate(300deg) translate(146%);
+}
+ 
+.spinner_bar:nth-child(12) {
+     animation-delay: -.1s;
+     transform: rotate(330deg) translate(146%);
+}
+ 
+@keyframes spinner_spin {
+  0% {
+         opacity: 1;
+    }
+     
+  100% {
+         opacity: .15;
+    }
+}
+ 
+.skeleton {
+     background-size: 400% 100%;
+     background-color: #111;
+     animation: skeleton_loading 8s ease-in-out infinite;
+}
+ 
+@keyframer skeleton_loading {
+     0% {
+         background-position: 200% 0;
+    }
+     100% {
+         background-position: -200% 0;
+    }
+}
+
+.shiki {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 20px 0;
+  background: transparent;
+  overflow-x: auto;
+  border-radius: 5px;
+}
+
+.shiki > code {
+  display: block;
+  padding: 0 24px;
+  width: fit-content;
+  min-width: 100%;
+  line-height: 1.7;
+  font-size: .875em;
+  color: rgba(60, 60, 67, .78);
+  transition: color .5s;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}

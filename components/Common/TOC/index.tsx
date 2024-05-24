@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import * as React from 'react'
 
@@ -68,7 +69,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                   <li key={heading.id} className="list-none">
                     <a
                       href={`#${heading.id}`}
-                      className="leading-[32px] text-[14px] transition-colors text-ellipsis overflow-hidden whitespace-nowrap text-[rgba(235,235,245,.6)] hover:text-white"
+                      className="leading-[32px] text-[14px] transition-colors text-ellipsis overflow-hidden whitespace-nowrap text-[rgba(60,60,67,.78)] dark:text-[rgba(235,235,245,.6)] hover:text-[rgba(60,60,67)] dark:hover:text-white"
                     >
                       {heading.text}
                     </a>

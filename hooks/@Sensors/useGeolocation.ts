@@ -1,16 +1,3 @@
-/**
- * @returns The `useGeolocation` custom hook returns an object with the following properties:
- * - `loading`: a boolean indicating whether the geolocation data is still loading
- * - `accuracy`: the accuracy of the geolocation coordinates
- * - `altitude`: the altitude in meters above the WGS 84 reference ellipsoid
- * - `altitudeAccuracy`: the accuracy of the altitude in meters
- * - `heading`: the direction in which the device is traveling, specified in degrees counting clockwise relative to the true north
- * - `latitude`: the latitude coordinate of the device's position, in decimal degrees
- * - `longitude`: the longitude coordinate of the device's position, in decimal degrees
- * - `speed`: the velocity of the device in meters per second
- * - `timestamp`: the time at which the position was determined
- * - `error`: the error object if there was an issue getting the geolocation data
- */
 
 import { useEffect, useState } from "react";
 

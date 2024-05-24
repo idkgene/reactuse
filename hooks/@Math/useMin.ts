@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type UpdateMinFn = (newNumbers: number[]) => void
 
 export const useMin = (numbers: number[]): [number, UpdateMinFn] => {
   const [min, setMin] = useState<number>(() => Math.min(...numbers))
-
-  const updateMin: UpdateMinFn = useCallback((newNumbers: number[]) => {
-    setMin(Math.min(...newNumbers))
-  }, [])
+  const updateMinRef = useRef<UpdateMinFn>(() => {})
 
   useEffect(() => {
-    updateMin(numbers)
-  }, [numbers, updateMin])
+    const updateMin: UpdateMinFn = (newNumbers: number[]) => {
+      setMin(Math.min(...newNumbers))
+    }
 
-  return [min, updateMin]
+    updateMin(numbers)
+    updateMinRef.current = updateMin
+  }, [numbers])
+
+  return [min, updateMinRef.current]
 }

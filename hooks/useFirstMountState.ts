@@ -1,16 +1,11 @@
-/**
- * @module useFirstMountState
- * @returns {boolean} True on the initial render, false on subsequent renders.
- */
-
 import { useEffect, useRef } from 'react'
 
-export const useFirstMountState = (): boolean => {
-  const isFirst = useRef(true)
+export function useFirstMountState(): boolean {
+  const isInitialMount = useRef<boolean>(true)
 
   useEffect(() => {
-    isFirst.current = false
+    isInitialMount.current = false
   }, []) // Empty dependency array ensures the effect runs only once
 
-  return isFirst.current
+  return isInitialMount.current
 }

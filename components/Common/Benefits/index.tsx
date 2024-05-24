@@ -1,16 +1,15 @@
-import React from "react";
-import styles from "./index.module.css";
+import React from 'react'
 
 interface BenefitsProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const Benefits = React.forwardRef<HTMLDivElement, BenefitsProps>(
   (props, ref) => {
-    return <div className={styles.container} ref={ref} {...props}></div>;
+    return <div className="flex flex-wrap -m-2" ref={ref} {...props}></div>
   }
-);
+)
 
-Benefits.displayName = "Benefits";
+Benefits.displayName = 'Benefits'
 
-export { Benefits };
+export { Benefits }

@@ -2,12 +2,15 @@
 import React from 'react'
 import { Hero } from '@/components/Common/Hero'
 import { Benefits } from '@/components/Common/Benefits'
-import { BenefitsItem } from '@/components/Common/BenefitItem'
+import { BenefitsItem } from '@/components/Common/Benefits/BenefitItem'
+import { Navigation } from '@/components/Common/Header'
+import { Footer } from '@/components/Common/Footer'
 
 export default function Home() {
   return (
     <>
-      <main className="container mx-auto px-32 py-12 lg:py-16 ">
+      <Navigation />
+      <main className="container mx-auto pt-16">
         <Hero />
         <section className="relative py-0 px-6 sm:px-10 lg:px-16">
           <div className="container mx-auto my-auto">
@@ -56,6 +59,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   )
 }
