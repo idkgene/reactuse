@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useTyping } from '@hooks/@Sensors/useStartTyping'
+import { useTyping } from '@hooks/@Sensors/useTyping'
 
 describe('useTyping', () => {
   it('should return false initially', () => {
