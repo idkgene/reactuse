@@ -49,6 +49,7 @@ export function useCopyToClipboard(
             setCopiedValue(text)
             return true
           } else {
+            setCopiedValue(null)
             throw new Error('execCommand copy failed')
           }
         } catch (error) {
@@ -65,7 +66,15 @@ export function useCopyToClipboard(
   )
 
   const copy: CopyFn = useCallback(
-    async (text: string) => (copyFn ? copyFn(text) : executeCopy(text)),
+    async (text: string) => {
+      const result = copyFn ? await copyFn(text) : await executeCopy(text)
+      if (result) {
+        setCopiedValue(text)
+      } else {
+        setCopiedValue(null)
+      }
+      return result
+    },
     [copyFn, executeCopy]
   )
 
