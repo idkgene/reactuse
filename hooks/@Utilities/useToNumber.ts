@@ -34,7 +34,7 @@ interface UseToNumberOptions {
  * @returns {number} The converted number value.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const number = useToNumber('42', { method: 'parseInt', radix: 10 });
  * console.log(number); // Output: 42
  *

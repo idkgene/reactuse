@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
  * @returns {boolean} `true` if the feature is supporter, otherwise `false`.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const isClipboardSupported = useSupported(() => !!navigator.clipboard);
  *
  * if (isClipboardSupported) {

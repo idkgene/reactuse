@@ -39,15 +39,15 @@ interface Pausable {
  * @returns {Pausable} An object containing the current polling status and methods to pause and resume.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const { isActive, pause, resume } = useTimeoutPoll(async () => {
  *   console.log('Polling...');
  * }, 1000, { immediate: true });
  *
- * // Pause the polling
+ * Pause the polling
  * pause();
  *
- * // Resume the polling
+ * Resume the polling
  * resume();
  */
 export function useTimeoutPoll(

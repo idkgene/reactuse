@@ -6,7 +6,7 @@
  * @returns {value is Exclude<T, null | undefined>} `true` if the value is defined, otherwise `false`.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const maybeValue: string | null | undefined = 'Hello';
  * if (isDefined(maybeValue)) {
  *   // maybeValue is now narrowed to `string`

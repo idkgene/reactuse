@@ -7,7 +7,7 @@ import { MutableRefObject } from 'react'
  * @returns {T} The current value of the reference
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const myRef = useRef<number>(0);
  * const value = getValue(myRef); // value will be 0
  */
@@ -24,7 +24,7 @@ export function getValue<T>(ref: MutableRefObject<T>): T {
  * @param {K} key - The key of the property to retrieve.
  * @returns {T[K]} - The value of the specified property.
  * @example
- * // Usage example:
+ * Usage example:
  * type Person = { name: string; age: number; };
  * const personRef = useRef<Person>({ name: 'Alex', age: 20 });
  * const name = getProperty(personRef, 'name');  // name will be 'Alex'

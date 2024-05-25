@@ -8,7 +8,7 @@ import { useMemo } from 'react'
  * @returns {string} The string representation of the resolved value.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const stringValue = useToString(42);
  * console.log(stringValue); // Output: '42'
  *

@@ -65,7 +65,7 @@ interface UseCounterResult {
  * @returns {UseCounterResult} An object containing the current count and methods to manipulate it.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const { count, inc, dec, reset } = useCounter(10, { min: 0, max: 100 });
  * inc();  // Increments count by 1
  * dec(2); // Decrements count by 2

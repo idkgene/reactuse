@@ -28,7 +28,7 @@ interface UseToggleOptions<Truthy, Falsy> {
  * @returns {[Truthy | Falsy, (value?: Truthy | Falsy) => void]} An array containing the current state and a toggling function.
  *
  * @example
- * // Usage example:
+ * Usage example:
  * const [isEnabled, toggleEnabled] = useToggle(true, {
  *   truthyValue: 'ON',
  *   falsyValue: 'OFF'
