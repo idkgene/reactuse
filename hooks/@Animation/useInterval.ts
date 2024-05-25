@@ -64,7 +64,7 @@ export function useInterval(
     }, interval)
 
     return () => clearInterval(id)
-  }, [interval, isRunning])
+  }, [counter, interval, isRunning])
 
   return { counter, reset, pause, resume }
 }
