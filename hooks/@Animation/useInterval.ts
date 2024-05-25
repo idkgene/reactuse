@@ -1,15 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface UseIntervalOptions {
-  /**
-   * Выполнить обновление сразу после вызова
-   *
-   * @default true
-   */
   immediate?: boolean
-  /**
-   * Callback-функция, вызываемая на каждом интервале
-   */
   callback?: (count: number) => void
 }
 
@@ -20,12 +12,6 @@ interface UseIntervalControls {
   resume: () => void
 }
 
-/**
- * Реактивный счетчик, увеличивающийся на каждом интервале
- *
- * @param interval - Интервал в миллисекундах
- * @param options - Опции хука
- */
 export function useInterval(
   interval: number,
   options?: UseIntervalOptions
