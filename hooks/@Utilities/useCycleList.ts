@@ -27,7 +27,7 @@ interface UseCycleListReturn<T> {
   go: (i: number) => T
 }
 
-function useCycleList<T>(
+export function useCycleList<T>(
   list: T[],
   options?: UseCycleListOptions<T>
 ): UseCycleListReturn<T> {
@@ -70,5 +70,3 @@ function useCycleList<T>(
 
   return { state, index, next, prev, go }
 }
-
-export default useCycleList
