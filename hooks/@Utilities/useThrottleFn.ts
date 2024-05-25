@@ -6,6 +6,18 @@ type PromiseType<T extends FunctionArgs> = (...args: T) => Promise<void>
 
 type CallbackType<T extends FunctionArgs> = (...args: T) => void
 
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param fn - A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *              to `callback` when the throttled-function is executed.
+ * @param ms - A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @param trailing - If true, call fn again after the time is up.
+ * @param leading - If true, call fn on the leading edge of the ms timeout.
+ * @param rejectOnCancel - If true, reject the last call if it's been cancel.
+ * @returns A new, throttled, function.
+ */
 function useThrottleFn<T extends FunctionArgs>(
   fn: CallbackType<T>,
   ms = 200,
