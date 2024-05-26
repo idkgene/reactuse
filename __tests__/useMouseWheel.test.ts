@@ -1,4 +1,4 @@
-import { useMouseWheel } from '@/hooks/useMouseWheel'
+import { useMouseWheel } from '@/hooks/Sensors/useMouseWheel'
 import { renderHook, act } from '@testing-library/react'
 
 describe('useMouseWheel', () => {

@@ -1,4 +1,4 @@
-import { useHover } from '@/hooks/useHover'
+import { useHover } from '@/hooks/Sensors/useHover'
 import { renderHook, act } from '@testing-library/react'
 
 describe('useHover', () => {

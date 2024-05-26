@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useUnmount } from "./useUnmout";
+import { useEffect, useRef, useState } from 'react'
+import { useUnmount } from './Component/useUnmount/useUnmout'
 
 /**
  * @param {T} value - The value to be throttled.
@@ -10,8 +10,8 @@ import { useUnmount } from "./useUnmout";
 export const useThrottle = <T>(value: T, ms: number = 200) => {
   const [state, setState] = useState<T>(value)
   const timeout = useRef<ReturnType<typeof setTimeout>>()
-  const nextValue = useRef<T |null>(null)
-  const hasNextValue = useRef<boolean>(false);
+  const nextValue = useRef<T | null>(null)
+  const hasNextValue = useRef<boolean>(false)
 
   useEffect(() => {
     if (!timeout.current) {

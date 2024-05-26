@@ -1,4 +1,4 @@
-import { useWillMount } from '@/hooks/useWillMount'
+import { useWillMount } from '@/hooks/Component/useWillMount/useWillMount'
 import { renderHook } from '@testing-library/react'
 
 describe('useWillMount', () => {
