@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 
 /**
- * Reactive `Array.join` hook for React.
+ * @name useArrayJoin
+ * @description `Array.join` hook for React.
  *
  * @param list - The array to join.
  * @param separator - A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated with a comma (",").

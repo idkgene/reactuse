@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 import { UseArrayEveryPredicate } from '../array'
 
 /**
- * Reactive `Array.every` hook for React.
+ * @name useArrayEvery
+ * @description `Array.every` hook for React.
  *
  * @param list - The array to check.
  * @param predicate - A function to test each element.

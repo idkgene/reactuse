@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 import { UseArrayIncludesOptions, UseArrayIncludesComparatorFn } from '../array'
 
 /**
- * Reactive `Array.includes` hook for React.
+ * @name useArrayIncludes
+ * @description `Array.includes` hook for React.
  *
  * @param list - The array to search.
  * @param value - The value to search for.

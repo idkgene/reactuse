@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 
 /**
- * Reactive `Array.filter` hook for React.
+ * @name useArrayFilter
+ * @description `Array.filter` hook for React.
  *
  * @param list - The array to filter.
  * @param predicate - A function that is called for every element of the given `list`. Each time `predicate` executes, the returned value is added to the new array.

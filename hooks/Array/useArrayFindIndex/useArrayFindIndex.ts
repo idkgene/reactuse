@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 import { UseArrayEveryPredicate } from '../array'
 
 /**
- * Reactive `Array.findIndex` hook for React.
+ * @name useArrayFindIndex
+ * @description `Array.findIndex` hook for React.
  *
  * @param list - The array to search.
  * @param predicate - A function to test each element.

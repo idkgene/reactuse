@@ -7,7 +7,8 @@ type UseArrayReducer<PV, CV, R> = (
 ) => R
 
 /**
- * Reactive `Array.reduce` hook for React.
+ * @name useArrayReduce
+ * @description `Array.reduce` hook for React.
  *
  * @param list - The array to reduce.
  * @param reducer - A "reducer" function.

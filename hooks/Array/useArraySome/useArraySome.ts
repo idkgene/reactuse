@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 
 /**
- * Reactive `Array.some` hook for React.
+ * @name useArraySome
+ * @description `Array.some` hook for React.
  *
  * @param list - The array to check.
  * @param predicate - A function to test each element.

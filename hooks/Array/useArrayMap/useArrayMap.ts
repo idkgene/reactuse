@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 
 /**
- * Reactive `Array.map` hook for React.
+ * @name useArrayMap
+ * @description`Array.map` hook for React.
  *
  * @param list - The array to map over.
  * @param callback - A function that is called for every element of the given `list`. Each time `callback` executes, the returned value is added to the new array.
