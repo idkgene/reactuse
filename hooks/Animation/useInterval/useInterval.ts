@@ -1,17 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { UseIntervalOptions, UseIntervalControls } from '../animation'
 
-interface UseIntervalOptions {
-  immediate?: boolean
-  callback?: (count: number) => void
-}
-
-interface UseIntervalControls {
-  counter: number
-  reset: () => void
-  pause: () => void
-  resume: () => void
-}
-
+/**
+ * @name useInterval
+ * @description Custom hook that runs a callback fn at a specified interval
+ *
+ * @returns {UseIntervalControls} An object containing the current count and functions to reset, pause, and resume the interval.
+ */
 export function useInterval(
   interval: number,
   options?: UseIntervalOptions
