@@ -2,13 +2,16 @@
   "env": {
     "browser": true,
     "node": true,
-    "es2021": true
+    "es2021": true,
+    "jest/globals": true
   },
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@next/next/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:perfectionist/recommended-natural",
+    "eslint"
   ],
   "parserOptions": {
     "ecmaFeatures": {
