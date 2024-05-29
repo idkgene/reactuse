@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useDefault } from './useDefault'
+import { useDefault } from '../useDefault'
 
 describe('useDefault hook', () => {
   it('should initialize state with the provided default value', () => {
