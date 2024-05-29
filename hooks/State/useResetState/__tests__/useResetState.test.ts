@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useResetState } from './useResetState'
+import { useResetState } from '../useResetState'
 
 describe('useResetState', () => {
   it('should initialize state with the initial value', () => {
