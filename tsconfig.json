@@ -5,8 +5,12 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "module": "esnext",
+    "outDir": "dist",
+    "sourceMap": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -26,6 +30,12 @@
       "@utils": ["./utils/utils.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "jest.config.js"
+  ],
   "exclude": ["node_modules"]
 }
