@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useArrayDifference } from './useArrayDifference'
+import { useArrayDifference } from '../useArrayDifference'
 
 describe('useArrayDifference', () => {
   it('should return the difference between two arrays', () => {
