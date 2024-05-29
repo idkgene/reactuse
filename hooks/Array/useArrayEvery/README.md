@@ -1,4 +1,4 @@
-#useArrayEvery
+# useArrayEvery
 
 `Array.every`
 
