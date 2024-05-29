@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useFirstMountState } from './useFirstMountState'
+import { useFirstMountState } from '../useFirstMountState'
 
 describe('useFirstMountState', () => {
   it('should return true on initial render', () => {
