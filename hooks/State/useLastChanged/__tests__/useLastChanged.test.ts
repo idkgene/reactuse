@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useLastChanged } from './useLastChanged'
+import { useLastChanged } from '../useLastChanged'
 
 describe('useLastChanged', () => {
   beforeEach(() => {
