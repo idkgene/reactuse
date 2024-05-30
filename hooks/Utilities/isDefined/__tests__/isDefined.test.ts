@@ -1,4 +1,4 @@
-import { isDefined } from './isDefined'
+import { isDefined } from '../isDefined'
 
 describe('isDefined', () => {
   it('should return true for defined values', () => {
