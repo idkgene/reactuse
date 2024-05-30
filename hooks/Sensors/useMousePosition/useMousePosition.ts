@@ -2,15 +2,36 @@ import { useEffect, useState } from 'react'
 
 /**
  * @name useMousePosition
- * @description A custom React hook that returns the current mouse position.
+ * @description This hook listens for 'mousemove' events on the window object to capture and update
+ * the current mouse position. It returns an object containing the x and y coordinates
+ * of the mouse cursor relative to the viewport.
  *
- * @returns {Object} An object containing the current mouse position.
- * @returns {number} position.x - The x-coordinate of the mouse position.
- * @returns {number} position.y - The y-coordinate of the mouse position.
+ * @returns {{x: number, y: number}} An object containing the x and y coordinates of the mouse position.
+ *
+ *  * @example
+ * import { useMousePosition } from './useMousePosition';
+ *
+ * function Component() {
+ *   const { x, y } = useMousePosition();
+ *
+ *   return (
+ *     <div>
+ *       <p>Mouse position - X: {x}, Y: {y}</p>
+ *     </div>
+ *   );
+ * }
  */
 export const useMousePosition = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
+  /**
+   * @function handleMouseMove
+   * @description Event handler for the 'mousemove' event. Updates the position state
+   * with the current mouse coordinates.
+   *
+   * @param {MouseEvent} event - The event object associated with the 'mousemove' event.
+   * @private
+   */
   const handleMouseMove = (e: MouseEvent) => {
     setPosition({ x: e.clientX, y: e.clientY })
   }
