@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useInterval } from './useInterval'
+import { useInterval } from '../useInterval'
 
 describe('useInterval', () => {
   beforeAll(() => {
