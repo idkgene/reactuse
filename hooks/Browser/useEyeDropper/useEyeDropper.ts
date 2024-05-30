@@ -16,6 +16,27 @@ interface UseEyeDropperReturn {
   ) => Promise<{ sRGBHex: string } | undefined>
 }
 
+/**
+ * @name useEyeDropper
+ * @description A hook to use the eye dropper feature of the browser
+ *
+ *
+ * @param options - Options for customizing the hook behavior.
+ * @returns A tuple containing the current sRGBHex value and a function to open the eye dropper and update the sRGBHex value.
+ *
+ * @example
+ * const { sRGBHex, open } = useEyeDropper()
+ *
+ * const handleClick = () => {
+ *   open()
+ * }
+ *
+ * return (
+ *   <button onClick={handleClick}>
+ *     Open Eye Dropper
+ *   </button>
+ * )
+ */
 export function useEyeDropper(
   options: UseEyeDropperOptions = {}
 ): UseEyeDropperReturn {
