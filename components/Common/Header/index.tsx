@@ -1,7 +1,7 @@
 'use client'
 import * as React from 'react'
 import Link from 'next/link'
-import { ThemeToggle } from '../Toggle'
+import { ThemeToggle } from '../Toggle/index'
 import { GithubIcon } from '../Icons/Github/icon'
 import { TelegramIcon } from '../Icons/Telegram/icon'
 import { DiscordIcon } from '../Icons/Discord/icon'
@@ -20,9 +20,16 @@ export const Navigation = React.forwardRef<
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop
       setIsScrolled(scrollTop > 0)
+      localStorage.setItem('isScrolled', JSON.stringify(scrollTop > 0))
     }
 
     window.addEventListener('scroll', handleScroll)
+
+    const isScrolledFromStorage = JSON.parse(
+      localStorage.getItem('isScrolled') || 'false'
+    )
+    setIsScrolled(isScrolledFromStorage)
+
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
@@ -74,17 +81,17 @@ export const Navigation = React.forwardRef<
                   <ThemeToggle />
                   <div className="-mr-2 hidden xl:flex xl:items-center before:ml-4 before:mr-2 before:w-px before:h-6 before:bg-[hsl(240,2%,89%)] dark:before:bg-[hsl(240,4%,19%)] before:content-['']">
                     <SocialsIcon
-                      href="example.com"
+                      href="https://github.com/changeelog"
                       label="Visit our GitHub"
                       icon={<GithubIcon />}
                     />
                     <SocialsIcon
-                      href="example.com"
+                      href="#"
                       label="Visit our Discord"
                       icon={<DiscordIcon />}
                     />
                     <SocialsIcon
-                      href="example.com"
+                      href="https://t.me/destroy2create"
                       label="Visit our Telegra"
                       icon={<TelegramIcon />}
                     />

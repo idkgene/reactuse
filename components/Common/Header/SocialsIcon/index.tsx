@@ -18,6 +18,8 @@ export const SocialsIcon: React.FC<SocialsIconProps> = ({
         href={href}
         className="flex items-center justify-center size-9 transition-colors text-[rgba(60,60,67,0.78)] dark:text-[hsla(240,33%,94%,1)]"
         aria-label={label}
+        target="_blank"
+        rel="noopener"
       >
         <span className="size-5 fill-current hover:text-[rgba(60,60,67)] dark:hover:text-[rgba(255,255,245,.86)]">
           {icon}
