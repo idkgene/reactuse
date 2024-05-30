@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useSupported } from './useSupported'
+import { useSupported } from '../useSupported'
 
 describe('useSupported', () => {
   test('should return true if the feature is supported', () => {
