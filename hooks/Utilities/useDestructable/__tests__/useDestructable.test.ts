@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react"
-import { useDestructurable } from "./useDestructable"
+import { renderHook } from '@testing-library/react'
+import { useDestructurable } from '../useDestructable'
 
 describe('useDestructurable', () => {
   it('should return a destructurable object and array', () => {
@@ -27,7 +27,7 @@ describe('useDestructurable', () => {
       ({ obj, arr }) => useDestructurable(obj, arr),
       {
         initialProps: { obj: obj1, arr: arr1 },
-      },
+      }
     )
 
     expect(result.current).toEqual({

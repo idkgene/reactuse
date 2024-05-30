@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { MakeDestructurableResult } from '../utilities'
+
 /**
  * @name useDestructurable
  * @description A React hook that combines an object and an array into a single destructurable
@@ -10,7 +11,6 @@ import { MakeDestructurableResult } from '../utilities'
  *   of `obj` and the elements of `arr`, allowing for easy destructuring.
  *
  * @example
- * Usage example:
  * const { foo, bar, baz } = useDestructurable({ foo: 1, bar: 2 }, [3, 4]);
  * // foo === 1, bar === 2, baz === 3
  */
