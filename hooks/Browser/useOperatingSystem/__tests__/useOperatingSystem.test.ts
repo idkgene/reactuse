@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useOperatingSystem } from './useOperatingSystem'
+import { useOperatingSystem } from '../useOperatingSystem'
 
 describe('useOperatingSystem', () => {
   beforeEach(() => {
