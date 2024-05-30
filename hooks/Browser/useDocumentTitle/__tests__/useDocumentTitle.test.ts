@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useDocumentTitle } from './useDocumentTitle'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 describe('useDocumentTitle', () => {
   afterEach(() => {
