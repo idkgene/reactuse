@@ -1,4 +1,4 @@
-import { getProperty, getValue } from './get'
+import { getProperty, getValue } from '../get'
 import { MutableRefObject } from 'react'
 
 describe('getValue', () => {
