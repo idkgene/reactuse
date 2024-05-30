@@ -1,5 +1,5 @@
-import { useMouseWheel } from './useMouseWheel'
 import { renderHook, act } from '@testing-library/react'
+import { useMouseWheel } from '../useMouseWheel'
 
 describe('useMouseWheel', () => {
   it('should return 0 initially', () => {
