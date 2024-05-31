@@ -1,5 +1,5 @@
-import { useWillMount } from '@/hooks/Component/useWillMount/useWillMount'
 import { renderHook } from '@testing-library/react'
+import { useWillMount } from '../useWillMount'
 
 describe('useWillMount', () => {
   it('should call the callback function only once before the component is mounted', () => {
