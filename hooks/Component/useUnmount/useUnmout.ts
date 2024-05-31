@@ -1,5 +1,4 @@
-import { useRef } from 'react'
-import { useEffectOnce } from '../useEffectOnce/useEffectOnce'
+import { useEffect, useRef } from 'react'
 
 /**
  * @param {function} fn - The function to be executed when the component is unmounted.
@@ -11,5 +10,10 @@ export const useUnmount = (fn: () => void) => {
 
   fnRef.current = fn
 
-  useEffectOnce(() => () => fnRef.current())
+  useEffect(
+    () => () => {
+      fnRef.current()
+    },
+    []
+  )
 }
