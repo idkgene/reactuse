@@ -1,12 +1,13 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react'
 
 interface UseHoverOptions {
-  onHoverChange?: (isHovering: boolean) => void;
-  shouldHandleHover?: (isHovering: boolean, event: MouseEvent) => boolean;
+  onHoverChange?: (isHovering: boolean) => void
+  shouldHandleHover?: (isHovering: boolean, event: MouseEvent) => boolean
 }
 
 /**
- * A React hook that tracks the hover state of an HTML element.
+ * @name useHover
+ * @description A React hook that tracks the hover state of an HTML element.
  *
  * @param ref - A ref object referring to the HTML element to track.
  * @param options - Options for customizing the hook behavior.
@@ -14,45 +15,43 @@ interface UseHoverOptions {
  */
 export function useHover<T extends HTMLElement>(
   ref: RefObject<T>,
-  options: UseHoverOptions = {}
+  options: UseHoverOptions   = {}
 ): boolean {
-  const { onHoverChange, shouldHandleHover } = options;
-  const [hovering, setHovering] = useState(false);
+  const { onHoverChange, shouldHandleHover } = options
+  const [hovering, setHovering] = useState(false)
 
   useEffect(() => {
-    const node = ref.current;
+    const node = ref.current
 
-    if (!node) return;
+    if (!node) return
 
     const handleMouseEnter = (event: MouseEvent) => {
-      const shouldHandle =
-        shouldHandleHover?.(true, event) ?? true;
+      const shouldHandle = shouldHandleHover?.(true, event) ?? true
 
       if (shouldHandle) {
-        setHovering(true);
-        onHoverChange?.(true);
+        setHovering(true)
+        onHoverChange?.(true)
       }
-    };
+    }
 
     const handleMouseLeave = (event: MouseEvent) => {
-      const shouldHandle =
-        shouldHandleHover?.(false, event) ?? true;
+      const shouldHandle = shouldHandleHover?.(false, event) ?? true
 
       if (shouldHandle) {
-        setHovering(false);
-        onHoverChange?.(false);
+        setHovering(false)
+        onHoverChange?.(false)
       }
-    };
+    }
 
     // Add event listeners to the node
-    node.addEventListener('mouseenter', handleMouseEnter);
-    node.addEventListener('mouseleave', handleMouseLeave);
+    node.addEventListener('mouseenter', handleMouseEnter)
+    node.addEventListener('mouseleave', handleMouseLeave)
 
     return () => {
-      node.removeEventListener('mouseenter', handleMouseEnter);
-      node.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [ref, onHoverChange, shouldHandleHover]);
+      node.removeEventListener('mouseenter', handleMouseEnter)
+      node.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [ref, onHoverChange, shouldHandleHover])
 
-  return hovering;
+  return hovering
 }

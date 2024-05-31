@@ -1,5 +1,5 @@
-import { useHover } from './useHover'
 import { renderHook, act } from '@testing-library/react'
+import { useHover } from '../useHover'
 
 describe('useHover', () => {
   it('should return false initially', () => {
