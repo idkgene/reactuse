@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useRound } from './useRound'
+import { useRound } from '../useRound'
 
 describe('useRound', () => {
   it('should initialize with 0', () => {
