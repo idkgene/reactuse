@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useSum } from './useSum'
+import { useSum } from '../useSum'
 
 describe('useSum', () => {
   it('should return the sum of an array of numbers', () => {

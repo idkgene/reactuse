@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * Calculates the sum of the numbers in the array
+ * 
+ * @param {number[]} array - Array of number to summarize.
+ * @returns {number} - The sum of the numbers in the array
+ * 
+ * @example
+ * const number = [1, 2, 3, 4, 5]
+ * const sum = useSum(number);
+ * console.log(sum); // Output: 15
+ */
 export const useSum = (array: number[]): number => {
   const [sum, setSum] = useState<number>(0)
 
