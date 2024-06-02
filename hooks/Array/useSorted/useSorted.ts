@@ -19,7 +19,7 @@ interface UseSortedOptions<T> {
 }
 
 /**
- * Reactive sort array
+ * Sort array
  *
  * @param source - The array to be sorted
  * @param compareFnOrOptions - The compare function or options for sorting
@@ -42,7 +42,7 @@ function useSorted<T>(
 
   const sortFn = useMemo<(arr: T[], compareFn: SortCompareFn<T>) => T[]>(() => {
     if (compareFnOrOptions && 'sortFn' in compareFnOrOptions) {
-      return compareFnOrOptions.sortFn! // Add non-null assertion operator
+      return compareFnOrOptions.sortFn!
     } else {
       return (arr, compareFn) => arr.slice().sort(compareFn)
     }
