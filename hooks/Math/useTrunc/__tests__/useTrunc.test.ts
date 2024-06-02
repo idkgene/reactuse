@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useTrunc } from './useTrunc'
+import { useTrunc } from '../useTrunc'
 
 describe('useTrunc', () => {
   it('should initialize with 0', () => {
