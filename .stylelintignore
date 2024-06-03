@@ -1,0 +1,10 @@
+.next
+.turbo
+.swc
+build
+
+public
+
+coverage
+
+storybook-static
