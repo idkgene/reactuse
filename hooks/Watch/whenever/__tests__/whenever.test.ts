@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { whenever } from './whenever'
+import { whenever } from '../whenever'
 
 describe('whenever', () => {
   it('should call the callback when the value becomes truthy', () => {
