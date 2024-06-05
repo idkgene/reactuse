@@ -1,32 +1,33 @@
-import { useList } from './useList'
+'use client';
+import { useList } from './useList';
 
 const UseListDemo = () => {
   const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList([
     1, 2, 3,
-  ])
+  ]);
 
   const handleAddItem = () => {
-    const newItem = list.length + 1
-    push(newItem)
-  }
+    const newItem = list.length + 1;
+    push(newItem);
+  };
 
   const handleRemoveItem = (index: number) => {
-    removeAt(index)
-  }
+    removeAt(index);
+  };
 
   const handleInsertItem = (index: number) => {
-    const newItem = list.length + 1
-    insertAt(index, newItem)
-  }
+    const newItem = list.length + 1;
+    insertAt(index, newItem);
+  };
 
   const handleUpdateItem = (index: number) => {
-    const newItem = list[index] * 2
-    updateAt(index, newItem)
-  }
+    const newItem = list[index] * 2;
+    updateAt(index, newItem);
+  };
 
   const handleClearList = () => {
-    set([])
-  }
+    set([]);
+  };
 
   return (
     <div>
@@ -43,7 +44,7 @@ const UseListDemo = () => {
       <button onClick={handleAddItem}>Add Item</button>
       <button onClick={handleClearList}>Set to empty array</button>
     </div>
-  )
-}
+  );
+};
 
-export default UseListDemo
+export default UseListDemo;
