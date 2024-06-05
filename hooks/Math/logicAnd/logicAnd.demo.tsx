@@ -1,6 +1,6 @@
 import React from 'react';
 import { logicAnd } from './logicAnd';
-import Demo from '@/components/Common/Demo/demo';
+import Demo from '../../../components/Common/Demo/demo';
 
 const LogicAndDemo = () => {
   const [value1, setValue1] = React.useState(true);
