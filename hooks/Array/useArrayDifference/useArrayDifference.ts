@@ -2,13 +2,19 @@ import { useMemo } from 'react'
 import { UseArrayDifferenceKey } from '../array'
 
 /**
- * @name useArrayDifference
- * @description Returns a new array containing elements from `list` that are not present in `values`.
- * If `keyOrCompareFn` is a function, it is used to determine if an element is present in `values`.
- * If `keyOrCompareFn` is a string, it is used as a key to compare elements in `list` and `values`.
- * If `keyOrCompareFn` is not provided, `values.includes(item)` is used to determine if an element is present in `values`.
+ * Calculates the difference between two arrays.
+ *
+ * @param {T[]} list - The original array.
+ * @param {T[]} values - The array to compare against.
+ * @param {UseArrayDifferenceKey<T>} [keyOrCompareFn] - The key to use for comparison.
  *
  * @returns {T[]} - A new array containing elements from `list` that are not present in `values`.
+ *
+ * @example
+ * const numbers = [1, 2, 3, 4, 5];
+ * const values = [3, 4];
+ * const difference = useArrayDifference(numbers, values);
+ * console.log(difference); // Output: [1, 2, 5]
  */
 export function useArrayDifference<T>(
   list: T[],
