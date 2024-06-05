@@ -12,4 +12,4 @@ npx changeelog/reactuse@latest add useArrayEvery
 
 ## Contribution
 
-Yes please! See the [contributing guidelines](#) for more details!
+Yes please! See the [contributing guidelines](/CONTRIBUTING.md) for more details!
