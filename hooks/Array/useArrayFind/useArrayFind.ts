@@ -2,13 +2,23 @@ import { useMemo } from 'react'
 import { UseArrayFindPredicate } from '../array'
 
 /**
- * @name useArrayFind
- * @description `Array.find` hook for React.
+ * `Array.find` hook for React.
  *
- * @param list - The array to search.
- * @param predicate - A function to test each element.
+ * Provides a memoized version of the `Array.find` method that searches for the first element in the array that satisfies the provided predicate function.
  *
- * @returns The first element in the array that satisfies the provided testing function. Otherwise, undefined is returned.
+ * @param {T[]} list - The array to search.
+ * @param {UseArrayFindPredicate<T>} predicate - A function to test each element in the array.
+ *
+ * @returns {T | undefined} The first element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
+ *
+ * @example
+ * const users = [
+ *   { id: 1, name: 'Alice' },
+ *   { id: 2, name: 'Bob' }
+ * ];
+ * const findUserById = (user) => user.id === 2;
+ * const user = useArrayFind(users, findUserById);
+ * console.log(user); // Output: { id: 2, name: 'Bob' }
  */
 export function useArrayFind<T>(
   list: T[],
