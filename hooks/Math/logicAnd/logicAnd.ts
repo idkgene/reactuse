@@ -1,27 +1,33 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useMemo } from 'react';
 
-type MaybeRefOrGetter<T> = T | (() => T)
+type ValueOrFunction<T> = T | (() => T);
 
 /**
- * `AND` conditions for refs
+ * Resolves a provided value or a function that returns a value.
  *
- * @param {...MaybeRefOrGetter<boolean>[]} args - The refs or getters to be ANDed together.
- * @returns {[boolean, (newValues: boolean[]) => void]} - An array containing the result of the AND operation and a function to update the values.
+ * @template T
+ * @param {ValueOrFunction<T>} value - A value or a function that returns a value.
+ *
+ * @returns {T} The resolved value.
  */
-export function useLogicAnd(
-  ...args: MaybeRefOrGetter<boolean>[]
-): [boolean, (newValues: boolean[]) => void] {
-  const [values, setValues] = useState<boolean[]>(() =>
-    args.map((arg) => (typeof arg === 'function' ? arg() : arg))
-  )
-
-  const updateValues = useCallback((newValues: boolean[]) => {
-    setValues(newValues)
-  }, [])
-
-  useEffect(() => {
-    updateValues(args.map((arg) => (typeof arg === 'function' ? arg() : arg)))
-  }, [args, updateValues])
-
-  return [values.every(Boolean), updateValues]
+function resolveValue<T>(value: ValueOrFunction<T>): T {
+  return typeof value === 'function' ? (value as () => T)() : value;
 }
+
+/**
+ * Uses a logical `AND` operator with multiple values or functions.
+ *
+ * @param {...ValueOrFunction<any>} args - The values or functions to evaluate.
+ *
+ * @returns {boolean} Returns `true` if all evaluated values are true; otherwise, `false`.
+ *
+ * @example
+ * const result = and(true, () => true, false); // Returns `false`.
+ */
+export function logicAnd(...args: ValueOrFunction<any>[]): boolean {
+  return useMemo(() => {
+    return args.every(arg => resolveValue(arg));
+  }, args);
+}
+
+export { logicAnd as and };
