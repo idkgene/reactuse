@@ -1,8 +1,8 @@
-import React from 'react'
-import type { Metadata } from 'next'
-import './globals.css'
-import { WixMadeForDisplayVariable } from './fonts'
-import { ThemeProvider } from 'next-themes'
+import React from 'react';
+import type { Metadata } from 'next';
+import './globals.css';
+import { ThemeProvider } from 'next-themes';
+import { GeistVariable } from './fonts';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://reactuse.vercel.app'),
@@ -38,17 +38,17 @@ export const metadata: Metadata = {
     description:
       'A collection of custom React hooks that are designed to simplify and improve your React development experience.',
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${WixMadeForDisplayVariable.className} box-border m-0 w-full min-w-[320px] min-h-[100vh] leading-[24px] text-[16px] font-normal dark:text-[rgba(255,255,245,.86)] text-[#3c3c43];
+        className={`${GeistVariable.className} box-border m-0 w-full min-w-[320px] min-h-[100vh] leading-[24px] text-[16px] font-normal dark:text-[#f6f7f9] text-[#23272f];
 `}
       >
         <ThemeProvider
@@ -60,5 +60,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
