@@ -1,6 +1,6 @@
 # logicNot
 
-`NOT` conditions for refs
+Uses a logical `NOT` operator with multiple values or functions.
 
 Please refer to the [documentation](#) for more information.
 
