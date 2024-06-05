@@ -1,18 +1,17 @@
-import { useMemo } from 'react'
-import { UseArrayEveryPredicate } from '../array'
+import { useMemo } from 'react';
+import { UseArrayEveryPredicate } from '../array';
 
 /**
- * @name useArrayEvery
- * @description `Array.every` hook for React.
+ * `Array.every` hook for React.
  *
- * @param list - The array to check.
+ * @param {T[]} list - The array to check.
  * @param predicate - A function to test each element.
  *
- * @returns `true` if the `predicate` function returns a truthy value for every element from the array. Otherwise, `false`.
+ * @returns {boolean} `true` if the `predicate` function returns a truthy value for every element from the array. Otherwise, `false`.
  */
 export function useArrayEvery<T>(
   list: T[],
   predicate: UseArrayEveryPredicate<T>
 ): boolean {
-  return useMemo(() => list.every(predicate), [list, predicate])
+  return useMemo(() => list.every(predicate), [list, predicate]);
 }
