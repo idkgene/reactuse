@@ -1,42 +1,39 @@
-import { logicNot } from '../logicNot'
+import { renderHook } from '@testing-library/react';
+import { logicNot, not } from '../logicNot';
 
 describe('logicNot', () => {
-  test('should return false when input is true', () => {
-    expect(logicNot(true)).toBe(false)
-  })
+  it('should return true when the argument is falsy', () => {
+    const { result } = renderHook(() => logicNot(false));
+    expect(result.current).toBe(true);
+  });
 
-  test('should return true when input is false', () => {
-    expect(logicNot(false)).toBe(true)
-  })
+  it('should return false when the argument is truthy', () => {
+    const { result } = renderHook(() => logicNot(true));
+    expect(result.current).toBe(false);
+  });
 
-  test('should return false when getter returns true', () => {
-    const getter = () => true
-    expect(logicNot(getter)).toBe(false)
-  })
+  it('should work with getter functions', () => {
+    const { result } = renderHook(() => logicNot(() => false));
+    expect(result.current).toBe(true);
+  });
 
-  test('should return true when getter returns false', () => {
-    const getter = () => false
-    expect(logicNot(getter)).toBe(true)
-  })
+  it('should memoize the result', () => {
+    const obj = { value: true };
+    const { result, rerender } = renderHook(
+      ({ obj }) => logicNot(obj.value),
+      { initialProps: { obj } }
+    );
 
-  test('should throw an error for non-boolean and non-function input', () => {
-    const invalidInput = 123
-    expect(() => logicNot(invalidInput as any)).toThrow(
-      'logicNot: Expected a boolean or a function that returns a boolean.'
-    )
-  })
+    expect(result.current).toBe(false);
 
-  test('should throw an error when function does not return a boolean', () => {
-    const invalidGetter = () => 'hello'
-    expect(() => logicNot(invalidGetter as any)).toThrow(
-      'logicNot: Expected a boolean or a function that returns a boolean.'
-    )
-  })
+    obj.value = false;
+    rerender({ obj });
 
-  test('should preserve the boolean type', () => {
-    const result1: boolean = logicNot(true)
-    const result2: boolean = logicNot(() => false)
-    expect(result1).toBe(false)
-    expect(result2).toBe(true)
-  })
+    expect(result.current).toBe(true);
+  });
+
+  it('should work with the "not" alias', () => {
+    const { result } = renderHook(() => not(false));
+    expect(result.current).toBe(true);
+  });
 })

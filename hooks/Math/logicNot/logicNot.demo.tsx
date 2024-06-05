@@ -1,40 +1,32 @@
-import React, { useState } from 'react'
-import { logicNot } from './logicNot'
+import React from 'react';
+import { logicNot } from './logicNot';
+import Demo from '../../../components/Common/Demo/demo';
 
 const LogicNotDemo = () => {
-  const [value, setValue] = useState(true)
-  const [getterValue, setGetterValue] = useState(true)
+  const [value, setValue] = React.useState(true);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.checked)
-  }
-
-  const handleGetterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGetterValue(event.target.checked)
-  }
-
-  const notValue = logicNot(value)
-  const notGetterValue = logicNot(() => getterValue)
+  const notResult = logicNot(value);
 
   return (
-    <div>
-      <h1>Logic Not Demo</h1>
-      <label>
-        Input:
-        <input type="checkbox" checked={value} onChange={handleChange} />
-      </label>
-      <p>NOT: {notValue.toString()}</p>
-      <label>
-        Getter Input:
+    <Demo href="#">
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-4xl font-bold mb-4">Logic Not Demo</h1>
+      <div className="flex items-center mb-4">
+        <label className="mr-2">Input:</label>
         <input
           type="checkbox"
-          checked={getterValue}
-          onChange={handleGetterChange}
+          checked={value}
+          onChange={e => setValue(e.target.checked)}
+          className="mr-2"
         />
-      </label>
-      <p>NOT Getter: {notGetterValue.toString()}</p>
+      </div>
+      <p className="text-2xl font-bold mb-4">
+        NOT Result: {notResult.toString()}
+      </p>
     </div>
-  )
-}
 
-export default LogicNotDemo
+    </Demo>
+  );
+};
+
+export default LogicNotDemo;

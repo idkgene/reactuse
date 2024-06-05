@@ -1,27 +1,33 @@
-type MaybeRefOrGetter<T> = T | (() => T)
+import { useMemo } from 'react';
+
+type ValueOfFunction<T> = T | (() => T);
 
 /**
- * `NOT` conditions for refs
+ * Resolves a provided value or a function that returns a value.
  *
- * This utility returns the negation of a boolean value or a getter function that returns a boolean.
- * 
- * @param {MaybeRefOrGetter<boolean>} value - The ref or getter to be NOTed.
- * @returns {[boolean, (newValue: boolean) => void]} - An array containing the result of the NOT operation and a function to update the value.
+ * @template T
+ * @param {ValueOrFunction<T>} value - A value or a function that returns a value.
+ *
+ * @returns {T} The resolved value.
+ */
+function resolveValue<T>(value: ValueOfFunction<T>): T {
+  return typeof value === 'function' ? (value as () => T)() : value;
+}
+
+/**
+ * Uses a logical `NOT` operator with multiple values or functions.
+ *
+ * @param {ValueOfFunction<any>} v - The value or a function that returns a value.
+ * @returns {boolean} The logical NOT of the provided value.
  *
  * @example
- * const [isTrue, setTrue] = logicNot(true);
- * console.log(isTrue); // Output: false;
- * setTrue(false);
- * console.log(istTrue); // Output: true;
+ * const result = logicNot(true); // Returns `false`.
+ * const result = logicNot(() => true); // Returns `false`.
  */
-export function logicNot<T extends boolean>(value: MaybeRefOrGetter<T>): T {
-  const resolvedValue = typeof value === 'function' ? value() : value
-
-  if (typeof resolvedValue !== 'boolean') {
-    throw new Error(
-      'logicNot: Expected a boolean or a function that returns a boolean.'
-    )
-  }
-
-  return !resolvedValue as T
+export function logicNot(v: ValueOfFunction<any>): boolean {
+  return useMemo(() => {
+    return !resolveValue(v);
+  }, [v]);
 }
+
+export { logicNot as not };
