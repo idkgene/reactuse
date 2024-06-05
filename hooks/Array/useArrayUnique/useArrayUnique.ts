@@ -1,10 +1,17 @@
 import { useCallback, useMemo } from 'react'
 
 /**
- * @name useArrayUnique
- * @description Custom hook to get a unique array of items.
+ * Returns a unique array of items based on a custom comparison function.
  *
- * @returns A unique array of items.
+ * @param {T[]} items - The array of items to filter for unique values.
+ * @param {(a: T, b: T, array: T[]) => boolean} [compareFn] - Optional custom comparison function
+ *
+ * @returns {T[]} A new array containing only the unique items from the input array.
+ *
+ * @example
+ * const items = [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 3 }];
+ * const uniqueItems = useArrayUnique(items, (a, b) => a.id === b.id);
+ * console.log(uniqueItems); // Output: [{ id: 1 }, { id: 2 }, { id: 3 }]
  */
 export function useArrayUnique<T>(
   items: T[],
