@@ -53,16 +53,12 @@ export function useDevicePixelRatio(
       setPixelRatio(targetWindow.devicePixelRatio);
     };
 
-    const mediaQuery = targetWindow.matchMedia(
-      `(resolution: ${pixelRatio}dppx)`
-    );
-
-    mediaQuery.addEventListener('change', updatePixelRatio);
+    targetWindow.addEventListener('resize', updatePixelRatio);
 
     return () => {
-      mediaQuery.removeEventListener('change', updatePixelRatio);
+      targetWindow.removeEventListener('resize', updatePixelRatio);
     };
-  }, [targetWindow, pixelRatio]);
+  }, [targetWindow]);
 
   return { pixelRatio };
 }
