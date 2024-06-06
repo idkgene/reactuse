@@ -1,5 +1,19 @@
-import { useMemo } from 'react'
-import { UseArrayEveryPredicate } from '../array'
+import { useMemo } from 'react';
+
+/**
+ * Represents a predicate function used in the `useArrayFindIndex` function.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T} element - The current element being processed.
+ * @param {number} index - The index of the current element.
+ * @param {T[]} array - The array being processed.
+ * @returns {boolean} - The result of the predicate function.
+ */
+export type UseArrayFindIndexPredicate<T> = (
+  element: T,
+  index: number,
+  array: T[]
+) => boolean;
 
 /**
  * `Array.findIndex` hook for React.
@@ -7,7 +21,7 @@ import { UseArrayEveryPredicate } from '../array'
  * Provides a memoized version of the `Array.findIndex` method.
  *
  * @param {T[]} list - The array to search.
- * @param {UseArrayEveryPredicate<T>} predicate - A function to test each element in the array.
+ * @param {UseArrayFindIndexPredicate<T>} predicate - A function to test each element in the array.
  *
  * @returns {number} The index of the first element in the array that passes the test. Otherwise, `-1`.
  *
@@ -22,7 +36,20 @@ import { UseArrayEveryPredicate } from '../array'
  */
 export function useArrayFindIndex<T>(
   list: T[],
-  predicate: UseArrayEveryPredicate<T>
+  predicate: UseArrayFindIndexPredicate<T>
 ): number {
-  return useMemo(() => list.findIndex(predicate), [list, predicate])
+  return useMemo(() => {
+    if (typeof predicate !== 'function') {
+      console.error(
+        'Invalid predicate function provided to useArrayFindIndex.'
+      );
+      return -1;
+    }
+
+    if (Array.isArray(list) && list.length === 0) {
+      return -1;
+    }
+
+    return list.findIndex(predicate);
+  }, [list, predicate]);
 }
