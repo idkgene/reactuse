@@ -1,5 +1,13 @@
-import { useMemo } from 'react'
-import { UseArrayDifferenceKey } from '../array'
+import { useMemo } from 'react';
+
+export type UseArrayDifferenceComparatorFn<T> = (
+  element: T,
+  value: T
+) => boolean;
+
+export type UseArrayDifferenceKey<T> =
+  | keyof T
+  | UseArrayDifferenceComparatorFn<T>;
 
 /**
  * Calculates the difference between two arrays.
@@ -22,17 +30,25 @@ export function useArrayDifference<T>(
   keyOrCompareFn?: UseArrayDifferenceKey<T>
 ): T[] {
   return useMemo(() => {
+    if (list.length === 0) {
+      return [];
+    }
+
+    if (values.length === 0) {
+      return [...list];
+    }
+
     if (typeof keyOrCompareFn === 'function') {
       return list.filter(
-        (item) => !values.some((othItem) => keyOrCompareFn(item, othItem))
-      )
+        item => !values.some(othItem => keyOrCompareFn(item, othItem))
+      );
     } else if (typeof keyOrCompareFn === 'string') {
-      const key = keyOrCompareFn
-      return list.filter(
-        (item) => !values.some((othItem) => item[key] === othItem[key])
-      )
+      const key = keyOrCompareFn;
+      const valuesSet = new Set(values.map(item => item[key]));
+      return list.filter(item => !valuesSet.has(item[key]));
     } else {
-      return list.filter((item) => !values.includes(item))
+      const valuesSet = new Set(values);
+      return list.filter(item => !valuesSet.has(item));
     }
-  }, [list, values, keyOrCompareFn])
+  }, [list, values, keyOrCompareFn]);
 }
