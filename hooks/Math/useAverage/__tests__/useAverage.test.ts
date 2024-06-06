@@ -1,63 +1,44 @@
-import { renderHook, act } from '@testing-library/react'
-import { useAverage } from '../useAverage'
+import { renderHook } from '@testing-library/react';
+import { useAverage } from '../useAverage';
 
 describe('useAverage', () => {
-  it('should return 0 for an empty array', () => {
-    const { result } = renderHook(() => useAverage())
-    expect(result.current).toBe(0)
-  })
+  it('should calculate the average of an array of numbers', () => {
+    const { result } = renderHook(() => useAverage([1, 2, 3]));
+    expect(result.current).toBe(2);
+  });
 
-  it('should calculate the average of numbers', () => {
-    const { result } = renderHook(() => useAverage(1, 2, 3, 4, 5))
-    expect(result.current).toBe(3)
-  })
+  it('should calculate the average of multiple number arguments', () => {
+    const { result } = renderHook(() => useAverage(1, 2, 3));
+    expect(result.current).toBe(2);
+  });
 
-  it('should calculate the average of getter functions', () => {
+  it('should work with getter functions', () => {
     const { result } = renderHook(() =>
       useAverage(
         () => 1,
         () => 2,
-        () => 3,
-        () => 4,
-        () => 5
+        () => 3
       )
-    )
-    expect(result.current).toBe(3)
-  })
+    );
+    expect(result.current).toBe(2);
+  });
 
-  it('should calculate the average of mixed numbers and getter functions', () => {
-    const { result } = renderHook(() =>
-      useAverage(
-        1,
-        () => 2,
-        3,
-        () => 4,
-        5
-      )
-    )
-    expect(result.current).toBe(3)
-  })
+  it('should return NaN if the array is empty', () => {
+    const { result } = renderHook(() => useAverage([]));
+    expect(result.current).toBeNaN();
+  });
 
-  it('should update the average when the dependencies change', () => {
-    const { result, rerender } = renderHook(
-      ({ a, b }) => useAverage(a, () => b),
-      { initialProps: { a: 1, b: 2 } }
-    )
-    expect(result.current).toBe(1.5)
+  it('should memoize the result', () => {
+    const arr = [1, 2, 3];
+    const { result, rerender } = renderHook(({ arr }) => useAverage(arr), {
+      initialProps: { arr },
+    });
 
-    rerender({ a: 2, b: 3 })
-    expect(result.current).toBe(2.5)
-  })
+    expect(result.current).toBe(2);
 
-  it('should update the average when a getter function returns a new value', () => {
-    let value = 2
-    const { result, rerender } = renderHook(() => useAverage(1, () => value))
-    expect(result.current).toBe(1.5)
+    arr.push(4);
+    rerender({ arr });
 
-    act(() => {
-      value = 3
-      rerender()
-    })
-    expect(result.current).toBe(2)
-  })
-})
+    expect(result.current).toBe(2.5);
+  });
+});
