@@ -1,63 +1,75 @@
-import { renderHook } from '@testing-library/react'
-import { useArrayFilter } from '../useArrayFilter'
+import { renderHook } from '@testing-library/react';
+import { useArrayFilter } from '../useArrayFilter';
 
 describe('useArrayFilter', () => {
-  it('should return a new array with elements that pass the predicate', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate = (num: number) => num % 2 === 0
+  it('should return an empty array when list is empty', () => {
+    const { result } = renderHook(() => useArrayFilter([], () => true));
+    expect(result.current).toEqual([]);
+  });
 
-    const { result } = renderHook(() => useArrayFilter(list, predicate))
+  it('should return an empty array when predicate is not a function', () => {
+    const { result } = renderHook(() => useArrayFilter([1, 2, 3], null as any));
+    expect(result.current).toEqual([]);
+  });
 
-    expect(result.current).toEqual([2, 4])
-  })
+  it('should filter an array based on the provided predicate function', () => {
+    const numbers = [1, 2, 3, 4, 5];
+    const isEven = (number: number) => number % 2 === 0;
+    const { result } = renderHook(() => useArrayFilter(numbers, isEven));
+    expect(result.current).toEqual([2, 4]);
+  });
 
-  it('should return an empty array if no elements pass the predicate', () => {
-    const list = [1, 3, 5, 7, 9]
-    const predicate = (num: number) => num % 2 === 0
-
-    const { result } = renderHook(() => useArrayFilter(list, predicate))
-
-    expect(result.current).toEqual([])
-  })
-
-  it('should pass the element, index, and array to the predicate', () => {
-    const list = ['apple', 'banana', 'cherry']
-    const predicate = (element: string, index: number, array: string[]) => {
-      expect(array).toBe(list)
-      expect(typeof index).toBe('number')
-      return element.length > 5
-    }
-
-    const { result } = renderHook(() => useArrayFilter(list, predicate))
-
-    expect(result.current).toEqual(['banana', 'cherry'])
-  })
-
-  it('should return a new array on each render if the list changes', () => {
+  it('should return a new array instance when dependencies change', () => {
     const { result, rerender } = renderHook(
-      ({ list }) => useArrayFilter(list, (num: number) => num % 2 === 0),
-      { initialProps: { list: [1, 2, 3] } }
-    )
+      ({ numbers, predicate }) => useArrayFilter(numbers, predicate),
+      {
+        initialProps: {
+          numbers: [1, 2, 3, 4, 5],
+          predicate: (number: number) => number % 2 === 0,
+        },
+      }
+    );
 
-    expect(result.current).toEqual([2])
+    const firstResult = result.current;
 
-    rerender({ list: [1, 2, 3, 4, 5] })
+    rerender({
+      numbers: [1, 2, 3, 4, 5],
+      predicate: (number: number) => number > 2,
+    });
 
-    expect(result.current).toEqual([2, 4])
-  })
+    expect(result.current).not.toBe(firstResult);
+    expect(result.current).toEqual([3, 4, 5]);
+  });
 
-  it('should return the same array on each render if the list and predicate remain the same', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate = (num: number) => num % 2 === 0
+  it('should handle complex objects', () => {
+    const users = [
+      { name: 'Alice', age: 25 },
+      { name: 'Bob', age: 30 },
+      { name: 'Charlie', age: 15 },
+    ];
+
+    const isAdult = (user: { name: string; age: number }) => user.age >= 18;
+
+    const { result } = renderHook(() => useArrayFilter(users, isAdult));
+
+    expect(result.current).toEqual([
+      { name: 'Alice', age: 25 },
+      { name: 'Bob', age: 30 },
+    ]);
+  });
+
+  it('should memoize the result when dependencies are the same', () => {
+    const numbers = [1, 2, 3, 4, 5];
+    const isEven = (number: number) => number % 2 === 0;
 
     const { result, rerender } = renderHook(() =>
-      useArrayFilter(list, predicate)
-    )
+      useArrayFilter(numbers, isEven)
+    );
 
-    const filteredArray = result.current
+    const firstResult = result.current;
 
-    rerender()
+    rerender();
 
-    expect(result.current).toBe(filteredArray)
-  })
-})
+    expect(result.current).toBe(firstResult);
+  });
+});
