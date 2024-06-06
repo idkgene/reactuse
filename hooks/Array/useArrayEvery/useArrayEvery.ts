@@ -13,5 +13,21 @@ export function useArrayEvery<T>(
   list: T[],
   predicate: UseArrayEveryPredicate<T>
 ): boolean {
-  return useMemo(() => list.every(predicate), [list, predicate]);
+  return useMemo(() => {
+    if (typeof predicate !== 'function') {
+      console.error('Invalid predicate function provided to useArrayEvery.');
+      return false;
+    }
+
+    if (!Array.isArray(list)) {
+      console.error('Invalid array provided to useArrayEvery.');
+      return false;
+    }
+
+    if (list.length === 0) {
+      return true;
+    }
+
+    return list.every(predicate);
+  }, [list, predicate]);
 }

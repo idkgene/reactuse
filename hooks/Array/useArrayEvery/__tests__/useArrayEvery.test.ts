@@ -1,54 +1,70 @@
-import { renderHook } from '@testing-library/react'
-import { useArrayEvery } from '../useArrayEvery'
+import { renderHook } from '@testing-library/react';
+import { useArrayEvery } from '../useArrayEvery';
 
 describe('useArrayEvery', () => {
-  it('should return true if the predicate returns true for all elements', () => {
-    const list = [2, 4, 6, 8, 10]
-    const predicate = (num: number) => num % 2 === 0
-
-    const { result } = renderHook(() => useArrayEvery(list, predicate))
-
-    expect(result.current).toBe(true)
-  })
-
-  it('should return false if the predicate returns false for any element', () => {
-    const list = [2, 3, 6, 8, 10]
-    const predicate = (num: number) => num % 2 === 0
-
-    const { result } = renderHook(() => useArrayEvery(list, predicate))
-
-    expect(result.current).toBe(false)
-  })
-
   it('should return true for an empty array', () => {
-    const list: number[] = []
-    const predicate = (num: number) => num % 2 === 0
+    const { result } = renderHook(() => useArrayEvery([], () => true));
+    expect(result.current).toBe(true);
+  });
 
-    const { result } = renderHook(() => useArrayEvery(list, predicate))
+  it('should return true if all elements satisfy the predicate', () => {
+    const numbers = [2, 4, 6, 8, 10];
+    const predicate = (num: number) => num % 2 === 0;
+    const { result } = renderHook(() => useArrayEvery(numbers, predicate));
+    expect(result.current).toBe(true);
+  });
 
-    expect(result.current).toBe(true)
-  })
+  it('should return false if any element does not satisfy the predicate', () => {
+    const numbers = [2, 4, 6, 7, 8, 10];
+    const predicate = (num: number) => num % 2 === 0;
+    const { result } = renderHook(() => useArrayEvery(numbers, predicate));
+    expect(result.current).toBe(false);
+  });
 
-  it('should memoize the result based on the dependencies', () => {
-    const list = [2, 4, 6, 8, 10]
-    const predicate = (num: number) => num % 2 === 0
+  it('should handle non-array input', () => {
+    const nonArray = null;
+    const predicate = (num: number) => num % 2 === 0;
+    const { result } = renderHook(() =>
+      useArrayEvery(nonArray as any, predicate)
+    );
+    expect(result.current).toBe(false);
+  });
 
+  it('should handle non-function predicate gracefully', () => {
+    const numbers = [2, 4, 6, 8, 10];
+    const nonFunctionPredicate = null;
+    const { result } = renderHook(() =>
+      useArrayEvery(numbers, nonFunctionPredicate as any)
+    );
+    expect(result.current).toBe(false);
+  });
+
+  it('should memoize the result based on list and predicate', () => {
+    const numbers = [2, 4, 6, 8, 10];
+    const predicate = (num: number) => num % 2 === 0;
     const { result, rerender } = renderHook(
       ({ list, predicate }) => useArrayEvery(list, predicate),
-      { initialProps: { list, predicate } }
-    )
+      {
+        initialProps: { list: numbers, predicate },
+      }
+    );
 
-    expect(result.current).toBe(true)
+    expect(result.current).toBe(true);
 
-    // Update the list without changing its contents
-    rerender({ list: [...list], predicate })
+    rerender({ list: numbers, predicate });
+    expect(result.current).toBe(true);
 
-    expect(result.current).toBe(true)
+    rerender({ list: [...numbers, 11], predicate });
+    expect(result.current).toBe(false);
 
-    // Update the predicate without changing its behavior
-    const newPredicate = (num: number) => num % 2 === 0
-    rerender({ list, predicate: newPredicate })
+    rerender({ list: numbers, predicate: (num: number) => num < 10 });
+    expect(result.current).toBe(false);
+  });
 
-    expect(result.current).toBe(true)
-  })
-})
+  it('should handle large arrays efficiently', () => {
+    const largeArray = Array.from({ length: 1000000 }, (_, index) => index);
+    const predicate = (num: number) => num < 1000000;
+    const { result } = renderHook(() => useArrayEvery(largeArray, predicate));
+    expect(result.current).toBe(true);
+  });
+});
