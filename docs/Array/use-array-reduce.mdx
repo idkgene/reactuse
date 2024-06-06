@@ -1,0 +1,48 @@
+import HookInfo from '../../components/Common/HookInfo/index.tsx';
+
+# useArrayReduce
+
+<HookInfo category="Array" exportSize="Might vary, will be calculated on production" lastChanged="Will be updated based on git history" />
+
+Array.reduce.
+
+## Usage
+
+```tsx
+import { useArrayReduce } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const sum = useArrayReduce(numbers, (acc, num) => acc + num, 0);
+// sum: 15
+```
+
+Use with a custom reducer function:
+
+```tsx
+import { useArrayReduce } from 'react-hook-port';
+
+const users = [
+  { id: 1, name: 'John', age: 30 },
+  { id: 2, name: 'Jane', age: 25 },
+  { id: 3, name: 'Bob', age: 40 },
+];
+
+const totalAge = useArrayReduce(users, (acc, user) => acc + user.age, 0);
+// totalAge: 95
+```
+
+## Type Declarations
+
+````typescript
+type UseArrayReducer<PV, CV, R> = (
+  previousValue: PV,
+  currentValue: CV,
+  currentIndex: number
+) => R
+
+export declare function useArrayReduce<T, U>(
+  list: T[],
+  reducer: UseArrayReducer<U, T, U>,
+  initialValue: U
+): U```
+````

@@ -1,0 +1,41 @@
+# useArrayFind
+
+<HookInfo category="Array" exportSize="Might vary, will be calculated on production" lastChanged="Will be updated based on git history" />
+
+Array.find.
+
+## Usage
+
+```tsx
+import { useArrayFind } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const firstEvenNumber = useArrayFind(numbers, num => num % 2 === 0);
+// firstEvenNumber: 2
+```
+
+Use with a custom predicate function:
+
+```tsx
+import { useArrayFind } from '#';
+
+const users = [
+  { id: 1, name: 'John', active: false },
+  { id: 2, name: 'Jane', active: true },
+  { id: 3, name: 'Bob', active: false },
+];
+
+const firstActiveUser = useArrayFind(users, user => user.active);
+// firstActiveUser: { id: 2, name: 'Jane', active: true }
+```
+
+## Type Declarations
+
+```typescript
+export declare function useArrayFind<T>(
+  list: T[],
+  predicate: (element: T, index: number, array: T[]) => boolean
+): T | undefined;
+```
+
+import HookInfo from '../../components/Common/HookInfo/index.tsx';

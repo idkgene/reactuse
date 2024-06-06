@@ -1,0 +1,41 @@
+import HookInfo from '../../components/Common/HookInfo/index.tsx';
+
+# useArraySome
+
+<HookInfo category="Array" exportSize="Might vary, will be calculated on production" lastChanged="Will be updated based on git history" />
+
+Array.some.
+
+## Usage
+
+```tsx
+import { useArraySome } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const hasEvenNumber = useArraySome(numbers, num => num % 2 === 0);
+// hasEvenNumber: true
+```
+
+Use with a custom predicate function:
+
+```tsx
+import { useArraySome } from '#';
+
+const users = [
+  { id: 1, active: false },
+  { id: 2, active: true },
+  { id: 3, active: false },
+];
+
+const hasActiveUser = useArraySome(users, user => user.active);
+// hasActiveUser: true
+```
+
+## Type Declarations
+
+````typescript
+export declare function useArraySome<T>(
+  list: T[],
+  predicate: (element: T, index: number, array: T[]) => unknown
+): boolean```
+````

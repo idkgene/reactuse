@@ -1,0 +1,61 @@
+# useArrayIncludes
+
+<HookInfo category="Array" exportSize="Might vary, will be calculated on production" lastChanged="Will be updated based on git history" />
+
+Array.includes.
+
+## Usage
+
+```tsx
+import { useArrayIncludes } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const includesThree = useArrayIncludes(numbers, 3);
+// includesThree: true
+```
+
+Use with additional options:
+
+```tsx
+import { useArrayIncludes } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const includesThreeFromIndex2 = useArrayIncludes(numbers, 3, { fromIndex: 2 });
+// includesThreeFromIndex2: true
+
+const users = [
+  { id: 1, name: 'John' },
+  { id: 2, name: 'Jane' },
+  { id: 3, name: 'Bob' },
+];
+
+const includesJane = useArrayIncludes(users, 'Jane', { comparator: 'name' });
+// includesJane: true
+
+const includesUser = useArrayIncludes(
+  users,
+  { id: 2, name: 'Jane' },
+  {
+    comparator: (user, value) =>
+      user.id === value.id && user.name === value.name,
+  }
+);
+// includesUser: true
+```
+
+## Type Declarations
+
+```typescript
+export declare function useArrayIncludes<T, V = any>(
+  list: T[],
+  value: V,
+  options?: {
+    fromIndex?: number;
+    comparator?:
+      | keyof T
+      | ((element: T, value: V, index: number, array: T[]) => boolean);
+  }
+): boolean;
+```
+
+import HookInfo from '../../components/Common/HookInfo/index.tsx';

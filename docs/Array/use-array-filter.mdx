@@ -1,0 +1,41 @@
+# useArrayFilter
+
+<HookInfo category="Array" exportSize="Might vary, will be calculated on production" lastChanged="Will be updated based on git history" />
+
+Array.filter.
+
+## Usage
+
+```tsx
+import { useArrayFilter } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const evenNumbers = useArrayFilter(numbers, num => num % 2 === 0);
+// evenNumbers: [2, 4]
+```
+
+Use with a predicate function:
+
+```tsx
+import { useArrayFilter } from '#';
+
+const users = [
+  { id: 1, active: true },
+  { id: 2, active: false },
+  { id: 3, active: true },
+];
+
+const activeUsers = useArrayFilter(users, user => user.active);
+// activeUsers: [{ id: 1, active: true }, { id: 3, active: true }]
+```
+
+## Type Declarations
+
+```typescript
+export declare function useArrayFilter<T>(
+  list: T[],
+  predicate: (element: T, index: number, array: T[]) => boolean
+): T[];
+```
+
+import HookInfo from '../../components/Common/HookInfo/index.tsx';

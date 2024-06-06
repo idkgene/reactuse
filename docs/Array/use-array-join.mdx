@@ -1,0 +1,33 @@
+# useArrayJoin
+
+<HookInfo category="Array" exportSize="Might vary, will be calculated on production" lastChanged="Will be updated based on git history" />
+
+Array.join.
+
+## Usage
+
+```tsx
+import { useArrayJoin } from '#';
+
+const fruits = ['Apple', 'Banana', 'Orange'];
+const joinedFruits = useArrayJoin(fruits);
+// joinedFruits: "Apple,Banana,Orange"
+```
+
+Use with a custom separator:
+
+```tsx
+import { useArrayJoin } from '#';
+
+const words = ['Hello', 'World', 'React'];
+const joinedWords = useArrayJoin(words, ' ');
+// joinedWords: "Hello World React"
+```
+
+## Type Declarations
+
+```typescript
+export declare function useArrayJoin<T>(list: T[], separator?: string): string;
+```
+
+import HookInfo from '../../components/Common/HookInfo/index.tsx';
