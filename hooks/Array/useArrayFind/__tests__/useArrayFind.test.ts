@@ -1,73 +1,70 @@
-import { renderHook } from '@testing-library/react'
-import { useArrayFind } from '../useArrayFind'
+import { renderHook } from '@testing-library/react';
+import { useArrayFind } from '../useArrayFind';
 
 describe('useArrayFind', () => {
-  it('should return the first element that satisfies the predicate', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate = (num: number) => num > 3
+  it('should return undefined when list is empty', () => {
+    const { result } = renderHook(() => useArrayFind([], () => true));
+    expect(result.current).toBeUndefined();
+  });
 
-    const { result } = renderHook(() => useArrayFind(list, predicate))
+  it('should return undefined when predicate is not a function', () => {
+    const { result } = renderHook(() => useArrayFind([1, 2, 3], null as any));
+    expect(result.current).toBeUndefined();
+  });
 
-    expect(result.current).toBe(4)
-  })
+  it('should find the first element that satisfies the predicate', () => {
+    const users = [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' },
+    ];
+    const findUserById = (user: { id: number; name: string }) => user.id === 2;
+    const { result } = renderHook(() => useArrayFind(users, findUserById));
+    expect(result.current).toEqual({ id: 2, name: 'Bob' });
+  });
 
-  it('should return undefined if no element satisfies the predicate', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate = (num: number) => num > 10
-
-    const { result } = renderHook(() => useArrayFind(list, predicate))
-
-    expect(result.current).toBeUndefined()
-  })
-
-  it('should memoize the result based on the list and predicate', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate = (num: number) => num > 3
-
-    const { result, rerender } = renderHook(() => useArrayFind(list, predicate))
-
-    expect(result.current).toBe(4)
-
-    rerender()
-
-    expect(result.current).toBe(4)
-  })
-
-  it('should return a new result when the list changes', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate = (num: number) => num > 3
-
+  it('should return a new reference when dependencies change', () => {
     const { result, rerender } = renderHook(
-      ({ list }) => useArrayFind(list, predicate),
+      ({ users, predicate }) => useArrayFind(users, predicate),
       {
-        initialProps: { list },
+        initialProps: {
+          users: [
+            { id: 1, name: 'Alice' },
+            { id: 2, name: 'Bob' },
+          ],
+          predicate: (user: { id: number; name: string }) => user.id === 2,
+        },
       }
-    )
+    );
 
-    expect(result.current).toBe(4)
+    const firstResult = result.current;
 
-    const newList = [6, 7, 8, 9, 10]
-    rerender({ list: newList })
+    rerender({
+      users: [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' },
+      ],
+      predicate: (user: { id: number; name: string }) => user.id === 1,
+    });
 
-    expect(result.current).toBe(6)
-  })
+    expect(result.current).not.toBe(firstResult);
+    expect(result.current).toEqual({ id: 1, name: 'Alice' });
+  });
 
-  it('should return a new result when the predicate changes', () => {
-    const list = [1, 2, 3, 4, 5]
-    const predicate1 = (num: number) => num > 3
-    const predicate2 = (num: number) => num > 4
+  it('should memoize the result when dependencies are the same', () => {
+    const users = [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' },
+    ];
+    const findUserById = (user: { id: number; name: string }) => user.id === 2;
 
-    const { result, rerender } = renderHook(
-      ({ predicate }) => useArrayFind(list, predicate),
-      {
-        initialProps: { predicate: predicate1 },
-      }
-    )
+    const { result, rerender } = renderHook(() =>
+      useArrayFind(users, findUserById)
+    );
 
-    expect(result.current).toBe(4)
+    const firstResult = result.current;
 
-    rerender({ predicate: predicate2 })
+    rerender();
 
-    expect(result.current).toBe(5)
-  })
-})
+    expect(result.current).toBe(firstResult);
+  });
+});
