@@ -1,43 +1,46 @@
-import { useState, useEffect } from 'react'
+import { useMemo } from 'react';
 
-type Domain = [number, number]
+type ValueOfFunction<T> = T | (() => T);
 
-export const useProjection = (
+export type ProjectorFunction<T, U> = (
+  value: T,
+  fromMin: T,
+  fromMax: T,
+  toMin: U,
+  toMax: U
+) => U;
+
+function defaultProjector(
   value: number,
-  domainFrom: Domain,
-  domainTo: Domain
-): number | null => {
-  const [projectedValue, setProjectedValue] = useState<number | null>(null)
+  fromMin: number,
+  fromMax: number,
+  toMin: number,
+  toMax: number
+): number {
+  return ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
+}
 
-  useEffect(() => {
-    if (
-      typeof value !== 'number' ||
-      !Array.isArray(domainFrom) ||
-      !Array.isArray(domainTo)
-    ) {
-      console.error(
-        'useProjection: Invalid input types. Expected number and two arrays of numbers.'
-      )
-      return
-    }
+export function useProjection(
+  input: ValueOfFunction<number>,
+  fromDomain: ValueOfFunction<readonly [number, number]>,
+  toDomain: ValueOfFunction<readonly [number, number]>,
+  projector: ProjectorFunction<number, number> = defaultProjector
+): number {
+  const inputValue = typeof input === 'function' ? input() : input;
+  const [fromMin, fromMax] = Array.isArray(fromDomain)
+    ? fromDomain
+    : typeof fromDomain === 'function'
+      ? fromDomain()
+      : fromDomain;
+  const [toMin, toMax] = Array.isArray(toDomain)
+    ? toDomain
+    : typeof toDomain === 'function'
+      ? toDomain()
+      : toDomain;
 
-    const [fromMin, fromMax] = domainFrom
-    const [toMin, toMax] = domainTo
+  const projected = useMemo(() => {
+    return projector(inputValue, fromMin, fromMax, toMin, toMax);
+  }, [inputValue, fromMin, fromMax, toMin, toMax, projector]);
 
-    if (
-      typeof fromMin !== 'number' ||
-      typeof fromMax !== 'number' ||
-      typeof toMin !== 'number' ||
-      typeof toMax !== 'number'
-    ) {
-      console.error('useProjection: Domain values must be numbers.')
-      return
-    }
-
-    const scale = (value - fromMin) / (fromMax - fromMin)
-    const projected = scale * (toMax - toMin) + toMin
-    setProjectedValue(projected)
-  }, [value, domainFrom, domainTo])
-
-  return projectedValue
+  return projected;
 }
