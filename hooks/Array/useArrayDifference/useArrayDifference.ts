@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import * as React from 'react';
 
 export type UseArrayDifferenceComparatorFn<T> = (
   element: T,
@@ -29,7 +29,7 @@ export function useArrayDifference<T>(
   values: T[],
   keyOrCompareFn?: UseArrayDifferenceKey<T>
 ): T[] {
-  return useMemo(() => {
+  return React.useMemo(() => {
     if (list.length === 0) {
       return [];
     }

@@ -113,4 +113,23 @@ describe('useArrayDifference', () => {
     );
     expect(result.current).toEqual([]);
   });
+
+  it('should memoize the result when the inputs remain the same', () => {
+    const list = [1, 2, 3, 4, 5];
+    const values = [3, 4];
+    const { result, rerender } = renderHook(
+      ({ list, values }) => useArrayDifference(list, values),
+      { initialProps: { list, values } }
+    );
+
+    expect(result.current).toEqual([1, 2, 5]);
+
+    rerender({ list, values: [3, 4] });
+
+    expect(result.current).toEqual([1, 2, 5]);
+
+    rerender({ list: [1, 2, 3, 4, 5, 6], values });
+
+    expect(result.current).toEqual([1, 2, 5, 6]);
+  });
 });

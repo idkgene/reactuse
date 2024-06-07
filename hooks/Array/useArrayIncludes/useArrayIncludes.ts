@@ -1,8 +1,5 @@
-import { useMemo } from 'react';
-import {
-  UseArrayIncludesOptions,
-  UseArrayIncludesComparatorFn,
-} from '../array';
+import * as React from 'react';
+import { UseArrayIncludesOptions } from '../array';
 
 /**
  * `Array.includes` hook for React.
@@ -31,27 +28,38 @@ import {
  * const includesObject = useArrayIncludes(objects, 'a', { comparator: customComparator });
  * console.log(includesObject); // Output: true
  */
-export function useArrayIncludes<T, V = any>(
+export function useArrayIncludes<T, V = T>(
   list: T[],
   value: V,
   options?: UseArrayIncludesOptions<T, V>
 ): boolean {
-  const { fromIndex, comparator } = options || {};
+  const { fromIndex = 0, comparator } = options || {};
 
-  return useMemo(() => {
+  return React.useMemo(() => {
+    if (Array.isArray(list) && list.length === 0) {
+      return false;
+    }
+
     if (typeof comparator === 'function') {
       return list.some((element, index, array) =>
-        (comparator as UseArrayIncludesComparatorFn<T, V>)(
-          element,
-          value,
-          index,
-          array
-        )
+        comparator(element, value, index, array)
       );
     } else if (typeof comparator === 'string') {
+      if (
+        typeof list[0] === 'object' &&
+        list[0] !== null &&
+        !(comparator in list[0])
+      ) {
+        console.error(`Invalid comparator key: ${comparator}`);
+        return false;
+      }
+
       return list.some(element => element[comparator as keyof T] === value);
-    } else {
+    } else if (typeof fromIndex === 'number' && fromIndex >= 0 && !comparator) {
       return list.includes(value as unknown as T, fromIndex);
+    } else {
+      console.error('Invalid options provided to useArrayIncludes.');
+      return false;
     }
   }, [list, value, fromIndex, comparator]);
 }

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import * as React from 'react'
 
 /**
  * `Array.map` hook for React.
@@ -23,5 +23,5 @@ export function useArrayMap<T, U = T>(
   list: T[],
   callback: (element: T, index: number, array: T[]) => U
 ): U[] {
-  return useMemo(() => list.map(callback), [list, callback]);
+  return React.useMemo(() => list.map(callback), [list, callback]);
 }

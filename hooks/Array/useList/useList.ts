@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import * as React from 'react'
 
 /**
  * A hook providing a list and utility functions for managing it.
@@ -26,14 +26,14 @@ export function useList<T>(defaultList: T[] = []): [
     clear: () => void;
   },
 ] {
-  const [list, setList] = useState(defaultList);
+  const [list, setList] = React.useState(defaultList);
 
   /**
    * Sets a new list.
    *
    * @param {T[]} l - The new array to set as the list.
    */
-  const set = useCallback((l: T[]) => {
+  const set = React.useCallback((l: T[]) => {
     setList(l);
   }, []);
 
@@ -42,7 +42,7 @@ export function useList<T>(defaultList: T[] = []): [
    *
    * @param {T} element - The element to be added to the list.
    */
-  const push = useCallback((element: T) => {
+  const push = React.useCallback((element: T) => {
     setList(l => [...l, element]);
   }, []);
 
@@ -51,7 +51,7 @@ export function useList<T>(defaultList: T[] = []): [
    *
    * @param {number} index - The index of the element to be removed.
    */
-  const removeAt = useCallback((index: number) => {
+  const removeAt = React.useCallback((index: number) => {
     setList(l => [...l.slice(0, index), ...l.slice(index + 1)]);
   }, []);
 
@@ -61,7 +61,7 @@ export function useList<T>(defaultList: T[] = []): [
    * @param {number} index - The index at which the element should be inserted.
    * @param {T} element - The element to be inserted into the list.
    */
-  const insertAt = useCallback((index: number, element: T) => {
+  const insertAt = React.useCallback((index: number, element: T) => {
     setList(l => [...l.slice(0, index), element, ...l.slice(index)]);
   }, []);
 
@@ -71,14 +71,14 @@ export function useList<T>(defaultList: T[] = []): [
    * @param {number} index - The index of the element to be updated.
    * @param {T} element - The new element to replace the existing one.
    */
-  const updateAt = useCallback((index: number, element: T) => {
+  const updateAt = React.useCallback((index: number, element: T) => {
     setList(l => l.map((e, i) => (i === index ? element : e)));
   }, []);
 
   /**
    * Clears the list by setting it to an empty array.
    */
-  const clear = useCallback(() => setList([]), []);
+  const clear = React.useCallback(() => setList([]), []);
 
   return [list, { set, push, removeAt, insertAt, updateAt, clear }];
 }

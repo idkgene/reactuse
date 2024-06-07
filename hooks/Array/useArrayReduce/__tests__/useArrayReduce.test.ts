@@ -1,68 +1,67 @@
-import { renderHook } from '@testing-library/react'
-import { useArrayReduce } from '../useArrayReduce'
-
-type Item = {
-  value: number
-}
-
-const sumReducer = (accumulator: number, current: Item) => {
-  return accumulator + current.value
-}
+import { renderHook } from '@testing-library/react';
+import { useArrayReduce } from '../useArrayReduce';
 
 describe('useArrayReduce', () => {
-  it('should calculate the sum correctly', () => {
-    const items: Item[] = [{ value: 1 }, { value: 2 }, { value: 3 }]
-    const { result } = renderHook(() => useArrayReduce(items, sumReducer, 0))
-
-    expect(result.current).toBe(6)
-  })
-
-  it('should return the initial value when the list is empty', () => {
-    const items: Item[] = []
-    const { result } = renderHook(() => useArrayReduce(items, sumReducer, 10))
-
-    expect(result.current).toBe(10)
-  })
-
-  it('should correctly handle a complex reducer', () => {
-    const items: Item[] = [{ value: 1 }, { value: 2 }, { value: 3 }]
-    const complexReducer = (accumulator: string, current: Item) => {
-      return `${accumulator}-${current.value}`
-    }
+  it('should return the initial value when list is not an array', () => {
     const { result } = renderHook(() =>
-      useArrayReduce(items, complexReducer, 'init')
-    )
+      useArrayReduce('not an array' as any, (a: any, b: any) => a + b, 0)
+    );
+    expect(result.current).toBe(0);
+  });
 
-    expect(result.current).toBe('init-1-2-3')
-  })
+  it('should return the initial value when list is empty', () => {
+    const { result } = renderHook(() =>
+      useArrayReduce([], (a: number, b: number) => a + b, 10)
+    );
+    expect(result.current).toBe(10);
+  });
 
-  it('should return a memoized result for the same input', () => {
-    const items: Item[] = [{ value: 1 }, { value: 2 }, { value: 3 }]
-    const { result, rerender } = renderHook(
-      ({ list }) => useArrayReduce(list, sumReducer, 0),
-      {
-        initialProps: { list: items },
-      }
-    )
+  it('should return the initial value when reducer is not a function', () => {
+    const { result } = renderHook(() =>
+      useArrayReduce([1, 2, 3], 'not a function' as any, 5)
+    );
+    expect(result.current).toBe(5);
+  });
 
-    const firstResult = result.current
-    rerender({ list: [...items] })
+  it('should reduce the array using the provided reducer function', () => {
+    const numbers = [1, 2, 3, 4];
+    const { result } = renderHook(() =>
+      useArrayReduce(
+        numbers,
+        (accumulator: number, currentValue: number) =>
+          accumulator + currentValue,
+        0
+      )
+    );
+    expect(result.current).toBe(10);
+  });
 
-    expect(result.current).toBe(firstResult)
-  })
+  it('should handle different data types in the array', () => {
+    const mixedArray = [1, 'hello', true];
+    const { result } = renderHook(() =>
+      useArrayReduce(
+        mixedArray,
+        (accumulator: string, currentValue: any) =>
+          accumulator + String(currentValue),
+        ''
+      )
+    );
+    expect(result.current).toBe('1hellotrue');
+  });
 
-  it('should recompute the result when the list changes', () => {
-    const items: Item[] = [{ value: 1 }, { value: 2 }, { value: 3 }]
-    const { result, rerender } = renderHook(
-      ({ list }) => useArrayReduce(list, sumReducer, 0),
-      {
-        initialProps: { list: items },
-      }
-    )
+  it('should memoize the result when dependencies are the same', () => {
+    const numbers = [1, 2, 3, 4];
+    const { result, rerender } = renderHook(() =>
+      useArrayReduce(
+        numbers,
+        (accumulator: number, currentValue: number) =>
+          accumulator + currentValue,
+        0
+      )
+    );
 
-    const newItems: Item[] = [{ value: 4 }, { value: 5 }, { value: 6 }]
-    rerender({ list: newItems })
-
-    expect(result.current).toBe(15)
-  })
-})
+    const firstResult = result.current;
+    rerender();
+    expect(result.current).toBe(firstResult);
+  });
+});

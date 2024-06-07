@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import * as React from 'react'
 
 /**
  * Represents a predicate function used in the `useArrayFindIndex` function.
@@ -38,7 +38,7 @@ export function useArrayFindIndex<T>(
   list: T[],
   predicate: UseArrayFindIndexPredicate<T>
 ): number {
-  return useMemo(() => {
+  return React.useMemo(() => {
     if (typeof predicate !== 'function') {
       console.error(
         'Invalid predicate function provided to useArrayFindIndex.'

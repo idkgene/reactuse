@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import * as React from 'react'
 
 /**
  * `Array.some` hook for React.
@@ -23,5 +23,5 @@ export function useArraySome<T>(
   list: T[],
   predicate: (element: T, index: number, array: T[]) => unknown
 ): boolean {
-  return useMemo(() => list.some(predicate), [list, predicate]);
+  return React.useMemo(() => list.some(predicate), [list, predicate]);
 }

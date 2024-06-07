@@ -9,7 +9,7 @@
  */
 export type UseArrayDifferenceKey<T> =
   | keyof T
-  | ((value: T, othVal: T) => boolean)
+  | ((value: T, othVal: T) => boolean);
 
 /**
  * Represents a predicate function used in the `useArrayEvery` function.
@@ -24,7 +24,7 @@ export type UseArrayEveryPredicate<T> = (
   element: T,
   index: number,
   array: T[]
-) => unknown
+) => unknown;
 
 /**
  * Represents a predicate function used in the `useArrayFind` function.
@@ -39,7 +39,7 @@ export type UseArrayFindPredicate<T> = (
   element: T,
   index: number,
   array: T[]
-) => boolean
+) => boolean;
 
 /**
  * Represents a comparator function used in the `useArrayIncludes` function.
@@ -52,12 +52,12 @@ export type UseArrayFindPredicate<T> = (
  * @param {T[]} array - The array being processed.
  * @returns {boolean} - The result of the comparator function.
  */
-export type UseArrayIncludesComparatorFn<T, V> = (
+export type UseArrayIncludesComparatorFn<T extends object, V> = (
   element: T,
   value: V,
   index: number,
   array: T[]
-) => boolean
+) => boolean;
 
 /**
  * Represents the options for the `useArrayIncludes` function.
@@ -69,10 +69,10 @@ export interface UseArrayIncludesOptions<T, V> {
   /**
    * The index to start searching from.
    */
-  fromIndex?: number
+  fromIndex?: number;
 
   /**
    * The comparator function or key to compare elements.
    */
-  comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T
+  comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
 }
