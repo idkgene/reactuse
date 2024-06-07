@@ -1,6 +1,5 @@
 import React from 'react';
 import { logicAnd } from './logicAnd';
-import Demo from '../../../components/Common/Demo/demo';
 
 const LogicAndDemo = () => {
   const [value1, setValue1] = React.useState(true);
@@ -10,7 +9,6 @@ const LogicAndDemo = () => {
   const andResult = logicAnd(value1, value2, value3);
 
   return (
-    <Demo href="#">
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-4xl font-bold mb-4">Logic And Demo</h1>
         <div className="flex items-center mb-4">
@@ -40,7 +38,6 @@ const LogicAndDemo = () => {
           AND Result: {andResult.toString()}
         </p>
       </div>
-    </Demo>
   );
 };
 

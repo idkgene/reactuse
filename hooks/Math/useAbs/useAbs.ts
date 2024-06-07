@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react';
 
-type MaybeGetter<T> = T | (() => T);
+type ValueOrGetter<T> = T | (() => T);
 
-function resolveMaybeGetter<T>(value: MaybeGetter<T>): T {
-  return typeof value === 'function' ? (value as () => T)() : value;
+function resolveValueOrGetter<T>(valueOrGetter: ValueOrGetter<T>): T {
+  return typeof valueOrGetter === 'function'
+    ? (valueOrGetter as () => T)()
+    : valueOrGetter;
 }
 
-export function useAbs(value: MaybeGetter<number>): number {
+export function useAbs(value: number | (() => number)): number {
   const [absValue, setAbsValue] = useState(() =>
-    Math.abs(resolveMaybeGetter(value))
+    Math.abs(resolveValueOrGetter(value))
   );
 
   useEffect(() => {
-    const resolvedValue = resolveMaybeGetter(value);
-    setAbsValue(Math.abs(resolvedValue));
-  }, [resolveMaybeGetter(value)]);
+    setAbsValue(Math.abs(resolveValueOrGetter(value)));
+  }, [value]);
 
   return absValue;
 }

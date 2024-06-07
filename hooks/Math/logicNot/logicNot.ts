@@ -26,7 +26,8 @@ function resolveValue<T>(value: ValueOfFunction<T>): T {
  */
 export function logicNot(v: ValueOfFunction<any>): boolean {
   return useMemo(() => {
-    return !resolveValue(v);
+    const resolvedValue = resolveValue(v);
+    return !resolvedValue;
   }, [v]);
 }
 
