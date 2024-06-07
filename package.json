@@ -98,9 +98,4 @@
     "tsup": "^8.1.0",
     "typescript": "^5"
   },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
-  }
 }
