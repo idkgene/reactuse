@@ -1,9 +1,16 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "noEmit": true,
     "declaration": true,
     "declarationMap": true,
@@ -14,7 +21,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "incremental": true,
     "plugins": [
       {
@@ -22,12 +29,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@hooks/*": ["./hooks/*"],
-      "@ui-components/*": ["./components/UI/*"],
-      "@ui-containers": ["./components/Containers/*"],
-      "@lib": ["./lib/utils.ts"],
-      "@utils": ["./utils/utils.ts"]
+      "@/*": [
+        "./*"
+      ],
+      "@hooks/*": [
+        "./hooks/*"
+      ],
+      "@ui-components/*": [
+        "./components/UI/*"
+      ],
+      "@ui-containers": [
+        "./components/Containers/*"
+      ],
+      "@lib": [
+        "./lib/utils.ts"
+      ],
+      "@utils": [
+        "./utils/utils.ts"
+      ]
     }
   },
   "include": [
@@ -40,5 +59,7 @@
     "docs/state/createGlobalState/page.mdx",
     "hooks/Array/useArrayDifference/tsconfig.json"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
