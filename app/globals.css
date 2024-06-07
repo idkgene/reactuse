@@ -62,6 +62,11 @@
     }
 }
 
+mark {
+  text-decoration: underline;
+  background-color: transparent;
+}
+
  .token {
      position: relative 
 }
@@ -315,4 +320,8 @@
       }
     }
   }
+}
+
+body {
+  font-family: 'Geist Variable', sans-serif
 }
