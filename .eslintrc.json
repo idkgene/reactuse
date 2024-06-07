@@ -3,7 +3,7 @@
     "browser": true,
     "node": true,
     "es2021": true,
-    "jest/globals": true
+    "jest": true
   },
   "extends": [
     "next/core-web-vitals",
