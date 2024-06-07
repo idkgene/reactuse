@@ -1,0 +1,52 @@
+---
+title: useArrayEvery
+description: Your first document
+---
+
+The `useArrayEvery` hook provides a way to determine if every element in an array satisfies a given condition, specified by a predicate function.
+
+## Demo
+
+<ArrayEveryDemo />
+
+## Usage
+
+```tsx
+import { useArrayEvery } from '#';
+
+const list = [2, 4, 6, 8, 10];
+const isEven = useArrayEvery(list, num => num % 2 === 0);
+// isEven: true
+```
+
+Use with a predicate function:
+
+```tsx
+import { useArrayEvery } from '#';
+
+const users = [
+  { id: 1, active: true },
+  { id: 2, active: true },
+  { id: 3, active: false },
+];
+
+const allActive = useArrayEvery(users, user => user.active);
+// allActive: false
+```
+
+## Type Declarations
+
+````typescript
+export function useArrayEvery<T>(
+  list: T[],
+  predicate: UseArrayEveryPredicate<T>
+): boolean;
+
+export type UseArrayEveryPredicate<T> = (
+  element: T,
+  index: number,
+  array: T[]
+) => unknown;```
+````
+
+import ArrayEveryDemo from '../../../demo/useArrayEvery.demo';

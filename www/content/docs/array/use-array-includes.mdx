@@ -1,0 +1,60 @@
+---
+title: useArrayIncludes
+description: Your first document
+---
+
+The `useArrayIncludes` hook provides a memoized way to determine if a specific value exists within an array, optionally allowing custom comparison logic and a starting index.
+
+## Usage
+
+```tsx
+import { useArrayIncludes } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const includesThree = useArrayIncludes(numbers, 3);
+// includesThree: true
+```
+
+Use with additional options:
+
+```tsx
+import { useArrayIncludes } from '#';
+
+const numbers = [1, 2, 3, 4, 5];
+const includesThreeFromIndex2 = useArrayIncludes(numbers, 3, { fromIndex: 2 });
+// includesThreeFromIndex2: true
+
+const users = [
+  { id: 1, name: 'John' },
+  { id: 2, name: 'Jane' },
+  { id: 3, name: 'Bob' },
+];
+
+const includesJane = useArrayIncludes(users, 'Jane', { comparator: 'name' });
+// includesJane: true
+
+const includesUser = useArrayIncludes(
+  users,
+  { id: 2, name: 'Jane' },
+  {
+    comparator: (user, value) =>
+      user.id === value.id && user.name === value.name,
+  }
+);
+// includesUser: true
+```
+
+## Type Declarations
+
+```typescript
+export function useArrayIncludes<T, V = T>(
+  list: T[],
+  value: V,
+  options?: UseArrayIncludesOptions<T, V>
+): boolean;
+
+export interface UseArrayIncludesOptions<T, V> {
+  fromIndex?: number;
+  comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
+}
+```

@@ -1,0 +1,44 @@
+---
+title: usePrecision
+description: Your first document
+---
+
+Sets the precision of a number.
+
+## Usage
+
+```tsx
+import { usePrecision } from '#'
+
+const value = 3.1415
+const result = usePrecision(value, 2) // 3.14
+
+const ceilResult = usePrecision(value, 2, {
+  math: 'ceil'
+})
+
+const floorResult = usePrecision(value, 3, {
+  math: 'floor'
+})
+```
+
+```tsx
+import { useAverage } from '#';
+
+const a = 1;
+const b = 3;
+
+const averageValue = useAverage(a, b); // 2
+```
+
+## Type Declarations
+
+```typescript
+/**
+ * Math.abs
+ */
+export declare function usePrecision({
+  precision,
+  value,
+}: PrecisionOptions): UsePrecisionReturn;
+```

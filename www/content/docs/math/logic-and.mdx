@@ -1,0 +1,30 @@
+---
+title: logicAnd
+description: Your first document
+---
+
+AND logical operator
+
+## Usage
+
+```tsx
+import { logicAnd } from '#';
+import { whenever } from '#';
+
+const a = ref(true);
+const b = ref(false);
+
+whenever(logicOr(a, b), () => {
+  console.log('both a and b are now truthy!')
+});
+```
+
+## Type Declarations
+
+```typescript
+/**
+ * Uses a logical `AND` operator with multiple values or functions.
+ */
+export declare function logicAnd(...args: ValueOrFunction<any>[]): boolean;
+export { logicAnd as and };
+```

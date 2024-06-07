@@ -1,0 +1,33 @@
+---
+title: useMin
+description: Your first document
+---
+
+Math.min
+
+## Usage
+
+```tsx
+import { useMin } from '#';
+
+const array = [1, 2, 3, 4];
+const max = useMax(array); // 1
+```
+
+```tsx
+import { useMin } from '#';
+
+const a = 1;
+const b = 3;
+
+const max = useMax(a, b, 2); // 1
+```
+
+## Type Declarations
+
+```typescript
+/**
+ * Math.abs
+ */
+export declare function useMin(...args: any[]): number;
+```

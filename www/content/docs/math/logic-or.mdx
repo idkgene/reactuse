@@ -1,0 +1,30 @@
+---
+title: logicOr
+description: Your first document
+---
+
+OR logical operator
+
+## Usage
+
+```tsx
+import { logicOr } from '#';
+import { whenever } from '#';
+
+const a = ref(true)
+const b = ref(false)
+
+whenever(logicOr(a, b), () => {
+  console.log('either a or b is truthy!')
+})
+```
+
+## Type Declarations
+
+```typescript
+/**
+ * Uses a logical `OR` operator with multiple values or functions.
+ */
+export declare function logicOr(...args: ValueOfFunction<any>[]): boolean;
+export { logicOr as or };
+```
