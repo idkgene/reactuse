@@ -11,7 +11,7 @@
     "plugin:@next/next/recommended",
     "plugin:storybook/recommended",
     "plugin:perfectionist/recommended-natural",
-    "eslint"
+    "plugin:jsdoc/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {

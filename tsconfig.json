@@ -36,6 +36,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.config.js"
-  ],
+, "middleware.js", "docs/state/createGlobalState/page.mdx", "hooks/Array/useArrayDifference/tsconfig.json"  ],
   "exclude": ["node_modules"]
 }
