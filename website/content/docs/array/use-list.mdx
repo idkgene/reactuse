@@ -1,0 +1,109 @@
+---
+title: useList
+description: Your first document
+---
+
+The `useList` hook provides a flexible way to manage an array (list) within your React components. It returns the current list and a set of convenient functions for common list operations, such as adding, removing, updating, and clearing elements.
+
+## Usage
+
+Basic Example:
+
+```tsx
+import { useList } from '#';
+
+function MyComponent() {
+  const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList([
+    1, 2, 3,
+  ]);
+
+  return (
+    <div>
+      <ul>
+        {list.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+      <button onClick={() => push(4)}>Push</button>
+      <button onClick={() => removeAt(1)}>Remove at index 1</button>
+      <button onClick={() => insertAt(1, 5)}>Insert 5 at index 1</button>
+      <button onClick={() => updateAt(0, 6)}>Update index 0 to 6</button>
+      <button onClick={() => set([7, 8, 9])}>Set new list</button>
+      <button onClick={clear}>Clear</button>
+    </div>
+  );
+}
+```
+
+## Type Declarations
+
+```typescript
+export function useList<T>(defaultList: T[] = []): [
+  T[],
+  {
+    set: (l: T[]) => void;
+    push: (element: T) => void;
+    removeAt: (index: number) => void;
+    insertAt: (index: number, element: T) => void;
+    updateAt: (index: number, element: T) => void;
+    clear: () => void;
+  },
+];
+```
+
+## API Details
+
+### Parameters
+
+`defaultList` (optional): The initial array of elements. Defaults to an empty array (`[]`).
+
+### Returns
+
+A tuple `[list, actions]` containing:
+
+`list`: The current state of the list as an array (`T[]`).
+`actions`: An object containing the following utility functions:
+* `set(l: T[]) => void`: Replaces the entire list with a new array (`l`).
+* `push(element: T) => void`: Adds an element to the end of the list.
+* `removeAt(index: number) => void`: Removes the element at the specified `index`.
+* `insertAt(index: number, element: T) => void`: Inserts an `element` at the given `index`.`
+* `updateAt(index: number, element: T) => void`: Replaces the element at the specified `index` with a new element.
+* `clear() => void`: Empties the list, setting it to an empty array.
+
+## Common Pitfals
+
+### Providing a non-array to the defaultList parameter
+
+```tsx
+const invalidList = 'not an array';
+const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList(
+  invalidList
+);
+```
+
+### Using functions with a non-array
+
+```tsx
+const invalidList = 'not an array';
+const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList();
+set(invalidList); // Error
+push(invalidList); // Error
+removeAt(invalidList); // Error
+insertAt(invalidList, 'not an element'); // Error
+updateAt(invalidList, 'not an element'); // Error
+clear(invalidList); // Error
+```
+
+### Direct List Mutation
+
+The `set`, `push`, `removeAt`, `insertAt`, and `updateAt` functions are meant to be used for managing the list state, not directly modifying the list itself. Direct list mutation can lead to unexpected behavior and make it difficult to track changes to the list.
+
+```tsx
+const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList();
+
+// Update the list state
+set([...list, 'new element']);
+
+// Access the updated list
+console.log(list); // Output: ['new element']
+```

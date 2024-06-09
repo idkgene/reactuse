@@ -1,0 +1,75 @@
+---
+title: useArrayJoin
+description: Your first document
+---
+
+a hook providing a memoized version of the `Array.join` method for React, joining all elements of an array into a string separated by the specified separator.
+
+## Usage
+
+Basic Example:
+
+```tsx
+import useArrayJoin from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [words, setWords] = useState(['hello', 'world']);
+
+  const joinedWords = useArrayJoin(words, ' ');
+
+  return (
+    <div>
+      <p>Joined Words: {joinedWords}</p>
+    </div>
+  );
+};
+```
+
+Numbers Example:
+
+```tsx
+import useArrayJoin from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([1, 2, 3]);
+
+  const joinedNumbers = useArrayJoin(numbers, '-');
+
+  return (
+    <div>
+      <p>Joined Numbers: {joinedNumbers}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+````typescript
+export function useArrayJoin<T>(list: T[], separator?: string): string```
+````
+
+## API Details
+
+### Parameters
+
+`list` (`T[]`): The array to join.
+
+`separator` (`string`): A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated by a comma (",").
+
+### Returns
+
+A string with all array elements joined. If `list.length` is `0`, an empty string is returned.
+
+## Common Pitfals
+
+### Providing an invalid separator
+
+```tsx
+const words = ['hello', 'world'];
+const invalidSeparator = '!';
+
+const joinedWords = useArrayJoin(words, invalidSeparator); // Error
+```

@@ -1,0 +1,111 @@
+---
+title: useArrayEvery
+description: Your first document
+---
+
+`useArrayEvery` is a React hook that checks if a given predicate function returns a truthy value for every element in an array. It mimics the behavior of JavaScript's `Array.every` method.
+
+## Usage
+
+```tsx
+import { useArrayEvery } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [list, setList] = useState([2, 4, 6, 8]);
+
+  // Check if all numbers are even
+  const allEven = useArrayEvery(list, num => num % 2 === 0);
+
+  return (
+    <div>
+      <p>All numbers are even: {JSON.stringify(allEven)}</p>
+    </div>
+  );
+};
+```
+
+Complex predicate example:
+
+```tsx
+import { useArrayEvery } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [list, setList] = useState([
+    { name: 'Alice', age: 25 },
+    { name: 'Bob', age: 30 },
+    { name: 'Charlie', age: 35 },
+  ]);
+
+  // Check if all people are at least 18 years old
+  const allAdults = useArrayEvery(list, person => person.age >= 18);
+
+  return (
+    <div>
+      <p>All people are adults: {JSON.stringify(allAdults)}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export function useArrayEvery<T>(
+  list: T[],
+  predicate: UseArrayEveryPredicate<T>
+): boolean;
+
+export type UseArrayEveryPredicate<T> = (
+  element: T,
+  index: number,
+  array: T[]
+) => boolean;
+```
+
+## API Details
+
+### Parameters
+
+`list` (`T[]`): The array to check.
+
+`predicate` (`UseArrayEveryPredicate<T>`): A function to test each element.
+
+### Returns
+
+A `boolean` value indicating whether all elements in the array satisfy the predicate.
+
+## Common Pitfals
+
+### Invalid Predicate Function
+
+Ensure thhat `predicate` is a valid function
+
+Example mistake:
+
+```tsx
+const result = useArrayEvery([1, 2, 3], 'not-a-function');
+```
+
+**Solution:** Pass a valie function to `predicate`
+
+```tsx
+const result = useArrayEvery([1, 2, 3], num => num > 0);
+```
+
+### Invalid Array
+
+Ensure that `list` is a valid array.
+
+Example mistake:
+
+```tsx
+const result = useArrayEvery('not-an-array', num => num > 0);
+```
+
+**Solution:** Pass a valie array to `list`.
+
+```tsx
+const result = useArrayEvery([1, 2, 3], num => num > 0);
+```

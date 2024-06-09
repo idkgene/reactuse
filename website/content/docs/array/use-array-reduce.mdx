@@ -1,0 +1,101 @@
+---
+title: useArrayReduce
+description: Your first document
+---
+
+A hook providing a memoized version of the `Array.reduce` method for React, applying a reducer function to each element of the array, resulting in a single output value.
+
+## Usage
+
+```tsx
+import { useArrayReduce } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([1, 2, 3, 4]);
+
+  const sum = useArrayReduce(
+    numbers,
+    (accumulator, number) => accumulator + number,
+    0
+  );
+
+  return (
+    <div>
+      <p>Sum: {sum}</p>
+    </div>
+  );
+};
+```
+
+Object Aggregation Example:
+
+```tsx
+import { useArrayReduce } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [objects, setObjects] = useState([{ count: 1 }, { count: 2 }]);
+
+  const totalCount = useArrayReduce(
+    objects,
+    (accumulator, obj) => accumulator + obj.count,
+    0
+  );
+
+  return (
+    <div>
+      <p>Total Count: {totalCount}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+````typescript
+export type UseArrayReduceCallback<PV, CV, R> = (
+  previousValue: PV,
+  currentValue: CV,
+  currentIndex: number,
+  array: CV[]
+) => R;
+
+export function useArrayReduce<T, U>(
+  list: T[],
+  reducer: UseArrayReduceCallback<U, T, U>,
+  initialValue: U
+): U```
+````
+
+## API Details
+
+### Parameters
+
+`list` (`T[]`): The array to reduce.
+
+`reducer`: A "reducer" function that accumulates the array elements.
+
+`initialValue`: A value to initialize the accumulator the first time the callback is called.
+
+### Returns
+
+The value that results from running the "reducer" callback function to completion over the entire array.
+
+## Common Pitfals
+
+### Providing a non-function reducer:
+
+```tsx
+const numbers = [1, 2, 3, 4];
+const invalidReducer = 'accumulator + number';
+
+const sum = useArrayReduce(numbers, invalidReducer, 0); // Error
+```
+
+### Passing a non-array to the list parameter
+
+```tsx
+const invalidList = 'not an array';
+const sum = useArrayReduce(invalidList, (accumulator, number) => accumulator + number, 0); // Error
+```

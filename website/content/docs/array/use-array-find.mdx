@@ -1,0 +1,97 @@
+---
+title: useArrayFind
+description: Your first document
+---
+
+A hook providing a memoized version of the `Array.find` method for React, finding the first element that passes the specified predicate function.
+
+## Usage
+
+Basic Example:
+
+```tsx
+import { useArrayFind } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [users, setUsers] = useState([
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Charlie' },
+  ]);
+
+  const findUserById = user => user.id === 2;
+
+  const user = useArrayFind(users, findUserById);
+
+  return (
+    <div>
+      <p>User: {user ? user.name : 'None'}</p>
+    </div>
+  );
+};
+```
+
+Advanced Example:
+
+```tsx
+import { useArrayFind } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [books, setBooks] = useState([
+    { title: 'Book A', author: 'Author A' },
+    { title: 'Book B', author: 'Author B' },
+    { title: 'Book C', author: 'Author A' },
+  ]);
+
+  const findBookByTitle = book => book.title === 'Book B';
+
+  const book = useArrayFind(books, findBookByTitle);
+
+  return (
+    <div>
+      <p>Book: {book ? book.title : 'None'}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export type UseArrayFindPredicate<T> = (
+  element: T,
+  index: number,
+  array: T[]
+) => boolean;
+
+export function useArrayFind<T>(
+  list: T[],
+  predicate: UseArrayFindPredicate<T>
+): T | undefined;
+```
+## API Details
+
+### Parameters
+
+`list`: The array to search.
+
+`predicate`: A function to test each element in the array, returning `true` for the element to include.
+
+### Returns
+
+The first element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
+
+## Common Pitfalls
+
+### Providing a predicate that isn't a function
+
+Ensure thhat `predicate` is a valid function
+
+```tsx
+const books = [{ title: 'Book A' }, { title: 'Book B' }];
+const invalidPredicate = 'findBookByTitle';
+
+const book = useArrayFind(books, invalidPredicate); // Error
+```

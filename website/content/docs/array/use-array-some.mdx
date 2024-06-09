@@ -1,0 +1,89 @@
+---
+title: useArraySome
+description: Your first document
+---
+
+The `useArraySome` hook provides a memoized way to check if at least one element in an array satisfies a given condition.
+
+## Usage
+
+Basic Example checking for Even Numbers
+
+```tsx
+import { useArraySome } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+
+  const hasEvenNumber = useArraySome(numbers, number => number % 2 === 0);
+
+  return (
+    <div>
+      <p>
+        Does the array contain an even number? {hasEvenNumber ? 'Yes' : 'No'}
+      </p>
+    </div>
+  );
+};
+```
+
+Verifying User Permissions:
+
+```tsx
+import { useArraySome } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [users, setUsers] = useState([
+    { id: 1, isAdmin: false },
+    { id: 2, isAdmin: true },
+  ]);
+
+  const hasAdmin = useArraySome(users, user => user.isAdmin);
+
+  return (
+    <div>
+      <p>Is there an admin user? {hasAdmin ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export function useArraySome<T>(
+  list: T[],
+  predicate: (element: T, index: number, array: T[]) => unknown
+): boolean;
+```
+## API Details
+
+### Parameters
+
+`list`: The array to check.
+
+`predicate`: A function that receives each element of the array as an argument. It should return `true` if the element satisfies the condition, and `false` otherwise.
+
+### Returns
+
+`boolean`: `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`.
+
+## Common Pitfals
+
+### Providing a non-function predicate
+
+```tsx
+const numbers = [1, 2, 3, 4, 5];
+const invalidPredicate = 'number % 2 === 0';
+
+const hasEvenNumber = useArraySome(numbers, invalidPredicate); // Error
+```
+
+### Passing a non-array to the list parameter
+
+```tsx
+const invalidList = 'not an array';
+const hasEvenNumber = useArraySome(invalidList, number => number % 2 === 0); // Error
+```

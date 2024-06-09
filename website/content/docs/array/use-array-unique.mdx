@@ -1,0 +1,118 @@
+---
+title: useArrayUnique
+description: Your first document
+---
+
+Te `useArrayUnique` hook provides a memoized function to extract unique elements from an array. It allows for custom comparison logic, making it versatile for various data structures and comparison needs.
+
+## Usage
+
+Basic Example:
+
+```tsx
+import { useArrayUnique } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [items, setItems] = useState([
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+    { id: 1, name: 'Alice' }, // Duplicate ID
+    { id: 3, name: 'Charlie' },
+  ]);
+
+  const uniqueItems = useArrayUnique(items, (a, b) => a.id === b.id);
+
+  return (
+    <ul>
+      {uniqueItems.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export function useArrayUnique<T>(
+  items: T[],
+  compareFn?: (a: T, b: T, array: T[]) => boolean
+): T[];
+```
+
+## API Details
+
+### Parameters
+
+`items`: The array of items to filter for unique values.
+
+`compareFn`: (optional): A custom function to compare two elements. It receives three arguments:
+
+- `a`: The first element to compare.
+- `b`: The second element to compare.
+- `array`: The entire array being processed.
+
+If `compareFn` returns `true`, the elements are considered equal, and only one is kept. If omitted, a default comparison based on JSON stringification is used.
+
+### Returns
+
+### Returns
+
+`T[]`: A new array containing only the unique elements from the input `items` array, determined using the provided `compareFn` or the default comparison.
+
+## Common Pitfals
+
+### Providing a non-function compareFn
+
+```tsx
+const items = [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 3 }];
+const invalidCompareFn = 'a.id === b.id';
+
+const uniqueItems = useArrayUnique(items, invalidCompareFn); // Error
+```
+
+### Passing a non-array to the items parameter
+
+```tsx
+const invalidItems = 'not an array';
+const uniqueItems = useArrayUnique(invalidItems, (a, b) => a.id === b.id); // Error
+```
+
+### Using the compareFn option with a non-function
+
+```tsx
+const items = [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 3 }];
+const invalidCompareFn = 'a.id === b.id';
+
+const uniqueItems = useArrayUnique(items, invalidCompareFn); // Error
+```
+
+### Complex Objects
+
+The default comparison using `JSON.stringify` might not be suitable for deeply nested objects or objects with methods. Always provide a compareFn when dealing with complex data structures.
+
+```tsx
+const items = [
+  {
+    id: 1,
+    name: 'Alice',
+    address: { street: '123 Main St', city: 'New York' },
+  },
+  {
+    id: 2,
+    name: 'Bob',
+    address: { street: '456 Elm St', city: 'Los Angeles' },
+  },
+  {
+    id: 3,
+    name: 'Charlie',
+    address: { street: '789 Oak St', city: 'Chicago' },
+  },
+];
+
+const uniqueItems = useArrayUnique(items, (a, b) => a.id === b.id);
+
+console.log(uniqueItems); // Output: [{ id: 1, name: 'Alice', address: { street: '123 Main St', city: 'New York' } }, { id: 2, name: 'Bob', address: { street: '456 Elm St', city: 'Los Angeles' } }, { id: 3, name: 'Charlie', address: { street: '789 Oak St', city: 'Chicago' } }]
+```

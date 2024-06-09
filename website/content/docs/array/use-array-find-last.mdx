@@ -1,0 +1,98 @@
+---
+title: useArrayFindLast
+description: Your first document
+---
+
+A hook providing a memoized version of the `Array.findLast` method for React, finding the last element that passes the specified predicate function.
+
+## Usage
+
+Basic Example:
+
+```tsx
+import { useArrayFindLast } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [users, setUsers] = useState([
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Charlie' },
+  ]);
+
+  const findLastUserByName = user => user.name.startsWith('B');
+
+  const lastUser = useArrayFindLast(users, findLastUserByName);
+
+  return (
+    <div>
+      <p>Last User: {lastUser ? lastUser.name : 'None'}</p>
+    </div>
+  );
+};
+```
+
+Advanced Example:
+
+```tsx
+import { useArrayFindLast } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [books, setBooks] = useState([
+    { title: 'Book A', author: 'Author A' },
+    { title: 'Book B', author: 'Author B' },
+    { title: 'Book C', author: 'Author A' },
+  ]);
+
+  const findLastBookByAuthor = book => book.author === 'Author A';
+
+  const lastBook = useArrayFindLast(books, findLastBookByAuthor);
+
+  return (
+    <div>
+      <p>Last Book: {lastBook ? lastBook.title : 'None'}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export type UseArrayFindLastPredicate<T> = (
+  element: T,
+  index: number,
+  array: T[]
+) => boolean;
+
+export function useArrayFindLast<T>(
+  list: T[],
+  predicate: UseArrayFindLastPredicate<T>
+): T | undefined;
+```
+
+## API Details
+
+### Parameters
+
+`list` (`T[]`): The array to search.
+
+`predicate`: A function to test each element in the array, returning `true` for the element to include
+
+### Returns
+
+The last element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
+
+## Common Pitfals
+
+### Providing a predicate that isn't a function
+
+Ensure thhat `predicate` is a valid function
+
+```tsx
+const books = [{ title: 'Book A' }, { title: 'Book B' }];
+const invalidPredicate = 'findLastBookByAuthor';
+
+const lastBook = useArrayFindLast(books, invalidPredicate); // Error
+```

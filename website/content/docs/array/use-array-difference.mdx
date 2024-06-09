@@ -1,0 +1,119 @@
+---
+title: useArrayDifference
+description: Your first document
+---
+
+`useArrayDifference` calculates the difference between two arrays. It returns a new array containing elements from the first array that are not present in the second array.
+
+## Usage
+
+Basic Comparison
+
+```tsx
+import { useArrayDifference } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [list1, setList1] = useState([0, 1, 2, 3, 4, 5]);
+  const [list2, setList2] = useState([4, 5, 6]);
+
+  const difference = useArrayDifference(list1, list2);
+
+  return (
+    <div>
+      <p>Difference: {JSON.stringify(difference)}</p>
+    </div>
+  );
+};
+```
+
+Custom comparison logic:
+
+```tsx
+import { useArrayDifference } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [list1, setList1] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  const [list2, setList2] = useState([{ id: 2 }, { id: 4 }]);
+
+  // Custom comparison function based on the 'id' property
+  const difference = useArrayDifference(list1, list2, (a, b) => a.id === b.id);
+
+  return (
+    <div>
+      <p>Difference: {JSON.stringify(difference)}</p>
+    </div>
+  );
+};
+```
+
+Using Key for Comparison:
+
+```tsx
+import { useArrayDifference } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [list1, setList1] = useState([{ name: 'Alice' }, { name: 'Bob' }]);
+  const [list2, setList2] = useState([{ name: 'Bob' }, { name: 'Charlie' }]);
+
+  // Compare based on the 'name' property
+  const difference = useArrayDifference(list1, list2, 'name');
+
+  return (
+    <div>
+      <p>Difference: {JSON.stringify(difference)}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export function useArrayDifference<T>(
+  list: T[],
+  values: T[],
+  keyOrCompareFn?: keyof T | UseArrayDifferenceComparatorFn<T>
+): T[];
+
+export type UseArrayDifferenceComparatorFn<T> = (
+  element: T,
+  value: T
+) => boolean;
+```
+
+## API Details
+
+### Parameters
+
+`list` (`T[]`): The primary array.
+
+`values` (`T[]`): The array to compare against.
+
+`keyOrCompareFn` `(keyof T | UseArrayDifferenceComparatorFn<T>`, _optional_):
+
+- If a string, keyOrCompareFn is the key to use for comparison.
+- If a function, it is a comparator function used to compare two elements.
+- If omitted, direct comparison is used.
+
+### Returns
+
+`T[]`: An array containing elements present in list but not in values.
+
+## Common Pitfals
+
+### Incorrect Key Usage:
+
+If using a key for comparison, ensure that the key exists in all objects.
+
+```ts
+const difference = useArrayDifference([{ id: 1 }], [{ name: 'Alice' }], 'id');
+```
+
+**Solution:** Ensure both arrays have the key `id`.
+
+### Inconsistent Data Types:
+
+Ensure both arrays contain comparable data types, especially when using direct comparison.

@@ -1,0 +1,123 @@
+---
+title: useArrayIncludes
+description: Your first document
+---
+
+A hook providing a memoized version of the `Array.includes` method for React, determining if a value is present in an array.
+
+## Usage
+
+Basic Example:
+
+```tsx
+import { useArrayIncludes } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+
+  const includesNumber = useArrayIncludes(numbers, 3);
+
+  return (
+    <div>
+      <p>Includes number 3: {includesNumber ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+Object Comparison Example:
+
+```tsx
+import { useArrayIncludes } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [items, setItems] = useState([
+    { id: 1, name: 'item1' },
+    { id: 2, name: 'item2' },
+  ]);
+
+  const options = { comparator: 'id' };
+
+  const includesItem = useArrayIncludes(items, 2, options);
+
+  return (
+    <div>
+      <p>Includes item with ID 2: {includesItem ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+Custom Comparator Example:
+
+```tsx
+import { useArrayIncludes } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [objects, setObjects] = useState([{ key: 'a' }, { key: 'b' }]);
+
+  const customComparator = (element, value) => element.key === value;
+
+  const includesObject = useArrayIncludes(objects, 'a', {
+    comparator: customComparator,
+  });
+
+  return (
+    <div>
+      <p>Includes object with key 'a': {includesObject ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+export interface UseArrayIncludesOptions<T, V> {
+  fromIndex?: number;
+  comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
+}
+
+export function useArrayIncludes<T, V = T>(
+  list: T[],
+  value: V,
+  options?: UseArrayIncludesOptions<T, V>
+): boolean;
+```
+
+## API Details
+
+### Parameters
+
+`list` (`T[]`): The array to search.
+
+`value` (`V`): The value to search for.
+
+`options` (`UseArrayIncludesOptions<T, V>`): Additional options for the search.
+
+### Returns
+
+`boolean`: `true` if the `value` is found in the array, otherwise `false`.
+
+## Common Pitfals
+
+### Providing an invalid comparator key
+
+```tsx
+const objects = [{ key: 'a' }, { key: 'b' }];
+const invalidKey = 'nonExistentKey';
+
+const includesObject = useArrayIncludes(objects, 'a', {
+  comparator: invalidKey,
+}); // Error
+```
+
+### Using the fromIndex option with a negative index
+
+```tsx
+const numbers = [1, 2, 3, 4, 5];
+const includesNumber = useArrayIncludes(numbers, 3, { fromIndex: -1 }); // Error
+```
