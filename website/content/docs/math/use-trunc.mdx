@@ -1,0 +1,64 @@
+---
+title: useTrunc
+description: Your first document
+---
+
+`useTrunc` is a React hook that truncates a number by removing its fractional part.
+
+## Usage
+
+```tsx
+import { useAverage } from '#';
+
+const list = [1, 2, 3];
+const averageValue = useAverage(list); // 2
+```
+
+```tsx
+import { useAverage } from '#';
+
+const a = 1;
+const b = 3;
+
+const averageValue = useAverage(a, b); // 2
+```
+
+## Type Declarations
+
+```typescript
+type TruncateNumberFn = (number: number) => void;
+
+export function useTrunc(initialValue: number = 0): [number, TruncateNumberFn]
+```
+
+## API Details
+
+### Parameters
+
+`initialValue` - The initial value of the truncated number. Defaults to 0.
+
+### Returns
+
+An array containing the current truncated number and a function to update (truncate) it.
+
+## Common Pitfalls
+
+### Non-Numeric Input
+
+Passing a non-numeric input to the truncating function will result in an error message and no update to the state.
+
+```tsx
+const [truncatedNumber, truncateNumber] = useTrunc(0);
+truncateNumber("hello");
+// Logs: "useTrunc: Input must be a number otherwise it'll return NaN"
+```
+
+### Empty Array
+
+Truncating an empty input will return the default value of `0`.
+
+```tsx
+const [truncatedNumber, truncateNumber] = useTrunc(0);
+truncateNumber([]);
+// Returns 0
+```

@@ -1,0 +1,67 @@
+---
+title: useSum
+description: Your first document
+---
+
+`useSum` is a React hook that calculates the sum of a list of numbers.
+
+## Usage
+
+```tsx
+import { useSum } from '#';
+
+const Component = () => {
+  const numbers = [1, 2, 3, 4, 5];
+  const sum = useSum(numbers);
+
+  return <div>Sum: {sum}</div>;
+};
+```
+
+```tsx
+import { useAverage } from '#';
+
+const a = 1;
+const b = 3;
+
+const averageValue = useAverage(a, b); // 2
+```
+
+## Type Declarations
+
+```typescript
+/**
+ * Math.abs
+ */
+export const useSum = (array: number[]): number
+```
+
+## API Details
+
+### Parameters
+
+`array` - An array of numbers to calculate the sum of.
+
+### Returns
+
+The sum of the numbers in the array.
+
+## Common Pitfalls
+
+### Non-Numeric Input
+
+Ensure that the input array contains only numeric values.
+
+```tsx
+const sum = useSum([1, 2, 'three', 4]);
+// Logs: 'useSum: Array must contain only numbers'
+```
+
+### Empty Array
+
+An empty array will return a sum of `0`.
+
+```tsx
+const sum = useSum([]);
+// Returns 0
+```

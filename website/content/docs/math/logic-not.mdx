@@ -1,0 +1,41 @@
+---
+title: logicNot
+description: Your first document
+---
+
+The `logicNot` function (also available as `not` for convenience) performs a logical NOT operation on a provided value or function. It returns the opposite boolean value of the resolved input. The
+
+## Usage
+
+```tsx
+import { logicNot, not } from '#';
+
+const isTrue = true;
+
+const result1 = logicNot(isTrue); // Returns false
+const result2 = logicNot(() => false); // Returns true
+const result3 = not(0); // Returns true
+const result4 = not('hello'); // Returns false
+
+console.log(result1); // Output: false
+console.log(result2); // Output: true
+console.log(result3); // Output: true
+console.log(result4); // Output: false
+```
+
+## Type Declarations
+
+```typescript
+export declare function logicNot(v: ValueOfFunction<any>): boolean;
+export { logicNot as not };
+```
+
+## API Details
+
+### Parameters
+
+`v`: The value or a function that returns a value to be evaluated.
+
+### Returns
+
+Returns a `boolean` value indicating whether the provided value or function evaluates to `false`.

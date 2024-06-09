@@ -1,0 +1,40 @@
+---
+title: logicOr
+description: Your first document
+---
+
+The `logicOr` function (also available as `or` for convenience) performs a logical OR operation on multiple provided values or functions. It efficiently checks if at least one of the provided conditions evaluates to true. The
+
+## Usage
+
+```tsx
+import { logicOr, or } from '#';
+
+const isTrue = true;
+const isFalsy = false;
+
+const result1 = logicOr(isTrue, () => false, 10 > 5); // Returns true
+const result2 = logicOr(isFalsy, isFalsy, () => 'hello'); // Returns true ('hello' is truthy)
+const result3 = or(0, '', [1, 2].length === 0); // Returns false (all falsy)
+
+console.log(result1); // Output: true
+console.log(result2); // Output: true
+console.log(result3); // Output: false
+```
+
+## Type Declarations
+
+```typescript
+export declare function logicOr(...args: ValueOfFunction<any>[]): boolean;
+export { logicOr as or };
+```
+
+## API Details
+
+### Parameters
+
+`args`: A variable number of arguments, each being a value of any type or a function that returns a value.
+
+### Returns
+
+The resolved value of type `T`. If `value` is a function, its return value is returned; otherwise, value itself is returned.

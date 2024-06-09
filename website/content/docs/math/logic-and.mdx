@@ -1,0 +1,40 @@
+---
+title: logicAnd
+description: Your first document
+---
+
+The `logicAnd` function (also available as `and` for convenience) performs a logical AND operation on multiple provided values or functions. It efficiently checks if all provided conditions evaluate to true.
+
+## Usage
+
+```tsx
+import { logicAnd, and } from '#';
+
+const isTrue = true;
+const isFalsy = false;
+
+const result1 = logicAnd(isTrue, () => true, 10 > 5); // Returns true
+const result2 = logicAnd(isTrue, isFalsy, () => 'hello'); // Returns false
+const result3 = and('a' === 'a', 0, [1, 2].length > 0); // Returns false
+
+console.log(result1); // Output: true
+console.log(result2); // Output: false
+console.log(result3); // Output: false
+```
+
+## Type Declarations
+
+```typescript
+export declare function logicAnd(...args: ValueOrFunction<any>[]): boolean;
+export { logicAnd as and };
+```
+
+## API Details
+
+### Parameters
+
+`args`: A variable number of arguments, each being ga value of any type or a function that returns a value.
+
+### Returns
+
+Returns a `boolean` value indicating whether all provided values or functions evaluate to `true`.

@@ -1,0 +1,79 @@
+---
+title: usePrecision
+description: Your first document
+---
+
+`usePrecision` is a hook that formats a number to a specified precision.
+
+## Usage
+
+```tsx
+import { usePrecision } from '#';
+
+const Component = () => {
+  const formattedValue = usePrecision({ precision: 2, value: 3.14159 });
+
+  return <div>Formatted Value: {formattedValue}</div>;
+};
+```
+
+```tsx
+import { usePrecision } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [precision, setPrecision] = useState(2);
+  const [value, setValue] = useState(3.14159);
+
+  const formattedValue = usePrecision({ precision, value });
+
+  return (
+    <div>
+      Formatted Value: {formattedValue}
+      <button onClick={() => setPrecision(4)}>Increase Precision</button>
+      <button onClick={() => setValue(2.71828)}>Change Value</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+type PrecisionOptions = {
+  precision: number;
+  value: number;
+};
+
+type FormattedValue = number;
+
+type UsePrecisionReturn = FormattedValue;
+
+export function usePrecision({
+  precision,
+  value,
+}: PrecisionOptions): UsePrecisionReturn;
+```
+
+## API Details
+
+### Parameters
+
+`precision`: The number of decimal places to round the value to.
+
+`value`: The number to format.
+
+### Returns
+
+The formatted value.
+
+## Common Pitfalls
+
+### Invalid Precision
+
+If the precision is negative, the hook will round without decimals.
+
+```tsx
+const formattedValue = usePrecision({ precision: -1, value: 3.14159 });
+// Returns 3
+```

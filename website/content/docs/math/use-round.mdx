@@ -1,0 +1,76 @@
+---
+title: useRound
+description: Your first document
+---
+
+`useRound` is a React hook that rounds a number to the nearest integer.
+
+## Usage
+
+```tsx
+import { useRound } from '#';
+
+const Component = () => {
+  const [roundedNumber, roundNumber] = useRound(0);
+
+  return (
+    <div>
+      Rounded Number: {roundedNumber}
+      <button onClick={() => roundNumber(5.8)}>Round 5.8</button>
+      <button onClick={() => roundNumber(2.3)}>Round 2.3</button>
+    </div>
+  );
+};
+```
+
+```tsx
+import { useRound } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [input, setInput] = useState(3.7);
+  const [roundedNumber, roundNumber] = useRound(0);
+
+  return (
+    <div>
+      <input
+        type="number"
+        value={input}
+        onChange={e => setInput(parseFloat(e.target.value))}
+      />
+      <button onClick={() => roundNumber(input)}>Round Input</button>
+      <div>Rounded Number: {roundedNumber}</div>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```typescript
+type RoundNumberFn = (number: number) => void;
+
+export function useRound(initialValue: number = 0): [number, RoundNumberFn]
+```
+
+## API Details
+
+### Parameters
+
+`initialValue` - The initial value of the rounded number. Defaults to 0.
+
+### Returns
+
+An array containing the current rounded number and a function to update (round) it.
+
+## Common Pitfalls
+
+### Non-Numeric Input
+
+Passing a non-numeric input to the rounding function will result in an error message and no update to the state.
+
+```tsx
+const [roundedNumber, roundNumber] = useRound(0);
+roundNumber("hello");
+// Logs: "useRound: Input must be a number, otherwise it'll return NaN"
+```

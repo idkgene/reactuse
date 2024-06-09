@@ -1,0 +1,60 @@
+---
+title: useMin
+description: Your first document
+---
+
+`useMin` is a hook that returns the minimum value from the given arguments or an array of values.
+
+## Usage
+
+```tsx
+import { useMin } from '#';
+
+const Component = () => {
+  const minValue = useMin(1, 2, 3, 4, -1, 10);
+
+  return <div>Min Value: {minValue}</div>;
+};
+```
+
+```tsx
+import { useMin } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([5, 10, 15, -5, 0]);
+
+  const minValue = useMin(() => numbers);
+
+  return <div>Min Value: {minValue}</div>;
+};
+```
+
+## Type Declarations
+
+```typescript
+type ValueOrFunction<T> = T | (() => T);
+
+export function useMin(...args: any[]): number
+```
+
+## API Details
+
+### Parameters
+
+`args`: Can be a series of numbers or an array of numbers. A function returning an array or numbers is also accepted.
+
+### Returns
+
+The minimum value from the given arguments or an array of values.
+
+## Common Pitfalls
+
+### Empty Array
+
+hen an empty array is provided, the hook will return `Infinity`.
+
+```tsx
+const minValue = useMin([]);
+// Returns Infinity due to no values to compare.
+```

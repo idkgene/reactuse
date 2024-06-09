@@ -1,0 +1,98 @@
+---
+title: useProjection
+description: Your first document
+---
+
+`useProjection` is a React hook that projects a value from one range to another using a specified projection function.
+
+## Usage
+
+```tsx
+import { useProjection } from '#';
+
+const Component = () => {
+  const projectedValue = useProjection(75, [0, 100], [0, 10]);
+
+  return <div>Projected Value: {projectedValue}</div>;
+};
+```
+
+```tsx
+import { useProjection, ProjectorFunction } from '#';
+
+const customProjector: ProjectorFunction<number, number> = (
+  value,
+  fromMin,
+  fromMax,
+  toMin,
+  toMax
+) => {
+  const logFrom = Math.log(fromMax) - Math.log(fromMin);
+  const logValue = Math.log(value) - Math.log(fromMin);
+  return (logValue / logFrom) * (toMax - toMin) + toMin;
+};
+
+const Component = () => {
+  const projectedValue = useProjection(10, [1, 100], [0, 10], customProjector);
+
+  return <div>Custom Projected Value: {projectedValue}</div>;
+};
+```
+
+## Type Declarations
+
+```typescript
+type ValueOfFunction<T> = T | (() => T);
+
+export type ProjectorFunction<T, U> = (
+  value: T,
+  fromMin: T,
+  fromMax: T,
+  toMin: U,
+  toMax: U
+) => U;
+
+export function defaultProjector(
+  value: number,
+  fromMin: number,
+  fromMax: number,
+  toMin: number,
+  toMax: number
+): number
+```
+
+## API Details
+
+### Parameters
+
+`input` - The input value to project. Can be a number or a function returning a number.
+
+`fromDomain` - The original range of the input value (as a tuple of two numbers). Can be an array or a function returning an array.
+
+`toDomain` - The target range to project the value to (as a tuple of two numbers). Can be an array or a function returning an array.
+
+`projector` - An optional projection function to use. Defaults to `defaultProjector`.
+
+### Returns
+
+The projected value.
+
+## Common Pitfalls
+
+### Incorrect Domain Ranges
+
+Ensure that the input value's original range (`fromDomain`) is valid and that `fromMin` is not equal to `fromMax`.
+
+```tsx
+const projectedValue = useProjection(75, [100, 100], [0, 10]);
+// Returns NaN due to division by zero.
+```
+
+### Inconsistent Domains
+
+Make sure that both `fromDomain` and `toDomain` are valid ranges.
+
+```tsx
+const projectedValue = useProjection(75, [0, 100], [10, 10]);
+// Returns NaN due to division by zero.
+```

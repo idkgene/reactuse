@@ -1,0 +1,60 @@
+---
+title: useMax
+description: Your first document
+---
+
+`useMax` is a hook that returns the maximum value from the given arguments or an array of values.
+
+## Usage
+
+```tsx
+import { useMax } from '#';
+
+const Component = () => {
+  const maxValue = useMax(1, 2, 3, 4, 5);
+
+  return <div>Max Value: {maxValue}</div>;
+};
+```
+
+```tsx
+import { useMax } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+
+  const maxValue = useMax(() => numbers);
+
+  return <div>Max Value: {maxValue}</div>;
+};
+```
+
+## Type Declarations
+
+```typescript
+type ValueOrFunction<T> = T | (() => T);
+
+export function useMax(...args: any[]): number;
+```
+
+## API Details
+
+### Parameters
+
+`args`: Can be a series of numbers or an array of numbers. A function returning an array or numbers is also accepted.
+
+### Returns
+
+The maximum value from the given arguments or an array of values.
+
+## Common Pitfalls
+
+### Empty Array
+
+hen an empty array is provided, the hook will return `-Infinity`.
+
+```tsx
+const maxValue = useMax([]);
+// Returns -Infinity due to no values to compare.
+```

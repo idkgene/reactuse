@@ -1,0 +1,50 @@
+---
+title: useAverage
+description: Your first document
+---
+
+`useAverage` is a hook that calculates the average of a series of numbers provided as arguments or an array.
+
+## Usage
+
+```tsx
+import { useAverage } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+  const [numbers, setNumbers] = useState([10, 20, 30, 40, 50]);
+
+  const average = useAverage(numbers);
+
+  return <div>Average: {average}</div>;
+};
+```
+
+## Type Declarations
+
+```typescript
+type ValueOrFunction<T> = T | (() => T);
+
+export function useAverage(...args: any[]): number;
+```
+
+## API Details
+
+### Parameters
+
+`args`: Can be a series of numbers or an array of numbers. A function returning an array or numbers is also accepted.
+
+### Returns
+
+The average of the provided numbers.
+
+## Common Pitfalls
+
+### Empty Array
+
+When an empty array is provided, it will return `NaN`.
+
+```tsx
+const average = useAverage([]);
+// Returns NaN due to division by zero.
+```

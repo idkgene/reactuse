@@ -1,0 +1,43 @@
+---
+title: useAbs
+description: Your first document
+---
+
+The `useAbs` hook provides a convenient way to obtain and track the absolute value of a number within your React components. It handles both direct numeric values and functions that return numbers, dynamically updating the absolute value whenever the input changes.
+
+## Usage
+
+```tsx
+import { useState } from 'react';
+import { useAbs } from '#';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  const absCount = useAbs(count);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Absolute Count: {absCount}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+````typescript
+export function useAbs(value: number | (() => number)): number;```
+````
+
+## API Details
+
+### Parameters
+
+`value`: The value or a function that returns a value to be evaluated.
+
+### Returns
+
+Returns a `number` value representing the absolute value of the provided value.
