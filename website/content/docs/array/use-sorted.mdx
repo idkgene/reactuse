@@ -3,4 +3,129 @@ title: useSorted
 description: Your first document
 ---
 
-To be implemented!
+`useSorted` is a custom hook that provides a sorted version of an input array. It allows for sorting with a custom comparison function or sorting options.
+
+## Usage
+
+```tsx
+import { useSorted } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+    const [list, setList] = useState([5, 3, 1, 4, 2]);
+
+    // Using a comparison function
+    const sortedList = useSorted(list, (a, b) => a - b);
+
+    return (
+        <div>
+            Sorted List: {JSON.stringify(sortedList)}
+        </div>
+    );
+};
+```
+
+```tsx
+import { useSorted } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+    const [list, setList] = useState([
+        { id: 3, name: 'Charlie' },
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' },
+    ]);
+
+    // Using sorting options
+    const sortedList = useSorted(list, {
+        compareFn: (a, b) => a.id - b.id,
+        dirty: true  // Mutates the input array
+    });
+
+    return (
+        <div>
+            Sorted List: {JSON.stringify(sortedList)}
+        </div>
+    );
+};
+```
+
+```tsx
+import { useSorted } from '#';
+import { useState } from 'react';
+
+const Component = () => {
+    const [list, setList] = useState(['banana', 'apple', 'cherry', 'date']);
+
+    // Using a custom sort function
+    const sortedList = useSorted(list, {
+        sortFn: (arr, compareFn) => [...arr].sort(compareFn).reverse(),
+        compareFn: (a, b) => a.localeCompare(b)
+    });
+
+    return (
+        <div>
+            Sorted List: {JSON.stringify(sortedList)}
+        </div>
+    );
+};
+```
+
+## Type Declarations
+
+```ts
+type UseSortedCompareFn = (a: T, b: T) => number;
+
+interface UseSortedOptions {
+    sortFn?: (arr: T[], compareFn?: UseSortedCompareFn) => T[];
+    compareFn?: UseSortedCompareFn;
+    dirty?: boolean;
+}
+
+export function useSorted<T>(
+    source: T[],
+    compareFnOrOptions?: UseSortedCompareFn | UseSortedOptions,
+    options?: Omit<UseSortedOptions, 'compareFn'>
+): T[]
+
+export function defaultSortFn<T>(arr: T[], compareFn?: UseSortedCompareFn): T[]
+```
+
+## API Details
+
+### Parameters
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `source` | `T[]` | - | The input array to be sorted. |
+| `compareFnOrOptions` | `UseSortedCompareFn \| UseSortedOptions` | - | The comparison function or options to use for sorting. |
+| `options` | `Omit<UseSortedOptions, 'compareFn'>` | - | Optional options to use for sorting. |
+
+### Returns
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `T[]` | - | - | The sorted array. |
+
+## Common Pitfalls
+
+### Incorrect Sorting Logic
+
+Ensure that comparison function or sort options provided are consistent and handle all data types appropriately.
+
+```ts
+const sortedList = useSorted([{ id: 1 }], (a, b) => a.name.localeCompare(b.name));
+// Solution: Ensure that the comparison logic matches the available properties.
+```
+
+### Mutatble Sorting with dirty: true
+
+Using `dirty: true` mutates the original array. Be cautious when using this option if the original order of the input array is importang.
+
+```ts
+const sortedList = useSorted([{ id: 3 }, { id: 1 }, { id: 2 }], {
+    compareFn: (a, b) => a.id - b.id,
+    dirty: true
+});
+// Solution: If you don't want to mutate the original array, omit the `dirty` option or set it to `false`.
+```
