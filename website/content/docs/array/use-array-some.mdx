@@ -54,17 +54,21 @@ export function useArraySome<T>(
   predicate: (element: T, index: number, array: T[]) => unknown
 ): boolean;
 ```
+
 ## API Details
 
 ### Parameters
 
-`list`: The array to check.
-
-`predicate`: A function that receives each element of the array as an argument. It should return `true` if the element satisfies the condition, and `false` otherwise.
+| Property    | Type                                                 | Default | Description                                                                                                                                               |
+| ----------- | ---------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `list`      | `T[]`                                                | -       | The primary array to check.                                                                                                                               |
+| `predicate` | `(element: T, index: number, array: T[]) => unknown` | -       | A function that receives each element of the array as an argument. It should return `true` if the element satisfies the condition, and `false` otherwise. |
 
 ### Returns
 
-`boolean`: `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`.
+| Property  | Type      | Default | Description                                                                                                |
+| --------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `boolean` | `boolean` | -       | `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`. |
 
 ## Common Pitfals
 

@@ -44,21 +44,16 @@ export function useArrayUnique<T>(
 
 ### Parameters
 
-`items`: The array of items to filter for unique values.
-
-`compareFn`: (optional): A custom function to compare two elements. It receives three arguments:
-
-- `a`: The first element to compare.
-- `b`: The second element to compare.
-- `array`: The entire array being processed.
-
-If `compareFn` returns `true`, the elements are considered equal, and only one is kept. If omitted, a default comparison based on JSON stringification is used.
+| Property    | Type                                  | Default | Description                                                             |
+| ----------- | ------------------------------------- | ------- | ----------------------------------------------------------------------- |
+| `items`     | `T[]`                                 | -       | The array of items to filter for unique values.                         |
+| `compareFn` | `(a: T, b: T, array: T[]) => boolean` | -       | A custom function to compare two elements. It receives three arguments: |
 
 ### Returns
 
-### Returns
-
-`T[]`: A new array containing only the unique elements from the input `items` array, determined using the provided `compareFn` or the default comparison.
+| Property | Type  | Default | Description                                                                                                                                        |
+| -------- | ----- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `T[]`    | `T[]` | -       | A new array containing only the unique elements from the input `items` array, determined using the provided `compareFn` or the default comparison. |
 
 ## Common Pitfals
 

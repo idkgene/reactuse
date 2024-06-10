@@ -86,15 +86,17 @@ export function useArrayIncludes<T, V = T>(
 
 ### Parameters
 
-`list` (`T[]`): The array to search.
-
-`value` (`V`): The value to search for.
-
-`options` (`UseArrayIncludesOptions<T, V>`): Additional options for the search.
+| Property  | Type                            | Default | Description                        |
+| --------- | ------------------------------- | ------- | ---------------------------------- |
+| `list`    | `T[]`                           | -       | The primary array to search.       |
+| `value`   | `V`                             | -       | The value to search for.           |
+| `options` | `UseArrayIncludesOptions<T, V>` | -       | Additional options for the search. |
 
 ### Returns
 
-`boolean`: `true` if the `value` is found in the array, otherwise `false`.
+| Property  | Type      | Default | Description                                                     |
+| --------- | --------- | ------- | --------------------------------------------------------------- |
+| `boolean` | `boolean` | -       | `true` if the `value` is found in the array, otherwise `false`. |
 
 ## Common Pitfals
 

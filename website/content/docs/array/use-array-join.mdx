@@ -51,13 +51,16 @@ export function useArrayJoin<T>(list: T[], separator?: string): string```
 
 ### Parameters
 
-`list` (`T[]`): The array to join.
-
-`separator` (`string`): A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated by a comma (",").
+| Property    | Type     | Default | Description                                                                                                                      |
+| ----------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `list`      | `T[]`    | -       | The primary array to join.                                                                                                       |
+| `separator` | `string` | -       | A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated by a comma (","). |
 
 ### Returns
 
-A string with all array elements joined. If `list.length` is `0`, an empty string is returned.
+| Property | Type     | Default | Description                                                                                    |
+| -------- | -------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `string` | `string` | -       | A string with all array elements joined. If `list.length` is `0`, an empty string is returned. |
 
 ## Common Pitfals
 
