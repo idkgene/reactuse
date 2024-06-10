@@ -13,7 +13,7 @@ import { useState } from 'react';
 
 const Component = () => {
   const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
-  const isEven = (number) => number % 2 === 0;
+  const isEven = number => number % 2 === 0;
 
   const evenNumbers = useArrayFilter(numbers, isEven);
 
@@ -35,13 +35,13 @@ const Component = () => {
     { name: 'Bob', age: 30 },
   ]);
 
-  const isAdult = (user) => user.age >= 18;
+  const isAdult = user => user.age >= 18;
 
   const adults = useArrayFilter(users, isAdult);
 
   return (
     <ul>
-      {adults.map((user) => (
+      {adults.map(user => (
         <li key={user.name}>{user.name}</li>
       ))}
     </ul>
@@ -68,13 +68,16 @@ export function useArrayFilter<T>(
 
 ### Parameters
 
-`list`: The primary array to filter.
-
-`predicate`: A function called for every element of the `list`, returning `true` for elements to include in the new array.
+| Property    | Type                         | Default                                              | Description                                                                                                   |
+| ----------- | ---------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `list`      | `T[]`                        | -                                                    | The primary array to filter.                                                                                  |
+| `predicate` | `UseArrayFilterPredicate<T>` | `(element: T, index: number, array: T[]) => boolean` | A function called for every element of the `list`, returning `true` for elements to include in the new array. |
 
 ### Returns
 
-A new array containing only the elements that pass the `predicate` function.
+| Property | Type  | Default | Description                                                                    |
+| -------- | ----- | ------- | ------------------------------------------------------------------------------ |
+| `list`   | `T[]` | -       | The new array containing only the elements that pass the `predicate` function. |
 
 ## Common Pitfalls
 
