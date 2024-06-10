@@ -82,19 +82,17 @@ export type UseArrayDifferenceComparatorFn<T> = (
 
 ### Parameters
 
-`list` (`T[]`): The primary array.
-
-`values` (`T[]`): The array to compare against.
-
-`keyOrCompareFn` `(keyof T | UseArrayDifferenceComparatorFn<T>`, _optional_):
-
-- If a string, keyOrCompareFn is the key to use for comparison.
-- If a function, it is a comparator function used to compare two elements.
-- If omitted, direct comparison is used.
+| Property         | Type                                           | Default | Description                                                          |
+| ---------------- | ---------------------------------------------- | ------- | -------------------------------------------------------------------- |
+| `list`           | `T[]`                                          | -       | The primary array.                                                   |
+| `values`         | `T[]`                                          | -       | The array to compare against.                                        |
+| `keyOrCompareFn` | `keyof T \| UseArrayDifferenceComparatorFn<T>` | -       | The key to use for comparison or a comparator function (_optional_). |
 
 ### Returns
 
-`T[]`: An array containing elements present in list but not in values.
+| Property | Type | Default | Description                                                     |
+| -------- | ---- | ------- | --------------------------------------------------------------- |
+| `T[]`    | -    | -       | An array containing elements present in list but not in values. |
 
 ## Common Pitfals
 
