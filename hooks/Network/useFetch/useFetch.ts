@@ -1,119 +1,214 @@
-import { QueryClient, QueryFunction, QueryKey } from "@tanstack/react-query";
-import axios, { AxiosRequestConfig } from "axios";
-import ky, { Options as KyOptions } from "ky";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-type FetchLibrary = "axios" | "ky" | "fetch" | "react-query";
-
-interface UseFetchOptions<TData> {
-  library?: FetchLibrary;
-  queryKey?: QueryKey;
-  queryFn?: QueryFunction<TData>;
-  axiosOptions?: AxiosRequestConfig;
-  kyOptions?: KyOptions;
-  fetchOptions?: RequestInit;
-  queryClient?: QueryClient;
+interface FetchOptions {
+  method?: string;
+  headers?: HeadersInit;
+  body?: BodyInit | null;
+  refetch?: boolean;
+  immediate?: boolean;
+  timeout?: number;
+  beforeFetch?: (
+    ctx: BeforeFetchContext
+  ) => Promise<FetchContext | void> | FetchContext | void;
+  afterFetch?: (
+    ctx: AfterFetchContext
+  ) => Promise<AfterFetchContext> | AfterFetchContext;
+  onFetchError?: (
+    ctx: FetchErrorContext
+  ) => Promise<FetchErrorContext> | FetchErrorContext;
+  updateDataOnError?: boolean;
 }
 
-interface UseFetchResult<TData> {
-  data: TData | undefined;
-  loading: boolean;
+interface FetchContext {
+  url: string;
+  options: RequestInit;
+  cancel?: () => void;
+}
+
+interface BeforeFetchContext extends FetchContext {}
+
+interface AfterFetchContext {
+  response: Response;
+  data: any;
+}
+
+interface FetchErrorContext {
+  error: Error;
+  data: any;
+}
+
+interface UseFetchReturn<T> {
+  data: T | null;
+  isFetching: boolean;
   error: Error | null;
-  refetch: () => void;
+  statusCode: number | null;
+  canAbort: boolean;
+  execute: () => Promise<void>;
+  abort: () => void;
+  onFetchResponse: (callback: (response: Response) => void) => void;
+  onFetchError: (callback: (error: Error) => void) => void;
 }
 
-/**
- * @param url - The URL to fetch data from.
- * @param options - An optional object containing configuration options for the fetch operation.
- * @param options.library - The HTTP client library to use for the fetch operation. Can be 'axios', 'ky', 'fetch', or 'react-query'. Defaults to 'axios'.
- * @param options.queryKey - The query key to use when using the 'react-query' library. Required when using 'react-query'.
- * @param options.queryFn - The query function to use when using the 'react-query' library. Required when using 'react-query'.
- * @param options.axiosOptions - An object containing options to be passed to the Axios library when using the 'axios' library.
- * @param options.kyOptions - An object containing options to be passed to the Ky library when using the 'ky' library.
- * @param options.fetchOptions - An object containing options to be passed to the Fetch API when using the 'fetch' library.
- *
- * @returns An object with the following properties:
- * - `data`: The fetched data, or `undefined` if the fetch operation is still in progress or has failed.
- * - `loading`: A boolean indicating whether the fetch operation is still in progress.
- * - `error`: An `Error` object if the fetch operation has failed, or `null` otherwise.
- * - `refetch`: A function that can be called to refetch the data.
- */
-
-export const useFetch = <TData = unknown> (
+export function useFetch<T>(
   url: string,
-  options: UseFetchOptions<TData> = {}
-): UseFetchResult<TData> => {
-  const {
-    library = "axios",
-    queryKey,
-    queryFn,
-    axiosOptions,
-    kyOptions,
-    fetchOptions,
-    queryClient,
-  } = options;
-  const [data, setData] = useState<TData | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+  options: FetchOptions = {}
+): UseFetchReturn<T> {
+  const [data, setData] = useState<T | null>(null);
+  const [isFetching, setIsFetching] = useState<boolean>(
+    options.immediate ?? true
+  );
   const [error, setError] = useState<Error | null>(null);
+  const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [canAbort, setCanAbort] = useState<boolean>(false);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const onFetchResponseCallbacks = useRef<Array<(response: Response) => void>>(
+    []
+  );
+  const onFetchErrorCallbacks = useRef<Array<(error: Error) => void>>([]);
+
+  const execute = async () => {
+    setIsFetching(true);
     setError(null);
+    setStatusCode(null);
+    setCanAbort(true);
+
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+
+    const ctx: FetchContext = {
+      url,
+      options: {
+        method: options.method ?? 'GET',
+        headers: options.headers ?? {},
+        body: options.body ?? null,
+        signal: abortController.signal,
+      },
+    };
+
+    if (options.beforeFetch) {
+      const newCtx = await options.beforeFetch(ctx as BeforeFetchContext);
+      if (newCtx) Object.assign(ctx, newCtx);
+    }
 
     try {
-      let response;
-
-      switch (library) {
-        case "axios":
-          response = await axios.get(url, axiosOptions);
-          break;
-        case "ky":
-          response = await ky.get(url, kyOptions).json();
-          break;
-        case "fetch":
-          response = await fetch(url, fetchOptions);
-          response = await response.json();
-          break;
-        case "react-query":
-          if (!queryKey || !queryFn || !queryClient) {
-            throw new Error(
-              "queryKey, queryFn, and queryClient are required when using react-query"
-            );
-          }
-          response = await queryClient.fetchQuery<TData>({
-            queryKey,
-            queryFn,
-          });
-          break;
-        default:
-          throw new Error("Unsupported fetch library");
+      const response = await fetch(ctx.url, ctx.options);
+      const data = await response.json();
+      if (options.afterFetch) {
+        const newCtx = await options.afterFetch({
+          response,
+          data,
+        } as AfterFetchContext);
+        setData(newCtx.data);
+      } else {
+        setData(data);
       }
-
-      setData(response);
-    } catch (error) {
-      setError(error as Error);
+      setStatusCode(response.status);
+      onFetchResponseCallbacks.current.forEach(callback => callback(response));
+    } catch (err) {
+      const fetchError = err as Error;
+      const errorCtx: FetchErrorContext = { error: fetchError, data: null };
+      if (options.onFetchError) {
+        const newCtx = await options.onFetchError(errorCtx);
+        setData(newCtx.data);
+        setError(newCtx.error);
+      } else {
+        setError(fetchError);
+      }
+      if (options.updateDataOnError) {
+        setData(errorCtx.data);
+      }
+      onFetchErrorCallbacks.current.forEach(callback => callback(fetchError));
     } finally {
-      setLoading(false);
+      setIsFetching(false);
+      setCanAbort(false);
+      abortControllerRef.current = null;
     }
-  }, [
-    url,
-    library,
-    axiosOptions,
-    kyOptions,
-    fetchOptions,
-    queryKey,
-    queryFn,
-    queryClient,
-  ]);
+  };
+
+  const abort = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      setCanAbort(false);
+    }
+  };
+
+  const onFetchResponse = (callback: (response: Response) => void) => {
+    onFetchResponseCallbacks.current.push(callback);
+  };
+
+  const onFetchError = (callback: (error: Error) => void) => {
+    onFetchErrorCallbacks.current.push(callback);
+  };
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (options.immediate ?? true) {
+      execute();
+    }
+
+    return () => {
+      abort();
+    };
+  }, [url, options.refetch]);
+
+  useEffect(() => {
+    if (options.timeout) {
+      const timeoutId = setTimeout(() => {
+        if (canAbort) {
+          abort();
+        }
+      }, options.timeout);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [canAbort, options.timeout]);
 
   return {
     data,
-    loading,
+    isFetching,
     error,
-    refetch: fetchData,
+    statusCode,
+    canAbort,
+    execute,
+    abort,
+    onFetchResponse,
+    onFetchError,
+  };
+}
+
+interface CreateFetchOptions {
+  baseUrl?: string;
+  combination?: 'overwrite' | 'chain';
+  options?: FetchOptions;
+  fetchOptions?: RequestInit;
+}
+
+export function createFetch({
+  baseUrl = '',
+  combination = 'chain',
+  options: globalOptions = {},
+  fetchOptions: globalFetchOptions = {},
+}: CreateFetchOptions) {
+  return function useCustomFetch<T>(
+    url: string,
+    localOptions: FetchOptions = {}
+  ): UseFetchReturn<T> {
+    let combinedOptions: FetchOptions;
+
+    if (combination === 'overwrite') {
+      combinedOptions = { ...globalOptions, ...localOptions };
+    } else {
+      combinedOptions = {
+        ...globalOptions,
+        ...localOptions,
+        headers: {
+          ...globalOptions.headers,
+          ...localOptions.headers,
+        },
+      };
+    }
+
+    const fullUrl = baseUrl ? `${baseUrl}${url}` : url;
+
+    return useFetch<T>(fullUrl, { ...combinedOptions, ...globalFetchOptions });
   };
 }
