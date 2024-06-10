@@ -1,16 +1,10 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["node_modules/@types"],
     "noEmit": true,
     "declaration": true,
     "declarationMap": true,
@@ -29,24 +23,10 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@hooks/*": [
-        "./hooks/*"
-      ],
-      "@ui-components/*": [
-        "./components/UI/*"
-      ],
-      "@ui-containers": [
-        "./components/Containers/*"
-      ],
-      "@lib": [
-        "./lib/utils.ts"
-      ],
-      "@utils": [
-        "./utils/utils.ts"
-      ]
+      "@/*": ["./*"],
+      "@hooks/*": ["./hooks/*"],
+      "@lib": ["./lib/utils.ts"],
+      "@utils": ["./utils/utils.ts"]
     }
   },
   "include": [
@@ -55,11 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.config.js",
-    "middleware.js",
-    "docs/state/createGlobalState/page.mdx",
-    "hooks/Array/useArrayDifference/tsconfig.json"
+    "middleware.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
