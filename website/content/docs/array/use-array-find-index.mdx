@@ -64,20 +64,23 @@ export type UseArrayFindIndexPredicate<T> = (
 export function useArrayFindIndex<T>(
   list: T[],
   predicate: UseArrayFindIndexPredicate<T>
-): number
+): number;
 ```
 
 ## API Details
 
 ### Parameters
 
-`list` (`T[]`): The array to search.
-
-`predicate` (`UseArrayFindIndexPredicate<T>`): A function to test each element in the array, returning `true` for the element to include.
+| Property    | Type                            | Default                                              | Description                                                                                                      |
+| ----------- | ------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `list`      | `T[]`                           | -                                                    | The primary array to search.                                                                                     |
+| `predicate` | `UseArrayFindIndexPredicate<T>` | `(element: T, index: number, array: T[]) => boolean` | A function called for every element of the `list`, returning `true` for the element to include in the new array. |
 
 ### Returns
 
-`number`: The index of the first element in the array that passes the test. Otherwise, `-1`.
+| Property | Type     | Default | Description                                                                        |
+| -------- | -------- | ------- | ---------------------------------------------------------------------------------- |
+| `number` | `number` | -       | The index of the first element in the array that passes the test. Otherwise, `-1`. |
 
 ## Common Pitfals
 
