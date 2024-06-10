@@ -4,17 +4,7 @@
   "description": "Collection of React hooks and utilities",
   "private": true,
   "author": "changeelog",
-  "type": "commonjs",
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/changeelog/reactuse.git",
-    "directory": "packages/cli"
-  },
-  "exports": "./dist/index.js",
-  "bin": "./dist/index.js",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -97,7 +87,6 @@
     "jest-slow-test-reporter": "^1.0.0",
     "jsdom": "^24.1.0",
     "postcss": "^8.4.38",
-    "postcss-cinalc": "^10.0.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.6.2",
@@ -108,8 +97,5 @@
     "tsup": "^8.1.0",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
-  },
-  "workspaces": [
-    "./packages/*"
-  ]
+  }
 }
