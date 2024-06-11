@@ -1,13 +1,5 @@
-import { useState, useCallback } from 'react'
-
-/**
- * Function type for trunctaing a number
- *
- * @typedef {function} TruncateNumberFn
- * @param {number} number - The number to be truncated.
- * @returns {void}
- */
-type TruncateNumberFn = (number: number) => void
+import { useState, useCallback } from 'react';
+import type { TruncateNumberFn } from '../math';
 
 /**
  * Truncates a number by removing its fractional part
@@ -16,22 +8,22 @@ type TruncateNumberFn = (number: number) => void
  * @returns {[number, TruncateNumberFn]} An array containing the current truncated number and a function to update it.
  *
  * @example
- * const [trunctaedNumber, truncateNumber] = useTrunc();
+ * const [truncatedNumber, truncateNumber] = useTrunc();
  * console.log(truncatedNumber); // Output: 0
  * truncatedNumber(3.14);
  * console.log(truncatedNumber); // Output: 3
  */
 export function useTrunc(initialValue: number = 0): [number, TruncateNumberFn] {
-  const [result, setResult] = useState(initialValue)
+  const [result, setResult] = useState(initialValue);
   const truncateNumber: TruncateNumberFn = useCallback((number: number) => {
     if (typeof number !== 'number') {
       console.error(
         "useTrunc: Input must be a number otherwise it'll return NaN"
-      )
-      return
+      );
+      return;
     }
-    setResult(Math.trunc(number))
-  }, [])
+    setResult(Math.trunc(number));
+  }, []);
 
-  return [result, truncateNumber]
+  return [result, truncateNumber];
 }

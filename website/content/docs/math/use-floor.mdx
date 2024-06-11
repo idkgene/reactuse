@@ -1,0 +1,67 @@
+---
+title: useFloor
+description: Your first document
+---
+
+`useFloor` is a React hook that returns the largest integer less than or equal to the given number (`Math.floor`).
+
+## Usage
+
+```tsx
+import { useFloor } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const floored = useFloor(4.9); // Returns `4`
+  const flooredWithFn = useFloor(() => 7.8); // Returns `7`
+
+  return (
+    <div>
+      <p>Floored Value: {floored}</p>
+      <p>Floored Value (Function): {flooredWithFn}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare type Resolvable<T> = T | (() => T);
+
+export declare function resolveValue<T>(value: Resolvable<T>): T;
+
+export declare function useFloor(value: Resolvable<number>): number;
+```
+
+## Reference
+
+| Parameter | Type                 | Description                                                   |
+| --------- | -------------------- | ------------------------------------------------------------- |
+| `value`   | `Resolvable<number>` | The value or a function that returns a value to be evaluated. |
+
+### Returns
+
+| Type     | Description        |
+| -------- | ------------------ |
+| `number` | The floored value. |
+
+## Common Pitfalls
+
+### Incorrect Data Type
+
+Ensure that the value passed to `useFloor` is a number or a function returning a number.
+
+```tsx
+const floored = useFloor('4.9'); // Incorrect, should be a number
+```
+
+### Function Not Returning a Number
+
+When using a function as the input, make sure the function returns a valid number.
+
+```tsx
+const floored = useFloor(() => '7.8'); // Incorrect, should return a number
+```

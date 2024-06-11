@@ -3,62 +3,104 @@ title: useTrunc
 description: Your first document
 ---
 
-`useTrunc` is a React hook that truncates a number by removing its fractional part.
+`useTrunc` is a custom React hook that provides a truncated number and a function to update it by removing the fractional part of a given number. It uses the `Math.trunc()` function internally to perform the truncation operation.
 
 ## Usage
 
 ```tsx
-import { useAverage } from '#';
+import { useTrunc } from '#';
+import * as React from 'react';
 
-const list = [1, 2, 3];
-const averageValue = useAverage(list); // 2
+const Component = () => {
+  const [truncatedNumber, truncateNumber] = useTrunc();
+
+  return (
+    <div>
+      <p>Truncated number: {truncatedNumber}</p>
+      <button onClick={() => truncateNumber(3.14)}>Truncate 3.14</button>
+      <button onClick={() => truncateNumber(2.78)}>Truncate 2.78</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ```tsx
-import { useAverage } from '#';
+import { useTrunc } from '#';
+import * as React from 'react';
 
-const a = 1;
-const b = 3;
+const Component = () => {
+  const [truncatedNumber, truncateNumber] = useTrunc(5);
 
-const averageValue = useAverage(a, b); // 2
+  return (
+    <div>
+      <p>Truncated number: {truncatedNumber}</p>
+      <button onClick={() => truncateNumber(7.89)}>Truncate 7.89</button>
+      <button onClick={() => truncateNumber(4.23)}>Truncate 4.23</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ## Type Declarations
 
-```typescript
-type TruncateNumberFn = (number: number) => void;
+```ts
+export declare function useTrunc(
+  initialValue?: number
+): [number, TruncateNumberFn];
 
-export function useTrunc(initialValue: number = 0): [number, TruncateNumberFn];
+export declare type TruncateNumberFn = (number: number) => void;
 ```
 
-## API Details
+### Reference
 
-### Parameters
+#### useTrunc
 
-`initialValue` - The initial value of the truncated number. Defaults to 0.
+| Property       | Type     | Default | Description                                                            |
+| -------------- | -------- | ------- | ---------------------------------------------------------------------- |
+| `initialValue` | `number` | `0`     | (_Optional_) The initial value of the truncated number. Defaults to 0. |
 
 ### Returns
 
-An array containing the current truncated number and a function to update (truncate) it.
+| Type                         | Description                                                                   |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `[number, TruncateNumberFn]` | An array containing the current truncated number and a function to update it. |
+
+#### TruncateNumberFn
+
+| Property | Type     | Description                 |
+| -------- | -------- | --------------------------- |
+| `number` | `number` | The number to be truncated. |
 
 ## Common Pitfalls
 
-### Non-Numeric Input
+### Passing Non-Number Values
 
-Passing a non-numeric input to the truncating function will result in an error message and no update to the state.
+Ensure that the value passed to the `truncateNumber` function is a number. Passing non-number values will result in `NaN` (Not-a-Number) and an error message will be logged to the console.
 
 ```tsx
-const [truncatedNumber, truncateNumber] = useTrunc(0);
-truncateNumber('hello');
-// Logs: "useTrunc: Input must be a number otherwise it'll return NaN"
+truncateNumber('3.14'); // Incorrect usage
 ```
 
-### Empty Array
-
-Truncating an empty input will return the default value of `0`.
+**Solution**: Pass a number value to the `truncateNumber` function.
 
 ```tsx
-const [truncatedNumber, truncateNumber] = useTrunc(0);
-truncateNumber([]);
-// Returns 0
+truncateNumber(3.14);
+```
+
+### Forgetting to Destructure the Hook Return Value
+
+Make sure to destructure the return value of the `useTrunc` hook into a truncated number and a function to update it.
+
+```tsx
+const truncatedNumber = useTrunc(); // Incorrect usage
+```
+
+**Solution**: Destructure the return value of the `useTrunc` hook.
+
+```tsx
+const [truncatedNumber, truncateNumber] = useTrunc();
 ```

@@ -3,48 +3,65 @@ title: useAverage
 description: Your first document
 ---
 
-`useAverage` is a hook that calculates the average of a series of numbers provided as arguments or an array.
+`useAverage` is a custom React hook that calculates the average of the provided values.
 
 ## Usage
 
 ```tsx
 import { useAverage } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([10, 20, 30, 40, 50]);
+  const avg = useAverage(1, 2, 3, 4); // Returns `2.5`
+  const avgArray = useAverage([1, 2, 3, 4]); // Returns `2.5`
 
-  const average = useAverage(numbers);
-
-  return <div>Average: {average}</div>;
+  return (
+    <div>
+      <p>Average: {avg}</p>
+      <p>Average (Array): {avgArray}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-type ValueOrFunction<T> = T | (() => T);
+export declare type Resolvable<T> = T | (() => T);
 
-export function useAverage(...args: any[]): number;
+export declare function resolveValue<T>(value: Resolvable<T>): T;
+
+export declare function useAverage(...args: any[]): number;
 ```
 
-## API Details
+## Reference
 
-### Parameters
-
-`args`: Can be a series of numbers or an array of numbers. A function returning an array or numbers is also accepted.
+| Parameter | Type | Description                |
+| --------- | ---- | -------------------------- |
+| `args`    | `T`  | The values to be averaged. |
 
 ### Returns
 
-The average of the provided numbers.
+| Type     | Description        |
+| -------- | ------------------ |
+| `number` | The average value. |
 
 ## Common Pitfalls
 
-### Empty Array
+### Mixing Individual Values and Arrays
 
-When an empty array is provided, it will return `NaN`.
+Ensure that all individual values or a single array are passed as arguments consistently.
 
 ```tsx
-const average = useAverage([]);
-// Returns NaN due to division by zero.
+const avg = useAverage(1, [2, 3], 4); // Incorrect, should be consistent
+```
+
+### Non-Numeric Values
+
+Ensure that all provided values are numeric.
+
+```tsx
+const avg = useAverage(1, 2, 'three', 4); // Incorrect, "three" is not numeric
 ```

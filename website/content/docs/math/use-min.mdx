@@ -9,52 +9,85 @@ description: Your first document
 
 ```tsx
 import { useMin } from '#';
+import * as React from 'react';
 
 const Component = () => {
-  const minValue = useMin(1, 2, 3, 4, -1, 10);
+  const value1 = 5;
+  const value2 = 10;
+  const value3 = 3;
 
-  return <div>Min Value: {minValue}</div>;
+  const minValue = useMin(value1, value2, value3);
+
+  return (
+    <div>
+      <p>Minimum value: {minValue}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useMin } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([5, 10, 15, -5, 0]);
+  const values = [8, 2, 6, 4];
 
-  const minValue = useMin(() => numbers);
+  const minValueFromArray = useMin(values);
 
-  return <div>Min Value: {minValue}</div>;
+  return (
+    <div>
+      <p>Minimum value from array: {minValueFromArray}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-type ValueOrFunction<T> = T | (() => T);
+export declare function useMin(...args: any[]): number;
 
-export function useMin(...args: any[]): number
+export declare type Resolvable<T> = T | (() => T);
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### useMin
 
-`args`: Can be a series of numbers or an array of numbers. A function returning an array or numbers is also accepted.
+| Property | Type    | Default | Description                                |
+| -------- | ------- | ------- | ------------------------------------------ |
+| `args`   | `any[]` | -       | The values or arrays of values to compare. |
+
+#### Resolvable
+
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
 
 ### Returns
 
-The minimum value from the given arguments or an array of values.
+| Type     | Description                                                                                                                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `number` | The minimum value from the given arguments or array of values. If any of the provided values or functions are functions, they are called and their return values are evaluated. |
 
 ## Common Pitfalls
 
-### Empty Array
+### Passing Non-Numeric Values
 
-hen an empty array is provided, the hook will return `Infinity`.
+Ensure that the values passed to `useMin` are numeric or can be coerced to numbers. Passing non-numeric values may lead to unexpected behavior.
 
 ```tsx
-const minValue = useMin([]);
-// Returns Infinity due to no values to compare.
+const minValue = useMin(1, '2', true); // Incorrect usage
 ```
+
+**Solution**: Pass numeric values or values that can be coerced to numbers.
+
+```tsx
+const minValue = useMin(1, 2, 3);
+// or
+const minValue = useMin([1, 2, 3]);

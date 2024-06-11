@@ -8,33 +8,111 @@ The `logicOr` function (also available as `or` for convenience) performs a logic
 ## Usage
 
 ```tsx
-import { logicOr, or } from '#';
+import { logicOr } from '#';
+import * as React from 'react';
 
-const isTrue = true;
-const isFalsy = false;
+const Component = () => {
+  const value1 = true;
+  const value2 = false;
+  const value3 = () => false;
 
-const result1 = logicOr(isTrue, () => false, 10 > 5); // Returns true
-const result2 = logicOr(isFalsy, isFalsy, () => 'hello'); // Returns true ('hello' is truthy)
-const result3 = or(0, '', [1, 2].length === 0); // Returns false (all falsy)
+  const result = logicOr(value1, value2, value3);
 
-console.log(result1); // Output: true
-console.log(result2); // Output: true
-console.log(result3); // Output: false
+  return (
+    <div>
+      <p>Logical OR result: {result.toString()}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { logicOr } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value1, setValue1] = React.useState(false);
+  const [value2, setValue2] = React.useState(false);
+
+  const result = logicOr(value1, value2, () => true);
+
+  return (
+    <div>
+      <p>Logical OR result: {result.toString()}</p>
+      <button onClick={() => setValue1(true)}>Set value1 to true</button>
+      <button onClick={() => setValue2(true)}>Set value2 to true</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export declare function logicOr(...args: ValueOfFunction<any>[]): boolean;
-export { logicOr as or };
+export declare function logicOr(...args: Resolvable<any>[]): boolean;
+
+export declare type Resolvable<T> = T | (() => T);
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### logicOr
 
-`args`: A variable number of arguments, each being a value of any type or a function that returns a value.
+| Property | Type                | Default | Description                          |
+| :------- | :------------------ | :------ | :----------------------------------- |
+| `args`   | `Resolvable<any>[]` | -       | The values or functions to evaluate. |
+
+#### Resolvable
+
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
 
 ### Returns
 
-The resolved value of type `T`. If `value` is a function, its return value is returned; otherwise, value itself is returned.
+| Type      | Description                                                                                                                                                                                  |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `boolean` | Returns `true` if any of the evaluated values are true; otherwise, `false`. If any of the provided values or functions are functions, they are called and their return values are evaluated. |
+
+## Common Pitfalls
+
+### Passing Invalid Arguments
+
+Ensure that the arguments passed to `logicOr` are either values or functions that return values. Passing other data types may lead to unexpected behavior.
+
+```tsx
+const result = logicOr(true, 'false', null); // Incorrect usage
+```
+
+**Solution**: Pass values or functions that return values.
+
+```tsx
+const result = logicOr(true, false, () => true);
+```
+
+## Alias
+
+The `logicOr` function can also be aliased as `or`.
+
+```tsx
+import { or } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const value1 = true;
+  const value2 = false;
+  const value3 = () => false;
+
+  const result = or(value1, value2, value3);
+
+  return (
+    <div>
+      <p>Logical OR result: {result.toString()}</p>
+    </div>
+  );
+};
+```

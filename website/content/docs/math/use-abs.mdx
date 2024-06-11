@@ -3,41 +3,84 @@ title: useAbs
 description: Your first document
 ---
 
-The `useAbs` hook provides a convenient way to obtain and track the absolute value of a number within your React components. It handles both direct numeric values and functions that return numbers, dynamically updating the absolute value whenever the input changes.
+`useAbs` is a custom React hook that takes a number or a function that returns a number and computes it's absolute value. The hook returns the absolute value as a number.
 
 ## Usage
 
 ```tsx
-import { useState } from 'react';
 import { useAbs } from '#';
+import * as React from 'react';
 
-const Counter = () => {
-  const [count, setCount] = useState(0);
-  const absCount = useAbs(count);
+const Component = () => {
+  const value = -10;
+  const absValue = useAbs(value);
 
   return (
     <div>
-      <p>Count: {count}</p>
-      <p>Absolute Count: {absCount}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <p>
+        Absolute value of {value}: {absValue}
+      </p>
     </div>
   );
 };
+
+export default Component;
+```
+
+```tsx
+import { useAbs } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value, setValue] = React.useState(-5);
+
+  const absValue = useAbs(() => value);
+
+  return (
+    <div>
+      <p>
+        Absolute value of {value}: {absValue}
+      </p>
+      <button onClick={() => setValue(-10)}>Update value to -10</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ## Type Declarations
 
-````typescript
-export function useAbs(value: number | (() => number)): number;```
-````
+```typescript
+export declare function useAbs(value: number | (() => number)): number;
+```
 
-## API Details
+## Reference
 
-### Parameters
-
-`value`: The value or a function that returns a value to be evaluated.
+| Property | Type                     | Default | Description                                                   |
+| :------- | :----------------------- | :------ | :------------------------------------------------------------ |
+| `value`  | `number \| () => number` | -       | The value or a function that returns a value to be evaluated. |
 
 ### Returns
 
-Returns a `number` value representing the absolute value of the provided value.
+| Type     | Description                               |
+| :------- | :---------------------------------------- |
+| `number` | The absolute value of the provided value. |
+
+## Common Pitfalls
+
+### Passing a Non-Number value
+
+Ensure that the value passed to the `useAbs` is either a number or a function that returns a number. Passing other data types may lead to unexpected behavior.
+
+```tsx
+const absValue = useAbs('10'); // Incorrect usage
+```
+
+**Solution**: Pass a number or a function that returns a number.
+
+```tsx
+const absValue = useAbs(10);
+// or
+const absValue = useAbs(() => 10);
+```

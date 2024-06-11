@@ -1,0 +1,81 @@
+---
+title: useClamp
+description: Your first document
+---
+
+`useClamp` is a React hook that limits a numerical value to stay within a specified range.
+
+## Usage
+
+```tsx
+import { useClamp } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const clamped = useClamp(5, 0, 10); // Returns `5`
+  const clampedWithFn = useClamp(() => 15, 0, 10); // Returns `10`
+
+  return (
+    <div>
+      <p>Clamped Value: {clamped}</p>
+      <p>Clamped Value (Function): {clampedWithFn}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare type Resolvable<T> = T | (() => T);
+
+export declare function resolveValue<T>(value: Resolvable<T>): T;
+
+export declare function useClamp(
+  value: Resolvable<number>,
+  min: Resolvable<number>,
+  max: Resolvable<number>
+): number;
+```
+
+## Reference
+
+| Parameter | Type | Description              |
+| --------- | ---- | ------------------------ |
+| `value`   | `T`  | The value to be clamped. |
+| `min`     | `T`  | The minimum value.       |
+| `max`     | `T`  | The maximum value.       |
+
+### Returns
+
+| Type     | Description        |
+| -------- | ------------------ |
+| `number` | The floored value. |
+
+## Common Pitfalls
+
+### Incorrect Data Type
+
+Ensure that the values passed to `useClamp` are numbers or functions returning numbers.
+
+```tsx
+const clamped = useClamp('5', 0, 10); // Incorrect, should be a number
+```
+
+### Function Not Returning a Number
+
+When using a function as the input, make sure the function returns a valid number.
+
+```tsx
+const clamped = useClamp(() => '15', 0, 10); // Incorrect, should return a number
+```
+
+### Reversed Min and Max
+
+Ensure that the minimum value is less than or equal to the maximum value.
+
+```tsx
+const clamped = useClamp(5, 10, 0); // Incorrect, min should be less than max
+```

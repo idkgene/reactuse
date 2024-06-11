@@ -8,34 +8,107 @@ The `logicNot` function (also available as `not` for convenience) performs a log
 ## Usage
 
 ```tsx
-import { logicNot, not } from '#';
+import { logicNot } from '#';
+import * as React from 'react';
 
-const isTrue = true;
+const Component = () => {
+  const value = true;
 
-const result1 = logicNot(isTrue); // Returns false
-const result2 = logicNot(() => false); // Returns true
-const result3 = not(0); // Returns true
-const result4 = not('hello'); // Returns false
+  const result = logicNot(value);
 
-console.log(result1); // Output: false
-console.log(result2); // Output: true
-console.log(result3); // Output: true
-console.log(result4); // Output: false
+  return (
+    <div>
+      <p>Logical NOT result: {result.toString()}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { logicNot } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value, setValue] = React.useState(false);
+
+  const result = logicNot(() => value);
+
+  return (
+    <div>
+      <p>Logical NOT result: {result.toString()}</p>
+      <button onClick={() => setValue(true)}>Set value to true</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export declare function logicNot(v: ValueOfFunction<any>): boolean;
-export { logicNot as not };
+export declare function logicNot(v: Resolvable<any>): boolean;
+
+export declare type Resolvable<T> = T | (() => T);
 ```
 
 ## API Details
 
-### Parameters
+#### logicNot
 
-`v`: The value or a function that returns a value to be evaluated.
+| Property | Type              | Default | Description                                   |
+| -------- | ----------------- | ------- | --------------------------------------------- |
+| `v`      | `Resolvable<any>` | -       | The value or a function that returns a value. |
+
+#### Resolvable
+
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
 
 ### Returns
 
-Returns a `boolean` value indicating whether the provided value or function evaluates to `false`.
+| Type      | Description                                 |
+| :-------- | :------------------------------------------ |
+| `boolean` | The logical negation of the provided value. |
+
+## Common Pitfalls
+
+### Passing Invalid Argument
+
+Ensure that the argument passed to `logicNot` is either a value or a function that returns a value. Passing other data types may lead to unexpected behavior.
+
+```tsx
+const result = logicNot(null); // Incorrect usage
+```
+
+**Solution**: Pass a value or a function that returns a value.
+
+```tsx
+const result = logicNot(true);
+// or
+const result = logicNot(() => false);
+```
+
+## Alias
+
+The `logicNot` function can also be aliased as `not`.
+
+```tsx
+import { not } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const value = true;
+
+  const result = not(value);
+
+  return (
+    <div>
+      <p>Logical NOT result: {result.toString()}</p>
+    </div>
+  );
+};
+```

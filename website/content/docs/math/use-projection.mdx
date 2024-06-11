@@ -9,90 +9,135 @@ description: Your first document
 
 ```tsx
 import { useProjection } from '#';
+import * as React from 'react';
 
 const Component = () => {
-  const projectedValue = useProjection(75, [0, 100], [0, 10]);
+  const inputValue = 0.5;
+  const fromDomain: [number, number] = [0, 1];
+  const toDomain: [number, number] = [0, 100];
 
-  return <div>Projected Value: {projectedValue}</div>;
+  const projectedValue = useProjection(inputValue, fromDomain, toDomain);
+
+  return (
+    <div>
+      <p>Input value: {inputValue}</p>
+      <p>Projected value: {projectedValue}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ```tsx
-import { useProjection, ProjectorFunction } from '#';
-
-const customProjector: ProjectorFunction<number, number> = (
-  value,
-  fromMin,
-  fromMax,
-  toMin,
-  toMax
-) => {
-  const logFrom = Math.log(fromMax) - Math.log(fromMin);
-  const logValue = Math.log(value) - Math.log(fromMin);
-  return (logValue / logFrom) * (toMax - toMin) + toMin;
-};
+import { useProjection } from '#';
+import * as React from 'react';
 
 const Component = () => {
-  const projectedValue = useProjection(10, [1, 100], [0, 10], customProjector);
+  const [inputValue, setInputValue] = React.useState(0.25);
+  const [fromDomain, setFromDomain] = React.useState<[number, number]>([0, 1]);
+  const [toDomain, setToDomain] = React.useState<[number, number]>([0, 200]);
 
-  return <div>Custom Projected Value: {projectedValue}</div>;
+  const projectedValue = useProjection(
+    () => inputValue,
+    fromDomain,
+    () => toDomain
+  );
+
+  return (
+    <div>
+      <p>Input value: {inputValue}</p>
+      <p>Projected value: {projectedValue}</p>
+      <button onClick={() => setInputValue(0.75)}>Update input value</button>
+      <button onClick={() => setFromDomain([-1, 1])}>Update from domain</button>
+      <button onClick={() => setToDomain([100, 300])}>Update to domain</button>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-type ValueOfFunction<T> = T | (() => T);
+export declare function useProjection(
+  input: Resolvable<number>,
+  fromDomain: Resolvable<readonly [number, number]>,
+  toDomain: Resolvable<readonly [number, number]>,
+  projector?: ProjectorFunction<number, number>
+): number;
 
-export type ProjectorFunction<T, U> = (
+export declare type Resolvable<T> = T | (() => T);
+
+export declare type ProjectorFunction<I, O> = (
   value: T,
   fromMin: T,
   fromMax: T,
   toMin: U,
   toMax: U
 ) => U;
-
-export function defaultProjector(
-  value: number,
-  fromMin: number,
-  fromMax: number,
-  toMin: number,
-  toMax: number
-): number
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### useProjection
 
-`input` - The input value to project. Can be a number or a function returning a number.
+| Property     | Type                                    | Default            | Description                                                                     |
+| :----------- | :-------------------------------------- | :----------------- | :------------------------------------------------------------------------------ |
+| `input`      | `Resolvable<number>`                    | -                  | The input value to project.                                                     |
+| `fromDomain` | `Resolvable<readonly [number, number]>` | -                  | The input range [min, max].                                                     |
+| `toDomain`   | `Resolvable<readonly [number, number]>` | -                  | The output range [min, max].                                                    |
+| `projector`  | `ProjectorFunction<number, number>`     | `defaultProjector` | (_Optional_) The function to project the value. Defaults to `defaultProjector`. |
 
-`fromDomain` - The original range of the input value (as a tuple of two numbers). Can be an array or a function returning an array.
+#### Resolvable
 
-`toDomain` - The target range to project the value to (as a tuple of two numbers). Can be an array or a function returning an array.
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
 
-`projector` - An optional projection function to use. Defaults to `defaultProjector`.
+#### ProjectorFunction
+
+| Property  | Type | Description                            |
+| :-------- | :--- | :------------------------------------- |
+| `value`   | `T`  | The input value to project.            |
+| `fromMin` | `T`  | The minimum value of the input range.  |
+| `fromMax` | `T`  | The maximum value of the input range.  |
+| `toMin`   | `U`  | The minimum value of the output range. |
+| `toMax`   | `U`  | The maximum value of the output range. |
 
 ### Returns
 
-The projected value.
+| Type     | Description                              |
+| :------- | :--------------------------------------- |
+| `number` | The projected value ni the output range. |
 
 ## Common Pitfalls
 
-### Incorrect Domain Ranges
+### Passing Invalid Input Range
 
-Ensure that the input value's original range (`fromDomain`) is valid and that `fromMin` is not equal to `fromMax`.
+Ensure that the `fromDomain` represents a valid range where the minimum value is less than the maximum value. Passing an invalid range may lead to unexpected behavior.
 
 ```tsx
-const projectedValue = useProjection(75, [100, 100], [0, 10]);
-// Returns NaN due to division by zero.
+const projectedValue = useProjection(0.5, [1, 0], [0, 100]); // Incorrect usage
 ```
 
-### Inconsistent Domains
-
-Make sure that both `fromDomain` and `toDomain` are valid ranges.
+**Solution**: Pass a valid input range where the minimum value is less than the maximum value.
 
 ```tsx
-const projectedValue = useProjection(75, [0, 100], [10, 10]);
-// Returns NaN due to division by zero.
+const projectedValue = useProjection(0.5, [0, 1], [0, 100]);
+```
+
+### Passing Invalid Output Range
+
+Ensure that the `toDomain` represents a valid range where the minimum value is less than the maximum value. Passing an invalid range may lead to unexpected behavior.
+
+```tsx
+const projectedValue = useProjection(0.5, [0, 1], [100, 0]); // Incorrect usage
+```
+
+**Solution**: Pass a valid output range where the minimum value is less than the maximum value.
+
+```tsx
+const projectedValue = useProjection(0.5, [0, 1], [0, 100]);
 ```

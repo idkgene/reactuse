@@ -3,65 +3,101 @@ title: useSum
 description: Your first document
 ---
 
-`useSum` is a React hook that calculates the sum of a list of numbers.
+`useSum` is a custom React hook that takes an array of numbers and calculates the sum of those numbers. It returns the calculated sum as a number.
 
 ## Usage
 
 ```tsx
 import { useSum } from '#';
+import * as React from 'react';
 
 const Component = () => {
   const numbers = [1, 2, 3, 4, 5];
   const sum = useSum(numbers);
 
-  return <div>Sum: {sum}</div>;
+  return (
+    <div>
+      <p>Sum: {sum}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ```tsx
-import { useAverage } from '#';
+import { useSum } from '#';
+import * as React from 'react';
 
-const a = 1;
-const b = 3;
+const Component = () => {
+  const [numbers, setNumbers] = React.useState([10, 20, 30]);
+  const sum = useSum(numbers);
 
-const averageValue = useAverage(a, b); // 2
+  const handleAddNumber = () => {
+    setNumbers([...numbers, 40]);
+  };
+
+  return (
+    <div>
+      <p>Sum: {sum}</p>
+      <button onClick={handleAddNumber}>Add Number</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ## Type Declarations
 
-```typescript
-/**
- * Math.abs
- */
-export const useSum = (array: number[]): number
+```ts
+export declare function useSum(array: number[]): number;
 ```
 
-## API Details
+## Reference
 
-### Parameters
-
-`array` - An array of numbers to calculate the sum of.
+| Property | Type       | Default | Description                                  |
+| -------- | ---------- | ------- | -------------------------------------------- |
+| `array`  | `number[]` | -       | An array of numbers to calculate the sum of. |
 
 ### Returns
 
-The sum of the numbers in the array.
+| Type     | Description                                |
+| -------- | ------------------------------------------ |
+| `number` | The sum of the numbers in the input array. |
+|          |
 
 ## Common Pitfalls
 
-### Non-Numeric Input
+### Passing Non-Array Input
 
-Ensure that the input array contains only numeric values.
+Ensure that the input passed to `useSum` is an array. Passing a non-array value will result in an error message being logged to the console.
 
 ```tsx
-const sum = useSum([1, 2, 'three', 4]);
-// Logs: 'useSum: Array must contain only numbers'
+const sum = useSum(123); // Incorrect usage
 ```
 
-### Empty Array
+**Solution**: Pass an array of numbers to useSum.
+
+```tsx
+const numbers = [1, 2, 3];
+const sum = useSum(numbers);
+```
+
+### Passing Array with Non-Number Elements
 
 An empty array will return a sum of `0`.
 
+Make sure that the input array contains only numbers. If the array contains non-number elements, an error message will be logged to the console.
+
 ```tsx
-const sum = useSum([]);
-// Returns 0
+const numbers = [1, '2', 3]; // Incorrect usage
+const sum = useSum(numbers);
+```
+
+**Solution**: Ensure that the input array contains only numbers.
+
+```tsx
+const numbers = [1, 2, 3];
+const sum = useSum(numbers);
 ```

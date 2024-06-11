@@ -9,52 +9,86 @@ description: Your first document
 
 ```tsx
 import { useMax } from '#';
+import * as React from 'react';
 
 const Component = () => {
-  const maxValue = useMax(1, 2, 3, 4, 5);
+  const value1 = 5;
+  const value2 = 10;
+  const value3 = 3;
 
-  return <div>Max Value: {maxValue}</div>;
+  const maxValue = useMax(value1, value2, value3);
+
+  return (
+    <div>
+      <p>Maximum value: {maxValue}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useMax } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+  const values = [8, 2, 6, 4];
 
-  const maxValue = useMax(() => numbers);
+  const maxValueFromArray = useMax(values);
 
-  return <div>Max Value: {maxValue}</div>;
+  return (
+    <div>
+      <p>Maximum value from array: {maxValueFromArray}</p>
+    </div>
+  );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-type ValueOrFunction<T> = T | (() => T);
+export declare function useMax(...args: any[]): number;
 
-export function useMax(...args: any[]): number;
+export declare type Resolvable<T> = T | (() => T);
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### useMax
 
-`args`: Can be a series of numbers or an array of numbers. A function returning an array or numbers is also accepted.
+| Property | Type    | Default | Description                                |
+| -------- | ------- | ------- | ------------------------------------------ |
+| `args`   | `any[]` | -       | The values or arrays of values to compare. |
+
+#### Resolvable
+
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
 
 ### Returns
 
-The maximum value from the given arguments or an array of values.
+| Type     | Description                                                                                                                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `number` | The maximum value from the given arguments or array of values. If any of the provided values or functions are functions, they are called and their return values are evaluated. |
 
 ## Common Pitfalls
 
-### Empty Array
+### Passing Non-Numeric Values
 
-hen an empty array is provided, the hook will return `-Infinity`.
+Ensure that the values passed to `useMax` are numeric or can be coerced to numbers. Passing non-numeric values may lead to unexpected behavior.
 
 ```tsx
-const maxValue = useMax([]);
-// Returns -Infinity due to no values to compare.
+const maxValue = useMax(1, '2', true); // Incorrect usage
+```
+
+**Solution**: Pass numeric values or values that can be coerced to numbers.
+
+```tsx
+const maxValue = useMax(1, 2, 3);
+// or
+const maxValue = useMax([1, 2, 3]);
 ```

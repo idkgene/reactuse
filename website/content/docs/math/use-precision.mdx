@@ -9,71 +9,104 @@ description: Your first document
 
 ```tsx
 import { usePrecision } from '#';
+import * as React from 'react';
 
 const Component = () => {
-  const formattedValue = usePrecision({ precision: 2, value: 3.14159 });
-
-  return <div>Formatted Value: {formattedValue}</div>;
-};
-```
-
-```tsx
-import { usePrecision } from '#';
-import { useState } from 'react';
-
-const Component = () => {
-  const [precision, setPrecision] = useState(2);
-  const [value, setValue] = useState(3.14159);
+  const value = 3.14159;
+  const precision = 2;
 
   const formattedValue = usePrecision({ precision, value });
 
   return (
     <div>
-      Formatted Value: {formattedValue}
-      <button onClick={() => setPrecision(4)}>Increase Precision</button>
-      <button onClick={() => setValue(2.71828)}>Change Value</button>
+      <p>Original value: {value}</p>
+      <p>Formatted value: {formattedValue}</p>
     </div>
   );
 };
+
+export default Component;
+```
+
+```tsx
+import { usePrecision } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value, setValue] = React.useState(1.23456);
+  const [precision, setPrecision] = React.useState(3);
+
+  const formattedValue = usePrecision({ precision, value });
+
+  return (
+    <div>
+      <p>Original value: {value}</p>
+      <p>Formatted value: {formattedValue}</p>
+      <button onClick={() => setValue(4.56789)}>Update value</button>
+      <button onClick={() => setPrecision(1)}>Update precision</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-type PrecisionOptions = {
+export declare function usePrecision(
+  options: PrecisionOptions
+): UsePrecisionReturn;
+
+export declare type PrecisionOptions = {
   precision: number;
   value: number;
 };
 
-type FormattedValue = number;
+export declare type FormattedValue = number;
 
-type UsePrecisionReturn = FormattedValue;
-
-export function usePrecision({
-  precision,
-  value,
-}: PrecisionOptions): UsePrecisionReturn;
+export declare type UsePrecisionReturn = FormattedValue;
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### usePrecision
 
-`precision`: The number of decimal places to round the value to.
+| Property  | Type               | Default | Description                                             |
+| :-------- | :----------------- | :------ | :------------------------------------------------------ |
+| `options` | `PrecisionOptions` | -       | An object containing the precision and value to format. |
 
-`value`: The number to format.
+#### PrecisionOptions
+
+| Property    | Type     | Default | Description                                         |
+| :---------- | :------- | :------ | :-------------------------------------------------- |
+| `precision` | `number` | -       | The number of decimal places to round the value to. |
+| `value`     | `number` | -       | The number to format.                               |
+
+#### FormattedValue
+
+| Type     | Description                                                                |
+| :------- | :------------------------------------------------------------------------- |
+| `number` | The formatted value, which is a number rounded to the specified precision. |
 
 ### Returns
 
-The formatted value.
+| Type     | Description                                                                |
+| :------- | :------------------------------------------------------------------------- |
+| `number` | The formatted value, which is a number rounded to the specified precision. |
 
 ## Common Pitfalls
 
 ### Invalid Precision
 
-If the precision is negative, the hook will round without decimals.
+Ensure that the `precision` passed to `usePrecision` is a non-negative integer. Passing a negative or non-integer value may lead to unexpected behavior. Ensure
 
 ```tsx
-const formattedValue = usePrecision({ precision: -1, value: 3.14159 });
-// Returns 3
+const formattedValue = usePrecision({ precision: -1, value: 3.14159 }); // Incorrect usage
+```
+
+**Solution**: Pass a non-negative integer as the precision.
+
+```tsx
+const formattedValue = usePrecision({ precision: 2, value: 3.14159 });
 ```

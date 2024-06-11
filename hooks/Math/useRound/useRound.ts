@@ -1,13 +1,5 @@
-import { useState, useCallback } from 'react'
-
-/**
- * Function type for rounding a number.
- *
- * @typedef {Function} RoundNumberFn
- * @param {number} number - The number to be rounded.
- * @returns {void}
- */
-type RoundNumberFn = (number: number) => void
+import { useState, useCallback } from 'react';
+import type { RoundNumberFn } from '../math';
 
 /**
  * Rounds a number to the nearest integer
@@ -22,17 +14,17 @@ type RoundNumberFn = (number: number) => void
  * console.log(roundedNumber); // Output: 4
  */
 export function useRound(initialValue: number = 0): [number, RoundNumberFn] {
-  const [result, setResult] = useState<number>(initialValue)
+  const [result, setResult] = useState<number>(initialValue);
 
   const roundNumber: RoundNumberFn = useCallback((number: number) => {
     if (typeof number !== 'number') {
       console.error(
         "useRound: Input must be a number otherwise it'll return NaN"
-      )
-      return
+      );
+      return;
     }
-    setResult(Math.round(number))
-  }, [])
+    setResult(Math.round(number));
+  }, []);
 
-  return [result, roundNumber]
+  return [result, roundNumber];
 }

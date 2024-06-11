@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { useProjection, ProjectorFunction } from '../useProjection';
+import { useProjection } from '../useProjection';
+import { ProjectorFunction } from '../../math';
 
 const customProjector: ProjectorFunction<number, number> = (
   value,
@@ -89,7 +90,7 @@ describe('useProjection', () => {
     expect(projector).toHaveBeenCalledTimes(1);
   });
 
-  test('should handle fromDomain as a function', () => {
+  test('should handle fromDomain as a function returning an array', () => {
     const fromDomainFn = () => [0, 10] as const;
     const { result } = renderHook(() =>
       useProjection(5, fromDomainFn, [0, 100])
@@ -97,26 +98,40 @@ describe('useProjection', () => {
     expect(result.current).toBe(50);
   });
 
-  test('should handle toDomain as an array', () => {
-    const { result } = renderHook(() => useProjection(5, [0, 10], [0, 100]));
-    expect(result.current).toBe(50);
-  });
-
-  test('should handle toDomain as a function', () => {
+  test('should handle toDomain as a function returning an array', () => {
     const toDomainFn = () => [0, 100] as const;
     const { result } = renderHook(() => useProjection(5, [0, 10], toDomainFn));
     expect(result.current).toBe(50);
   });
 
-  test('should use default projector', () => {
+  test('should handle both fromDomain and toDomain as functions returning arrays', () => {
+    const fromDomainFn = () => [0, 10] as const;
+    const toDomainFn = () => [0, 100] as const;
+    const { result } = renderHook(() =>
+      useProjection(5, fromDomainFn, toDomainFn)
+    );
+    expect(result.current).toBe(50);
+  });
+
+  test('should use the default projector when no custom projector is provided', () => {
     const { result } = renderHook(() => useProjection(5, [0, 10], [0, 100]));
     expect(result.current).toBe(50);
   });
 
-  test('should project input value using custom projector', () => {
+  test('should project input value using a custom projector', () => {
     const { result } = renderHook(() =>
       useProjection(5, [0, 10], [0, 100], customProjector)
     );
     expect(result.current).toBe(50);
   });
+
+  it('should handle fromDomain as an array', () => {
+    const { result } = renderHook(() => useProjection(5, [0, 10], [0, 100]));
+    expect(result.current).toBe(50);
+  });
+
+  it('should handle toDomain as an array', () => {
+  const { result } = renderHook(() => useProjection(5, [0, 10], [0, 100]));
+  expect(result.current).toBe(50);
+});
 });

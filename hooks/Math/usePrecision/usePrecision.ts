@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react';
+import type {
+  PrecisionOptions,
+  FormattedValue,
+  UsePrecisionReturn,
+} from '../math';
 
-type PrecisionOptions = {
-  precision: number;
-  value: number;
-};
-
-type FormattedValue = number;
-
+/**
+ * Formats a number to a specified precision.
+ *
+ * @param {number} value - The number to format.
+ * @param {number} precision - The number of decimal places to round the value to.
+ * @returns {FormattedValue} The formatted value.
+ */
 const formatNumber = (value: number, precision: number): FormattedValue => {
   return Number(value.toFixed(precision));
 };
-
-type UsePrecisionReturn = FormattedValue;
 
 /**
  * A hook that formats a number to a specified precision.
@@ -22,7 +25,7 @@ type UsePrecisionReturn = FormattedValue;
  * @param {PrecisionOptions} options - An object containing the precision and value to format.
  * @param {number} options.precision - The number of decimal places to round the value to.
  * @param {number} options.value - The number to format.
- * @returns {number} The formatted value.
+ * @returns {UsePrecisionReturn} The formatted value.
  *
  * @example
  * const formattedValue = usePrecision({ precision: 2, value: 3.14159 });
