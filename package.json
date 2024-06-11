@@ -4,7 +4,7 @@
   "description": "Collection of React hooks and utilities",
   "private": true,
   "author": "changeelog",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

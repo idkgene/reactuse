@@ -43,3 +43,7 @@ next-env.d.ts
 # Million Lint
 .million
 dist/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
