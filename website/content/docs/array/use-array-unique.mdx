@@ -1,6 +1,6 @@
 ---
 title: useArrayUnique
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 The `useArrayUnique` hook provides a memoized function to extract unique elements from an array. It allows for custom comparison logic, making it versatile for various data structures and comparison needs.
@@ -9,10 +9,10 @@ The `useArrayUnique` hook provides a memoized function to extract unique element
 
 ```tsx
 import { useArrayUnique } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [items, setItems] = useState([
+  const [items, setItems] = React.useState([
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 1, name: 'Alice' }, // Duplicate ID
@@ -29,6 +29,8 @@ const Component = () => {
     </ul>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
@@ -40,9 +42,7 @@ export function useArrayUnique<T>(
 ): T[];
 ```
 
-## API Details
-
-### Parameters
+## Reference
 
 | Property    | Type                                  | Default | Description                                                             |
 | ----------- | ------------------------------------- | ------- | ----------------------------------------------------------------------- |

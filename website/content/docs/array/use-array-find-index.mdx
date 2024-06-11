@@ -1,6 +1,6 @@
 ---
 title: useArrayFindIndex
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 A hook providing a memoized version of the `Array.findIndex` method for React, finding the index of the first element that passes the specified predicate function.
@@ -9,16 +9,16 @@ A hook providing a memoized version of the `Array.findIndex` method for React, f
 
 ```tsx
 import { useArrayFindIndex } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [users, setUsers] = useState([
+  const [users, setUsers] = React.useState([
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
   ]);
 
-  const findUserIndexById = user => user.id === 2;
+  const findUserIndexById = (user: { id: number }) => user.id === 2;
 
   const userIndex = useArrayFindIndex(users, findUserIndexById);
 
@@ -28,19 +28,21 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayFindIndex } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [books, setBooks] = useState([
+  const [books, setBooks] = React.useState([
     { title: 'Book A', author: 'Author A' },
     { title: 'Book B', author: 'Author B' },
   ]);
 
-  const findBookByTitle = book => book.title === 'Book B';
+  const findBookByTitle = (book: { title: string }) => book.title === 'Book B';
 
   const bookIndex = useArrayFindIndex(books, findBookByTitle);
 
@@ -50,26 +52,26 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export type UseArrayFindIndexPredicate<T> = (
+export declare type UseArrayFindIndexPredicate<T> = (
   element: T,
   index: number,
   array: T[]
 ) => boolean;
 
-export function useArrayFindIndex<T>(
+export declare function useArrayFindIndex<T>(
   list: T[],
   predicate: UseArrayFindIndexPredicate<T>
 ): number;
 ```
 
-## API Details
-
-### Parameters
+## Reference
 
 | Property    | Type                            | Default                                              | Description                                                                                                      |
 | ----------- | ------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -78,9 +80,9 @@ export function useArrayFindIndex<T>(
 
 ### Returns
 
-| Property | Type     | Default | Description                                                                        |
-| -------- | -------- | ------- | ---------------------------------------------------------------------------------- |
-| `number` | `number` | -       | The index of the first element in the array that passes the test. Otherwise, `-1`. |
+| Type     | Description                                                                        |
+| -------- | ---------------------------------------------------------------------------------- |
+| `number` | The index of the first element in the array that passes the test. Otherwise, `-1`. |
 
 ## Common Pitfals
 

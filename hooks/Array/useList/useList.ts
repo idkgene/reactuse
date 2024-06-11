@@ -2,10 +2,14 @@ import * as React from 'react'
 
 /**
  * A hook providing a list and utility functions for managing it.
+ * This hook simplifies common operations on arrays, providing a more streamlined way to manipulate lists.
  *
  * @template T - The type of elements in the list.
  * @param {T[]} [defaultList=[]] - The initial list of elements.
- * @returns {[T[], { set: (l: T[]) => void, push: (element: T) => void, removeAt: (index: number) => void, insertAt: (index: number, element: T) => void, updateAt: (index: number, element: T) => void, clear: () => void }]} An array containing the list and an object with utility functions to manage the list.
+ * @returns {[T[], { set: (l: T[]) => void, push: (element: T) => void, removeAt: (index: number) => void, insertAt: (index: number, element: T) => void, updateAt: (index: number, element: T) => void, clear: () => void }]}
+ * An array containing:
+ *  - The current state of the list.
+ *  - An object containing utility functions to manage the list.
  *
  * @example
  * const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList<number>([1, 2, 3]);
@@ -29,7 +33,7 @@ export function useList<T>(defaultList: T[] = []): [
   const [list, setList] = React.useState(defaultList);
 
   /**
-   * Sets a new list.
+   * Sets a new list, replacing the existing one.
    *
    * @param {T[]} l - The new array to set as the list.
    */

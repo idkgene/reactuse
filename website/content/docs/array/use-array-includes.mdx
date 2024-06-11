@@ -1,6 +1,6 @@
 ---
 title: useArrayIncludes
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 A hook providing a memoized version of the `Array.includes` method for React, determining if a value is present in an array.
@@ -9,10 +9,10 @@ A hook providing a memoized version of the `Array.includes` method for React, de
 
 ```tsx
 import { useArrayIncludes } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+  const [numbers, setNumbers] = React.useState([1, 2, 3, 4, 5]);
 
   const includesNumber = useArrayIncludes(numbers, 3);
 
@@ -22,38 +22,19 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayIncludes } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [items, setItems] = useState([
-    { id: 1, name: 'item1' },
-    { id: 2, name: 'item2' },
-  ]);
+  const [objects, setObjects] = React.useState([{ key: 'a' }, { key: 'b' }]);
 
-  const options = { comparator: 'id' };
-
-  const includesItem = useArrayIncludes(items, 2, options);
-
-  return (
-    <div>
-      <p>Includes item with ID 2: {includesItem ? 'Yes' : 'No'}</p>
-    </div>
-  );
-};
-```
-
-```tsx
-import { useArrayIncludes } from '#';
-import { useState } from 'react';
-
-const Component = () => {
-  const [objects, setObjects] = useState([{ key: 'a' }, { key: 'b' }]);
-
-  const customComparator = (element, value) => element.key === value;
+  const customComparator = (element: { key: any }, value: any) =>
+    element.key === value;
 
   const includesObject = useArrayIncludes(objects, 'a', {
     comparator: customComparator,
@@ -65,38 +46,54 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export interface UseArrayIncludesOptions<T, V> {
+export declare interface UseArrayIncludesOptions<T, V> {
   fromIndex?: number;
   comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
 }
 
-export function useArrayIncludes<T, V = T>(
+export declare type UseArrayIncludesComparatorFn<T extends object, V> = (
+  element: T,
+  value: V,
+  index: number,
+  array: T[]
+) => boolean;
+
+export declare function useArrayIncludes<T, V = T>(
   list: T[],
   value: V,
   options?: UseArrayIncludesOptions<T, V>
 ): boolean;
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### useArrayIncludes
 
-| Property  | Type                            | Default | Description                        |
-| --------- | ------------------------------- | ------- | ---------------------------------- |
-| `list`    | `T[]`                           | -       | The primary array to search.       |
-| `value`   | `V`                             | -       | The value to search for.           |
-| `options` | `UseArrayIncludesOptions<T, V>` | -       | Additional options for the search. |
+| Property  | Type                            | Default | Description                                                                             |
+| --------- | ------------------------------- | ------- | --------------------------------------------------------------------------------------- |
+| `list`    | `T[]`                           | -       | The primary array to search.                                                            |
+| `value`   | `V`                             | -       | The value to search for.                                                                |
+| `options` | `UseArrayIncludesOptions<T, V>` | -       | (_Optional_) Additional options for the search, including `fromIndex` and `comparator`. |
+
+#### UseArrayIncludesOptions
+
+| Property     | Type                                            | Default | Description                                                  |
+| ------------ | ----------------------------------------------- | ------- | ------------------------------------------------------------ |
+| `fromIndex`  | `number`                                        | `0`     | (_Optional_) The index to start searching from.              |
+| `comparator` | `UseArrayIncludesComparatorFn<T, V> \| keyof T` | -       | (_Optional_) The comparator function or a key to compare by. |
 
 ### Returns
 
-| Property  | Type      | Default | Description                                                     |
-| --------- | --------- | ------- | --------------------------------------------------------------- |
-| `boolean` | `boolean` | -       | `true` if the `value` is found in the array, otherwise `false`. |
+| Type      | Description                                                     |
+| --------- | --------------------------------------------------------------- |
+| `boolean` | `true` if the `value` is found in the array, otherwise `false`. |
 
 ## Common Pitfals
 

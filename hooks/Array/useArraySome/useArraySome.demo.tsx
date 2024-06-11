@@ -7,7 +7,7 @@ const ArraySomeDemo = () => {
 
   const hasEvenNumber = useArraySome(numbers, number => number % 2 === 0);
 
-  const addNumber = newNumber => {
+  const addNumber = (newNumber: number) => {
     setNumbers([...numbers, newNumber]);
   };
 

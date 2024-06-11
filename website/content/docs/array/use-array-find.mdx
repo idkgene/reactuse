@@ -1,6 +1,6 @@
 ---
 title: useArrayFind
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 A hook providing a memoized version of the `Array.find` method for React, finding the first element that passes the specified predicate function.
@@ -9,16 +9,16 @@ A hook providing a memoized version of the `Array.find` method for React, findin
 
 ```tsx
 import { useArrayFind } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [users, setUsers] = useState([
+  const [users, setUsers] = React.useState([
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
   ]);
 
-  const findUserById = user => user.id === 2;
+  const findUserById = (user: { id: number }) => user.id === 2;
 
   const user = useArrayFind(users, findUserById);
 
@@ -28,20 +28,22 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayFind } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [books, setBooks] = useState([
+  const [books, setBooks] = React.useState([
     { title: 'Book A', author: 'Author A' },
     { title: 'Book B', author: 'Author B' },
     { title: 'Book C', author: 'Author A' },
   ]);
 
-  const findBookByTitle = book => book.title === 'Book B';
+  const findBookByTitle = (book: { title: string }) => book.title === 'Book B';
 
   const book = useArrayFind(books, findBookByTitle);
 
@@ -51,36 +53,37 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export type UseArrayFindPredicate<T> = (
+export declare type UseArrayFindPredicate<T> = (
   element: T,
   index: number,
   array: T[]
 ) => boolean;
 
-export function useArrayFind<T>(
+export declare function useArrayFind<T>(
   list: T[],
   predicate: UseArrayFindPredicate<T>
 ): T | undefined;
 ```
-## API Details
 
-### Parameters
+## Reference
 
-| Property    | Type                           | Default                                              | Description                                                                                                      |
-| ----------- | ------------------------------ | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `list`      | `T[]`                          | -                                                    | The primary array to search.                                                                                     |
+| Property    | Type                       | Default                                              | Description                                                                                                      |
+| ----------- | -------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `list`      | `T[]`                      | -                                                    | The primary array to search.                                                                                     |
 | `predicate` | `UseArrayFindPredicate<T>` | `(element: T, index: number, array: T[]) => boolean` | A function called for every element of the `list`, returning `true` for the element to include in the new array. |
 
 ### Returns
 
-| Property  | Type             | Default | Description                                                                                             |
-| --------- | ---------------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| `element` | `T \| undefined` | -       | The first element in the array that satisfies the provided function. Otherwise, `undefined` is returned. |
+| Property  | Type             | Description                                                                                              |
+| --------- | ---------------- | -------------------------------------------------------------------------------------------------------- |
+| `element` | `T \| undefined` | The first element in the array that satisfies the provided function. Otherwise, `undefined` is returned. |
 
 ## Common Pitfalls
 

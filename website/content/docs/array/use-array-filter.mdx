@@ -1,6 +1,6 @@
 ---
 title: useArrayFilter
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 A hook providing a memoized version of the `Array.filter` method for React, filtering an array based on the specified predicate function.
@@ -9,11 +9,11 @@ A hook providing a memoized version of the `Array.filter` method for React, filt
 
 ```tsx
 import { useArrayFilter } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
-  const isEven = number => number % 2 === 0;
+  const [numbers, setNumbers] = React.useState([1, 2, 3, 4, 5]);
+  const isEven = (number: number) => number % 2 === 0;
 
   const evenNumbers = useArrayFilter(numbers, isEven);
 
@@ -23,19 +23,21 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayFilter } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [users, setUsers] = useState([
+  const [users, setUsers] = React.useState([
     { name: 'Alice', age: 25 },
     { name: 'Bob', age: 30 },
   ]);
 
-  const isAdult = user => user.age >= 18;
+  const isAdult = (user: { age: number }) => user.age >= 18;
 
   const adults = useArrayFilter(users, isAdult);
 
@@ -47,6 +49,9 @@ const Component = () => {
     </ul>
   );
 };
+
+export default Component;
+
 ```
 
 ## Type Declarations
@@ -58,15 +63,13 @@ export type UseArrayFilterPredicate<T> = (
   array: T[]
 ) => boolean;
 
-export function useArrayFilter<T>(
+export declare function useArrayFilter<T>(
   list: T[],
   predicate: UseArrayFilterPredicate<T>
 ): T[];
 ```
 
-## API Details
-
-### Parameters
+## Reference
 
 | Property    | Type                         | Default                                              | Description                                                                                                   |
 | ----------- | ---------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -75,9 +78,9 @@ export function useArrayFilter<T>(
 
 ### Returns
 
-| Property | Type  | Default | Description                                                                    |
-| -------- | ----- | ------- | ------------------------------------------------------------------------------ |
-| `list`   | `T[]` | -       | The new array containing only the elements that pass the `predicate` function. |
+| Property | Type  | Description                                                                    |
+| -------- | ----- | ------------------------------------------------------------------------------ |
+| `list`   | `T[]` | The new array containing only the elements that pass the `predicate` function. |
 
 ## Common Pitfalls
 

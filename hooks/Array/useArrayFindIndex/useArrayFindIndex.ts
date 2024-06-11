@@ -1,19 +1,5 @@
-import * as React from 'react'
-
-/**
- * Represents a predicate function used in the `useArrayFindIndex` function.
- *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
- */
-export type UseArrayFindIndexPredicate<T> = (
-  element: T,
-  index: number,
-  array: T[]
-) => boolean;
+import * as React from 'react';
+import type { UseArrayFindIndexPredicate } from '../array';
 
 /**
  * `Array.findIndex` hook for React.

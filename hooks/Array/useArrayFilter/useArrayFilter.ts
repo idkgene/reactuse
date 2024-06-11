@@ -1,19 +1,5 @@
 import * as React from 'react';
-
-/**
- * Represents a predicate function used in the `useArrayFilter` function.
- *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
- */
-export type UseArrayFilterPredicate<T> = (
-  element: T,
-  index: number,
-  array: T[]
-) => boolean;
+import type { UseArrayFilterPredicate } from '../array';
 
 /**
  * `Array.filter` hook for React.

@@ -1,19 +1,5 @@
-import * as React from 'react'
-
-/**
- * Represents a predicate function used in the `useArrayFindLast` function.
- *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
- */
-export type UseArrayFindLastPredicate<T> = (
-  element: T,
-  index: number,
-  array: T[]
-) => boolean;
+import * as React from 'react';
+import type { UseArrayFindLastPredicate } from '../array';
 
 /**
  * `Array.findLast` hook for React.

@@ -1,6 +1,6 @@
 ---
 title: useArrayEvery
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 `useArrayEvery` is a React hook that checks if a given predicate function returns a truthy value for every element in an array. It mimics the behavior of JavaScript's `Array.every` method.
@@ -9,10 +9,10 @@ description: Your first document
 
 ```tsx
 import { useArrayEvery } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [list, setList] = useState([2, 4, 6, 8]);
+  const [list, setList] = React.useState([2, 4, 6, 8]);
 
   // Check if all numbers are even
   const allEven = useArrayEvery(list, num => num % 2 === 0);
@@ -23,14 +23,16 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayEvery } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [list, setList] = useState([
+  const [list, setList] = React.useState([
     { name: 'Alice', age: 25 },
     { name: 'Bob', age: 30 },
     { name: 'Charlie', age: 35 },
@@ -45,26 +47,26 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export function useArrayEvery<T>(
+export declare function useArrayEvery<T>(
   list: T[],
   predicate: UseArrayEveryPredicate<T>
 ): boolean;
 
-export type UseArrayEveryPredicate<T> = (
+export declare type UseArrayEveryPredicate<T> = (
   element: T,
   index: number,
   array: T[]
-) => boolean;
+) => unknown;
 ```
 
-## API Details
-
-### Parameters
+## Reference
 
 | Property    | Type                        | Default | Description                      |
 | ----------- | --------------------------- | ------- | -------------------------------- |
@@ -73,9 +75,9 @@ export type UseArrayEveryPredicate<T> = (
 
 ### Returns
 
-| Property  | Type | Default | Description                                                                           |
-| --------- | ---- | ------- | ------------------------------------------------------------------------------------- |
-| `boolean` | -    | -       | A `boolean` value indicating whether all elements in the array satisfy the predicate. |
+| Type      | Description                                                                           |
+| --------- | ------------------------------------------------------------------------------------- |
+| `boolean` | A `boolean` value indicating whether all elements in the array satisfy the predicate. |
 
 ## Common Pitfals
 

@@ -1,6 +1,6 @@
 ---
 title: useArraySome
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 The `useArraySome` hook provides a memoized way to check if at least one element in an array satisfies a given condition.
@@ -9,10 +9,10 @@ The `useArraySome` hook provides a memoized way to check if at least one element
 
 ```tsx
 import { useArraySome } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+  const [numbers, setNumbers] = React.useState([1, 2, 3, 4, 5]);
 
   const hasEvenNumber = useArraySome(numbers, number => number % 2 === 0);
 
@@ -24,14 +24,16 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArraySome } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [users, setUsers] = useState([
+  const [users, setUsers] = React.useState([
     { id: 1, isAdmin: false },
     { id: 2, isAdmin: true },
   ]);
@@ -44,31 +46,31 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export function useArraySome<T>(
+export declare function useArraySome<T>(
   list: T[],
   predicate: (element: T, index: number, array: T[]) => unknown
 ): boolean;
 ```
 
-## API Details
+## Reference
 
-### Parameters
-
-| Property    | Type                                                 | Default | Description                                                                                                                                               |
-| ----------- | ---------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `list`      | `T[]`                                                | -       | The primary array to check.                                                                                                                               |
-| `predicate` | `(element: T, index: number, array: T[]) => unknown` | -       | A function that receives each element of the array as an argument. It should return `true` if the element satisfies the condition, and `false` otherwise. |
+| Property    | Type                                                 | Default | Description                                                                                   |
+| ----------- | ---------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------- |
+| `list`      | `T[]`                                                | -       | The primary array to check.                                                                   |
+| `predicate` | `(element: T, index: number, array: T[]) => unknown` | -       | A function that receives each element of the array as an argument. Returns `true` or `false`. |
 
 ### Returns
 
-| Property  | Type      | Default | Description                                                                                                |
-| --------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------- |
-| `boolean` | `boolean` | -       | `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`. |
+| Type      | Description                                                                                                |
+| --------- | ---------------------------------------------------------------------------------------------------------- |
+| `boolean` | `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`. |
 
 ## Common Pitfals
 

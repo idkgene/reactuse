@@ -4,7 +4,9 @@ import * as React from 'react'
  * Returns a unique array of items based on a custom comparison function.
  *
  * @param {T[]} items - The array of items to filter for unique values.
- * @param {(a: T, b: T, array: T[]) => boolean} [compareFn] - Optional custom comparison function
+ * @param {(a: T, b: T, array: T[]) => boolean} [compareFn] - Optional custom comparison function.
+ * If provided, this function will be used to determine the equality of two items.
+ * The function should take two items (a and b) and the original array as arguments and return true if they are considered equal, false otherwise.
  *
  * @returns {T[]} A new array containing only the unique items from the input array.
  *

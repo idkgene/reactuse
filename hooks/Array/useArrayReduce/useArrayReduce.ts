@@ -1,23 +1,5 @@
 import * as React from 'react';
-
-/**
- * Represents a reducer function used in the `useArrayReduce` function.
- *
- * @template PV - The type of the accumulated value.
- * @template CV - The type of the current value being processed.
- * @template R - The type of the returned value.
- * @param {PV} previousValue - The value previously returned in the last invocation of the reducer.
- * @param {CV} currentValue - The current element being processed.
- * @param {number} currentIndex - The index of the current element.
- * @param {CV[]} array - The array being processed.
- * @returns {R} - The result of applying the reducer.
- */
-export type UseArrayReduceCallback<PV, CV, R> = (
-  previousValue: PV,
-  currentValue: CV,
-  currentIndex: number,
-  array: CV[]
-) => R;
+import type { UseArrayReduceCallback } from '../array';
 
 /**
  * `Array.reduce` hook for React.

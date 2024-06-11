@@ -1,6 +1,6 @@
 ---
 title: useList
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 The `useList` hook provides a flexible way to manage an array (list) within your React components. It returns the current list and a set of convenient functions for common list operations, such as adding, removing, updating, and clearing elements.
@@ -9,8 +9,9 @@ The `useList` hook provides a flexible way to manage an array (list) within your
 
 ```tsx
 import { useList } from '#';
+import * as React from 'react';
 
-function MyComponent() {
+const Component = () => {
   const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList([
     1, 2, 3,
   ]);
@@ -30,7 +31,9 @@ function MyComponent() {
       <button onClick={clear}>Clear</button>
     </div>
   );
-}
+};
+
+export default Component;
 ```
 
 ## Type Declarations
@@ -49,9 +52,7 @@ export function useList<T>(defaultList: T[] = []): [
 ];
 ```
 
-## API Details
-
-### Parameters
+## Reference
 
 | Property      | Type  | Default | Description                                                       |
 | ------------- | ----- | ------- | ----------------------------------------------------------------- |

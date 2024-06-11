@@ -1,31 +1,5 @@
-import { useMemo, useRef } from 'react';
-
-/**
- * Comparison function type for sorting elements in an array.
- *
- * @typedef {Function} UseSortedCompareFn
- * @param {T} a - The first element to compare.
- * @param {T} b - The second element to compare.
- * @returns {number} A negative value if `a` should be sorted before `b`,
- * a positive value if `b` should be sorted before `a`, or zero if they're equal.
- * @template T
- */
-type UseSortedCompareFn<T> = (a: T, b: T) => number;
-
-/**
- * Options for the `useSorted` hook.
- *
- * @interface UseSortedOptions
- * @template TestComponent
- * @property {Function} [sortFn] - Custom sort function to use instead of the default.
- * @property {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
- * @property {boolean} [dirty] - Flag indicating whether to mutate the original array.
- */
-interface UseSortedOptions<T> {
-  sortFn?: (arr: T[], compareFn?: UseSortedCompareFn<T>) => T[];
-  compareFn?: UseSortedCompareFn<T>;
-  dirty?: boolean;
-}
+import * as React from 'react';
+import type { UseSortedOptions, UseSortedCompareFn } from '../array';
 
 /**
  * Default sort function that creates a new sorted array using the provided comparison function.
@@ -35,7 +9,10 @@ interface UseSortedOptions<T> {
  * @returns {T[]} A new sorted array.
  * @template T
  */
-function defaultSortFn<T>(arr: T[], compareFn?: UseSortedCompareFn<T>): T[] {
+export function defaultSortFn<T>(
+  arr: T[],
+  compareFn?: UseSortedCompareFn<T>
+): T[] {
   return [...arr].sort(compareFn);
 }
 
@@ -59,19 +36,19 @@ export function useSorted<T>(
     ? { compareFn: compareFnOrOptions, ...options }
     : compareFnOrOptions || {};
 
-  const sourceRef = useRef(source);
+  const sourceRef = React.useRef(source);
 
   if (sourceRef.current !== source) {
     sourceRef.current = source;
   }
 
-  const sorted = useMemo(() => {
+  const sorted = React.useMemo(() => {
     if (dirty) {
       // If `dirty` is true, mutate the original array by sorting it in place.
       sourceRef.current.sort(compareFn);
       return sourceRef.current;
     }
-    // If `dirty` is false, create a new sorted array using the `sortFn`
+    // If `dirty` is false, create a new sorted array using the sortFn`
     return sortFn([...sourceRef.current], compareFn);
   }, [sortFn, compareFn, dirty, source]);
 

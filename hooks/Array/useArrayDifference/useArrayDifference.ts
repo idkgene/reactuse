@@ -1,28 +1,16 @@
 import * as React from 'react';
-
-export type UseArrayDifferenceComparatorFn<T> = (
-  element: T,
-  value: T
-) => boolean;
-
-export type UseArrayDifferenceKey<T> =
-  | keyof T
-  | UseArrayDifferenceComparatorFn<T>;
+import type { UseArrayDifferenceKey } from '../array';
 
 /**
- * Calculates the difference between two arrays.
+ * A React hook that returns the difference between two arrays.
  *
- * @param {T[]} list - The original array.
- * @param {T[]} values - The array to compare against.
- * @param {UseArrayDifferenceKey<T>} [keyOrCompareFn] - The key to use for comparison.
- *
- * @returns {T[]} - A new array containing elements from `list` that are not present in `values`.
+ * @param {T[]} list - The first array.
+ * @param {T[]} values - The second array.
+ * @param {UseArrayDifferenceKey<T>} keyOrCompareFn - Optional. A key of an object or a custom comparator function.
+ * @returns {T[]} The difference between the two arrays.
  *
  * @example
- * const numbers = [1, 2, 3, 4, 5];
- * const values = [3, 4];
- * const difference = useArrayDifference(numbers, values);
- * console.log(difference); // Output: [1, 2, 5]
+ * const difference = useArrayDifference(list1, list2);
  */
 export function useArrayDifference<T>(
   list: T[],

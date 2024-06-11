@@ -1,6 +1,6 @@
 ---
 title: useArrayDifference
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 `useArrayDifference` calculates the difference between two arrays. It returns a new array containing elements from the first array that are not present in the second array.
@@ -9,11 +9,11 @@ description: Your first document
 
 ```tsx
 import { useArrayDifference } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [list1, setList1] = useState([0, 1, 2, 3, 4, 5]);
-  const [list2, setList2] = useState([4, 5, 6]);
+  const [list1, setList1] = React.useState([0, 1, 2, 3, 4, 5]);
+  const [list2, setList2] = React.useState([4, 5, 6]);
 
   const difference = useArrayDifference(list1, list2);
 
@@ -23,15 +23,17 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayDifference } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [list1, setList1] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
-  const [list2, setList2] = useState([{ id: 2 }, { id: 4 }]);
+  const [list1, setList1] = React.useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  const [list2, setList2] = React.useState([{ id: 2 }, { id: 4 }]);
 
   // Custom comparison function based on the 'id' property
   const difference = useArrayDifference(list1, list2, (a, b) => a.id === b.id);
@@ -42,57 +44,83 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import { useArrayDifference } from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [list1, setList1] = useState([{ name: 'Alice' }, { name: 'Bob' }]);
-  const [list2, setList2] = useState([{ name: 'Bob' }, { name: 'Charlie' }]);
+  const [list1, setList1] = React.useState([
+    { name: 'Alice' },
+    { name: 'Bob' },
+  ]);
+  const [list2, setList2] = React.useState([
+    { name: 'Bob' },
+    { name: 'Charlie' },
+  ]);
 
   // Compare based on the 'name' property
   const difference = useArrayDifference(list1, list2, 'name');
 
   return (
     <div>
-      <p>Difference: {JSON.stringify(difference)}</p>
+      <p>
+        Difference showing elements from list1 that are not present in list2:{' '}
+        {JSON.stringify(difference)}
+      </p>
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ```typescript
-export function useArrayDifference<T>(
+export declare function useArrayDifference<T>(
   list: T[],
   values: T[],
   keyOrCompareFn?: keyof T | UseArrayDifferenceComparatorFn<T>
 ): T[];
 
-export type UseArrayDifferenceComparatorFn<T> = (
+export declare type UseArrayDifferenceComparatorFn<T> = (
   element: T,
   value: T
 ) => boolean;
+
+export declare type UseArrayDifferenceKey<T> =
+  | keyof T
+  | UseArrayDifferenceComparatorFn<T>;
 ```
 
-## API Details
+## Reference
 
-### Parameters
+#### useArrayDifference
 
 | Property         | Type                                           | Default | Description                                                          |
 | ---------------- | ---------------------------------------------- | ------- | -------------------------------------------------------------------- |
 | `list`           | `T[]`                                          | -       | The primary array.                                                   |
 | `values`         | `T[]`                                          | -       | The array to compare against.                                        |
-| `keyOrCompareFn` | `keyof T \| UseArrayDifferenceComparatorFn<T>` | -       | The key to use for comparison or a comparator function (_optional_). |
+| `keyOrCompareFn` | `keyof T \| UseArrayDifferenceComparatorFn<T>` | -       | (_Optional_) The key to use for comparison or a comparator function. |
+
+#### UseArrayDifferenceKey
+
+| Property                         | Type                                | Description                                                                       |
+| -------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------- |
+| `element`                        | `T`                                 | An element frmo the `list` array.                                                 |
+| `value`                          | `T`                                 | An element frmo the `values` array..                                              |
+| `UseArrayDifferenceComparatorFn` | `(element: T, value: T) => boolean` | Comparator function that returns `true` if the two elements are considered equal. |
 
 ### Returns
 
-| Property | Type | Default | Description                                                     |
-| -------- | ---- | ------- | --------------------------------------------------------------- |
-| `T[]`    | -    | -       | An array containing elements present in list but not in values. |
+| Type  | Description                                                                                       |
+| ----- | ------------------------------------------------------------------------------------------------- |
+| `T[]` | Returns a new array containing elements from the `list` that are not present in the values array. |
+|       |
 
 ## Common Pitfals
 

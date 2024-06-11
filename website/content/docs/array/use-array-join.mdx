@@ -1,6 +1,6 @@
 ---
 title: useArrayJoin
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
 
 a hook providing a memoized version of the `Array.join` method for React, joining all elements of an array into a string separated by the specified separator.
@@ -9,10 +9,10 @@ a hook providing a memoized version of the `Array.join` method for React, joinin
 
 ```tsx
 import useArrayJoin from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [words, setWords] = useState(['hello', 'world']);
+  const [words, setWords] = React.useState(['hello', 'world']);
 
   const joinedWords = useArrayJoin(words, ' ');
 
@@ -22,14 +22,16 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ```tsx
 import useArrayJoin from '#';
-import { useState } from 'react';
+import * as React from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = useState([1, 2, 3]);
+  const [numbers, setNumbers] = React.useState([1, 2, 3]);
 
   const joinedNumbers = useArrayJoin(numbers, '-');
 
@@ -39,28 +41,28 @@ const Component = () => {
     </div>
   );
 };
+
+export default Component;
 ```
 
 ## Type Declarations
 
 ````typescript
-export function useArrayJoin<T>(list: T[], separator?: string): string```
+export declare function useArrayJoin<T>(list: T[], separator?: string): string```
 ````
 
-## API Details
+## Reference
 
-### Parameters
-
-| Property    | Type     | Default | Description                                                                                                                      |
-| ----------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `list`      | `T[]`    | -       | The primary array to join.                                                                                                       |
-| `separator` | `string` | -       | A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated by a comma (","). |
+| Property    | Type     | Default | Description                                                                               |
+| ----------- | -------- | ------- | ----------------------------------------------------------------------------------------- |
+| `list`      | `T[]`    | -       | The primary array to join.                                                                |
+| `separator` | `string` | `,`     | (_Optional_) A string to separate each pair of adjacent elements in the resulting string. |
 
 ### Returns
 
-| Property | Type     | Default | Description                                                                                    |
-| -------- | -------- | ------- | ---------------------------------------------------------------------------------------------- |
-| `string` | `string` | -       | A string with all array elements joined. If `list.length` is `0`, an empty string is returned. |
+| Type     | Description                                                                                    |
+| -------- | ---------------------------------------------------------------------------------------------- |
+| `string` | A string with all array elements joined. If `list.length` is `0`, an empty string is returned. |
 
 ## Common Pitfals
 
