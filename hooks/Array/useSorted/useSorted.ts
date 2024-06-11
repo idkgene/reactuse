@@ -1,104 +1,79 @@
-import * as React from 'react';
+import { useMemo, useRef } from 'react';
 
 /**
- * Function used for comparing two elements during sorting.
+ * Comparison function type for sorting elements in an array.
  *
- * @template T - The type of elements being compared.
- * @typedef {Function} SortCompareFn
+ * @typedef {Function} UseSortedCompareFn
  * @param {T} a - The first element to compare.
  * @param {T} b - The second element to compare.
- * @returns {number} Returns a negative value if `a` should come before `b`,
- * a positive value if `a` should come after `b`, or `0` if they are equivalent.
+ * @returns {number} A negative value if `a` should be sorted before `b`,
+ * a positive value if `b` should be sorted before `a`, or zero if they're equal.
+ * @template T
  */
-type SortCompareFn<T> = (a: T, b: T) => number;
+type UseSortedCompareFn<T> = (a: T, b: T) => number;
 
+/**
+ * Options for the `useSorted` hook.
+ *
+ * @interface UseSortedOptions
+ * @template TestComponent
+ * @property {Function} [sortFn] - Custom sort function to use instead of the default.
+ * @property {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
+ * @property {boolean} [dirty] - Flag indicating whether to mutate the original array.
+ */
 interface UseSortedOptions<T> {
-  /**
-   * Sort algorithm for custom sorting.
-   *
-   * @param {T[]} arr - The array to be sorted.
-   * @param {SortCompareFn<T>} compareFn - Comparison function for sorting.
-   * @returns {T[]} Sorted array.
-   */
-  sortFn?: (arr: T[], compareFn: SortCompareFn<T>) => T[];
-
-  /**
-   * Comparison function for sorting elements.
-   *
-   * @type {SortCompareFn<T>}
-   */
-  compareFn?: SortCompareFn<T>;
-
-  /**
-   * Indicates whether to modify the source array directly.
-   *
-   * @default false
-   * @type {boolean}
-   */
+  sortFn?: (arr: T[], compareFn?: UseSortedCompareFn<T>) => T[];
+  compareFn?: UseSortedCompareFn<T>;
   dirty?: boolean;
 }
 
 /**
- * A hook that returns a sorted version of the provided array.
+ * Default sort function that creates a new sorted array using the provided comparison function.
  *
- * @template T - The type of elements in the array.
+ * @param {T[]} arr - The array to be sorted.
+ * @param {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
+ * @returns {T[]} A new sorted array.
+ * @template T
+ */
+function defaultSortFn<T>(arr: T[], compareFn?: UseSortedCompareFn<T>): T[] {
+  return [...arr].sort(compareFn);
+}
+
+/**
+ * React hook that returns a sorted version of the provided array.
+ *
  * @param {T[]} source - The array to be sorted.
- * @param {SortCompareFn<T> | UseSortedOptions<T>} [compareFnOrOptions] - A comparison function or an options object.
- *
- * @returns {T[]} The sorted array.
- *
- * @example
- * const sortedNumbers = useSorted([3, 1, 4, 1, 5, 9], (a, b) => a - b);
- * console.log(sortedNumbers); // Output: [1, 1, 3, 4, 5, 9]
- *
- * @example
- * const options = {
- *   compareFn: (a, b) => a - b,
- *   dirty: true
- * };
- * const sortedNumbers = useSorted([3, 1, 4, 1, 5, 9], options);
- * console.log(sortedNumbers); // Output: [1, 1, 3, 4, 5, 9]
+ * @param {UseSortedCompareFn<T> | UseSortedOptions<T>} [compareFnOrOptions] - Comparison function or options object.
+ * @param {Omit<UseSortedOptions<T>, 'compareFn'>} [options] - Additional options for sorting.
  */
 export function useSorted<T>(
   source: T[],
-  compareFnOrOptions?: SortCompareFn<T> | UseSortedOptions<T>
+  compareFnOrOptions?: UseSortedCompareFn<T> | UseSortedOptions<T>,
+  options?: Omit<UseSortedOptions<T>, 'compareFn'>
 ): T[] {
-  const sourceRef = React.useRef<T[]>(source);
-  const compareFn = React.useMemo<SortCompareFn<T>>(() => {
-    if (typeof compareFnOrOptions === 'function') {
-      return compareFnOrOptions;
-    } else if (compareFnOrOptions?.compareFn) {
-      return compareFnOrOptions.compareFn;
-    } else {
-      return (a, b) => (a > b ? 1 : a < b ? -1 : 0);
-    }
-  }, [compareFnOrOptions]);
+  const {
+    sortFn = defaultSortFn,
+    compareFn,
+    dirty = false,
+  } = typeof compareFnOrOptions === 'function'
+    ? { compareFn: compareFnOrOptions, ...options }
+    : compareFnOrOptions || {};
 
-  const sortFn = React.useMemo<
-    (arr: T[], compareFn: SortCompareFn<T>) => T[]
-  >(() => {
-    if (compareFnOrOptions && 'sortFn' in compareFnOrOptions) {
-      return compareFnOrOptions.sortFn!;
-    } else {
-      return (arr, compareFn) => arr.slice().sort(compareFn);
-    }
-  }, [compareFnOrOptions]);
+  const sourceRef = useRef(source);
 
-  const dirty = React.useMemo<boolean>(() => {
-    return compareFnOrOptions && 'dirty' in compareFnOrOptions
-      ? compareFnOrOptions.dirty ?? false
-      : false;
-  }, [compareFnOrOptions]);
+  if (sourceRef.current !== source) {
+    sourceRef.current = source;
+  }
 
-  const sorted = React.useMemo<T[]>(() => {
+  const sorted = useMemo(() => {
     if (dirty) {
-      sourceRef.current = [...sourceRef.current].sort(compareFn);
+      // If `dirty` is true, mutate the original array by sorting it in place.
+      sourceRef.current.sort(compareFn);
       return sourceRef.current;
-    } else {
-      const copiedSource = sourceRef.current.slice();
-      return sortFn(copiedSource, compareFn);
     }
-  }, [dirty, compareFn, sortFn]);
+    // If `dirty` is false, create a new sorted array using the `sortFn`
+    return sortFn([...sourceRef.current], compareFn);
+  }, [sortFn, compareFn, dirty, source]);
 
   return sorted;
 }
