@@ -1,0 +1,73 @@
+name: Bug Report
+description: Create a detailed bug report to help us improve
+labels: ['🐛 bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to fill out this bug report. Before opening a new issue, please search the existing issues to avoid duplicates.
+
+        If you need assistance, please consider starting a discussion in the [Q&A Section](#).
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Please provide a clear and concise step-by-step description of how to reproduce the issue. If applicable, include a link to a minimal reproducible repository.
+      placeholder: |
+        1. Start the application in development mode using `next dev`
+        2. Navigate to the X page
+        3. Click on the Y button
+        4. Observe the unexpected behavior Z
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected vs. Actual behavior
+      description: Describe the expected behavior and contrast it with the actual behavior you observed.
+      placeholder: 'Following the reproduction steps, I expected A to happen. However, I observed B happening instead'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Environment information
+      description: Please run `next info` in the root directory of your project and paste the results.
+      render: bash
+      placeholder: |
+        Operating System:
+          Platform: darwin
+          Arch: arm64
+          Version: Darwin Kernel Version 22.5.0
+        Binaries:
+          Node: 20.14.0
+          npm: 10.8.1
+          Yarn: 1.22.22
+          pnpm: 9.3.0
+        Relevant Packages:
+          react: 18.3.1
+          react-dom: 18.3.1
+          typescript: 5.4.5
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Affected Area(s)
+      description: Select all the areas that are affected by this bug.
+      multiple: true
+      options:
+        - 'Unsure'
+        - 'Hooks'
+        - 'Website'
+        - 'TypeScript (built-in types)'
+        - 'Examples'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: |
+        Please provide any additional information that might help us investigate and resolve the issue, such as:
+        - Relevant logs or error messages
+        - Screenshots or screen recordings
+        - Versions of dependencies or packages you suspect might be causing the issue
+        - Any workarounds or temporary fixes you have discovered
+      placeholder: |
+        I tested my reproduction against different canary releases, and the first one that introduced the bug was "11.0.0". Reverting to version "10.0.0" resolves the issue.
