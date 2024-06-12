@@ -1,0 +1,59 @@
+name: Documentation Improvement Request
+description: Suggest improvements or report missing information in the project documentation
+labels: ['📚 Documentation']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to help us improve our documentation! Your feedback is valuable in making our project more accessible and user-friendly.
+
+        Before submitting a new request, please search the existing issues to avoid duplicates.
+  - type: textarea
+    attributes:
+      label: Documentation Section
+      description: Specify the section or topic of the documentation that needs improvement.
+      placeholder: |
+        e.g., "Getting Started", "API Reference", "useXYZ Hook"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed Changes
+      description: Describe the changes or additions you'd like to see in the documentation.
+      placeholder: |
+        - Add a more detailed explanation of the hook's behavior
+        - Include a code example demonstrating the usage of the utility
+        - Clarify the expected input and output types
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Rationale
+      description: Explain why you believe these changes would improve the documentation.
+      placeholder: |
+        The current documentation lacks a clear explanation of how to handle edge cases when using this hook. Adding a section addressing common pitfalls and providing examples would help developers avoid mistakes and better understand the hook's usage.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Impact
+      description: Assess the impact of the proposed documentation changes.
+      options:
+        - 'Minor: Small tweaks or additions'
+        - 'Moderate: Improves clarity or adds useful examples'
+        - 'Major: Addresses a significant gap or confusion in the documentation'
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Contribution
+      description: Are you willing to contribute to the documentation changes yourself?
+      options:
+        - label: 'Yes, I am willing to submit a pull request with the proposed changes'
+          required: false
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or references that support your request.
+    validations:
+      required: false
