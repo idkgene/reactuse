@@ -4,6 +4,7 @@
   "description": "Collection of React hooks and utilities",
   "private": true,
   "author": "changeelog",
+  "packageManager": "pnpm@9.2.0",
   "type": "commonjs",
   "scripts": {
     "dev": "next dev",
@@ -18,8 +19,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test-ct": "playwright test -c playwright-ct.config.ts",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@babel/preset-env": "^7.24.7",
@@ -95,6 +95,7 @@
     "tailwindcss": "^3.4.4",
     "ts-jest": "^29.1.4",
     "tsup": "^8.1.0",
+    "turbo": "^2.0.3",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
   }
