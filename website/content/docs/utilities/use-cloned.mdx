@@ -1,4 +1,99 @@
 ---
 title: useCloned
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useCloned` provides a way to keep a cloned reference of a given source object with the option to manually or automatically sync changes.
+
+## Usage
+
+```tsx
+import { useCloned } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [source, setSource] = React.useState({ name: 'Alice', age: 25 });
+  const { cloned, sync } = useCloned(source);
+
+  const updateSource = () => {
+    setSource(prev => ({ ...prev, age: prev.age + 1 }));
+  };
+
+  return (
+    <div>
+      <p>Source: {JSON.stringify(source)}</p>
+      <p>Cloned: {JSON.stringify(cloned.current)}</p>
+      <button onClick={updateSource}>Update Source</button>
+      <button onClick={sync}>Sync Clone</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```ts
+export declare function cloneFnJSON<T>(source: T): T;
+
+export declare function useCloned<T>(
+  source: T,
+  options?: UseClonedOptions<T>
+): UseClonedReturn<T>;
+
+export interface UseClonedOptions<T> {
+  clone?: (source: T) => T;
+  manual?: boolean;
+}
+
+export interface UseClonedReturn<T> {
+  cloned: React.MutableRefObject<T>;
+  sync: () => void;
+}
+```
+
+## Reference
+
+#### cloneFnJSON
+
+| Property | Type | Description                     |
+| :------- | :--- | :------------------------------ |
+| source   | `T`  | The source object to be cloned. |
+
+#### useCloned
+
+| Property       | Type               | Default       | Description                                                         |
+| :------------- | :----------------- | :------------ | :------------------------------------------------------------------ |
+| source         | `T`                | -             | The source object to be cloned.                                     |
+| options        | `T`                | -             | (_Optional_) Options for customizing the cloning behavior.          |
+| options.clone  | `(source: T) => T` | `cloneFnJSON` | (_Optional_) A function to clone the source object.                 |
+| options.manual | `boolean`          | `false`       | (_Optional_) Whether to manually control when the clone is updated. |
+
+### Return
+
+| Type                 | Description                                                                                  |
+| -------------------- | :------------------------------------------------------------------------------------------- |
+| `UseClonedReturn<T>` | An object containing the cloned reference and a function to sync the clone with the source.. |
+
+## Common Pitfalls
+
+### Forgetting to Sync in Manual Mode
+
+When usin the `manual` options, remember to call the sync function to update the cloned reference when necessary. Failing to do so may result in the cloned reference being out of sync with the source object.
+
+```tsx
+const { cloned, sync } = useCloned(source, { manual: true });
+// Update the source object
+source.age = 30;
+// Forgot to call sync, cloned reference is out of sync
+```
+
+**Solution**: Call the `sync` function after updating the source object in manual mode/
+
+### Mutating the Cloned Reference
+
+Avoid directly mutating the `cloned.current` object as it may lead to unexpected behavior. Instead, update the `source` object and let the hook handle the cloning thing.
+
+```ts
+const { cloned } = useCloned({ name: 'Alice', age: 25 });
+cloned.current.age = 30; // Avoid direct mutation
+```

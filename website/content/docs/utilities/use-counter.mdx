@@ -1,4 +1,110 @@
 ---
 title: useCounter
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useCounter` provides a counter with increment, decrement, and reset functions, with optional min and max constraints.
+
+## Usage
+
+```tsx
+import { useCounter } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const { count, inc, dec, reset } = useCounter(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => inc()}>Increment</button>
+      <button onClick={() => dec()}>Decrement</button>
+      <button onClick={() => reset()}>Reset</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { useCounter } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const { count, inc, dec, reset } = useCounter(10, { min: 0, max: 20 });
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => inc(5)}>Increment by 5</button>
+      <button onClick={() => dec(3)}>Decrement by 3</button>
+      <button onClick={() => reset()}>Reset</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare function useCounter(
+  initialValue?: number,
+  options?: UseCounterOptions
+): UseCounterResult;
+
+export interface UseCounterOptions {
+  min?: number;
+  max?: number;
+}
+
+export interface UseCounterResult {
+  count: number;
+  inc: (delta?: number) => void;
+  dec: (delta?: number) => void;
+  get: () => number;
+  set: (value: number) => void;
+  reset: (value?: number) => void;
+}
+```
+
+## Reference
+
+#### useCounter
+
+| Property     | Type                | Default     | Description                                                |
+| :----------- | :------------------ | :---------- | :--------------------------------------------------------- |
+| initialValue | `number`            | `0`         | The initial value of the counter.                          |
+| options      | `UseCounterOptions` | `undefined` | (_Optional_) Options to define minimum and maximum values. |
+
+#### UseCounterOptions
+
+| Property | Type     | Default     | Description                                          |
+| :------- | :------- | :---------- | :--------------------------------------------------- |
+| min      | `number` | `undefined` | (_Optional_) The minimum value the counter can have. |
+| max      | `number` | `undefined` | (_Optional_) The maximum value the counter can have. |
+
+### Return
+
+| Property | Type                       | Description                                                                                      |
+| :------- | :------------------------- | :----------------------------------------------------------------------------------------------- |
+| count    | `number`                   | The current value of the counter.                                                                |
+| inc      | `(delta?: number) => void` | Increments the counter by the specified delta. If no delta is provided, increments by 1.         |
+| dec      | `(delta?: number) => void` | Decrements the counter by the specified delta. If no delta is provided, decrements by 1.         |
+| get      | `() => number`             | Returns the current value of the counter.                                                        |
+| set      | `(value: number) => void`  | Sets the counter to the specified value.                                                         |
+| reset    | `(value?: number) => void` | Resets the counter to the specified value. If no value is provided, resets to the initial value. |
+
+## Common Pitfalls
+
+### Exceeding Min/Max Constraints:
+
+When using `min` and `max` options, ensure that the initial value and any values passed to `set` or `reset` are within the specified range. Values outside range will be clamped to the neares valid value.
+
+```ts
+const { count } = useCounter(0, { min: 0, max: 10 });
+set(15); // count will be set to 10 (clamped to max)
+reset(-5); // count will
+```

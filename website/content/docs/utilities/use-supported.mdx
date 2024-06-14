@@ -1,4 +1,80 @@
 ---
 title: useSupported
-description: Your first document
+description: Collection of useful React hooks and utilitie.
 ---
+
+`useSupported` is a hook that checks if a feature or capability is supported using a callback function.
+
+## Usage
+
+```tsx
+import { useSupported } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const isLocalStorageSupported = useSupported(() => 'localStorage' in window);
+
+  return (
+    <div>
+      <p>Local Storage Supported: {isLocalStorageSupported ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { useSupported } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const isGeolocationSupported = useSupported(() => 'geolocation' in navigator);
+
+  return (
+    <div>
+      <p>Geolocation Supported: {isGeolocationSupported ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare function useSupported(callback: SupportCheckCallback): boolean;
+
+export declare type SupportCheckCallback = () => boolean;
+```
+
+## Reference
+
+#### useSupported
+
+| Property   | Type            | Description                                               |
+| ---------- | --------------- | --------------------------------------------------------- |
+| `callback` | `() => boolean` | A function that checks for feature or capability support. |
+
+### Returns
+
+| Type      | Description                                                          |
+| --------- | -------------------------------------------------------------------- |
+| `boolean` | A boolean indicating whether the feature or capability is supported. |
+
+## Common Pitfalls
+
+### Handling Exceptions
+
+The `useSupported` hook catches any exceptions that may occur during the support check and returns `false` in such cases. It's important to ensure that the callbackf unction doesn't have any unintended side effects.
+
+```tsx
+const isSupported = useSupported(() => {
+  // Perform support check that may throw an exception
+  throw new Error('Something went wrong');
+});
+console.log(isSupported); // Output: false
+```
+
+**Solution**: Make sure the callback function only performs the necessary checks and doesn't have any side effects that could throw exceptions.

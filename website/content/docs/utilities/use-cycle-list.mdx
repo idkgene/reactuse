@@ -1,4 +1,115 @@
 ---
 title: useCycleList
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useCycleList` is a hook that cycles through a list of items, providing navigation functions to go to the next, previous, or a specific index.
+
+## Usage
+
+```tsx
+import { useCycleList } from '#';
+import * as React from 'react';
+
+const colors = ['red', 'green', 'blue'];
+const {
+  state: currentColor,
+  next,
+  prev,
+  go,
+} = useCycleList(colors, { initialValue: 'green' });
+
+return (
+  <div>
+    <p>Current color: {currentColor}</p>
+    <button onClick={next}>Next</button>
+    <button onClick={prev}>Prev</button>
+    <button onClick={() => go(0)}>Go to first</button>
+  </div>
+);
+```
+
+```tsx
+import { useCycleList } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const names = ['Alice', 'Bob', 'Charlie'];
+  const { state: currentName, index, next, prev } = useCycleList(names);
+
+  return (
+    <div>
+      <p>Current Name: {currentName}</p>
+      <p>Index: {index}</p>
+      <button onClick={() => next(2)}>Skip Next</button>
+      <button onClick={() => prev(2)}>Skip Previous</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare function useCycleList<T>(
+  list: T[],
+  options?: UseCycleListOptions<T>
+): UseCycleListReturn<T>;
+
+export interface UseCycleListOptions<T> {
+  initialValue?: T;
+  fallbackIndex?: number;
+  getIndexOf?: (value: T, list: T[]) => number;
+}
+
+export interface UseCycleListReturn<T> {
+  state: T;
+  index: number;
+  next: (n?: number) => T;
+  prev: (n?: number) => T;
+  go: (i: number) => T;
+}
+```
+
+## Reference
+
+#### useCycleList
+
+| Property  | Type                     | Default | Description                                              |
+| --------- | ------------------------ | ------- | -------------------------------------------------------- |
+| `list`    | `T[]`                    | -       | - The list of items to cycle through.                    |
+| `options` | `UseCycleListOptions<T>` | `{}`    | (_Optional_) Options for customizing the cycle behavior. |
+
+#### UseCycleListOptions
+
+| Property        | Type                              | Default                                                      | Description                                                                           |
+| --------------- | --------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| `initialValue`  | `T`                               | `undefined`                                                  | (_Optional_) The initial value to start at.                                           |
+| `fallbackIndex` | `number`                          | `0`                                                          | (_Optional_) The index to fall back to if the initial value is not found in the list. |
+| `getIndexOf`    | `(value: T, list: T[]) => number` | `(value: any, list: string \| any[]) => list.indexOf(value)` | (_Optional_) A function to find the index of an item in the list.                     |
+
+### Returns
+
+| Property | Type                | Description                              |
+| -------- | ------------------- | ---------------------------------------- |
+| `state`  | `T`                 | - The current state value.               |
+| `index`  | `number`            | - The current index.                     |
+| `next`   | `(n?: number) => T` | - Function to move to the next item.     |
+| `prev`   | `(n?: number) => T` | - Function to move to the previous item. |
+| `go`     | `(i: number) => T`  | - Function to move to a specific item.   |
+
+## Common Pitfalls
+
+### Accessing Previous Value on Initial Render
+
+On the initial render, the previous value will be `undefined`unless an initialValue is provided.
+
+```tsx
+const [count, setCount] = useState(0);
+const prevCount = usePrevious(count);
+console.log(prevCount); // Output: undefined
+```
+
+**Solution**: Provide an `initialValue` if you want to return a specific value before the first update.

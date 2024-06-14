@@ -1,4 +1,99 @@
 ---
 title: useDestructable
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useDestructable` is a hook that combines an object and an array into a destructable object, allowing both structured and array destructuring.
+
+## Usage
+
+```tsx
+import { useDestructible } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [firstName, lastName, { age, location }] = useDestructible(
+    { age: 30, location: 'New York' },
+    ['John', 'Doe']
+  );
+
+  return (
+    <div>
+      <p>First Name: {firstName}</p>
+      <p>Last Name: {lastName}</p>
+      <p>Age: {age}</p>
+      <p>Location: {location}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { useDestructible } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [title, content, { author, date }] = useDestructible(
+    { author: 'John Doe', date: '2023-06-10' },
+    ['My Blog Post', 'Lorem ipsum dolor sit amet...']
+  );
+
+  return (
+    <div>
+      <h1>{title}</h1>
+      <p>{content}</p>
+      <p>Author: {author}</p>
+      <p>Date: {date}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare function useDestructible<
+  T extends Record<string, unknown>,
+  A extends readonly any[],
+>(obj: T, arr: A): MakeDestructibleResult<T, A>;
+
+export declare type MakeDestructibleResult<T, A extends readonly any[]> = T & {
+  [K in keyof A]: A[K];
+};
+```
+
+## Reference
+
+#### useDestructible
+
+| Property | Type | Default | Description                                                                |
+| -------- | ---- | ------- | -------------------------------------------------------------------------- |
+| `obj`    | `T`  | -       | - The object whose properties will be included in the destructible result. |
+| `arr`    | `A`  | -       | - The array whose elements will be included in the destructible result.    |
+
+### Returns
+
+| Type                           | Description                                                                     |
+| ------------------------------ | ------------------------------------------------------------------------------- |
+| `MakeDestructibleResult<T, A>` | A destructible object containing both the object properties and array elements. |
+
+## Common Pitfalls
+
+### Naming Conflicts
+
+Be cautious when using property names from the object that conflict with the array elements.
+
+```tsx
+const [firstName, lastName, { age, firstName: objFirstName }] = useDestructible(
+  { firstName: 'John', age: 30 },
+  ['Jane', 'Doe']
+);
+console.log(firstName); // Output: 'Jane'
+console.log(objFirstName); // Output: 'John'
+```
+
+**Solution**: Use unique names for object properties and array elements to avoid naming conflits.

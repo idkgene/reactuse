@@ -1,4 +1,77 @@
 ---
-title: Get
+title: get
 description: Your first document
 ---
+
+`get` is a utility function that retrieves the value of a mutable ref or a specific property of the ref's value. It provides a convenient way to access the current value of a ref or a specific property of the ref's value.
+
+## Usage
+
+```tsx
+import { get } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const ref = React.useRef({ name: 'John', age: 25 });
+
+  const value = get(ref);
+  const name = get(ref, 'name');
+  const age = get(ref, 'age');
+
+  return (
+    <div>
+      <p>Value: {JSON.stringify(value)}</p>
+      <p>Name: {name?.toString()}</p>
+      <p>Age: {age?.toString()}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declaration
+
+```ts
+export declare function get<T, K extends keyof T>(
+  ref: React.MutableRefObject<T | null | undefined>,
+  key?: K
+): T | T[K] | undefined;
+```
+
+## Parameters
+
+| Name  | Type                                             | Default | Description                                                            |
+| :---- | :----------------------------------------------- | ------- | :--------------------------------------------------------------------- |
+| `ref` | `	React.MutableRefObject<T \| null \| undefined>` | -       | The mutable ref object.                                                |
+| `key` | `K`                                              | -       | (_Optional_) The key to access a specific property of the ref's value. |
+
+### Returns
+
+| Type                     | Description                                                                                                      |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `T \| T[K] \| undefined` | The value of the ref or the value of the specified property, or `undefined` if the ref is `null` or `undefined`. |
+
+## Common Pitfalls
+
+### Accessing Non-Existent Properties
+
+If accessing a non-existent property of the ref's value using the `key` parameter, the function will return `undefined`.
+
+```tsx
+const ref = React.useRef({ name: 'John' });
+const age = get(ref, 'age'); // Returns undefined
+```
+
+**Solution**: Ensure the property exists in the ref's value before accessing it.
+
+### Null or Undefined Ref
+
+If the ref's current value is null or undefined, the function will return `undefined`.
+
+```tsx
+const ref = React.useRef<string | null>(null);
+const value = get(ref); // Returns undefined
+```
+
+**Solution**: Handle the case when the ref's value is null or undefined appropriately in your code.
