@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import * as React from 'react';
+
 import type { RoundNumberFn } from '../math';
 
 /**
@@ -14,9 +15,9 @@ import type { RoundNumberFn } from '../math';
  * console.log(roundedNumber); // Output: 4
  */
 export function useRound(initialValue: number = 0): [number, RoundNumberFn] {
-  const [result, setResult] = useState<number>(initialValue);
+  const [result, setResult] = React.useState<number>(initialValue);
 
-  const roundNumber: RoundNumberFn = useCallback((number: number) => {
+  const roundNumber: RoundNumberFn = React.useCallback((number: number) => {
     if (typeof number !== 'number') {
       console.error(
         "useRound: Input must be a number otherwise it'll return NaN"

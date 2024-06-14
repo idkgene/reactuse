@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { usePrecision } from "./usePrecision";
+import * as React from 'react';
+
+import { usePrecision } from './usePrecision';
 
 const UsePrecisionDemo = () => {
-  const [value, setValue] = useState(3.14159265);
-  const [precision, setPrecision] = useState(2);
+  const [value, setValue] = React.useState(3.14159265);
+  const [precision, setPrecision] = React.useState(2);
   const formattedValue = usePrecision({ precision, value });
 
   return (
@@ -13,7 +14,7 @@ const UsePrecisionDemo = () => {
         <input
           type="number"
           value={value}
-          onChange={(e) => setValue(parseFloat(e.target.value))}
+          onChange={e => setValue(parseFloat(e.target.value))}
         />
       </label>
       <label>
@@ -21,7 +22,7 @@ const UsePrecisionDemo = () => {
         <input
           type="number"
           value={precision}
-          onChange={(e) => setPrecision(parseInt(e.target.value, 10))}
+          onChange={e => setPrecision(parseInt(e.target.value, 10))}
         />
       </label>
       <p>Formatted Value: {formattedValue}</p>
@@ -29,4 +30,4 @@ const UsePrecisionDemo = () => {
   );
 };
 
-export default UsePrecisionDemo
+export default UsePrecisionDemo;

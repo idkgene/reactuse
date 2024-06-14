@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { useAverage } from './useAverage';
 
 const UseAverageDemo = () => {
-  const [nums, setNums] = useState([1, 2, 3, 4, 5]);
+  const [nums, setNums] = React.useState([1, 2, 3, 4, 5]);
   const average = useAverage(...nums);
 
   return (

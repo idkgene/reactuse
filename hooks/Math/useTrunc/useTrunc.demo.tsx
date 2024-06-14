@@ -1,18 +1,19 @@
-import { useState } from 'react'
-import { useTrunc } from './useTrunc'
+import * as React from 'react';
+
+import { useTrunc } from './useTrunc';
 
 const UseTruncDemo = () => {
-  const [inputValue, setInputValue] = useState('')
-  const [truncatedValue, truncateNumber] = useTrunc()
+  const [inputValue, setInputValue] = React.useState('');
+  const [truncatedValue, truncateNumber] = useTrunc();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value)
-  }
+    setInputValue(event.target.value);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    truncateNumber(Number(inputValue))
-  }
+    event.preventDefault();
+    truncateNumber(Number(inputValue));
+  };
 
   return (
     <>
@@ -31,7 +32,7 @@ const UseTruncDemo = () => {
         <p>Trunctaed value: {truncatedValue}</p>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default UseTruncDemo
+export default UseTruncDemo;

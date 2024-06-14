@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 import type { Resolvable } from '../math';
-import { resolve } from 'path';
 
 /**
  * Resolves a value, whether it's a plain value or a function that returns a value.
@@ -25,11 +24,11 @@ function resolveResolvable<T>(Resolvable: Resolvable<T>): T {
  * const absValue = useAbs(-10); // Returns `10`.
  */
 export function useAbs(value: number | (() => number)): number {
-  const [absValue, setAbsValue] = useState(() =>
+  const [absValue, setAbsValue] = React.useState(() =>
     Math.abs(resolveResolvable(value))
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     setAbsValue(Math.abs(resolveResolvable(value)));
   }, [resolveResolvable(value)]);
 
