@@ -1,4 +1,84 @@
 ---
 title: useBoolean
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useBoolean` is a custom hook to manage a boolean state value with a toggle function.
+
+## Usage
+
+```tsx
+import { useBoolean } from '#';
+import * as React from 'react';
+
+const MyComponent = () => {
+  const [isVisible, toggleVisibility, setVisibility] = useBoolean(false);
+
+  return (
+    <div>
+      <p>Visibility: {isVisible ? 'Visible' : 'Hidden'}</p>
+      <button onClick={toggleVisibility}>Toggle Visibility</button>
+      <button onClick={() => setVisibility(true)}>Show</button>
+      <button onClick={() => setVisibility(false)}>Hide</button>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+```tsx
+import { useBoolean } from '#';
+import * as React from 'react';
+
+const MyComponent = () => {
+  const [isOpen, toggleOpen, setOpen] = useBoolean(true);
+
+  return (
+    <div>
+      <p>Modal: {isOpen ? 'Open' : 'Closed'}</p>
+      <button onClick={toggleOpen}>Toggle Modal</button>
+      <button onClick={() => setOpen(false)}>Close Modal</button>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+## Type Declaration
+
+```ts
+type UseBooleanReturn = [
+  boolean,
+  () => void,
+  Dispatch<SetStateAction<boolean>>,
+];
+
+export declare const useBoolean: (initialValue?: boolean) => UseBooleanReturn;
+```
+
+## Reference
+
+#### useBoolean
+
+| Property       | Type      | Default | Description                             |
+| -------------- | --------- | ------- | --------------------------------------- |
+| `initialValue` | `boolean` | `false` | (_Optional_) The initial boolean value. |
+
+### Returns
+
+| Type               | Description                                                                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `UseBooleanReturn` | An array containing the current boolean value, a function to toggle the boolean value, and a function to set the boolean value directly. |
+
+## Common Pitfalls
+
+### Naming Conventions
+
+Choose meaningful names for the returned values based on the context of your application. Instead of using generic names like `value` and `toggle`, use names that describe the specific boolean state, such as `isVisible` and `toggleVisibility`.
+
+```ts
+const [value, toggle] = useBoolean(); // Generic naming
+const [isModalOpen, toggleModal] = useBoolean(); // Descriptive naming
+```

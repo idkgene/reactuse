@@ -1,4 +1,113 @@
 ---
 title: useLastChanged
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useLastChanged` is a custom hook that returns a mutable ref containing the timestamp of the last change of the provided source value.
+
+## Usage
+
+```tsx
+import { useLastChanged } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value, setValue] = React.useState(0);
+  const lastChanged = useLastChanged(value);
+
+  return (
+    <div>
+      <p>Last changed: {lastChanged.current}</p>
+      <button onClick={() => setValue(prev => prev + 1)}>Increment</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { useLastChanged } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [user, setUser] = React.useState({ name: 'Alice', age: 25 });
+  const lastChanged = useLastChanged(user, {
+    equalityFn: (prev, next) =>
+      prev.name === next.name && prev.age === next.age,
+  });
+
+  const updateUser = () => {
+    setUser(prev => ({ ...prev, age: prev.age + 1 }));
+  };
+
+  return (
+    <div>
+      <p>Last changed: {lastChanged.current}</p>
+      <button onClick={updateUser}>Update User</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declaration
+
+```typescript
+interface UseLastChangedOptions<T> {
+  initialValue?: number | null;
+  equalityFn?: (prev: T, next: T) => boolean;
+}
+
+export declare function useLastChanged<T>(
+  source: T,
+  options?: UseLastChangedOptions<T>
+): React.MutableRefObject<number | null>;
+```
+
+## Parameters
+
+#### useLastChanged
+
+| Property  | Type                       | Default | Description                        |
+| --------- | -------------------------- | ------- | ---------------------------------- |
+| `source`  | `T`                        | -       | The source value to track.         |
+| `options` | `UseLastChangedOptions<T>` | `{}`    | (_Optional_) Options for the hook. |
+
+#### UseLastChangedOptions
+
+| Property       | Type                            | Default | Description                                              |
+| -------------- | ------------------------------- | ------- | -------------------------------------------------------- |
+| `initialValue` | `number`                        | `null`  | (_Optional_) The initial value or `null`.                |
+| `equalityFn`   | `(prev: T, next: T) => boolean` | -       | (_Optional_) Custom equality function to compare values. |
+
+### Returns
+
+| Type                                     | Description                                        |
+| ---------------------------------------- | -------------------------------------------------- |
+| `React.MutableRefObject<number \| null>` | A ref containing the timestamp of the last change. |
+
+## Common Pitfalls
+
+### Incorrect Equality Function
+
+When providing a custom `equalityFn`, ensure that it correctly compares the relevant properties of the source value. An incorrect equality function may lead to unexpected behavior and inaccurate tracking of changes.
+
+```tsx
+const lastChanged = useLastChanged(user, {
+  equalityFn: (prev, next) => prev.name === next.name,
+});
+// Equality function only compares the 'name' property, ignoring changes to 'age'
+```
+
+**Solution**: Ensure that the equality function compares all relevant properties of the source value.
+
+### Accessing lastChanged.current Before the First Change
+
+If you access `lastChanged.current` before te source value has changed for the first time, it will return the `initialValue` (default: `null`). Handle this behavior appropriately in your code.
+
+```ts
+const lastChanged = useLastChanged(value);
+console.log(lastChanged.current); // Output: null (before the first change)
+```
