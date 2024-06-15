@@ -3,17 +3,11 @@ title: useToNumber
 description: Collection of useful React hooks and utilities.
 ---
 
-`useToNumber` is a hook that converts a string or a unmber to a numeric value using specified options.
-
-## Usage
-
-````tsx
----
-title: useToNumber
-description: Collection of useful React hooks and utilities.
----
-
 `useToNumber` is a hook that converts a string or a number to a numeric value using specified options. It provides flexibility in choosing the conversion method (`parseFloat` or `parseInt`) and handling NaN values.
+
+## Demo
+
+<ToNumberDemo />
 
 ## Usage
 
@@ -33,7 +27,7 @@ const Component = () => {
 };
 
 export default Component;
-````
+```
 
 ```tsx
 import { useToNumber } from '#';
@@ -130,3 +124,7 @@ By default, if the conversion fails and results in NaN, the hook will return NaN
 const num1 = useToNumber('invalid'); // Output: NaN
 const num2 = useToNumber('invalid', { nanToZero: true }); // Output: 0
 ```
+
+import ToNumberDemo from '../../../../hooks/Utilities/useToNumber/useToNumber.demo';
+
+;

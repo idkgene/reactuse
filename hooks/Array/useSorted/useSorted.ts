@@ -17,24 +17,51 @@ export function defaultSortFn<T>(
 }
 
 /**
+ * Sorts an array based on the provided comparison function and options.
+ *
+ * @param {T[]} source - The array to be sorted.
+ * @param {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
+ * @param {UseSortedOptions<T>} [options] - Additional options for sorting.
+ * @returns {T[]} A sorted array.
+ * @template T
+ */
+function sortArray<T>(
+  source: T[],
+  compareFn?: UseSortedCompareFn<T>,
+  options?: UseSortedOptions<T>
+): T[] {
+  const { sortFn = defaultSortFn, dirty = false } = options || {};
+
+  if (dirty) {
+    source.sort(compareFn);
+    return source;
+  }
+
+  return sortFn([...source], compareFn);
+}
+
+/**
  * React hook that returns a sorted version of the provided array.
  *
  * @param {T[]} source - The array to be sorted.
  * @param {UseSortedCompareFn<T> | UseSortedOptions<T>} [compareFnOrOptions] - Comparison function or options object.
  * @param {Omit<UseSortedOptions<T>, 'compareFn'>} [options] - Additional options for sorting.
+ * @returns {T[]} A sorted array.
+ * @template T
  */
 export function useSorted<T>(
   source: T[],
-  compareFnOrOptions?: UseSortedCompareFn<T> | UseSortedOptions<T>,
-  options?: Omit<UseSortedOptions<T>, 'compareFn'>
+  compareFnOrOptions?: UseSortedCompareFn<T> | UseSortedOptions<T> | null,
+  options?: Omit<UseSortedOptions<T>, 'compareFn'> | null
 ): T[] {
-  const {
-    sortFn = defaultSortFn,
-    compareFn,
-    dirty = false,
-  } = typeof compareFnOrOptions === 'function'
-    ? { compareFn: compareFnOrOptions, ...options }
-    : compareFnOrOptions || {};
+  const compareFn =
+    typeof compareFnOrOptions === 'function'
+      ? compareFnOrOptions
+      : compareFnOrOptions?.compareFn;
+  const mergedOptions: UseSortedOptions<T> | undefined =
+    typeof compareFnOrOptions === 'object' && compareFnOrOptions !== null
+      ? compareFnOrOptions
+      : options ?? undefined;
 
   const sourceRef = React.useRef(source);
 
@@ -42,15 +69,10 @@ export function useSorted<T>(
     sourceRef.current = source;
   }
 
-  const sorted = React.useMemo(() => {
-    if (dirty) {
-      // If `dirty` is true, mutate the original array by sorting it in place.
-      sourceRef.current.sort(compareFn);
-      return sourceRef.current;
-    }
-    // If `dirty` is false, create a new sorted array using the sortFn`
-    return sortFn([...sourceRef.current], compareFn);
-  }, [sortFn, compareFn, dirty, source]);
+  const sorted = React.useMemo(
+    () => sortArray([...sourceRef.current], compareFn, mergedOptions),
+    [compareFn, mergedOptions, source]
+  );
 
   return sorted;
 }

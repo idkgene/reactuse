@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState } from 'react';
 import { useArrayDifference } from './useArrayDifference';
 
 type Person = {
@@ -14,7 +16,7 @@ const initialList: Person[] = [
   { id: 5, name: 'Eve' },
 ];
 
-const ArrayDifferenceDemo: React.FC = () => {
+const ArrayDifferenceDemo = () => {
   const [list, setList] = useState<Person[]>(initialList);
   const [values, setValues] = useState<Person[]>([]);
   const [key, setKey] = useState<keyof Person>('id');

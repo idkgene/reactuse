@@ -4,18 +4,18 @@ import { useSorted } from '../useSorted';
 describe('useSorted', () => {
   const numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
 
-  it('should sort the array in ascendin order by default', () => {
+  it('should sort the array in ascending order by default', () => {
     const { result } = renderHook(() => useSorted(numbers));
     expect(result.current).toEqual([1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]);
   });
 
-  it('should sort the array usin a custom compare function', () => {
+  it('should sort the array using a custom compare function', () => {
     const compareFn = (a: number, b: number) => b - a;
     const { result } = renderHook(() => useSorted(numbers, compareFn));
     expect(result.current).toEqual([9, 6, 5, 5, 5, 4, 3, 3, 2, 1, 1]);
   });
 
-  it('should sort thehh array using a custom sort function', () => {
+  it('should sort the array using a custom sort function', () => {
     const sortFn = (arr: any[]) => arr.slice().reverse();
     const { result } = renderHook(() => useSorted(numbers, { sortFn }));
     expect(result.current).toEqual([5, 3, 5, 6, 2, 9, 5, 1, 4, 1, 3]);

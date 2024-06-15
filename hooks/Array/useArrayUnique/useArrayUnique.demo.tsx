@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import * as React from 'react';
 import { useArrayUnique } from './useArrayUnique';
 
 const objects = [
@@ -10,8 +10,8 @@ const objects = [
 ];
 
 const ArrayUniqueDemo = () => {
-  const [inputArray, setInputArray] = useState(objects);
-  const [useCustomComparator, setUseCustomComparator] = useState(false);
+  const [inputArray, setInputArray] = React.useState(objects);
+  const [useCustomComparator, setUseCustomComparator] = React.useState(false);
   const uniqueItems = useArrayUnique(
     inputArray,
     useCustomComparator ? (a, b) => a.id === b.id : undefined

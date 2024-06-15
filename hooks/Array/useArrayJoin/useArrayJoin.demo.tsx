@@ -1,5 +1,5 @@
 import React from 'react';
-import useArrayJoin from './useArrayJoin';
+import { useArrayJoin } from './useArrayJoin';
 
 const useArrayJoinDemo = () => {
   const list = [1, 2, 3, 4, 5];

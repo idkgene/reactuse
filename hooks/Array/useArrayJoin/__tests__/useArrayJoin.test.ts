@@ -1,4 +1,4 @@
-import useArrayJoin from '../useArrayJoin';
+import { useArrayJoin } from '../useArrayJoin';
 import { renderHook } from '@testing-library/react';
 
 describe('useArrayJoin', () => {

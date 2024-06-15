@@ -1,4 +1,4 @@
-import useArrayJoin from '../useArrayJoin';
+import { useArrayJoin } from '../useArrayJoin';
 import * as React from 'react';
 
 const Component = () => {

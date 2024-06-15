@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState } from 'react';
 import { useArrayEvery } from './useArrayEvery';
 
 type Person = {
@@ -15,11 +17,14 @@ const initialList: Person[] = [
   { id: 5, name: 'Eve', age: 45 },
 ];
 
-const ArrayEveryDemo: React.FC = () => {
+const ArrayEveryDemo = () => {
   const [list, setList] = useState<Person[]>(initialList);
   const [ageThreshold, setAgeThreshold] = useState<number>(18);
 
-  const isEveryPersonAboveAge = useArrayEvery(list, person => person.age >= ageThreshold);
+  const isEveryPersonAboveAge = useArrayEvery(
+    list,
+    person => person.age >= ageThreshold
+  );
 
   const handlePersonChange = (id: number, checked: boolean) => {
     if (checked) {
@@ -32,7 +37,9 @@ const ArrayEveryDemo: React.FC = () => {
     }
   };
 
-  const handleAgeThresholdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAgeThresholdChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAgeThreshold(Number(event.target.value));
   };
 
@@ -44,8 +51,6 @@ const ArrayEveryDemo: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">useArrayEvery Demo</h1>
-
       <div className="mb-4">
         <label htmlFor="ageThreshold" className="block mb-2 font-bold">
           Age Threshold:
@@ -88,15 +93,19 @@ const ArrayEveryDemo: React.FC = () => {
           <p>
             The first person below the threshold is{' '}
             <strong>
-              {firstPersonBelowThreshold.name} (age {firstPersonBelowThreshold.age})
+              {firstPersonBelowThreshold.name} (age{' '}
+              {firstPersonBelowThreshold.age})
             </strong>
             , who is{' '}
-            <strong>{ageThreshold - firstPersonBelowThreshold.age} years below the threshold.</strong>
-            </p>
+            <strong>
+              {ageThreshold - firstPersonBelowThreshold.age} years below the
+              threshold.
+            </strong>
+          </p>
         )}
       </div>
     </div>
   );
 };
 
-export default ArrayEveryDemo
+export default ArrayEveryDemo;

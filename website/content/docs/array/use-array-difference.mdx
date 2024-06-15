@@ -5,6 +5,10 @@ description: Collection of useful React hooks and utilities.
 
 `useArrayDifference` calculates the difference between two arrays. It returns a new array containing elements from the first array that are not present in the second array.
 
+## Demo
+
+<ArrayDifferenceDemo />
+
 ## Usage
 
 ```tsx
@@ -137,3 +141,5 @@ const difference = useArrayDifference([{ id: 1 }], [{ name: 'Alice' }], 'id');
 ### Inconsistent Data Types:
 
 Ensure both arrays contain comparable data types, especially when using direct comparison.
+
+import ArrayDifferenceDemo from '../../../../hooks/Array/useArrayDifference/useArrayDifference.demo';

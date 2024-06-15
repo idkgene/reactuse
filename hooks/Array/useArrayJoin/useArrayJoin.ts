@@ -19,8 +19,6 @@ import * as React from 'react';
  * const joinedNumbers = useArrayJoin(numbers, '-');
  * console.log(joinedNumbers); // Output: '1-2-3'
  */
-function useArrayJoin<T>(list: T[], separator?: string): string {
+export function useArrayJoin<T>(list: T[], separator?: string): string {
   return React.useMemo(() => list.join(separator), [list, separator]);
 }
-
-export default useArrayJoin;

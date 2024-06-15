@@ -5,6 +5,10 @@ description: Collection of useful React hooks and utilities.
 
 `useArrayEvery` is a React hook that checks if a given predicate function returns a truthy value for every element in an array. It mimics the behavior of JavaScript's `Array.every` method.
 
+## Demo
+
+<ArrayEveryDemo />
+
 ## Usage
 
 ```tsx
@@ -112,3 +116,5 @@ const result = useArrayEvery('not-an-array', num => num > 0);
 ```tsx
 const result = useArrayEvery([1, 2, 3], num => num > 0);
 ```
+
+import ArrayEveryDemo from '../../../../hooks/Array/useArrayEvery/useArrayEvery.demo';
