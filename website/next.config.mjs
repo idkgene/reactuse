@@ -1,6 +1,12 @@
 import createMDX from 'fumadocs-mdx/config';
 import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
 import { transformerTwoslash } from 'fumadocs-twoslash';
+import {
+  remarkDocGen,
+  fileGenerator,
+  remarkInstall,
+  typescriptGenerator,
+} from 'fumadocs-docgen';
 
 const withMDX = createMDX({
   mdxOptions: {
@@ -8,8 +14,31 @@ const withMDX = createMDX({
       transformers: [
         ...rehypeCodeDefaultOptions.transformers,
         transformerTwoslash(),
+        {
+          name: 'fumadocs:remove-escape',
+          code(element) {
+            element.children.forEach(line => {
+              if (line.type !== 'element') return;
+
+              line.children.forEach(child => {
+                if (child.type !== 'element') return;
+                const textNode = child.children[0];
+                if (!textNode || textNode.type !== 'text') return;
+
+                textNode.value = textNode.value.replace(/\[\\!code/g, '[!code');
+              });
+            });
+
+            return element;
+          },
+        },
       ],
     },
+    lastModifiedTime: 'git',
+    remarkPlugins: [
+      [remarkInstall, { Tabs: 'InstallTabs' }],
+      [remarkDocGen, { generators: [typescriptGenerator(), fileGenerator()] }],
+    ],
   },
 });
 

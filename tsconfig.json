@@ -1,16 +1,10 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["node_modules/@types"],
     "noEmit": true,
     "declaration": true,
     "declarationMap": true,
@@ -29,18 +23,22 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@hooks/*": [
-        "./hooks/*"
-      ],
-      "@lib": [
-        "./lib/utils.ts"
-      ],
-      "@utils": [
-        "./utils/utils.ts"
-      ]
+      "@/*": ["./*"],
+      "@hooks/*": ["./hooks/*"],
+      "@lib": ["./lib/utils.ts"],
+      "@utils": ["./utils/utils.ts"],
+      "@animation-hook": ["./hooks/Animation/*"],
+      "@array-hook": ["./hooks/Array*"],
+      "@browser-hook": ["./hooks/Browser/*"],
+      "@component-hook": ["./hooks/Component/*"],
+      "@date-hook": ["./hooks/Date/*"],
+      "@elements-hook": ["./hooks/Elements/*"],
+      "@math-hook": ["./hooks/Math/*"],
+      "@network-hook": ["./hooks/Network/*"],
+      "@sensor-hook": ["./hooks/Sensors/*"],
+      "@state-hook": ["./hooks/State/*"],
+      "@utility-hook": ["./hooks/Utilities/*"],
+      "@watch-hook": ["./hooks/Watch/*"]
     }
   },
   "include": [
@@ -50,7 +48,5 @@
     "jest.config.js",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

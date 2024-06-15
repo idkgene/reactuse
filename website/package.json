@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "fumadocs-core": "^11.3.2",
+    "fumadocs-docgen": "^1.0.2",
     "fumadocs-mdx": "^8.2.27",
     "fumadocs-twoslash": "^1.0.3",
+    "fumadocs-typescript": "^2.0.1",
     "fumadocs-ui": "^11.3.2",
     "next": "^14.2.3",
     "react": "^18.3.1",

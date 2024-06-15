@@ -16,7 +16,19 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@animation-hook": ["../hooks/Animation/*"],
+      "@array-hook": ["../hooks/Array*"],
+      "@browser-hook": ["../hooks/Browser/*"],
+      "@component-hook": ["../hooks/Component/*"],
+      "@date-hook": ["../hooks/Date/*"],
+      "@elements-hook": ["../hooks/Elements/*"],
+      "@math-hook": ["../hooks/Math/*"],
+      "@network-hook": ["../hooks/Network/*"],
+      "@sensor-hook": ["../hooks/Sensors/*"],
+      "@state-hook": ["../hooks/State/*"],
+      "@utility-hook": ["../hooks/Utilities/*"],
+      "@watch-hook": ["../hooks/Watch/*"]
     },
     "plugins": [
       {
@@ -24,6 +36,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
