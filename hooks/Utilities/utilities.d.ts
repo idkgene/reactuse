@@ -1,389 +1,333 @@
-import * as React from 'react'
+import { MutableRefObject } from 'react';
 
 /**
  * Defines a type that excludes `null` and `undefined` values from the given type `T`.
  *
- * @typeparam T - The original type.
+ * @param T - The original type.
  * @returns A new type that excludes `null` and `undefined` values.
  */
-export type Defined<T> = Exclude<T, null | undefined>
+export type Defined<T> = Exclude<T, null | undefined>;
 
 /**
- * @template T
+ * A task function that is executed in the async queue.
+ *
+ * @type {(...args: any[]) => T | Promise<T>} UseAsyncQueueTask
+ * @template T - The type of the task result.
+ */
+export type UseAsyncQueueTask<T> = (...args: any[]) => T | Promise<T>;
+
+/**
+ * Represents the result of an individual task in the async queue.
+ *
+ * @type {Object} UseAsyncQueueResult
+ * @template T - The type of the task result.
+ * @property {'aborted' | 'fulfilled' | 'pending' | 'rejected'} state - The state of the task.
+ * @property {T | null} data - The result data of the task, or null if the task is not fulfilled.
+ */
+export type UseAsyncQueueResult<T> = {
+  state: 'aborted' | 'fulfilled' | 'pending' | 'rejected';
+  data: T | null;
+};
+
+/**
+ * The return object provided by the `useAsyncQueue` hook.
+ *
+ * @type {Object} UseAsyncQueueReturn
+ * @template T - An array of task result types.
+ * @property {number} activeIndex - The index of the currently executing task.
+ * @property {UseAsyncQueueResult<T[P]>[]} result - An array of results for each task in the queue.
+ */
+export type UseAsyncQueueReturn<T extends unknown[]> = {
+  activeIndex: number;
+  result: {
+    [P in keyof T]: UseAsyncQueueResult<T[P]>;
+  };
+};
+
+/**
+ * Options to customize the behavior of the async queue.
+ *
+ * @type {Object} UseAsyncQueueOptions
+ * @property {boolean} [interrupt=true] - Whether to stop executing subsequent tasks if a task fails.
+ * @property {() => void} [onError] - A callback function that's called when a task fails.
+ * @property {() => void} [onFinished] - A callback function that's called when all tasks have finished executing.
+ * @property {AbortSignal} [signal] - An AbortSignal to cancel the queue execution.
+ */
+export type UseAsyncQueueOptions = {
+  interrupt?: boolean;
+  onError?: () => void;
+  onFinished?: () => void;
+  signal?: AbortSignal;
+};
+
+/**
+ * Options for customizing the cloning behavior in the `useCloned` hook.
+ *
  * @interface UseClonedOptions
- * @description Options for the `useCloned` hook.
+ * @template T - The type of the source object.
+ * @property {(source: T) => T} [clone=cloneFnJSON] - A function to clone the source object.
+ * @property {boolean} [manual=false] - Whether to manually control when the clone is updated.
  */
 export interface UseClonedOptions<T = any> {
-  /**
-   * @typeparam T - The type of the value to be cloned.
-   * @description Custom clone function. By default, it uses `JSON.parse(JSON.stringify(value))` to clone.
-   */
-  clone?: (source: T) => T
-
-  /**
-   * @typeparam T - The type of the value to be cloned.
-   * @description Manually sync the ref.
-   * @default false
-   */
-  manual?: boolean
+  clone?: (source: T) => T;
+  manual?: boolean;
 }
 
 /**
- * @template T
+ * The return object provided by the `useCloned` hook.
+ *
  * @interface UseClonedReturn
- * @description The return type of the `useCloned` hook.
+ * @template T - The type of the source object.
+ * @property {MutableRefObject<T>} cloned - The reference to the cloned object.
+ * @property {() => void} sync - A function to manually sync the clone with the source.
  */
 export interface UseClonedReturn<T> {
-  /**
-   * @typeparam T - The type of the cloned value.
-   * @description Cloned ref.
-   */
-  cloned?: React.MutableRefObject<T>
-
-  /**
-   * @description Sync cloned data with the source manually.
-   */
-  sync: () => void
+  cloned?: MutableRefObject<T>;
+  sync: () => void;
 }
 
 /**
+ * Options for configuring the `useCounter` hook.
+ *
  * @interface UseCounterOptions
- * @description Options for the `useCounter` hook.
+ * @property {number} [min] - The minimum value the counter can have.
+ * @property {number} [max] - The maximum value the counter can have.
  */
 export interface UseCounterOptions {
-  /**
-   * @description Minimum value for the counter.
-   */
-  min?: number
-
-  /**
-   * @description Maximum value for the counter.
-   */
-  max?: number
+  min?: number;
+  max?: number;
 }
 
 /**
+ * The return object provided by the `useCounter` hook.
+ *
  * @interface UseCounterResult
- * @description The return type of the `useCounter` hook.
+ * @property {number} count - The current count value.
+ * @property {(delta?: number) => void} inc - Function to increment the count by a specified delta.
+ * @property {(delta?: number) => void} dec - Function to decrement the count by a specified delta.
+ * @property {() => number} get - Function to get the current count value.
+ * @property {(value: number) => void} set - Function to set the count to a specific value.
+ * @property {(value?: number) => void} reset - Function to reset the count to the initial value or a specified value.
  */
 export interface UseCounterResult {
-  /**
-   * @type {number}
-   * @description The current count value.
-   */
-  count: number
-
-  /**
-   * @type {(delta?: number) => void}
-   * @description Increments the count value by the specified delta.
-   */
-  inc: (delta?: number) => void
-
-  /**
-   * @type {(delta?: number) => void}
-   * @description Increments the count value by the specified delta.
-   */
-  dec: (delta?: number) => void
-
-  /**
-   * @type {() => number}
-   * @description Returns the current count value.
-   */
-  get: () => number
-
-  /**
-   * @type {(value: number) => void}
-   * @description Sets the count to a specific value, respecting the optional min and max limits.
-   */
-  set: (value: number) => void
-
-  /**
-   * @type {(value?: number) => void}
-   * @description Resets the count to the initial value or a specified value, respecting the optional min and max limits.
-   */
-  reset: (value?: number) => void
+  count: number;
+  inc: (delta?: number) => void;
+  dec: (delta?: number) => void;
+  get: () => number;
+  set: (value: number) => void;
+  reset: (value?: number) => void;
 }
 
 /**
- * @template T
+ * Options for customizing the behavior of the `useCycleList` hook.
+ *
  * @interface UseCycleListOptions
- * @description Options for the `useCycleList` hook.
+ * @template T - The type of items in the list.
+ * @property {T} [initialValue] - The initial value to start at.
+ * @property {number} [fallbackIndex=0] - The index to fall back to if the initial value is not found in the list.
+ * @property {(value: T, list: T[]) => number} [getIndexOf] - A function to find the index of an item in the list.
  */
 export interface UseCycleListOptions<T> {
-  /**
-   * @type {T}
-   * @description The initial value of the state. A ref can be provided to reuse.
-   */
-  initialValue?: T
-
-  /**
-   * @type {number}
-   * @default 0
-   * @description The default index to fall back to.
-   */
-  fallbackIndex?: number
-
-  /**
-   * @type {(value: T, list: T[]) => number}
-   * @description Custom function to get the index of the current value.
-   */
-  getIndexOf?: (value: T, list: T[]) => number
+  initialValue?: T;
+  fallbackIndex?: number;
+  getIndexOf?: (value: T, list: T[]) => number;
 }
 
 /**
- * @template T
+ * The return object provided by the `useCycleList` hook.
+ *
  * @interface UseCycleListReturn
- * @description The return type of the `useCycleList` hook.
+ * @template T - The type of items in the list.
+ * @property {T} state - The current state value.
+ * @property {number} index - The current index.
+ * @property {(n?: number) => T} next - Function to move to the next item.
+ * @property {(n?: number) => T} prev - Function to move to the previous item.
+ * @property {(i: number) => T} go - Function to move to a specific item.
  */
 export interface UseCycleListReturn<T> {
-  /**
-   * @type {T}
-   * @description The current state value.
-   */
-  state: T
-
-  /**
-   * @type {number}
-   * @description The current index of the state value.
-   */
-  index: number
-
-  /**
-   * @type {(n?: number) => T}
-   * @description Move to the next item in the list.
-   */
-  next: (n?: number) => T
-
-  /**
-   * @type {(n?: number) => T}
-   * @description Move to the previous item in the list.
-   */
-  prev: (n?: number) => T
-
-  /**
-   * @type {(i: number) => T}
-   * @description Go to a specific index in the list.
-   */
-  go: (i: number) => T
+  state: T;
+  index: number;
+  next: (n?: number) => T;
+  prev: (n?: number) => T;
+  go: (i: number) => T;
 }
 
 /**
- * @template T
- * @interface UseDebounceOptions
- * @description Options for the `useDebounce` hook.
- */
-export interface UseDebounceOptions<T> {
-  /**
-   * @type {T}
-   * @description The initial value to be returned by the hook.
-   */
-  initialValue?: T
-
-  /**
-   * @type {(prev: T, next: T) => boolean}
-   * @description A function to determine if the debounce should be triggered.
-   */
-  shouldDebounce?: (prev: T, next: T) => boolean
-}
-
-/**
- * @template T
- * @type {Object}
- * @description A utility type that creates a destructurable object from a given object type `T`.
- */
-export type DestructurableObject<T extends Record<string, unknown>> = {
-  [K in keyof T]: T[K]
-}
-
-/**
- * @template A
- * @type {Object}
- * @description A utility type that creates a destructurable array from a given array type `A`.
- */
-export type DestructurableArray<A extends readonly any[]> = {
-  [K in keyof A]: A[K]
-}
-
-/**
- * @template T
- * @template A
- * @type {Object}
- * @description A utility type that creates a destructurable object from a given object type `T` and a given array type `A`.
- */
-export type MakeDestructurableResult<
-  T extends Record<string, unknown>,
-  A extends readonly any[],
-> = DestructurableObject<T> & DestructurableArray<A>
-
-/**
- * @type {string}
- * @description A type representin a language code.
- */
-export type LanguageCode = string
-
-/**
- * @description Options for the `usePreferredLanguage` hook.
- */
-export interface UsePreferredLanguageOptions {
-  /**
-   * @description A callback function that triggers when the language changes.
-   * @param {LanguageCode} languageCode - The new language code.
-   * @returns {void}
-   */
-  onLanguageChange?: (languageCode: LanguageCode) => void
-
-  /**
-   * @type {LanguageCode}
-   * @description The initial language code to use.
-   * @default 'en'
-   */
-  initialLanguage?: LanguageCode
-}
-
-/**
- * @type {T | undefined}
- * @template T - The type of the value being tracked.
- */
-export type PreviousValue<T> = T | undefined
-
-/**
- * @type {() => unknown}
- * @description A type representing a callback function that checks for feature support.
- */
-export type SupportCheckCallback = () => unknown
-
-/**
- * @type {any[]}
- * @description A type representing arguments of a function.
- */
-export type FunctionArgs = any[]
-
-/**
+ * Options for configuring the debounce behavior.
  *
- * @template T - The type of the function arguments.
- * @description A type representing a function that returns a Promise.
- * @type {(...args: T) => Promise<void>}
+ * @interface DebounceOptions
+ * @property {number} [wait=0] - The wait time in milliseconds before updating the debounced value.
+ * @property {boolean} [leading=false] - Whether to update the value immediately on leading edge.
+ * @property {boolean} [trailing=true] - Whether to update the value at the trailing edge.
+ * @property {number} [maxWait] - The maximum wait time in milliseconds before forcing the update.
  */
-export type PromiseType<T extends FunctionArgs> = (...args: T) => Promise<void>
+export interface DebounceOptions {
+  wait?: number;
+  leading?: boolean;
+  trailing?: boolean;
+  maxWait?: number;
+}
 
 /**
+ * Options for controlling the debounce behavior.
  *
- * @template T - The type of the function arguments.
- * @description A type representing a callback function.
- * @type {(...args: T) => void}
- */
-export type CallbackType<T extends FunctionArgs> = (...args: T) => void
-
-/**
  * @interface DebounceFilterOptions
- * @description Options for the `useDebounceFn` hook.
+ * @property {number} [maxWait=0] - The maximum wait time in milliseconds before forcing the function to execute.
+ * @property {boolean} [rejectOnCancel=false] - Whether to reject the promise when the function execution is cancelled.
  */
 export interface DebounceFilterOptions {
-  /**
-   * @type {number}
-   * @description The maximum time in milliseconds to delay before invoking the function.
-   */
-  maxWait?: number
-
-  /**
-   * @description If `true`, the promise returned by `useDebounceFn` will be rejected when the debounced function is cancelled.
-   * If `false`, the promise will resolve.
-   * @type {boolean}
-   * @default false
-   */
-  rejectOnCancel?: boolean
+  maxWait?: number;
+  rejectOnCancel?: boolean;
 }
 
 /**
+ * A utility type that creates a destructible object from a given object type `T`.
+ *
+ * @type {Object} DestructibleObject
+ * @template T - The type of the object.
+ * @property {K} [K in keyof T] - Each property of the object.
+ */
+export type DestructibleObject<T extends Record<string, unknown>> = {
+  [K in keyof T]: T[K];
+};
+
+/**
+ * A utility type that creates a destructible array from a given array type `A`.
+ *
+ * @type {Object} DestructibleArray
+ * @template A - The type of the array.
+ * @property {K} [K in keyof A] - Each element of the array.
+ */
+export type DestructibleArray<A extends readonly any[]> = {
+  [K in keyof A]: A[K];
+};
+
+/**
+ * A utility type that creates a destructible object from a given object type `T` and a given array type `A`.
+ *
+ * @typedef {Object} MakeDestructibleResult
+ * @template T - The type of the object.
+ * @template A - The type of the array.
+ * @property {K} [K in keyof T | keyof A] - Each property of the object and each element of the array.
+ */
+export type MakeDestructibleResult<
+  T extends Record<string, unknown>,
+  A extends readonly any[],
+> = DestructibleObject<T> & DestructibleArray<A>;
+
+/**
+ * A type representing a language code.
+ *
+ * @type {string} LanguageCode
+ */
+export type LanguageCode = string;
+
+/**
+ * Options for the `usePreferredLanguage` hook.
+ *
+ * @interface UsePreferredLanguageOptions
+ * @property {(languageCode: LanguageCode) => void} [onLanguageChange] - A callback function triggered when the language changes.
+ * @property {LanguageCode} [initialLanguage='en'] - The initial language code to use.
+ */
+export interface UsePreferredLanguageOptions {
+  onLanguageChange?: (languageCode: LanguageCode) => void;
+  initialLanguage?: LanguageCode;
+}
+
+/**
+ * Represents the previous value of a given type or `undefined`.
+ *
+ * @type {T | undefined} PreviousValue
+ * @template T - The type of the value being tracked.
+ */
+export type PreviousValue<T> = T | undefined;
+
+/**
+ * A callback function that checks for feature or capability support.
+ *
+ * @type {() => unknown} SupportCheckCallback
+ */
+export type SupportCheckCallback = () => unknown;
+
+/**
+ * An array of any types representing function arguments.
+ *
+ * @type {any[]} FunctionArgs
+ */
+export type FunctionArgs = any[];
+
+/**
+ * A type representing a function that returns a promise.
+ *
+ * @type {(...args: T) => Promise<void>} PromiseType
+ * @template T - The argument types of the function.
+ */
+export type PromiseType<T extends FunctionArgs> = (...args: T) => Promise<void>;
+
+/**
+ * A type representing a callback function.
+ *
+ * @type {(...args: T) => void} CallbackType
+ * @template T - The argument types of the function.
+ */
+export type CallbackType<T extends FunctionArgs> = (...args: T) => void;
+
+/**
+ * Options for the `useTimeoutPoll` hook.
+ *
  * @interface UseTimeoutPollOptions
- * @description Options for the `useTimeoutPoll` hook.
+ * @property {boolean} [immediate=true] - Whether to start polling immediately.
  */
 export interface UseTimeoutPollOptions {
-  /**
-   * @type {boolean}
-   * @description Indicates whether the polling should start immediately.
-   * @default true
-   */
-  immediate?: boolean
+  immediate?: boolean;
 }
 
 /**
+ * An interface to control the polling state.
+ *
  * @interface Pausable
- * @description an object with pause and resume capabilities.
+ * @property {boolean} isActive - Indicates if the polling is active.
+ * @property {() => void} pause - Pauses the polling.
+ * @property {() => void} resume - Resumes the polling.
  */
 export interface Pausable {
-  /**
-   * @type {boolean}
-   * @description Indicates whether the polling is currently active.
-   */
-  isActive: boolean
-
-  /**
-   * @returns {void}
-   * @description Pauses the polling.
-   */
-  pause: () => void
-
-  /**
-   * Resumes the polling.
-   * @returns {void}
-   */
-  resume: () => void
+  isActive: boolean;
+  pause: () => void;
+  resume: () => void;
 }
 
 /**
+ * Options for the `useToggle` hook.
+ *
  * @interface UseToggleOptions
- * @description Options for the `useToggle` hook.
  * @template Truthy - The type of the "truthy" value.
  * @template Falsy - The type of the "falsy" value.
+ * @property {Truthy} [truthyValue=true as Truthy] - The value representing the "truthy" state.
+ * @property {Falsy} [falsyValue=false as Falsy] - The value representing the "falsy" state.
  */
 export interface UseToggleOptions<Truthy, Falsy> {
-  /**
-   * @type {Truthy}
-   * @description The value representing the "truthy" state.
-   * @default true
-   */
-  truthyValue?: Truthy
-
-  /**
-   * @type {Falsy}
-   * @description The value representing the "falsy" state.
-   * @default false
-   */
-  falsyValue?: Falsy
+  truthyValue?: Truthy;
+  falsyValue?: Falsy;
 }
 
 /**
+ * Options for the `useToNumber` hook.
+ *
  * @interface UseToNumberOptions
- * @description Options for the `useToNumber` hook.
- * @template T - The type of the value to be converted.
+ * @property {'parseFloat' | 'parseInt'} [method='parseFloat'] - Specifies the method to convert the value.
+ * @property {number} [radix=10] - The radix to use when `method` is 'parseInt'.
+ * @property {boolean} [nanToZero=false] - If true, returns 0 instead of NaN when the conversion fails.
  */
 export interface UseToNumberOptions {
-  /**
-   * @type {'parseFloat' | 'parseInt'}
-   * @description Specifies the method to convert the value: 'parseFloat' or 'parseInt'.
-   * @default 'parseFloat'
-   */
-  method?: 'parseFloat' | 'parseInt'
-
-  /**
-   * @type {number}
-   * @description The radix to use when `method` is 'parseInt'.
-   * @default 10
-   */
-  radix?: number
-
-  /**
-   * @type {boolean}
-   * @descriptionIf true, returns 0 instead of NaN when the conversion fails.
-   * @default false
-   */
-  nanToZero?: boolean
+  method?: 'parseFloat' | 'parseInt';
+  radix?: number;
+  nanToZero?: boolean;
 }
 
 /**
- * @type {Object}
- * @template T - The type of the value to be resolved.
- * @description Representing either a value or a function returning a value.
+ * A type representing a value or a function returning a value.
+ *
+ * @type {T | (() => T)} Resolvable
+ * @template T - The type of the value.
  */
-export type Resolvable<T> = T | (() => T)
+export type Resolvable<T> = T | (() => T);
