@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useCallback, useMemo } from 'react';
+
 import type { UseArrayFindLastPredicate } from '../array';
 
 /**
@@ -24,9 +25,9 @@ export function useArrayFindLast<T>(
   list: T[],
   predicate: UseArrayFindLastPredicate<T>
 ): T | undefined {
-  const memoizedPredicate = React.useCallback(predicate, [predicate]);
+  const memoizedPredicate = useCallback(predicate, [predicate]);
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (typeof memoizedPredicate !== 'function') {
       console.error('Invalid predicate function provided to useArrayFindLast.');
       return undefined;
