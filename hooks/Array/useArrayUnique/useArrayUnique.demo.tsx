@@ -1,92 +1,79 @@
 'use client';
-import * as React from 'react';
+
+import { useState } from 'react';
+
 import { useArrayUnique } from './useArrayUnique';
 
-const objects = [
-  { id: 1, name: 'Apple' },
-  { id: 2, name: 'Banana' },
-  { id: 1, name: 'Apple' },
-  { id: 3, name: 'Cherry' },
-];
-
-const ArrayUniqueDemo = () => {
-  const [inputArray, setInputArray] = React.useState(objects);
-  const [useCustomComparator, setUseCustomComparator] = React.useState(false);
-  const uniqueItems = useArrayUnique(
-    inputArray,
-    useCustomComparator ? (a, b) => a.id === b.id : undefined
+export default function ArrayUniqueDemo() {
+  const [inputValue, setInputValue] = useState('');
+  const [compareFnValue, setCompareFnValue] = useState(
+    '(a, b) => a.id === b.id'
   );
-
-  const handleInputChange = (
-    index: number,
-    field: 'id' | 'name',
-    value: string
-  ) => {
-    setInputArray(prevArray => {
-      const newArray = [...prevArray];
-      newArray[index] = { ...newArray[index], [field]: value };
-      return newArray;
-    });
-  };
+  const items = inputValue
+    .split(',')
+    .map((item, index) => ({ id: index + 1, value: item.trim() }));
+  const uniqueItems = useArrayUnique(items, (a, b) => {
+    try {
+      const func = eval(compareFnValue);
+      return func(a, b);
+    } catch (error) {
+      return a.value === b.value;
+    }
+  });
 
   return (
-    <div className="container mx-auto p-8 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">
-        useArrayUnique Demo
-      </h2>
-
-      <div className="mb-6">
-        <label
-          htmlFor="customComparator"
-          className="inline-flex items-center space-x-2 cursor-pointer"
-        >
-          <input
-            id="customComparator"
-            type="checkbox"
-            className="form-checkbox rounded-md h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-            checked={useCustomComparator}
-            onChange={() => setUseCustomComparator(!useCustomComparator)}
-          />
-          <span className="text-gray-700">
-            Use Custom Comparator (compare by ID)
-          </span>
-        </label>
-      </div>
-
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2 text-gray-800">
-          Input Array:
-        </h3>
-        <ul className="list-decimal pl-6 space-y-2">
-          {inputArray.map((item, index) => (
-            <li key={index} className="flex items-center space-x-4">
-              <input
-                type="text"
-                className="border rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={item.id}
-                onChange={e => handleInputChange(index, 'id', e.target.value)}
-              />
-              <input
-                type="text"
-                className="border rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={item.name}
-                onChange={e => handleInputChange(index, 'name', e.target.value)}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-2 text-gray-800">
-          Unique Items:
-        </h3>
-        <pre className="bg-gray-100 rounded-md p-4 text-sm">
-          {JSON.stringify(uniqueItems, null, 2)}
-        </pre>
+    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <div className="mb-4">
+            <label
+              htmlFor="input"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Enter items (comma-separated):
+            </label>
+            <input
+              id="input"
+              type="text"
+              value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="compareFn"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Enter custom compare function:
+            </label>
+            <input
+              id="compareFn"
+              type="text"
+              value={compareFnValue}
+              onChange={e => setCompareFnValue(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="bg-gray-100 p-4 rounded-md">
+            <p className="text-lg font-semibold mb-2">Original items:</p>
+            <ul className="list-disc pl-6">
+              {items.map(item => (
+                <li key={item.id}>{item.value}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-gray-100 p-4 rounded-md mt-4">
+            <p className="text-lg font-semibold mb-2">Unique items:</p>
+            <ul className="list-disc pl-6">
+              {uniqueItems.map(item => (
+                <li key={item.id}>{item.value}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default ArrayUniqueDemo;
+}

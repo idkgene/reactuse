@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useMemo, useCallback } from 'react';
 
 /**
  * Returns a unique array of items based on a custom comparison function.
@@ -19,7 +19,7 @@ export function useArrayUnique<T>(
   items: T[],
   compareFn?: (a: T, b: T, array: T[]) => boolean
 ): T[] {
-  const compareItems = React.useCallback(
+  const compareItems = useCallback(
     (a: T, b: T, array: T[]) => {
       if (compareFn) {
         return compareFn(a, b, array);
@@ -29,7 +29,7 @@ export function useArrayUnique<T>(
     [compareFn]
   );
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     const uniqueItems: T[] = [];
     items.forEach(item => {
       if (
