@@ -1,61 +1,85 @@
-import React, { useMemo, useState } from 'react';
+'use client';
 
-interface ListItem {
-  id: number;
-  value: number;
-}
+import { useState } from 'react';
 
-const UseArrayReduceDemo: React.FC = () => {
-  const [list, setList] = useState<ListItem[]>([
-    { id: 1, value: 5 },
-    { id: 2, value: 10 },
-    { id: 3, value: 15 },
-  ]);
+import { useArrayReduce } from '../useArrayReduce';
 
-  const handleAddItem = () => {
-    const nextId =
-      list.length > 0 ? Math.max(...list.map(item => item.id)) + 1 : 1;
-    setList([...list, { id: nextId, value: Math.floor(Math.random() * 100) }]);
-  };
-
-  const handleRemoveItem = (id: number) => {
-    setList(list.filter(item => item.id !== id));
-  };
-
-  const sum = useMemo(() => {
-    return list.reduce((acc, item) => acc + item.value, 0);
-  }, [list]);
+export default function ArrayReduceDemo() {
+  const [inputValue, setInputValue] = useState('');
+  const [reducerFunction, setReducerFunction] = useState(
+    '(acc, item) => acc + item'
+  );
+  const [initialValue, setInitialValue] = useState('0');
+  const items = inputValue.split(',').map(item => parseInt(item.trim(), 10));
+  const reducedValue = useArrayReduce(
+    items,
+    (acc, item) => {
+      try {
+        const func = eval(reducerFunction);
+        return func(acc, item);
+      } catch (error) {
+        return acc;
+      }
+    },
+    parseInt(initialValue, 10)
+  );
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="mb-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddItem}
-        >
-          Add an element
-        </button>
-      </div>
-
-      <ul className="list-disc list-inside">
-        {list.map(item => (
-          <li key={item.id} className="flex items-center justify-between">
-            <span>Value: {item.value}</span>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-sm"
-              onClick={() => handleRemoveItem(item.id)}
+    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <div className="mb-4">
+            <label
+              htmlFor="input"
+              className="block text-gray-700 font-bold mb-2"
             >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-4">
-        <p className="text-lg font-semibold">Sum of values: {sum}</p>
+              Enter numbers (comma-separated):
+            </label>
+            <input
+              id="input"
+              type="text"
+              value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="reducerFunction"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Enter reducer function:
+            </label>
+            <input
+              id="reducerFunction"
+              type="text"
+              value={reducerFunction}
+              onChange={e => setReducerFunction(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="initialValue"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Enter initial value:
+            </label>
+            <input
+              id="initialValue"
+              type="text"
+              value={initialValue}
+              onChange={e => setInitialValue(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="bg-gray-100 p-4 rounded-md">
+            <p className="text-lg font-semibold mb-2">Reduced value:</p>
+            <p className="text-gray-800">{reducedValue}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default UseArrayReduceDemo;
+}

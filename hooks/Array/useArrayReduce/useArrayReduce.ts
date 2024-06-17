@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import type { UseArrayReduceCallback } from '../array';
 
 /**
@@ -26,7 +27,7 @@ export function useArrayReduce<T, U>(
   reducer: UseArrayReduceCallback<U, T, U>,
   initialValue: U
 ): U {
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (!Array.isArray(list)) {
       console.error(
         'Invalid list provided to useArrayReduce. Expected an array.'
