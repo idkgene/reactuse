@@ -1,35 +1,32 @@
-import { useRef, useEffect, useCallback } from 'react'
-import { UseClonedOptions, UseClonedReturn } from '../utilities'
-import { cloneFnJSON } from '@/lib/utils'
+import { useRef, useEffect, useCallback } from 'react';
+
+import { UseClonedOptions, UseClonedReturn } from '../utilities';
 
 /**
- * @name useCloned
- * @description A React hook that creates a deep clone of an object and keeps it synchronized with the source object.
+ * Clones an object using JSON serialization and deserialization.
  *
- * @returns {UseClonedReturn<T>} An object containing the cloned object and a synchronization function.
+ * @param {T} source - The object to be cloned.
+ * @returns {T} A deep clone of the input object.
+ * @template T - The type of the object to be cloned.
+ */
+export function cloneFnJSON<T>(source: T): T {
+  return JSON.parse(JSON.stringify(source));
+}
+
+/**
+ * Keeps a cloned reference of a given source object with the option to manually or automatically sync changes.
+ *
+ * @template T - The type of the source object.
+ * @param {T} source - The original source object to be cloned.
+ * @param {UseClonedOptions<T>} [options] - Options for customizing the cloning behavior.
+ * @param {(source: T) => T} [options.clone=cloneFnJSON] - A function to clone the source object.
+ * @param {boolean} [options.manual=false] - Whether to manually control when the clone is updated.
+ * @returns {UseClonedReturn<T>} An object containing the cloned reference and a function to sync the clone with the source.
  *
  * @example
- * const MyComponent = () => {
- *   const [state, setState] = useState({ count: 0 });
- *   const { cloned, sync } = useCloned(state);
- *
- *   // Modify the cloned object
- *   cloned.current.count++;
- *
- *   // Synchronize the state with the cloned object
- *   const handleClick = () => {
- *     sync();
- *     setState(cloned.current);
- *   };
- *
- *   return (
- *     <div>
- *       <p>State: {state.count}</p>
- *       <p>Cloned: {cloned.current.count}</p>
- *       <button onClick={handleClick}>Increment</button>
- *     </div>
- *   );
- * };
+ * Basic usage with automatic syncing
+ * const { cloned, sync } = useCloned({ name: 'Alice', age: 25 });
+ * console.log(cloned.current); // Output: { name: 'Alice', age: 25 }
  */
 export function useCloned<T>(
   source: T,
@@ -37,18 +34,18 @@ export function useCloned<T>(
 ): UseClonedReturn<T> {
   const cloned = useRef<T>(
     options?.clone ? options.clone(source) : cloneFnJSON(source)
-  )
-  const { manual = false, clone = cloneFnJSON } = options || {}
+  );
+  const { manual = false, clone = cloneFnJSON } = options || {};
 
   const sync = useCallback(() => {
-    cloned.current = clone(source)
-  }, [source, clone])
+    cloned.current = clone(source);
+  }, [source, clone]);
 
   useEffect(() => {
     if (!manual) {
-      sync()
+      sync();
     }
-  }, [source, manual, sync])
+  }, [source, manual, sync]);
 
-  return { cloned, sync }
+  return { cloned, sync };
 }
