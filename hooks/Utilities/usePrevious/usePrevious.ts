@@ -1,27 +1,27 @@
-import { useEffect, useRef } from 'react'
-import { PreviousValue } from '../utilities'
+import { useEffect, useRef } from 'react';
+
+import { PreviousValue } from '../utilities';
 
 /**
- * @name usePrevious
- * @description A custom hook to keep track of the previous value of a stage or prop.
+ * Returns the previous value of a given variable.
  *
- * @returns {(T | undefined)} - The previous value of the state or prop.
+ * @template T - The type of the value being tracked.
+ * @param {T} value - The current value whose previous value is to be tracked.
+ * @param {T} [initialValue] - An optional initial value to return before the first update.
+ * @returns {PreviousValue<T>} The previous value of the given variable, or the initial value if provided.
  *
  * @example
- * Usage example:
+ * Tracking the previous count value
  * const [count, setCount] = useState(0);
  * const prevCount = usePrevious(count);
- *
- * useEffect(() => {
- *   console.log(`Current count: ${count}, Previous count: ${prevCount}`);
- * }, [count, prevCount]);
+ * console.log(`Previous count: ${prevCount}, Current count: ${count}`);
  */
 export function usePrevious<T>(value: T, initialValue?: T): PreviousValue<T> {
-  const ref = useRef<T | undefined>(initialValue)
+  const ref = useRef<T | undefined>(initialValue);
 
   useEffect(() => {
-    ref.current = value
-  }, [value])
+    ref.current = value;
+  }, [value]);
 
-  return ref.current
+  return ref.current;
 }
