@@ -1,41 +1,45 @@
-import { useState, useCallback, SetStateAction, Dispatch } from 'react'
+import { useState, useCallback } from 'react';
 
-type UseBooleanReturn = [boolean, () => void, Dispatch<SetStateAction<boolean>>]
+import type { SetStateAction, Dispatch } from 'react';
 
 /**
- * @function useBoolean
- * @description This hook provides a boolean state with a toggle function and a setter function, making it easy
- * to control boolean states like toggles, checkboxes, visibility flags, etc. The hook initializes the
- * boolean state to the provided initial value of defaults to `false`
+ * Type representing the return value of the `useBoolean` hook.
+ *
+ * @param {boolean} boolean - The current boolean value.
+ * @param {() => void} toggle - A function to toggle the boolean value.
+ * @param {Dispatch<SetStateAction<boolean>>} setValue - A function to set the boolean value directly.
+ */
+export type UseBooleanReturn = [
+  boolean,
+  () => void,
+  Dispatch<SetStateAction<boolean>>,
+];
+
+/**
+ * A custom hook to manage a boolean state value with a toggle function.
  *
  * @param {boolean} [initialValue=false] - The initial boolean value.
- * @returns {UseBooleanReturn} A tuple containing:
- * 1. The current boolean value.
- * 2. A function to toggle the boolean value.
- * 3. A dispatch function to manually set the boolean value.
+ * @returns {[boolean, () => void, Dispatch<SetStateAction<boolean>>]} An array containing:
+ * - The current boolean value.
+ * - A function to toggle the boolean value.
+ * - A function to set the boolean value directly.
  *
  * @example
- * import { useBoolean } from './useBoolean';
+ * Example usage of useBoolean
+ * const [isVisible, toggleVisibility, setVisibility] = useBoolean(false);
  *
- * const UseBooleanDemo = () => {
- * const [isToggled, toggleIsToggled, setIsToggled] = useBoolean(false)
+ * Toggle the visibility
+ * toggleVisibility();
  *
- * return (
- *  <div>
- *    <p>The toggle is {isToggled ? 'ON' : 'OFF'}.</p>
- *    <button onClick={toggleIsToggled}>Toggle</button>
- *    <button onClick={() => setIsToggled(true)}>Turn ON</button>
- *    <button onClick={() => setIsToggled(false)}>Turn OFF</button>
- * </div>
- *  )
- * }
+ * Set visibility to true directly
+ * setVisibility(true);
  */
 export const useBoolean = (initialValue = false): UseBooleanReturn => {
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(initialValue);
 
   const toggle = useCallback(() => {
-    setValue((prevValue) => !prevValue)
-  }, [])
+    setValue(prevValue => !prevValue);
+  }, []);
 
-  return [value, toggle, setValue]
-}
+  return [value, toggle, setValue];
+};

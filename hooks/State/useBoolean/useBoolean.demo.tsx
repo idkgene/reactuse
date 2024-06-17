@@ -1,13 +1,12 @@
 'use client';
-import React from 'react';
-import { useBoolean } from './useBoolean';
-import Demo from '@/components/Common/Demo/demo';
 
-const UseBooleanDemo = () => {
+import { useBoolean } from './useBoolean';
+
+export default function UseBooleanDemo() {
   const [isToggled, toggleIsToggled, setIsToggled] = useBoolean(false);
 
   return (
-    <Demo href="#">
+    <>
       <p>
         The toggle is{' '}
         {isToggled ? (
@@ -22,10 +21,6 @@ const UseBooleanDemo = () => {
         <button onClick={() => setIsToggled(true)}>Turn ON</button>
         <button onClick={() => setIsToggled(false)}>Turn OFF</button>
       </div>
-    </Demo>
-    // <div>
-    // </div>
+    </>
   );
-};
-
-export default UseBooleanDemo;
+}
