@@ -1,44 +1,68 @@
 'use client';
-import React, { useState } from 'react';
+
+import { useState } from 'react';
+
 import { useArraySome } from './useArraySome';
 
-const ArraySomeDemo = () => {
-  const [numbers, setNumbers] = useState([1, 3, 5, 7]);
-
-  const hasEvenNumber = useArraySome(numbers, number => number % 2 === 0);
-
-  const addNumber = (newNumber: number) => {
-    setNumbers([...numbers, newNumber]);
-  };
+export default function ArraySomeDemo() {
+  const [inputValue, setInputValue] = useState('');
+  const [predicateFunction, setPredicateFunction] =
+    useState('(item) => item > 5');
+  const items = inputValue.split(',').map(item => parseInt(item.trim(), 10));
+  const hasSomeMatch = useArraySome(items, item => {
+    try {
+      const func = eval(predicateFunction);
+      return func(item);
+    } catch (error) {
+      return false;
+    }
+  });
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold">Numbers:</h2>
-        <ul className="list-disc list-inside">
-          {numbers.map((number, index) => (
-            <li key={index}>{number}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mb-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => addNumber(numbers[numbers.length - 1] + 1)}
-        >
-          Add Next Number
-        </button>
-      </div>
-
-      <div className="bg-gray-100 p-4 rounded-md">
-        <p className="text-lg">
-          <strong>Does the array contain an even number?</strong>{' '}
-          {hasEvenNumber ? 'Yes' : 'No'}
-        </p>
+    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <div className="mb-4">
+            <label
+              htmlFor="input"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Enter numbers (comma-separated):
+            </label>
+            <input
+              id="input"
+              type="text"
+              value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="predicateFunction"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Enter predicate function:
+            </label>
+            <input
+              id="predicateFunction"
+              type="text"
+              value={predicateFunction}
+              onChange={e => setPredicateFunction(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="bg-gray-100 p-4 rounded-md">
+            <p className="text-lg font-semibold mb-2">Result:</p>
+            <p className="text-gray-800">
+              {hasSomeMatch
+                ? 'At least one element matches the predicate'
+                : 'No elements match the predicate'}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default ArraySomeDemo;
+}
