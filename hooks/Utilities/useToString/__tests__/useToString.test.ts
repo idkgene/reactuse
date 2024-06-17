@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useToString } from './useToString'
+import { useToString } from '../useToString'
 
 describe('useToString', () => {
   it('should convert a value to a string', () => {

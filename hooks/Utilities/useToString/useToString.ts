@@ -2,18 +2,18 @@ import { useMemo } from 'react'
 import { Resolvable } from '../utilities'
 
 /**
- * @name useToString
- * @description A custom hook to convert a value or a function returning a value to a string.
+ * A custom React hook that converts a value of any type to a string.
  *
- * @returns {string} The string representation of the resolved value.
+ * @param value - The value to be converted to a string. It can be a direct value or a function.
+ * @returns {string} The string representation of the value.
  *
  * @example
- * Usage example:
- * const stringValue = useToString(42);
- * console.log(stringValue); // Output: '42'
+ * const myString = useToString(123); // myString will be "123";
  *
- * const dynamicStringValue = useToString(() => new Date().getFullYear());
- * console.log(dynamicStringValue); // Output: '2024' (or the current year)
+ * @example
+ *
+ * const myDynamicString = useToString(() => new Date().toLocaleString());
+ * myDynamicString will be the current locale date and time as a string
  */
 export function useToString<T>(value: Resolvable<T>): string {
   return useMemo(() => {
