@@ -2,21 +2,23 @@ import { useCallback, useState } from 'react'
 import { UseToggleOptions } from '../utilities'
 
 /**
- * @name useToggle
- * @description A custom hook to toggle between two states: a "truthy" value and a "falsy" value.
+ * A hook to toggle between two values, typically representing "true" and "false".
  *
- * @returns {[Truthy | Falsy, (value?: Truthy | Falsy) => void]} An array containing the current state and a toggling function.
+ * @template Truthy - The type of the "truthy" value.
+ * @template Falsy - The type of the "falsy" value.
+ * @param {Truthy | Falsy} [initialValue=false as Falsy] - The initial value of the toggle.
+ * @param {UseToggleOptions<Truthy, Falsy>} [options={}] - Options to customize the truthy and falsy values.
+ * @param {Truthy} [options.truthyValue=true as Truthy] - The value representing the "truthy" state.
+ * @param {Falsy} [options.falsyValue=false as Falsy] - The value representing the "falsy" state.
+ * @returns {[Truthy | Falsy, (value?: Truthy | Falsy) => void]} The current state and a function to toggle the value.
  *
  * @example
- * Usage example:
- * const [isEnabled, toggleEnabled] = useToggle(true, {
- *   truthyValue: 'ON',
- *   falsyValue: 'OFF'
- * });
- *
- * console.log(isEnabled); // 'ON'
- * toggleEnabled();        // Switches to 'OFF'
- * toggleEnabled('ON');    // Explicitly sets to 'ON'
+ * Basic toggle between true and false
+ * const [isActive, toggleActive] = useToggle();
+ * Toggle between specific strings
+ * const [status, toggleStatus] = useToggle('on', { truthyValue: 'on', falsyValue: 'off' });
+ * Toggle between numbers
+ * const [currentNumber, toggleNumber] = useToggle(1, { truthyValue: 1, falsyValue: 0 });
  */
 export function useToggle<Truthy = true, Falsy = false>(
   initialValue: Truthy | Falsy = false as Falsy,

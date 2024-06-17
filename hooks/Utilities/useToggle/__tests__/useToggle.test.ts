@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useToggle } from './useToggle'
+import { useToggle } from '../useToggle'
 
 describe('useToggle', () => {
   it('should initialize with the default value', () => {
