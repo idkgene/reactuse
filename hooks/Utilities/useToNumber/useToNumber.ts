@@ -1,43 +1,44 @@
-import { useMemo } from 'react'
-import { UseToNumberOptions } from '../utilities'
+import { useMemo } from 'react';
+import { UseToNumberOptions } from '../utilities';
 
 /**
- * @name useToNumber
- * @description A custom hook to convert a string or number to a number using a specified method.
+ * Converts a string or a number to a numeric value using specified options.
  *
- * @returns {number} The converted number value.
+ * @param {string | number} value - The value to be converted to a number.
+ * @param {UseToNumberOptions} [options={}] - Conversion options.
+ * @param {'parseFloat' | 'parseInt'} [options.method='parseFloat'] - Specifies the method to convert the value.
+ * @param {number} [options.radix=10] - The radix to use when `method` is 'parseInt'.
+ * @param {boolean} [options.nanToZero=false] - If true, returns 0 instead of NaN when the conversion fails.
+ * @returns {number} The numeric representation of the input value.
  *
  * @example
- * Usage example:
- * const number = useToNumber('42', { method: 'parseInt', radix: 10 });
- * console.log(number); // Output: 42
- *
- * const floatNumber = useToNumber('3.14159', { method: 'parseFloat' });
- * console.log(floatNumber); // Output: 3.14159
- *
- * const invalidNumber = useToNumber('invalid', { nanToZero: true });
- * console.log(invalidNumber); // Output: 0
+ * Using parseFloat (default)
+ * const num1 = useToNumber('42.42');
+ * Using parseInt with radix 10
+ * const num2 = useToNumber('42', { method: 'parseInt', radix: 10 });
+ * Returning 0 instead of NaN
+ * const num3 = useToNumber('invalid', { nanToZero: true });
  */
 export function useToNumber(
   value: string | number,
   options: UseToNumberOptions = {}
 ): number {
-  const { method = 'parseFloat', radix = 10, nanToZero = false } = options
+  const { method = 'parseFloat', radix = 10, nanToZero = false } = options;
 
   const number = useMemo(() => {
-    let parsed: number
+    let parsed: number;
 
     if (typeof value === 'number') {
-      parsed = value
+      parsed = value;
     } else if (typeof value === 'string') {
       parsed =
-        method === 'parseFloat' ? parseFloat(value) : parseInt(value, radix)
+        method === 'parseFloat' ? parseFloat(value) : parseInt(value, radix);
     } else {
-      parsed = NaN
+      parsed = NaN;
     }
 
-    return nanToZero && isNaN(parsed) ? 0 : parsed
-  }, [value, method, radix, nanToZero])
+    return nanToZero && isNaN(parsed) ? 0 : parsed;
+  }, [value, method, radix, nanToZero]);
 
-  return number
+  return number;
 }

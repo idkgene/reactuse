@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useToNumber } from './useToNumber'
+import { useToNumber } from '../useToNumber'
 
 interface HookProps {
   value: string | number
