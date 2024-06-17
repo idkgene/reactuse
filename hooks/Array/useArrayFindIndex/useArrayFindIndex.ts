@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import type { UseArrayFindIndexPredicate } from '../array';
 
 /**
@@ -24,7 +25,7 @@ export function useArrayFindIndex<T>(
   list: T[],
   predicate: UseArrayFindIndexPredicate<T>
 ): number {
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (typeof predicate !== 'function') {
       console.error(
         'Invalid predicate function provided to useArrayFindIndex.'
