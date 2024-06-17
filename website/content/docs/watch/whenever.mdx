@@ -1,38 +1,122 @@
 ---
-title: Whenever
+title: whenever
 description: Your first document
 ---
 
-Welcome to the Get Started page for ReactUse, a library that provides a collection of useful React hooks. Whether you're a beginner or an experienced React developer, this will help you get started with ReactUse and leverage your developer experience of using React.
+`whenever` is a custom React hook that allows you to conditionally execute a callback function whenever a specified value changes. It provides options to control the behavior of the callback execution.
 
-## Installation
+## Usage
 
-> 🚀 We're using React 18 for now (actively waiting for v. 19 to become stable to update the library).
+```tsx
+import { whenever } from '#';
+import * as React from 'react';
 
-```bash
-npm install changeelog/reactuse-core
+const Component = () => {
+  const [count, setCount] = React.useState(0);
+
+  whenever(count, (current, previous) => {
+    console.log('Count changed:', current, 'Previous:', previous);
+  });
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+};
+
+export default Component;
 ```
 
-[Addons](https://example.com) | [Next JS Module](https://example.com)
+```tsx
+import { whenever } from '#';
+import * as React from 'react';
 
-## CDN
+const Component = () => {
+  const [user, setUser] = React.useState<{ id: number; name: string } | null>(
+    null
+  );
 
-```html
-<script src="https://unpkg.com/changeelog/reactuse/shared"></script>
+  whenever(
+    user,
+    (current, previous) => {
+      console.log('User changed:', current);
+    },
+    { once: true }
+  );
 
-<script src="https://unpkg.com/changeelog/reactuse/core"></script>
+  const handleLogin = () => {
+    setUser({ id: 1, name: 'John' });
+  };
+
+  return (
+    <div>
+      {user ? (
+        <p>Welcome, {user.name}!</p>
+      ) : (
+        <button onClick={handleLogin}>Login</button>
+      )}
+    </div>
+  );
+};
+
+export default Component;
 ```
 
-## Usage Example
+## Type Declarations
 
 ```ts
-import { useMouse, usePreferredDark } from 'changeelog/reactuse';
+export declare function whenever<T>(
+  value: T | false | null | undefined,
+  callback: WatchCallback<T>,
+  options?: WheneverOptions
+): void;
 
-// tracks mouse position
-const { x, y } = useMouse();
+export declare type WatchCallback<T> = (
+  current: T,
+  previous: T | undefined
+) => void;
 
-// is user prefers dark theme
-const isDark = usePreferredDark();
+export interface WheneverOptions {
+  once?: boolean;
+}
 ```
 
-Refer to [function list](http://example.com) for more details.
+## Reference
+
+#### whenever
+
+| Property   | Type                              | Default | Description                                                                                                                           |
+| ---------- | --------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`    | `T \| false \| null \| undefined` | -       | The value to watch for changes.                                                                                                       |
+| `callback` | `WatchCallback<T>`                | -       | The callback function to execute when the value changes.                                                                              |
+| `options`  | `WheneverOptions`                 | -       | (_Optional_) An object to specify additional options for the callback execution.                                                      |
+| `once`     | `boolean`                         | `false` | (_Optional_) If set to `true`, the callback will be executed only once, even if the value changes multiple times. Default is `false`. |
+
+#### WatchCallback
+
+| Property   | Type             | Description                                                                         |
+| ---------- | ---------------- | ----------------------------------------------------------------------------------- |
+| `current`  | `T`              | The current value.                                                                  |
+| `previous` | `T \| undefined` | The previous value. It will be `undefined` for the first execution of the callback. |
+
+### Returns
+
+| Type   | Description                                                                                                  |
+| ------ | ------------------------------------------------------------------------------------------------------------ |
+| `void` | The `whenever` utility does not return any value. It executes the callback based on the provided conditions. |
+
+## Common Pitfalls
+
+### Incorrect Value Type
+
+Ensure that the `value` passed to `whenever` matches the expected type `T`. Passing a value of a different type may lead to unexpected behavior.
+
+```tsx
+whenever(count, (current: string) => {
+  console.log(current.toUpperCase());
+});
+```
+
+**Solution**: Make sure the `value` and the callback parameter types are consistent.

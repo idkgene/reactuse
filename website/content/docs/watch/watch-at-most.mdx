@@ -1,0 +1,113 @@
+---
+title: watchAtMost
+description: Collection of useful React hooks and utilities.
+---
+
+`watchAtMost` is a utility function that allows you to watch a value and trigger a callback at most a specified number of times. It is useful when you want to limit the number of times a callback is invoked based on changes in a value.
+
+## Usage
+
+```tsx
+import { watchAtMost } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [count, setCount] = React.useState(0);
+
+  const { stop, count: triggerCount } = watchAtMost(
+    count,
+    value => {
+      console.log(`Value changed to ${value}`);
+    },
+    { count: 3 }
+  );
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Trigger Count: {triggerCount}</p>
+      <button onClick={() => setCount(prev => prev + 1)}>Increment</button>
+      <button onClick={stop}>Stop Watching</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export interface WatchAtMostOptions {
+  count: number;
+}
+
+export interface WatchAtMostReturn {
+  stop: () => void;
+  count: number;
+}
+
+export declare function watchAtMost<T>(
+  source: T,
+  callback: (value: T) => void,
+  options: WatchAtMostOptions
+): WatchAtMostReturn;
+```
+
+## Reference
+
+#### watchAtMost
+
+| Property   | Type                 | Default | Description                                         |
+| ---------- | -------------------- | ------- | --------------------------------------------------- |
+| `source`   | `T`                  | -       | The value to watch.                                 |
+| `callback` | `(value: T) => void` | -       | The callback to invoke when the value changes.      |
+| `options`  | `WatchAtMostOptions` | -       | Options to configure the behavior of `watchAtMost`. |
+
+#### WatchAtMostOptions
+
+| Property | Type     | Default | Description                                                   |
+| -------- | -------- | ------- | ------------------------------------------------------------- |
+| `count`  | `number` | -       | The maximum number of times the callback should be triggered. |
+
+#### WatchAtMostReturn
+
+| Property | Type         | Description                                                 |
+| -------- | ------------ | ----------------------------------------------------------- |
+| `stop`   | `() => void` | A function to stop watching the value.                      |
+| `count`  | `number`     | The current count of times the callback has been triggered. |
+
+### Returns
+
+| Type                | Description                                                                        |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| `WatchAtMostReturn` | An object containing the `stop` function and the current `count` of trigger times. |
+
+## Common Pitfalls
+
+### Incorrect Usage of Callback
+
+Ensure that the callback function does not have any side effects that modify the watched value, as it may lead to unexpected behavior.
+
+```tsx
+const { stop, count } = watchAtMost(
+  value,
+  val => {
+    setValue(val + 1); // Modifying the watched value inside the callback
+  },
+  { count: 3 }
+);
+```
+
+**Solution**: Avoid modifying the watched value inside the callback function.
+
+### Exceeding the Maximum Trigger Count
+
+If the watched value changes more times than the specified `count`, the callback will not be triggered after the maximum count is reached.
+
+```ts
+const { stop, count } = watchAtMost(value, callback, { count: 3 });
+// If `value` changes more than 3 times, the callback will not be triggered after the 3rd change.
+```
+
+**Solution**: Ensure that the count option is set appropriately based on the expected number of changes in the watched value.

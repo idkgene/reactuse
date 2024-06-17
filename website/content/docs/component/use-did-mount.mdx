@@ -2,3 +2,37 @@
 title: useDidMount
 description: Your first document
 ---
+
+`useDidMount` is a React hook that runs a function when the component mounts.
+
+## Usage
+
+```tsx
+import { useDidMount } from '#';
+
+const MyComponent = () => {
+  useDidMount(() => {
+    console.log('Component mounted');
+  });
+
+  return <div>Hello World</div>;
+};
+```
+
+## Type Declarations
+
+```ts
+useDidMount(callback: () => void): void;
+```
+
+## Parameters
+
+| Name       | Type         | Description                                    |
+| :--------- | :----------- | :--------------------------------------------- |
+| `callback` | `() => void` | The function to run when the component mounts. |
+
+## Returns
+
+| Name   | Type   | Description |
+| :----- | :----- | :---------- |
+| `void` | `void` | -           |

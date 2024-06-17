@@ -1,4 +1,40 @@
 ---
 title: useWindowLoad
-description: Your first document
+description: Collection of useful React hooks and utilities.
 ---
+
+`useWindowLoad` is a custom hook that returns the current state of the window's loading process. It can be either `LOADING` or `LOADED`.
+
+## Usage
+
+```tsx
+import { useWindowLoad } from '#'
+
+const Component = () => {
+  const windowLoadState = useWindowLoad()
+
+  return (
+    {windowLoadState === 'LOADING' ? (
+      Loading... ) : ( Window has finished loading!
+    )}
+  );
+}
+```
+
+## Type Declarations
+
+```typescript
+export declare type WindowLoadState = 'LOADING' | 'LOADED';
+
+export declare function useWindowLoad(): WindowLoadState;
+```
+
+## Reference
+
+`useWindowLoad`
+
+## Returns
+
+| Type              | Description                                                                                |
+| :---------------- | :----------------------------------------------------------------------------------------- |
+| `WindowLoadState` | The current state of the window's loading process. It can be either `LOADING` or `LOADED`. |
