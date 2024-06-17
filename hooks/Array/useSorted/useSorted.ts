@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import type { UseSortedOptions, UseSortedCompareFn } from '../array';
 
 /**
@@ -25,7 +26,7 @@ export function defaultSortFn<T>(
  * @returns {T[]} A sorted array.
  * @template T
  */
-function sortArray<T>(
+export function sortArray<T>(
   source: T[],
   compareFn?: UseSortedCompareFn<T>,
   options?: UseSortedOptions<T>
@@ -63,15 +64,9 @@ export function useSorted<T>(
       ? compareFnOrOptions
       : options ?? undefined;
 
-  const sourceRef = React.useRef(source);
-
-  if (sourceRef.current !== source) {
-    sourceRef.current = source;
-  }
-
-  const sorted = React.useMemo(
-    () => sortArray([...sourceRef.current], compareFn, mergedOptions),
-    [compareFn, mergedOptions, source]
+  const sorted = useMemo(
+    () => sortArray(source, compareFn, mergedOptions),
+    [source, compareFn, mergedOptions]
   );
 
   return sorted;
