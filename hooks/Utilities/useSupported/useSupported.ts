@@ -1,33 +1,28 @@
-import { useState, useEffect } from 'react'
-import { SupportCheckCallback } from '../utilities'
+import * as React from 'react';
+
+import { SupportCheckCallback } from '../utilities';
 
 /**
- * @name useSupported
- * @description A custom hook to check if a feature is supported based on the provided callback.
+ * Checks if a feature or capability is supported using a callback function.
  *
- * @returns {boolean} `true` if the feature is supporter, otherwise `false`.
+ * @param {SupportCheckCallback} callback - A function that checks for feature or capability support.
+ * @returns {boolean} A boolean indicating whether the feature or capability is supported.
  *
  * @example
- * Usage example:
- * const isClipboardSupported = useSupported(() => !!navigator.clipboard);
- *
- * if (isClipboardSupported) {
- *   console.log('Clipboard API is supported!');
- * } else {
- *   console.log('Clipboard API is not supported.');
- * }
+ * const isLocalStorageSupported = useSupported(() => 'localStorage' in window);
+ * console.log(isLocalStorageSupported); // true or false
  */
 export function useSupported(callback: SupportCheckCallback): boolean {
-  const [isSupported, setIsSupported] = useState<boolean>(false)
+  const [isSupported, setIsSupported] = React.useState<boolean>(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     try {
-      const result = callback()
-      setIsSupported(Boolean(result))
+      const result = callback();
+      setIsSupported(Boolean(result));
     } catch {
-      setIsSupported(false)
+      setIsSupported(false);
     }
-  }, [callback])
+  }, [callback]);
 
-  return isSupported
+  return isSupported;
 }
