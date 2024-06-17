@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 
 /**
  * `Array.join` hook for React.
@@ -20,5 +20,5 @@ import * as React from 'react';
  * console.log(joinedNumbers); // Output: '1-2-3'
  */
 export function useArrayJoin<T>(list: T[], separator?: string): string {
-  return React.useMemo(() => list.join(separator), [list, separator]);
+  return useMemo(() => list.join(separator), [list, separator]);
 }
