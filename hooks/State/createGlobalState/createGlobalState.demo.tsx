@@ -59,9 +59,7 @@ const Demo: React.FC = () => {
 
 const CreateGlobalStateDemoPage: React.FC = () => {
   return (
-    <div className="p-[2em] relative mb-[10px] rounded-[8px] transition-colors">
-      <Demo />
-    </div>
+    <div className="p-[2em] relative mb-[10px] rounded-[8px] transition-colors"></div>
   );
 };
 
