@@ -1,9 +1,12 @@
-import React from 'react';
+'use client';
+
+import { useState } from 'react';
+
 import { useDefault } from './useDefault';
 
 export const UseDefaultDemo = () => {
   const [state, setState] = useDefault('Default Value');
-  const [newValue, setNewValue] = React.useState('');
+  const [newValue, setNewValue] = useState('');
 
   const handleReset = () => {
     setState(null);
@@ -16,7 +19,11 @@ export const UseDefaultDemo = () => {
   return (
     <div>
       <p>Current State: {state}</p>
-      <input type="text" value={newValue} onChange={(e) => setNewValue(e.target.value)} />
+      <input
+        type="text"
+        value={newValue}
+        onChange={e => setNewValue(e.target.value)}
+      />
       <button onClick={handleReset}>Reset</button>
       <button onClick={handleUpdate}>Update</button>
     </div>
