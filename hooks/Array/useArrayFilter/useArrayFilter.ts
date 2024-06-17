@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import type { UseArrayFilterPredicate } from '../array';
 
 /**
@@ -25,7 +26,7 @@ export function useArrayFilter<T>(
   list: T[],
   predicate: UseArrayFilterPredicate<T>
 ): T[] {
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (typeof predicate !== 'function') {
       console.error('Invalid predicate function provided to useArrayFilter.');
       return [];
