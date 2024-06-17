@@ -1,11 +1,11 @@
 import React from 'react'
-import { useDestructurable } from './useDestructable'
+import { useDestructible } from './useDestructable'
 
 const UseDestructurableDemo = () => {
   const obj = { foo: 1, bar: 2 }
   const arr = [3, 4]
 
-  const destructable = useDestructurable(obj, arr)
+  const destructable = useDestructible(obj, arr)
 
   return (
     <div>

@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react'
-import { useDestructurable } from '../useDestructable'
+import { useDestructible } from '../useDestructable'
 
 describe('useDestructurable', () => {
   it('should return a destructurable object and array', () => {
     const obj = { name: 'John', age: 30 }
     const arr = ['apple', 'banana', 'orange']
 
-    const { result } = renderHook(() => useDestructurable(obj, arr))
+    const { result } = renderHook(() => useDestructible(obj, arr))
 
     expect(result.current).toEqual({
       name: 'John',
@@ -24,7 +24,7 @@ describe('useDestructurable', () => {
     const arr2 = ['grape', 'kiwi']
 
     const { result, rerender } = renderHook(
-      ({ obj, arr }) => useDestructurable(obj, arr),
+      ({ obj, arr }) => useDestructible(obj, arr),
       {
         initialProps: { obj: obj1, arr: arr1 },
       }
@@ -52,7 +52,7 @@ describe('useDestructurable', () => {
     const obj = { name: 'John', age: 30 }
     const arr = ['apple', 'banana', 'orange']
 
-    const { result, rerender } = renderHook(() => useDestructurable(obj, arr))
+    const { result, rerender } = renderHook(() => useDestructible(obj, arr))
 
     const firstResult = result.current
 
@@ -65,7 +65,7 @@ describe('useDestructurable', () => {
     const obj = {}
     const arr: any[] = []
 
-    const { result } = renderHook(() => useDestructurable(obj, arr))
+    const { result } = renderHook(() => useDestructible(obj, arr))
 
     expect(result.current).toEqual({})
   })

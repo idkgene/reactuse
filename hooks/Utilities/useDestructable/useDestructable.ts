@@ -1,24 +1,28 @@
-import { useMemo } from 'react'
-import { MakeDestructurableResult } from '../utilities'
+import { useMemo } from 'react';
+import { MakeDestructibleResult as MakeDestructibleResult } from '../utilities';
 
 /**
- * @name useDestructurable
- * @description A React hook that combines an object and an array into a single destructurable
- * object, allowing for easy destructuring of both the object properties and array
- * elements.
+ *  Combines an object and an array into a destructible object, allowing both structured and array destructuring.
  *
- * @return {MakeDestructurableResult<T, A>} An object that combines the properties
- *   of `obj` and the elements of `arr`, allowing for easy destructuring.
+ * @template T - The type of the object.
+ * @template A - The type of the array.
+ * @param {T} obj - An object whose properties will be included in the destructible result.
+ * @param {A} arr - An array whose elements will be included in the destructible result.
+ * @returns {MakeDestructibleResult<T, A>} A destructible object containing both the object properties and array elements.
  *
  * @example
- * const { foo, bar, baz } = useDestructurable({ foo: 1, bar: 2 }, [3, 4]);
- * // foo === 1, bar === 2, baz === 3
+ * const [firstName, lastName, { age, location }] = useDestructible(
+ *   { age: 30, location: 'New York' },
+ *   ['John', 'Doe']
+ * );
+ * console.log(firstName); // Output: 'John'
+ * console.log(age); // Output: 30
  */
-export function useDestructurable<
+export function useDestructible<
   T extends Record<string, unknown>,
   A extends readonly any[],
->(obj: T, arr: A): MakeDestructurableResult<T, A> {
+>(obj: T, arr: A): MakeDestructibleResult<T, A> {
   return useMemo(() => {
-    return Object.assign({}, obj, { ...arr })
-  }, [obj, arr])
+    return Object.assign({}, obj, { ...arr });
+  }, [obj, arr]);
 }
