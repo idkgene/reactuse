@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import type { UseArrayDifferenceKey } from '../array';
 
 /**
@@ -17,7 +18,7 @@ export function useArrayDifference<T>(
   values: T[],
   keyOrCompareFn?: UseArrayDifferenceKey<T>
 ): T[] {
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (list.length === 0) {
       return [];
     }
