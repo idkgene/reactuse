@@ -1,4 +1,5 @@
-import * as React from 'react'
+import { useMemo } from 'react';
+
 import { UseArrayFindPredicate } from '../array';
 
 /**
@@ -24,7 +25,7 @@ export function useArrayFind<T>(
   list: T[],
   predicate: UseArrayFindPredicate<T>
 ): T | undefined {
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (typeof predicate !== 'function') {
       console.error('Invalid predicate function provided to useArrayFind.');
       return undefined;
