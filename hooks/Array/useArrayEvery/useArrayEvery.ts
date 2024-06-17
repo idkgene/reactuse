@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import { UseArrayEveryPredicate } from '../array';
 
 /**
@@ -18,7 +19,7 @@ export function useArrayEvery<T>(
   list: T[],
   predicate: UseArrayEveryPredicate<T>
 ): boolean {
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (typeof predicate !== 'function') {
       console.error('Invalid predicate function provided to useArrayEvery.');
       return false;
