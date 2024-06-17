@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
-import { useLastChanged } from './useLastChanged'
+'use client';
 
-const UseLastChangedDemo: React.FC = () => {
-  const [source, setSource] = useState('Initial value')
-  const lastChanged = useLastChanged(source)
+import { useState } from 'react';
+
+import { useLastChanged } from './useLastChanged';
+
+export default function UseLastChangedDemo() {
+  const [source, setSource] = useState('Initial value');
+  const lastChanged = useLastChanged(source);
 
   return (
     <div>
@@ -14,9 +17,7 @@ const UseLastChangedDemo: React.FC = () => {
           ? new Date(lastChanged.current).toLocaleString()
           : 'Never'}
       </p>
-      <input value={source} onChange={(e) => setSource(e.target.value)} />
+      <input value={source} onChange={e => setSource(e.target.value)} />
     </div>
-  )
+  );
 }
-
-export default UseLastChangedDemo
