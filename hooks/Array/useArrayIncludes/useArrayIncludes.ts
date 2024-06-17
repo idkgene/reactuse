@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo } from 'react';
+
 import { UseArrayIncludesOptions } from '../array';
 
 /**
@@ -35,7 +36,7 @@ export function useArrayIncludes<T, V = T>(
 ): boolean {
   const { fromIndex = 0, comparator } = options || {};
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (Array.isArray(list) && list.length === 0) {
       return false;
     }
