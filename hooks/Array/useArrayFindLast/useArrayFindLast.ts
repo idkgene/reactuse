@@ -3,21 +3,24 @@ import { useCallback, useMemo } from 'react';
 import type { UseArrayFindLastPredicate } from '../array';
 
 /**
- * `Array.findLast` hook for React.
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.findLast`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast) method.
  *
- * Provides a memoized version of the `Array.findLast` method.
- *
- * @param {T[]} list - The array to search.
+ * @template T - The type of elements in the array.
+ * @param {T[]} list - The array to search. If `list` is not an array, an error message is logged to the console and the hook returns `undefined`.
  * @param {UseArrayFindLastPredicate<T>} predicate - A function to test each element in the array.
  * @returns {T | undefined} The last element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
  *
  * @example
+ * // Finding the last user whose name starts with "B"
+ * import { useArrayFindLast } from './useArrayFindLast';
+ *
  * const users = [
  *   { id: 1, name: 'Alice' },
  *   { id: 2, name: 'Bob' },
  *   { id: 3, name: 'Charlie' }
  * ];
- * const findLastUserByName = (user) => user.name.startsWith('B');
+ * const findLastUserByName = (user: { id: number; name: string }) => user.name.startsWith('B');
  * const lastUser = useArrayFindLast(users, findLastUserByName);
  * console.log(lastUser); // Output: { id: 2, name: 'Bob' }
  */
