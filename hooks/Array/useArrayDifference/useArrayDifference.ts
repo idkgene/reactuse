@@ -5,6 +5,7 @@ import type { UseArrayDifferenceKey } from '../array';
 /**
  * A React hook that returns the difference between two arrays.
  *
+ * @template T - The type of elements in the arrays.
  * @param {T[]} list - The first array.
  * @param {T[]} values - The second array.
  * @param {UseArrayDifferenceKey<T>} keyOrCompareFn - Optional. A key of an object or a custom comparator function.
