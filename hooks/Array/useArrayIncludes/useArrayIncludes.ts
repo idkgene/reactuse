@@ -3,29 +3,35 @@ import { useMemo } from 'react';
 import { UseArrayIncludesOptions } from '../array';
 
 /**
- * `Array.includes` hook for React.
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.includes`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) method.
  *
- * Provides a memoized version of the `Array.includes` method
- *
- * @param {T[]} list - The array to search.
+ * @template T - The type of elements in the array.
+ * @template V - The type of the value being searched for.
+ * @param {T[]} list - The array to search. If `list` is not an array, the hook returns `false`.
  * @param {V} value - The value to search for.
  * @param {UseArrayIncludesOptions<T, V>} [options] - Additional options for the search.
  * @returns {boolean} `true` if the `value` is found in the array, otherwise `false`.
  *
  * @example
+ * // Checking if a number is included in a list
+ * import { useArrayIncludes } from './useArrayIncludes';
+ *
  * const numbers = [1, 2, 3, 4, 5];
  * const includesNumber = useArrayIncludes(numbers, 3);
  * console.log(includesNumber); // Output: true
  *
  * @example
+ * // Using a key comparator to find an item by ID
  * const items = [{ id: 1, name: 'item1' }, { id: 2, name: 'item2' }];
  * const options = { comparator: 'id' };
  * const includesItem = useArrayIncludes(items, 2, options);
  * console.log(includesItem); // Output: true
  *
  * @example
+ * // Using a custom comparator function to find an object by key
  * const objects = [{ key: 'a' }, { key: 'b' }];
- * const customComparator = (element, value) => element.key === value;
+ * const customComparator = (element: { key: string }, value: string) => element.key === value;
  * const includesObject = useArrayIncludes(objects, 'a', { comparator: customComparator });
  * console.log(includesObject); // Output: true
  */
