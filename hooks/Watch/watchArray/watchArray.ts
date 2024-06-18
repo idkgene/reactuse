@@ -1,5 +1,19 @@
-import * as React from 'react';
+import { useRef, useEffect } from 'react';
 
+/**
+ * Type alias for the callback function used by `useArrayWatcher`.
+ *
+ * The callback function receives four arguments: the new array, the old array,
+ * items added to the new array, and items removed from the old array.
+ *
+ * @template T
+ * @callback WatchArrayCallback
+ * @param {T[]} newArray - The new array after the change.
+ * @param {T[]} oldArray - The array before the change.
+ * @param {T[]} added - The items added to the new array.
+ * @param {T[]} removed - The items removed from the old array.
+ * @returns {void}
+ */
 type WatchArrayCallback<T> = (
   newArray: T[],
   oldArray: T[],
@@ -7,6 +21,20 @@ type WatchArrayCallback<T> = (
   removed: T[]
 ) => void;
 
+/**
+ * Utility function to calculate the differences between two arrays.
+ *
+ * @template T
+ * @param {T[]} arr1 - The first array.
+ * @param {T[]} arr2 - The second array.
+ * @returns {{ added: T[], removed: T[] }} An object containing arrays of added and removed items.
+ *
+ * @example
+ * // Example usage of getArrayDifferences
+ * const { added, removed } = getArrayDifferences([1, 2, 3], [2, 3, 4]);
+ * console.log(added); // [4]
+ * console.log(removed); // [1]
+ */
 function getArrayDifferences<T>(
   arr1: T[],
   arr2: T[]
@@ -20,14 +48,31 @@ function getArrayDifferences<T>(
   };
 }
 
+/**
+ * Hook that monitors an array and triggers a callback when items are added or removed.
+ *
+ * @template T
+ * @param {T[]} array - The array to monitor.
+ * @param {WatchArrayCallback<T>} callback - The function to call when items are added or removed.
+ * @returns {void}
+ *
+ * @example
+ * // Example usage of useArrayWatcher
+ * useArrayWatcher(someArray, (newArray, oldArray, added, removed) => {
+ *   console.log('New array:', newArray);
+ *   console.log('Old array:', oldArray);
+ *   console.log('Items added:', added);
+ *   console.log('Items removed:', removed);
+ * });
+ */
 export function useArrayWatcher<T>(
   array: T[],
   callback: WatchArrayCallback<T>
 ): void {
-  const prevArrayRef = React.useRef<T[]>([]);
-  const isInitialRender = React.useRef(true);
+  const prevArrayRef = useRef<T[]>([]);
+  const isInitialRender = useRef(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isInitialRender.current) {
       isInitialRender.current = false;
     } else {
@@ -44,3 +89,5 @@ export function useArrayWatcher<T>(
     prevArrayRef.current = [...array];
   }, [array, callback]);
 }
+
+export const watchArray = useArrayWatcher;
