@@ -1,8 +1,9 @@
 /**
  * A function that compares two elements for equality.
  *
- * @param element - The first element to compare.
- * @param value - The second element to compare.
+ * @template T The type of elements being compared.
+ * @param {T} element The first element to compare.
+ * @param {T} value The second element to compare.
  * @returns {boolean} `true` if the elements are equal, `false` otherwise.
  */
 export type UseArrayDifferenceComparatorFn<T> = (
@@ -12,6 +13,9 @@ export type UseArrayDifferenceComparatorFn<T> = (
 
 /**
  * A key of an object or a custom comparator function used to determine the uniqueness of elements in array.
+ *
+ * @template T The type of elements in the array.
+ * @typedef {keyof T | UseArrayDifferenceComparatorFn<T>} UseArrayDifferenceKey
  */
 export type UseArrayDifferenceKey<T> =
   | keyof T
@@ -20,11 +24,11 @@ export type UseArrayDifferenceKey<T> =
 /**
  * Represents a predicate function used in the `useArrayEvery` function.
  *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {unknown} - The result of the predicate function.
+ * @template T The type of elements in the array.
+ * @param {T} element The current element being processed.
+ * @param {number} index The index of the current element.
+ * @param {T[]} array The array being processed.
+ * @returns {unknown} The result of the predicate function.
  */
 export type UseArrayEveryPredicate<T> = (
   element: T,
@@ -35,11 +39,11 @@ export type UseArrayEveryPredicate<T> = (
 /**
  * Represents a predicate function used in the `useArrayFilter` function.
  *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
+ * @template T The type of elements in the array.
+ * @param {T} element The current element being processed.
+ * @param {number} index The index of the current element.
+ * @param {T[]} array The array being processed.
+ * @returns {boolean} The result of the predicate function. If `true`, the element is included in the filtered array.
  */
 export type UseArrayFilterPredicate<T> = (
   element: T,
@@ -54,7 +58,7 @@ export type UseArrayFilterPredicate<T> = (
  * @param {T} element - The current element being processed.
  * @param {number} index - The index of the current element.
  * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
+ * @returns {boolean} - The result of the predicate function. If `true`, the element is considered a match.
  */
 export type UseArrayFindPredicate<T> = (
   element: T,
@@ -69,7 +73,7 @@ export type UseArrayFindPredicate<T> = (
  * @param {T} element - The current element being processed.
  * @param {number} index - The index of the current element.
  * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
+ * @returns {boolean} - The result of the predicate function. If `true`, the current element passes the test.
  */
 export type UseArrayFindIndexPredicate<T> = (
   element: T,
@@ -84,7 +88,7 @@ export type UseArrayFindIndexPredicate<T> = (
  * @param {T} element - The current element being processed.
  * @param {number} index - The index of the current element.
  * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function.
+ * @returns {boolean} - The result of the predicate function. If `true`, the current element is considered a match.
  */
 export type UseArrayFindLastPredicate<T> = (
   element: T,
