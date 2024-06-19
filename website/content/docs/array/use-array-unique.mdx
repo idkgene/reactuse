@@ -9,10 +9,11 @@ The `useArrayUnique` hook provides a memoized function to extract unique element
 
 ```tsx
 import { useArrayUnique } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [items, setItems] = React.useState([
+  const [items, setItems] = useState([
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 1, name: 'Alice' }, // Duplicate ID
@@ -36,6 +37,16 @@ export default Component;
 ## Type Declarations
 
 ```typescript
+/**
+ * A React hook that returns a unique array of items based on a custom comparison function.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} items - The array of items to filter for unique values. If `items` is not an array, the hook returns an empty array.
+ * @param {(a: T, b: T, array: T[]) => boolean} [compareFn] - Optional custom comparison function.
+ * If provided, this function will be used to determine the equality of two items.
+ * The function should take two items (`a` and `b`) and the original array as arguments and return `true` if they are considered equal, `false` otherwise.
+ * @returns {T[]} A new array containing only the unique items from the input array.
+ */
 export function useArrayUnique<T>(
   items: T[],
   compareFn?: (a: T, b: T, array: T[]) => boolean
@@ -44,68 +55,15 @@ export function useArrayUnique<T>(
 
 ## Reference
 
-| Property    | Type                                  | Default | Description                                                             |
-| ----------- | ------------------------------------- | ------- | ----------------------------------------------------------------------- |
-| `items`     | `T[]`                                 | -       | The array of items to filter for unique values.                         |
-| `compareFn` | `(a: T, b: T, array: T[]) => boolean` | -       | A custom function to compare two elements. It receives three arguments: |
-
-### Returns
-
-| Property | Type  | Default | Description                                                                                                                                        |
-| -------- | ----- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `T[]`    | `T[]` | -       | A new array containing only the unique elements from the input `items` array, determined using the provided `compareFn` or the default comparison. |
-
-## Common Pitfals
-
-### Providing a non-function compareFn
-
-```tsx
-const items = [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 3 }];
-const invalidCompareFn = 'a.id === b.id';
-
-const uniqueItems = useArrayUnique(items, invalidCompareFn); // Error
-```
-
-### Passing a non-array to the items parameter
-
-```tsx
-const invalidItems = 'not an array';
-const uniqueItems = useArrayUnique(invalidItems, (a, b) => a.id === b.id); // Error
-```
-
-### Using the compareFn option with a non-function
-
-```tsx
-const items = [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 3 }];
-const invalidCompareFn = 'a.id === b.id';
-
-const uniqueItems = useArrayUnique(items, invalidCompareFn); // Error
-```
-
-### Complex Objects
-
-The default comparison using `JSON.stringify` might not be suitable for deeply nested objects or objects with methods. Always provide a compareFn when dealing with complex data structures.
-
-```tsx
-const items = [
-  {
-    id: 1,
-    name: 'Alice',
-    address: { street: '123 Main St', city: 'New York' },
-  },
-  {
-    id: 2,
-    name: 'Bob',
-    address: { street: '456 Elm St', city: 'Los Angeles' },
-  },
-  {
-    id: 3,
-    name: 'Charlie',
-    address: { street: '789 Oak St', city: 'Chicago' },
-  },
-];
-
-const uniqueItems = useArrayUnique(items, (a, b) => a.id === b.id);
-
-console.log(uniqueItems); // Output: [{ id: 1, name: 'Alice', address: { street: '123 Main St', city: 'New York' } }, { id: 2, name: 'Bob', address: { street: '456 Elm St', city: 'Los Angeles' } }, { id: 3, name: 'Charlie', address: { street: '789 Oak St', city: 'Chicago' } }]
-```
+<TypeTable
+  type={{
+    items: {
+      description: 'The array of items to filter for unique values.',
+      type: 'T[]',
+    },
+    compareFn: {
+      description: 'A custom function to compare two elements.',
+      type: '(a: T, b: T, array: T[]) => boolean',
+    },
+  }}
+/>

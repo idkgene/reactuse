@@ -9,16 +9,18 @@ A hook providing a memoized version of the `Array.findLast` method for React, fi
 
 ```tsx
 import { useArrayFindLast } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [users, setUsers] = React.useState([
+  const [users, setUsers] = useState([
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
   ]);
 
-  const findLastUserByName = (user: { name: string; }) => user.name.startsWith('B');
+  const findLastUserByName = (user: { name: string }) =>
+    user.name.startsWith('B');
 
   const lastUser = useArrayFindLast(users, findLastUserByName);
 
@@ -34,10 +36,11 @@ export default Component;
 
 ```tsx
 import { useArrayFindLast } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [books, setBooks] = React.useState([
+  const [books, setBooks] = useState([
     { title: 'Book A', author: 'Author A' },
     { title: 'Book B', author: 'Author B' },
     { title: 'Book C', author: 'Author A' },
@@ -56,19 +59,36 @@ const Component = () => {
 };
 
 export default Component;
-
 ```
 
 ## Type Declarations
 
 ```typescript
-export declare type UseArrayFindLastPredicate<T> = (
+/**
+ * Represents a predicate function used in the `useArrayFindLast` function.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T} element - The current element being processed.
+ * @param {number} index - The index of the current element.
+ * @param {T[]} array - The array being processed.
+ * @returns {boolean} - The result of the predicate function. If `true`, the current element is considered a match.
+ */
+export type UseArrayFindLastPredicate<T> = (
   element: T,
   index: number,
   array: T[]
 ) => boolean;
 
-export declare function useArrayFindLast<T>(
+/**
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.findLast`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast) method.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} list - The array to search. If `list` is not an array, an error message is logged to the console and the hook returns `undefined`.
+ * @param {UseArrayFindLastPredicate<T>} predicate - A function to test each element in the array.
+ * @returns {T | undefined} The last element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
+ */
+export function useArrayFindLast<T>(
   list: T[],
   predicate: UseArrayFindLastPredicate<T>
 ): T | undefined;
@@ -76,26 +96,17 @@ export declare function useArrayFindLast<T>(
 
 ## Reference
 
-| Property    | Type                           | Default                                              | Description                                                                                                      |
-| ----------- | ------------------------------ | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `list`      | `T[]`                          | -                                                    | The primary array to search.                                                                                     |
-| `predicate` | `UseArrayFindLastPredicate<T>` | `(element: T, index: number, array: T[]) => boolean` | A function called for every element of the `list`, returning `true` for the element to include in the new array. |
-
-### Returns
-
-| Property  | Type             | Description                                                                                             |
-| --------- | ---------------- | ------------------------------------------------------------------------------------------------------- |
-| `element` | `T \| undefined` | The last element in the array that satisfies the provided function. Otherwise, `undefined` is returned. |
-
-## Common Pitfals
-
-### Providing a predicate that isn't a function
-
-Ensure thhat `predicate` is a valid function
-
-```tsx
-const books = [{ title: 'Book A' }, { title: 'Book B' }];
-const invalidPredicate = 'findLastBookByAuthor';
-
-const lastBook = useArrayFindLast(books, invalidPredicate); // Error
-```
+<TypeTable
+  type={{
+    list: {
+      description: 'The primary array to search',
+      type: 'T[]',
+    },
+    predicate: {
+      description:
+        'A function called for every element of the `list`, returning `true` for the element to include in the new array.',
+      type: 'UseArrayFindLastPredicate<T>',
+      default: '(element: T, index: number, array: T[]) => boolean',
+    },
+  }}
+/>

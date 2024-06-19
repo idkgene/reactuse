@@ -9,10 +9,11 @@ A hook providing a memoized version of the `Array.includes` method for React, de
 
 ```tsx
 import { useArrayIncludes } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = React.useState([1, 2, 3, 4, 5]);
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
 
   const includesNumber = useArrayIncludes(numbers, 3);
 
@@ -28,10 +29,11 @@ export default Component;
 
 ```tsx
 import { useArrayIncludes } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [objects, setObjects] = React.useState([{ key: 'a' }, { key: 'b' }]);
+  const [objects, setObjects] = useState([{ key: 'a' }, { key: 'b' }]);
 
   const customComparator = (element: { key: any }, value: any) =>
     element.key === value;
@@ -53,19 +55,65 @@ export default Component;
 ## Type Declarations
 
 ```typescript
-export declare interface UseArrayIncludesOptions<T, V> {
-  fromIndex?: number;
-  comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
-}
-
-export declare type UseArrayIncludesComparatorFn<T extends object, V> = (
+/**
+ * Represents a comparator function used in the `useArrayIncludes` function.
+ *
+ * @template T - The type of elements in the array.
+ * @template V - The type of the value being searched for.
+ * @param {T} element - The current element being processed.
+ * @param {V} value - The value being searched for.
+ * @param {number} index - The index of the current element.
+ * @param {T[]} array - The array being processed.
+ * @returns {boolean} - The result of the comparator function.
+ */
+export type UseArrayIncludesComparatorFn<T extends object, V> = (
   element: T,
   value: V,
   index: number,
   array: T[]
 ) => boolean;
 
-export declare function useArrayIncludes<T, V = T>(
+/**
+ * Represents the options for the `useArrayIncludes` function.
+ *
+ * @template T - The type of elements in the array.
+ * @template V - The type of the value being searched for.
+ */
+export interface UseArrayIncludesOptions<T, V> {
+  /**
+   * The index to start searching from.
+   *
+   * @type {number}
+   */
+  fromIndex?: number;
+
+  /**
+   * The comparator function or key to compare elements.
+   *
+   * @type {UseArrayIncludesComparatorFn<T, V> | keyof T}
+   */
+  comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
+}
+
+export type UseArrayIncludesComparatorFn<T extends object, V> = (
+  element: T,
+  value: V,
+  index: number,
+  array: T[]
+) => boolean;
+
+/**
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.includes`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) method.
+ *
+ * @template T - The type of elements in the array.
+ * @template V - The type of the value being searched for.
+ * @param {T[]} list - The array to search. If `list` is not an array, the hook returns `false`.
+ * @param {V} value - The value to search for.
+ * @param {UseArrayIncludesOptions<T, V>} [options] - Additional options for the search.
+ * @returns {boolean} `true` if the `value` is found in the array, otherwise `false`.
+ */
+export function useArrayIncludes<T, V = T>(
   list: T[],
   value: V,
   options?: UseArrayIncludesOptions<T, V>
@@ -74,43 +122,20 @@ export declare function useArrayIncludes<T, V = T>(
 
 ## Reference
 
-#### useArrayIncludes
-
-| Property  | Type                            | Default | Description                                                                             |
-| --------- | ------------------------------- | ------- | --------------------------------------------------------------------------------------- |
-| `list`    | `T[]`                           | -       | The primary array to search.                                                            |
-| `value`   | `V`                             | -       | The value to search for.                                                                |
-| `options` | `UseArrayIncludesOptions<T, V>` | -       | (_Optional_) Additional options for the search, including `fromIndex` and `comparator`. |
-
-#### UseArrayIncludesOptions
-
-| Property     | Type                                            | Default | Description                                                  |
-| ------------ | ----------------------------------------------- | ------- | ------------------------------------------------------------ |
-| `fromIndex`  | `number`                                        | `0`     | (_Optional_) The index to start searching from.              |
-| `comparator` | `UseArrayIncludesComparatorFn<T, V> \| keyof T` | -       | (_Optional_) The comparator function or a key to compare by. |
-
-### Returns
-
-| Type      | Description                                                     |
-| --------- | --------------------------------------------------------------- |
-| `boolean` | `true` if the `value` is found in the array, otherwise `false`. |
-
-## Common Pitfals
-
-### Providing an invalid comparator key
-
-```tsx
-const objects = [{ key: 'a' }, { key: 'b' }];
-const invalidKey = 'nonExistentKey';
-
-const includesObject = useArrayIncludes(objects, 'a', {
-  comparator: invalidKey,
-}); // Error
-```
-
-### Using the fromIndex option with a negative index
-
-```tsx
-const numbers = [1, 2, 3, 4, 5];
-const includesNumber = useArrayIncludes(numbers, 3, { fromIndex: -1 }); // Error
-```
+<TypeTable
+  type={{
+    list: {
+      description: 'The primary array to search',
+      type: 'T[]',
+    },
+    value: {
+      description: 'The value to search to search for.',
+      type: 'V',
+    },
+    options: {
+      description:
+        '(_Optional_) Additional options for the search, including `fromIndex` and `comparator`.',
+      type: 'UseArrayIncludesOptions<T, V>',
+    },
+  }}
+/>

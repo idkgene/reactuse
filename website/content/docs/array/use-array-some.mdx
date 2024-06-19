@@ -9,10 +9,11 @@ The `useArraySome` hook provides a memoized way to check if at least one element
 
 ```tsx
 import { useArraySome } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = React.useState([1, 2, 3, 4, 5]);
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
 
   const hasEvenNumber = useArraySome(numbers, number => number % 2 === 0);
 
@@ -30,10 +31,11 @@ export default Component;
 
 ```tsx
 import { useArraySome } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [users, setUsers] = React.useState([
+  const [users, setUsers] = useState([
     { id: 1, isAdmin: false },
     { id: 2, isAdmin: true },
   ]);
@@ -53,6 +55,15 @@ export default Component;
 ## Type Declarations
 
 ```typescript
+/**
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.some`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) method.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} list - The array to check. If `list` is not an array, an error message is logged to the console and the hook returns `false`.
+ * @param {(element: T, index: number, array: T[]) => unknown} predicate - A function to test each element in the array.
+ * @returns {boolean} `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`.
+ */
 export declare function useArraySome<T>(
   list: T[],
   predicate: (element: T, index: number, array: T[]) => unknown
@@ -61,31 +72,16 @@ export declare function useArraySome<T>(
 
 ## Reference
 
-| Property    | Type                                                 | Default | Description                                                                                   |
-| ----------- | ---------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------- |
-| `list`      | `T[]`                                                | -       | The primary array to check.                                                                   |
-| `predicate` | `(element: T, index: number, array: T[]) => unknown` | -       | A function that receives each element of the array as an argument. Returns `true` or `false`. |
-
-### Returns
-
-| Type      | Description                                                                                                |
-| --------- | ---------------------------------------------------------------------------------------------------------- |
-| `boolean` | `true` if the `predicate` function returns a truthy value for any element in the array, otherwise `false`. |
-
-## Common Pitfals
-
-### Providing a non-function predicate
-
-```tsx
-const numbers = [1, 2, 3, 4, 5];
-const invalidPredicate = 'number % 2 === 0';
-
-const hasEvenNumber = useArraySome(numbers, invalidPredicate); // Error
-```
-
-### Passing a non-array to the list parameter
-
-```tsx
-const invalidList = 'not an array';
-const hasEvenNumber = useArraySome(invalidList, number => number % 2 === 0); // Error
-```
+<TypeTable
+  type={{
+    list: {
+      description: 'The primary array to check',
+      type: 'T[]',
+    },
+    separator: {
+      description:
+        'A function that receives each element of the array as an argument. Returns `true` or `false`.',
+      type: '(element: T, index: number, array: T[]) => unknown',
+    },
+  }}
+/>

@@ -9,10 +9,12 @@ A hook providing a memoized version of the `Array.filter` method for React, filt
 
 ```tsx
 import { useArrayFilter } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = React.useState([1, 2, 3, 4, 5]);
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+
   const isEven = (number: number) => number % 2 === 0;
 
   const evenNumbers = useArrayFilter(numbers, isEven);
@@ -29,10 +31,11 @@ export default Component;
 
 ```tsx
 import { useArrayFilter } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [users, setUsers] = React.useState([
+  const [users, setUsers] = useState([
     { name: 'Alice', age: 25 },
     { name: 'Bob', age: 30 },
   ]);
@@ -56,13 +59,31 @@ export default Component;
 ## Type Declarations
 
 ```typescript
+/**
+ * Represents a predicate function used in the `useArrayFilter` function.
+ *
+ * @template T The type of elements in the array.
+ * @param {T} element The current element being processed.
+ * @param {number} index The index of the current element.
+ * @param {T[]} array The array being processed.
+ * @returns {boolean} The result of the predicate function. If `true`, the element is included in the filtered array.
+ */
 export type UseArrayFilterPredicate<T> = (
   element: T,
   index: number,
   array: T[]
 ) => boolean;
 
-export declare function useArrayFilter<T>(
+/**
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} list - The array to filter. If `list` is not an array, an error message is logged to the console and the hook returns an empty array.
+ * @param {UseArrayFilterPredicate<T>} predicate - A function that is called for every element of the given `list`, returning `true` for elements to include in the new array.
+ * @returns {T[]} A shallow copy of a portion of the given array, filtered down to just the elements from the given array that pass the test implemented by the provided function. If no elements pass the test, an empty array will be returned.
+ */
+export function useArrayFilter<T>(
   list: T[],
   predicate: UseArrayFilterPredicate<T>
 ): T[];
@@ -70,26 +91,19 @@ export declare function useArrayFilter<T>(
 
 ## Reference
 
-| Property    | Type                         | Default                                              | Description                                                                                                   |
-| ----------- | ---------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `list`      | `T[]`                        | -                                                    | The primary array to filter.                                                                                  |
-| `predicate` | `UseArrayFilterPredicate<T>` | `(element: T, index: number, array: T[]) => boolean` | A function called for every element of the `list`, returning `true` for elements to include in the new array. |
-
-### Returns
-
-| Property | Type  | Description                                                                    |
-| -------- | ----- | ------------------------------------------------------------------------------ |
-| `list`   | `T[]` | The new array containing only the elements that pass the `predicate` function. |
-
-## Common Pitfalls
-
-### Providing a predicate that isn't a function.
-
-```tsx
-const numbers = [1, 2, 3, 4];
-const invalidPredicate = 'isEven';
-
-const evenNumbers = useArrayFilter(numbers, invalidPredicate); // Error
-```
+<TypeTable
+  type={{
+    list: {
+      description: 'The primary array to filter',
+      type: 'T[]',
+    },
+    predicate: {
+      description:
+        'A function called for every element of the `list`, returning `true` for elements to include in the new array.',
+      type: 'UseArrayFilterPredicate<T>',
+      default: '(element: T, index: number, array: T[]) => boolean',
+    },
+  }}
+/>
 
 import ArrayFilterDemo from '../../../../hooks/Array/useArrayFilter/useArrayFilter.demo';

@@ -9,7 +9,6 @@ The `useList` hook provides a flexible way to manage an array (list) within your
 
 ```tsx
 import { useList } from '#';
-import * as React from 'react';
 
 const Component = () => {
   const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList([
@@ -39,65 +38,75 @@ export default Component;
 ## Type Declarations
 
 ```typescript
-export function useList<T>(defaultList: T[] = []): [
-  T[],
-  {
-    set: (l: T[]) => void;
-    push: (element: T) => void;
-    removeAt: (index: number) => void;
-    insertAt: (index: number, element: T) => void;
-    updateAt: (index: number, element: T) => void;
-    clear: () => void;
-  },
-];
+/**
+ * Utility functions for managing a list.
+ *
+ * @template T - The type of elements in the list.
+ */
+export interface UseListActions<T> {
+  /**
+   * Sets a new list, replacing the existing one.
+   *
+   * @param {T[]} l - The new array to set as the list.
+   */
+  set: (l: T[]) => void;
+
+  /**
+   * Adds a new element to the end of the list.
+   *
+   * @param {T} element - The element to be added to the list.
+   */
+  push: (element: T) => void;
+
+  /**
+   * Removes the element at the specified index.
+   *
+   * @param {number} index - The index of the element to be removed.
+   */
+  removeAt: (index: number) => void;
+
+  /**
+   * Inserts an element at the specified index.
+   *
+   * @param {number} index - The index at which the element should be inserted.
+   * @param {T} element - The element to be inserted into the list.
+   */
+  insertAt: (index: number, element: T) => void;
+
+  /**
+   * Updates the element at the specified index.
+   *
+   * @param {number} index - The index of the element to be updated.
+   * @param {T} element - The new element to replace the existing one.
+   */
+  updateAt: (index: number, element: T) => void;
+
+  /**
+   * Clears the list by setting it to an empty array.
+   */
+  clear: () => void;
+}
+
+/**
+ * A hook providing a list and utility functions for managing it.
+ *
+ * @template T - The type of elements in the list.
+ * @param {T[]} [defaultList=[]] - The initial list of elements.
+ * @returns {[T[], UseListActions<T>]} An array containing:
+ *  - The current state of the list.
+ *  - An object containing utility functions to manage the list.
+ */
+export function useList<T>(defaultList: T[] = []): [T[], UseListActions<T>];
 ```
 
 ## Reference
 
-| Property      | Type  | Default | Description                                                       |
-| ------------- | ----- | ------- | ----------------------------------------------------------------- |
-| `defaultList` | `T[]` | -       | The initial array of elements. Defaults to an empty array (`[]`). |
-
-### Returns
-
-| Property  | Type                                                                                                                                                                                                         | Default | Description                                                       |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ----------------------------------------------------------------- |
-| `T[]`     | `T[]`                                                                                                                                                                                                        | -       | The current state of the list as an array (`T[]`).                |
-| `actions` | `{ set: (l: T[]) => void; push: (element: T) => void; removeAt: (index: number) => void; insertAt: (index: number, element: T) => void; updateAt: (index: number, element: T) => void; clear: () => void; }` | -       | An object containing the utility functions for managing the list. |
-
-## Common Pitfals
-
-### Providing a non-array to the defaultList parameter
-
-```tsx
-const invalidList = 'not an array';
-const [list, { set, push, removeAt, insertAt, updateAt, clear }] =
-  useList(invalidList);
-```
-
-### Using functions with a non-array
-
-```tsx
-const invalidList = 'not an array';
-const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList();
-set(invalidList); // Error
-push(invalidList); // Error
-removeAt(invalidList); // Error
-insertAt(invalidList, 'not an element'); // Error
-updateAt(invalidList, 'not an element'); // Error
-clear(invalidList); // Error
-```
-
-### Direct List Mutation
-
-The `set`, `push`, `removeAt`, `insertAt`, and `updateAt` functions are meant to be used for managing the list state, not directly modifying the list itself. Direct list mutation can lead to unexpected behavior and make it difficult to track changes to the list.
-
-```tsx
-const [list, { set, push, removeAt, insertAt, updateAt, clear }] = useList();
-
-// Update the list state
-set([...list, 'new element']);
-
-// Access the updated list
-console.log(list); // Output: ['new element']
-```
+<TypeTable
+  type={{
+    defaultList: {
+      description: 'TThe initial array of elements.',
+      type: 'T[]',
+      default: '[]',
+    },
+  }}
+/>

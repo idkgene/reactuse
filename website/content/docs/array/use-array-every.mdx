@@ -9,10 +9,11 @@ description: Collection of useful React hooks and utilities.
 
 ```tsx
 import { useArrayEvery } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [list, setList] = React.useState([2, 4, 6, 8]);
+  const [list, setList] = useState([2, 4, 6, 8]);
 
   // Check if all numbers are even
   const allEven = useArrayEvery(list, num => num % 2 === 0);
@@ -29,10 +30,11 @@ export default Component;
 
 ```tsx
 import { useArrayEvery } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [list, setList] = React.useState([
+  const [list, setList] = useState([
     { name: 'Alice', age: 25 },
     { name: 'Bob', age: 30 },
     { name: 'Charlie', age: 35 },
@@ -54,12 +56,30 @@ export default Component;
 ## Type Declarations
 
 ```typescript
-export declare function useArrayEvery<T>(
+/**
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.every`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) method.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} list - The array to check.
+ * @param {UseArrayEveryPredicate<T>} predicate - A function to test each element.
+ * @returns {boolean} `true` if the `predicate` function returns a truthy value for every element from the array. Otherwise, `false`.
+ */
+export function useArrayEvery<T>(
   list: T[],
   predicate: UseArrayEveryPredicate<T>
 ): boolean;
 
-export declare type UseArrayEveryPredicate<T> = (
+/**
+ * Represents a predicate function used in the `useArrayEvery` function.
+ *
+ * @template T The type of elements in the array.
+ * @param {T} element The current element being processed.
+ * @param {number} index The index of the current element.
+ * @param {T[]} array The array being processed.
+ * @returns {unknown} The result of the predicate function.
+ */
+export type UseArrayEveryPredicate<T> = (
   element: T,
   index: number,
   array: T[]
@@ -68,49 +88,17 @@ export declare type UseArrayEveryPredicate<T> = (
 
 ## Reference
 
-| Property    | Type                        | Default | Description                      |
-| ----------- | --------------------------- | ------- | -------------------------------- |
-| `list`      | `T[]`                       | -       | The array to check.              |
-| `predicate` | `UseArrayEveryPredicate<T>` | -       | A function to test each element. |
-
-### Returns
-
-| Type      | Description                                                                           |
-| --------- | ------------------------------------------------------------------------------------- |
-| `boolean` | A `boolean` value indicating whether all elements in the array satisfy the predicate. |
-
-## Common Pitfals
-
-### Invalid Predicate Function
-
-Ensure thhat `predicate` is a valid function
-
-Example mistake:
-
-```tsx
-const result = useArrayEvery([1, 2, 3], 'not-a-function');
-```
-
-**Solution:** Pass a valie function to `predicate`
-
-```tsx
-const result = useArrayEvery([1, 2, 3], num => num > 0);
-```
-
-### Invalid Array
-
-Ensure that `list` is a valid array.
-
-Example mistake:
-
-```tsx
-const result = useArrayEvery('not-an-array', num => num > 0);
-```
-
-**Solution:** Pass a valie array to `list`.
-
-```tsx
-const result = useArrayEvery([1, 2, 3], num => num > 0);
-```
+<TypeTable
+  type={{
+    list: {
+      description: 'The array to check. ',
+      type: 'T[]',
+    },
+    predicate: {
+      description: 'A function to test each element.',
+      type: 'UseArrayEveryPredicate<T>',
+    },
+  }}
+/>
 
 import ArrayEveryDemo from '../../../../hooks/Array/useArrayEvery/useArrayEvery.demo';

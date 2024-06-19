@@ -9,6 +9,7 @@ description: Collection of useful React hooks and utilities.
 
 ```tsx
 import { useSorted } from '#';
+
 import { useState } from 'react';
 
 const Component = () => {
@@ -23,6 +24,7 @@ const Component = () => {
 
 ```tsx
 import { useSorted } from '#';
+
 import { useState } from 'react';
 
 const Component = () => {
@@ -44,6 +46,7 @@ const Component = () => {
 
 ```tsx
 import { useSorted } from '#';
+
 import { useState } from 'react';
 
 const Component = () => {
@@ -62,69 +65,92 @@ const Component = () => {
 ## Type Declarations
 
 ```ts
-export declare type UseSortedCompareFn = (a: T, b: T) => number;
+/**
+ * Comparison function type for sorting elements in an array.
+ *
+ * @typedef {Function} UseSortedCompareFn
+ * @param {T} a - The first element to compare.
+ * @param {T} b - The second element to compare.
+ * @returns {number} A negative value if `a` should be sorted before `b`,
+ * a positive value if `b` should be sorted before `a`, or zero if they're equal.
+ * @template T
+ */
+export type UseSortedCompareFn<T> = (a: T, b: T) => number;
 
-export declare interface UseSortedOptions {
-  sortFn?: (arr: T[], compareFn?: UseSortedCompareFn) => T[];
-  compareFn?: UseSortedCompareFn;
+/**
+ * Options for the `useSorted` hook.
+ *
+ * @interface UseSortedOptions
+ * @template TestComponent
+ * @property {Function} [sortFn] - Custom sort function to use instead of the default.
+ * @property {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
+ * @property {boolean} [dirty] - Flag indicating whether to mutate the original array.
+ */
+export interface UseSortedOptions<T> {
+  sortFn?: (arr: T[], compareFn?: UseSortedCompareFn<T>) => T[];
+  compareFn?: UseSortedCompareFn<T>;
   dirty?: boolean;
 }
 
-export declare function defaultSortFn<T>(
+/**
+ * Default sort function that creates a new sorted array using the provided comparison function.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} arr - The array to be sorted.
+ * @param {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
+ * @returns {T[]} A new sorted array.
+ */
+export function defaultSortFn<T>(
   arr: T[],
   compareFn?: UseSortedCompareFn<T>
 ): T[];
 
-export declare function defaultSortFn<T>(
-  arr: T[],
-  compareFn?: UseSortedCompareFn
+/**
+ * Sorts an array based on the provided comparison function and options.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} source - The array to be sorted.
+ * @param {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
+ * @param {UseSortedOptions<T>} [options] - Additional options for sorting.
+ * @returns {T[]} A sorted array.
+ */
+export function sortArray<T>(
+  source: T[],
+  compareFn?: UseSortedCompareFn<T>,
+  options?: UseSortedOptions<T>
+): T[];
+
+/**
+ * React hook that returns a sorted version of the provided array.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} source - The array to be sorted.
+ * @param {UseSortedCompareFn<T> | UseSortedOptions<T>} [compareFnOrOptions] - Comparison function or options object.
+ * @param {Omit<UseSortedOptions<T>, 'compareFn'>} [options] - Additional options for sorting.
+ * @returns {T[]} A sorted array.
+ */
+export function useSorted<T>(
+  source: T[],
+  compareFnOrOptions?: UseSortedCompareFn<T> | UseSortedOptions<T> | null,
+  options?: Omit<UseSortedOptions<T>, 'compareFn'> | null
 ): T[];
 ```
 
 ## Reference
 
-#### useSorted
-
-| Property           | Type                                           | Default | Description                                               |
-| ------------------ | ---------------------------------------------- | ------- | --------------------------------------------------------- |
-| `source`           | `T[]`                                          | -       | The primary array to sort.                                |
-| `compareOrOptions` | `UseSortedCompareFn<T> \| UseSortedOptions<T>` | -       | Either a comparison function or a set of sorting options. |
-
-#### useSortedOptions
-
-| Property    | Type                                                   | Default         | Description                                                                                 |
-| ----------- | ------------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------- |
-| `sortFn`    | `(arr: T[], compareFn?: UseSortedCompareFn<T>) => T[]` | `defaultSortFn` | (_Optional_) Custom sort function to use for sorting.                                       |
-| `compareFn` | `UseSortedCompareFn<T>`                                | -               | (_Optional_) Comparison function to determine the order of elements.                        |
-| `dirty`     | `boolean`                                              | `false`         | (_Optional_) If `true`, mutates the input array directly; otherwise, returns a sorted copy. |
-
-### Returns
-
-| Type  | Description       |
-| ----- | ----------------- |
-| `T[]` | The sorted array. |
-
-## Common Pitfalls
-
-### Incorrect Sorting Logic
-
-Ensure that comparison function or sort options provided are consistent and handle all data types appropriately.
-
-```ts
-const sortedList = useSorted([{ id: 1 }], (a, b) =>
-  a.name.localeCompare(b.name)
-);
-// Solution: Ensure that the comparison logic matches the available properties.
-```
-
-### Mutatble Sorting with dirty: true
-
-Using `dirty: true` mutates the original array. Be cautious when using this option if the original order of the input array is importang.
-
-```ts
-const sortedList = useSorted([{ id: 3 }, { id: 1 }, { id: 2 }], {
-  compareFn: (a, b) => a.id - b.id,
-  dirty: true,
-});
-// Solution: If you don't want to mutate the original array, omit the `dirty` option or set it to `false`.
-```
+<TypeTable
+  type={{
+    source: {
+      description: 'The type of elements in the array.',
+      type: 'T[]',
+    },
+    compareFnOrOptions: {
+      description: 'Comparison function or options object.',
+      type: 'UseSortedCompareFn<T> | UseSortedOptions<T> | null',
+    },
+    options: {
+      description: 'Additional options for sorting.',
+      type: 'UseSortedOptions<T>',
+    },
+  }}
+/>

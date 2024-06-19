@@ -9,10 +9,11 @@ a hook providing a memoized version of the `Array.join` method for React, joinin
 
 ```tsx
 import { useArrayJoin } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [words, setWords] = React.useState(['hello', 'world']);
+  const [words, setWords] = useState(['hello', 'world']);
 
   const joinedWords = useArrayJoin(words, ' ');
 
@@ -28,10 +29,11 @@ export default Component;
 
 ```tsx
 import { useArrayJoin } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [numbers, setNumbers] = React.useState([1, 2, 3]);
+  const [numbers, setNumbers] = useState([1, 2, 3]);
 
   const joinedNumbers = useArrayJoin(numbers, '-');
 
@@ -47,30 +49,32 @@ export default Component;
 
 ## Type Declarations
 
-````typescript
-export declare function useArrayJoin<T>(list: T[], separator?: string): string```
-````
+```ts
+/**
+ * A React hook that provides a memoized implementation of the
+ * [`Array.prototype.join`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) method.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} list - The array to join. If `list` is not an array, the hook returns an empty string.
+ * @param {string} [separator] - A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated by a comma (",").
+ * @returns {string} A string with all array elements joined. If `list.length` is `0`, an empty string is returned.
+ */
+export function useArrayJoin<T>(list: T[], separator?: string): string;
+```
 
 ## Reference
 
-| Property    | Type     | Default | Description                                                                               |
-| ----------- | -------- | ------- | ----------------------------------------------------------------------------------------- |
-| `list`      | `T[]`    | -       | The primary array to join.                                                                |
-| `separator` | `string` | `,`     | (_Optional_) A string to separate each pair of adjacent elements in the resulting string. |
-
-### Returns
-
-| Type     | Description                                                                                    |
-| -------- | ---------------------------------------------------------------------------------------------- |
-| `string` | A string with all array elements joined. If `list.length` is `0`, an empty string is returned. |
-
-## Common Pitfals
-
-### Providing an invalid separator
-
-```tsx
-const words = ['hello', 'world'];
-const invalidSeparator = '!';
-
-const joinedWords = useArrayJoin(words, invalidSeparator); // Error
-```
+<TypeTable
+  type={{
+    list: {
+      description: 'The primary array to join',
+      type: 'T[]',
+    },
+    separator: {
+      description:
+        '(Optional) A string to separate each pair of adjacent elements in the resulting string.',
+      type: 'string',
+      defaultValue: ',',
+    },
+  }}
+/>

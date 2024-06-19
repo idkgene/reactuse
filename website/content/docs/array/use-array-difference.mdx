@@ -9,11 +9,12 @@ description: Collection of useful React hooks and utilities.
 
 ```tsx
 import { useArrayDifference } from '#';
-import * as React from 'react';
+
+import { useState } from 'react';
 
 const Component = () => {
-  const [list1, setList1] = React.useState([0, 1, 2, 3, 4, 5]);
-  const [list2, setList2] = React.useState([4, 5, 6]);
+  const [list1, setList1] = useState([0, 1, 2, 3, 4, 5]);
+  const [list2, setList2] = useState([4, 5, 6]);
 
   const difference = useArrayDifference(list1, list2);
 
@@ -29,11 +30,11 @@ export default Component;
 
 ```tsx
 import { useArrayDifference } from '#';
-import * as React from 'react';
+import { useState } from 'react';
 
 const Component = () => {
-  const [list1, setList1] = React.useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
-  const [list2, setList2] = React.useState([{ id: 2 }, { id: 4 }]);
+  const [list1, setList1] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  const [list2, setList2] = useState([{ id: 2 }, { id: 4 }]);
 
   // Custom comparison function based on the 'id' property
   const difference = useArrayDifference(list1, list2, (a, b) => a.id === b.id);
@@ -81,61 +82,65 @@ export default Component;
 ## Type Declarations
 
 ```typescript
-export declare function useArrayDifference<T>(
+/**
+ * A React hook that returns the difference between two arrays.
+ *
+ * @template T - The type of elements in the arrays.
+ * @param {T[]} list - The first array.
+ * @param {T[]} values - The second array.
+ * @param {UseArrayDifferenceKey<T>} keyOrCompareFn - Optional.
+ * A key of an object or a custom comparator function.
+ * @returns {T[]} The difference between the two arrays.
+ */
+export function useArrayDifference<T>(
   list: T[],
   values: T[],
   keyOrCompareFn?: keyof T | UseArrayDifferenceComparatorFn<T>
 ): T[];
 
-export declare type UseArrayDifferenceComparatorFn<T> = (
+/**
+ * A function that compares two elements for equality.
+ *
+ * @template T The type of elements being compared.
+ * @param {T} element The first element to compare.
+ * @param {T} value The second element to compare.
+ * @returns {boolean} `true` if the elements are equal, `false` otherwise.
+ */
+export type UseArrayDifferenceComparatorFn<T> = (
   element: T,
   value: T
 ) => boolean;
 
-export declare type UseArrayDifferenceKey<T> =
+/**
+ * A key of an object or a custom comparator function used to determine
+ * the uniqueness of elements in array.
+ *
+ * @template T The type of elements in the array.
+ * @typedef {keyof T | UseArrayDifferenceComparatorFn<T>} UseArrayDifferenceKey
+ */
+export type UseArrayDifferenceKey<T> =
   | keyof T
   | UseArrayDifferenceComparatorFn<T>;
 ```
 
 ## Reference
 
-#### useArrayDifference
-
-| Property         | Type                                           | Default | Description                                                          |
-| ---------------- | ---------------------------------------------- | ------- | -------------------------------------------------------------------- |
-| `list`           | `T[]`                                          | -       | The primary array.                                                   |
-| `values`         | `T[]`                                          | -       | The array to compare against.                                        |
-| `keyOrCompareFn` | `keyof T \| UseArrayDifferenceComparatorFn<T>` | -       | (_Optional_) The key to use for comparison or a comparator function. |
-
-#### UseArrayDifferenceKey
-
-| Property                         | Type                                | Description                                                                       |
-| -------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------- |
-| `element`                        | `T`                                 | An element frmo the `list` array.                                                 |
-| `value`                          | `T`                                 | An element frmo the `values` array..                                              |
-| `UseArrayDifferenceComparatorFn` | `(element: T, value: T) => boolean` | Comparator function that returns `true` if the two elements are considered equal. |
-
-### Returns
-
-| Type  | Description                                                                                       |
-| ----- | ------------------------------------------------------------------------------------------------- |
-| `T[]` | Returns a new array containing elements from the `list` that are not present in the values array. |
-|       |
-
-## Common Pitfals
-
-### Incorrect Key Usage:
-
-If using a key for comparison, ensure that the key exists in all objects.
-
-```ts
-const difference = useArrayDifference([{ id: 1 }], [{ name: 'Alice' }], 'id');
-```
-
-**Solution:** Ensure both arrays have the key `id`.
-
-### Inconsistent Data Types:
-
-Ensure both arrays contain comparable data types, especially when using direct comparison.
+<TypeTable
+  type={{
+    list: {
+      description: 'The primary array',
+      type: 'T[]',
+    },
+    values: {
+      description: 'The array to compare against',
+      type: 'T[]',
+    },
+    keyOrCompareFn: {
+      description:
+        '(Optional) The key to use for comparison or a comparator function.',
+      type: 'keyof T | UseArrayDifferenceComparatorFn<T>',
+    },
+  }}
+/>
 
 import ArrayDifferenceDemo from '../../../../hooks/Array/useArrayDifference/useArrayDifference.demo';
