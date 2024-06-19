@@ -9,7 +9,6 @@ import { UseArrayFindPredicate } from '../array';
  * @template T - The type of elements in the array
  * @param {T[]} list - The array to search.
  * @param {UseArrayFindPredicate<T>} predicate - A function to test each element in the array.
- *
  * @returns {T | undefined} - The first element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
  *
  * @example
