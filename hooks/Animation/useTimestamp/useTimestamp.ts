@@ -1,50 +1,59 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+/**
+ * Options for the useTimestamp hook.
+ *
+ * @interface UseTimestampOptions
+ * @template Controls - Whether controls are enabled.
+ * @property {Controls} [controls=false] - Expose more controls.
+ * @property {number} [offset=0] - Offset value added to the timestamp.
+ * @property {boolean} [immediate=true] - Update the timestamp immediately.
+ * @property {'requestAnimationFrame' | number} [interval='requestAnimationFrame'] - Update interval, or use requestAnimationFrame.
+ * @property {(timestamp: number) => void} [callback] - Callback function invoked on each update.
+ */
 interface UseTimestampOptions<Controls extends boolean> {
-  /**
-   * Expose more controls
-   *
-   * @default false
-   */
   controls?: Controls;
-  /**
-   * Offset value adding to the value
-   *
-   * @default 0
-   */
   offset?: number;
-  /**
-   * Update the timestamp immediately
-   *
-   * @default true
-   */
   immediate?: boolean;
-  /**
-   * Update interval, or use requestAnimationFrame
-   *
-   * @default 'requestAnimationFrame'
-   */
   interval?: 'requestAnimationFrame' | number;
-  /**
-   * Callback on each update
-   */
   callback?: (timestamp: number) => void;
 }
 
+/**
+ * Interface for pause and resume controls.
+ *
+ * @interface Pausable
+ * @property {() => void} pause - Pause the timestamp updates.
+ * @property {() => void} resume - Resume the timestamp updates.
+ */
 interface Pausable {
   pause: () => void;
   resume: () => void;
 }
 
+/**
+ * Return type of the useTimestamp hook based on the controls option.
+ *
+ * @template Controls - Whether controls are enabled.
+ * @typedef {Controls extends true ? { timestamp: number } & Pausable : number} UseTimestampReturn
+ */
 type UseTimestampReturn<Controls extends boolean> = Controls extends true
   ? { timestamp: number } & Pausable
   : number;
 
 /**
- * Reactive current timestamp.
+ * Current timestamp.
  *
- * @param options - Options for the useTimestamp hook
- * @returns The current timestamp or an object with the timestamp and controls based on the options
+ * @template Controls - Whether controls are enabled.
+ * @param {UseTimestampOptions<Controls>} [options] - Options for the useTimestamp hook.
+ * @returns {UseTimestampReturn<Controls>} The current timestamp or an object with the timestamp and controls based on the options.
+ *
+ * @example
+ * // Basic usage
+ * const timestamp = useTimestamp();
+ *
+ * // With controls
+ * const { timestamp, pause, resume } = useTimestamp({ controls: true });
  */
 export function useTimestamp<Controls extends boolean = false>(
   options?: UseTimestampOptions<Controls>
