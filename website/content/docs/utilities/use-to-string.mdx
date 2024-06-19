@@ -65,17 +65,4 @@ export declare type Resolvable<T> = T | (() => T);
 | -------- | --------------------------------------- |
 | `string` | The string representation of the value. |
 
-## Common Pitfalls
-
-### Passing Incorrect Value Type
-
-Ensure that the value passed to `useToString` is of a type that can be converted to a string.
-
-```tsx
-const value = {};
-const stringValue = useToString(value); // Outputs: "[object Object]"
-```
-
-**Solution**: Pass a value that has a meaningful string representation or provide a custom function to resolve the value.
-
 import ToStringDemo from '../../../../hooks/Utilities/useToString/useToString.demo';

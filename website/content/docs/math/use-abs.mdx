@@ -66,21 +66,3 @@ export declare function useAbs(value: number | (() => number)): number;
 | Type     | Description                               |
 | :------- | :---------------------------------------- |
 | `number` | The absolute value of the provided value. |
-
-## Common Pitfalls
-
-### Passing a Non-Number value
-
-Ensure that the value passed to the `useAbs` is either a number or a function that returns a number. Passing other data types may lead to unexpected behavior.
-
-```tsx
-const absValue = useAbs('10'); // Incorrect usage
-```
-
-**Solution**: Pass a number or a function that returns a number.
-
-```tsx
-const absValue = useAbs(10);
-// or
-const absValue = useAbs(() => 10);
-```

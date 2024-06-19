@@ -94,19 +94,3 @@ export declare type UsePrecisionReturn = FormattedValue;
 | Type     | Description                                                                |
 | :------- | :------------------------------------------------------------------------- |
 | `number` | The formatted value, which is a number rounded to the specified precision. |
-
-## Common Pitfalls
-
-### Invalid Precision
-
-Ensure that the `precision` passed to `usePrecision` is a non-negative integer. Passing a negative or non-integer value may lead to unexpected behavior. Ensure
-
-```tsx
-const formattedValue = usePrecision({ precision: -1, value: 3.14159 }); // Incorrect usage
-```
-
-**Solution**: Pass a non-negative integer as the precision.
-
-```tsx
-const formattedValue = usePrecision({ precision: 2, value: 3.14159 });
-```

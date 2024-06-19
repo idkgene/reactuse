@@ -47,21 +47,3 @@ export declare function useAverage(...args: any[]): number;
 | Type     | Description        |
 | -------- | ------------------ |
 | `number` | The average value. |
-
-## Common Pitfalls
-
-### Mixing Individual Values and Arrays
-
-Ensure that all individual values or a single array are passed as arguments consistently.
-
-```tsx
-const avg = useAverage(1, [2, 3], 4); // Incorrect, should be consistent
-```
-
-### Non-Numeric Values
-
-Ensure that all provided values are numeric.
-
-```tsx
-const avg = useAverage(1, 2, 'three', 4); // Incorrect, "three" is not numeric
-```

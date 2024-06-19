@@ -66,38 +66,3 @@ export declare function useSum(array: number[]): number;
 | -------- | ------------------------------------------ |
 | `number` | The sum of the numbers in the input array. |
 |          |
-
-## Common Pitfalls
-
-### Passing Non-Array Input
-
-Ensure that the input passed to `useSum` is an array. Passing a non-array value will result in an error message being logged to the console.
-
-```tsx
-const sum = useSum(123); // Incorrect usage
-```
-
-**Solution**: Pass an array of numbers to useSum.
-
-```tsx
-const numbers = [1, 2, 3];
-const sum = useSum(numbers);
-```
-
-### Passing Array with Non-Number Elements
-
-An empty array will return a sum of `0`.
-
-Make sure that the input array contains only numbers. If the array contains non-number elements, an error message will be logged to the console.
-
-```tsx
-const numbers = [1, '2', 3]; // Incorrect usage
-const sum = useSum(numbers);
-```
-
-**Solution**: Ensure that the input array contains only numbers.
-
-```tsx
-const numbers = [1, 2, 3];
-const sum = useSum(numbers);
-```

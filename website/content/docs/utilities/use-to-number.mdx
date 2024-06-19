@@ -99,28 +99,4 @@ export interface UseToNumberOptions {
 | -------- | ---------------------------------------------- |
 | `number` | The numeric representation of the input value. |
 
-## Common Pitfalls
-
-### Unexpected Conversion Results
-
-Be aware of the behavior of `parseFloat` and `parseInt` when converting strings to numbers.
-
-```tsx
-const num1 = useToNumber('42.42abc'); // Output: 42.42
-const num2 = useToNumber('42abc', { method: 'parseInt' }); // Output: 42
-```
-
-**Solution**: Ensure that the input string is in a valid format for the chosen conversion method.
-
-### Handling NaN Values
-
-By default, if the conversion fails and results in NaN, the hook will return NaN. Use the `nanToZero` option to return 0 instead.
-
-```tsx
-const num1 = useToNumber('invalid'); // Output: NaN
-const num2 = useToNumber('invalid', { nanToZero: true }); // Output: 0
-```
-
 import ToNumberDemo from '../../../../hooks/Utilities/useToNumber/useToNumber.demo';
-
-;

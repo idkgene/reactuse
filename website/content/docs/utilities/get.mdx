@@ -51,27 +51,3 @@ export declare function get<T, K extends keyof T>(
 | Type                     | Description                                                                                                      |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
 | `T \| T[K] \| undefined` | The value of the ref or the value of the specified property, or `undefined` if the ref is `null` or `undefined`. |
-
-## Common Pitfalls
-
-### Accessing Non-Existent Properties
-
-If accessing a non-existent property of the ref's value using the `key` parameter, the function will return `undefined`.
-
-```tsx
-const ref = React.useRef({ name: 'John' });
-const age = get(ref, 'age'); // Returns undefined
-```
-
-**Solution**: Ensure the property exists in the ref's value before accessing it.
-
-### Null or Undefined Ref
-
-If the ref's current value is null or undefined, the function will return `undefined`.
-
-```tsx
-const ref = React.useRef<string | null>(null);
-const value = get(ref); // Returns undefined
-```
-
-**Solution**: Handle the case when the ref's value is null or undefined appropriately in your code.

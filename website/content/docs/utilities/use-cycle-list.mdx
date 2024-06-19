@@ -99,17 +99,3 @@ export interface UseCycleListReturn<T> {
 | `next`   | `(n?: number) => T` | - Function to move to the next item.     |
 | `prev`   | `(n?: number) => T` | - Function to move to the previous item. |
 | `go`     | `(i: number) => T`  | - Function to move to a specific item.   |
-
-## Common Pitfalls
-
-### Accessing Previous Value on Initial Render
-
-On the initial render, the previous value will be `undefined`unless an initialValue is provided.
-
-```tsx
-const [count, setCount] = useState(0);
-const prevCount = usePrevious(count);
-console.log(prevCount); // Output: undefined
-```
-
-**Solution**: Provide an `initialValue` if you want to return a specific value before the first update.

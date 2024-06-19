@@ -87,27 +87,3 @@ export declare function useLastChanged<T>(
 | Type                                     | Description                                        |
 | ---------------------------------------- | -------------------------------------------------- |
 | `React.MutableRefObject<number \| null>` | A ref containing the timestamp of the last change. |
-
-## Common Pitfalls
-
-### Incorrect Equality Function
-
-When providing a custom `equalityFn`, ensure that it correctly compares the relevant properties of the source value. An incorrect equality function may lead to unexpected behavior and inaccurate tracking of changes.
-
-```tsx
-const lastChanged = useLastChanged(user, {
-  equalityFn: (prev, next) => prev.name === next.name,
-});
-// Equality function only compares the 'name' property, ignoring changes to 'age'
-```
-
-**Solution**: Ensure that the equality function compares all relevant properties of the source value.
-
-### Accessing lastChanged.current Before the First Change
-
-If you access `lastChanged.current` before te source value has changed for the first time, it will return the `initialValue` (default: `null`). Handle this behavior appropriately in your code.
-
-```ts
-const lastChanged = useLastChanged(value);
-console.log(lastChanged.current); // Output: null (before the first change)
-```

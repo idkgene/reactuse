@@ -71,14 +71,3 @@ export declare const useBoolean: (initialValue?: boolean) => UseBooleanReturn;
 | Type               | Description                                                                                                                              |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `UseBooleanReturn` | An array containing the current boolean value, a function to toggle the boolean value, and a function to set the boolean value directly. |
-
-## Common Pitfalls
-
-### Naming Conventions
-
-Choose meaningful names for the returned values based on the context of your application. Instead of using generic names like `value` and `toggle`, use names that describe the specific boolean state, such as `isVisible` and `toggleVisibility`.
-
-```ts
-const [value, toggle] = useBoolean(); // Generic naming
-const [isModalOpen, toggleModal] = useBoolean(); // Descriptive naming
-```

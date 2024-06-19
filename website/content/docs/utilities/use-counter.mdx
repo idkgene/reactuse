@@ -96,15 +96,3 @@ export interface UseCounterResult {
 | get      | `() => number`             | Returns the current value of the counter.                                                        |
 | set      | `(value: number) => void`  | Sets the counter to the specified value.                                                         |
 | reset    | `(value?: number) => void` | Resets the counter to the specified value. If no value is provided, resets to the initial value. |
-
-## Common Pitfalls
-
-### Exceeding Min/Max Constraints:
-
-When using `min` and `max` options, ensure that the initial value and any values passed to `set` or `reset` are within the specified range. Values outside range will be clamped to the neares valid value.
-
-```ts
-const { count } = useCounter(0, { min: 0, max: 10 });
-set(15); // count will be set to 10 (clamped to max)
-reset(-5); // count will
-```

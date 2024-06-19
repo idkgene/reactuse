@@ -106,17 +106,3 @@ export interface WheneverOptions {
 | Type   | Description                                                                                                  |
 | ------ | ------------------------------------------------------------------------------------------------------------ |
 | `void` | The `whenever` utility does not return any value. It executes the callback based on the provided conditions. |
-
-## Common Pitfalls
-
-### Incorrect Value Type
-
-Ensure that the `value` passed to `whenever` matches the expected type `T`. Passing a value of a different type may lead to unexpected behavior.
-
-```tsx
-whenever(count, (current: string) => {
-  console.log(current.toUpperCase());
-});
-```
-
-**Solution**: Make sure the `value` and the callback parameter types are consistent.

@@ -47,21 +47,3 @@ export declare function useFloor(value: Resolvable<number>): number;
 | Type     | Description        |
 | -------- | ------------------ |
 | `number` | The floored value. |
-
-## Common Pitfalls
-
-### Incorrect Data Type
-
-Ensure that the value passed to `useFloor` is a number or a function returning a number.
-
-```tsx
-const floored = useFloor('4.9'); // Incorrect, should be a number
-```
-
-### Function Not Returning a Number
-
-When using a function as the input, make sure the function returns a valid number.
-
-```tsx
-const floored = useFloor(() => '7.8'); // Incorrect, should return a number
-```

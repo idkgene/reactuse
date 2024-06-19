@@ -80,20 +80,3 @@ export declare type MakeDestructibleResult<T, A extends readonly any[]> = T & {
 | Type                           | Description                                                                     |
 | ------------------------------ | ------------------------------------------------------------------------------- |
 | `MakeDestructibleResult<T, A>` | A destructible object containing both the object properties and array elements. |
-
-## Common Pitfalls
-
-### Naming Conflicts
-
-Be cautious when using property names from the object that conflict with the array elements.
-
-```tsx
-const [firstName, lastName, { age, firstName: objFirstName }] = useDestructible(
-  { firstName: 'John', age: 30 },
-  ['Jane', 'Doe']
-);
-console.log(firstName); // Output: 'Jane'
-console.log(objFirstName); // Output: 'John'
-```
-
-**Solution**: Use unique names for object properties and array elements to avoid naming conflits.

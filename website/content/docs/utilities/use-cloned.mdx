@@ -73,27 +73,3 @@ export interface UseClonedReturn<T> {
 | Type                 | Description                                                                                  |
 | -------------------- | :------------------------------------------------------------------------------------------- |
 | `UseClonedReturn<T>` | An object containing the cloned reference and a function to sync the clone with the source.. |
-
-## Common Pitfalls
-
-### Forgetting to Sync in Manual Mode
-
-When usin the `manual` options, remember to call the sync function to update the cloned reference when necessary. Failing to do so may result in the cloned reference being out of sync with the source object.
-
-```tsx
-const { cloned, sync } = useCloned(source, { manual: true });
-// Update the source object
-source.age = 30;
-// Forgot to call sync, cloned reference is out of sync
-```
-
-**Solution**: Call the `sync` function after updating the source object in manual mode/
-
-### Mutating the Cloned Reference
-
-Avoid directly mutating the `cloned.current` object as it may lead to unexpected behavior. Instead, update the `source` object and let the hook handle the cloning thing.
-
-```ts
-const { cloned } = useCloned({ name: 'Alice', age: 25 });
-cloned.current.age = 30; // Avoid direct mutation
-```

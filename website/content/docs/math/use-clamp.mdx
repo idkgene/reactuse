@@ -53,29 +53,3 @@ export declare function useClamp(
 | Type     | Description        |
 | -------- | ------------------ |
 | `number` | The floored value. |
-
-## Common Pitfalls
-
-### Incorrect Data Type
-
-Ensure that the values passed to `useClamp` are numbers or functions returning numbers.
-
-```tsx
-const clamped = useClamp('5', 0, 10); // Incorrect, should be a number
-```
-
-### Function Not Returning a Number
-
-When using a function as the input, make sure the function returns a valid number.
-
-```tsx
-const clamped = useClamp(() => '15', 0, 10); // Incorrect, should return a number
-```
-
-### Reversed Min and Max
-
-Ensure that the minimum value is less than or equal to the maximum value.
-
-```tsx
-const clamped = useClamp(5, 10, 0); // Incorrect, min should be less than max
-```

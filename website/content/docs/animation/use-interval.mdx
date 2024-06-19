@@ -1,4 +1,117 @@
 ---
 title: useInterval
-description: A custom hook that runs a callback fn at a specified interval
+description: Collection of useful React hooks and utilities.
 ---
+
+`useInterval` is a custom hook that runs a callback function at a specified interval. It provides controls to pause, resume, and reset the interval counter.
+
+## Usage
+
+```tsx
+import { useInterval } from '#';
+
+const Component = () => {
+  const { counter, reset, pause, resume } = useInterval(1000);
+
+  return (
+    <div>
+      <p>Counter: {counter}</p>
+      <button onClick={reset}>Reset</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+```tsx
+import { useInterval } from '#';
+
+const Component = () => {
+  const { counter, reset, pause, resume } = useInterval(500, {
+    immediate: false,
+    callback: count => {
+      console.log(`Interval count: ${count}`);
+    },
+  });
+
+  return (
+    <div>
+      <p>Counter: {counter}</p>
+      <button onClick={reset}>Reset</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```ts
+export declare interface UseIntervalOptions {
+  /**
+   * Determines whether the interval starts immediately.
+   * @default true
+   */
+  immediate?: boolean;
+
+  /**
+   * Optional callback function to be invoked at each interval.
+   * @param count - The current interval count.
+   */
+  callback?: (count: number) => void;
+}
+
+export declare interface UseIntervalControls {
+  /**
+   * The current count of intervals that have elapsed.
+   */
+  counter: number;
+
+  /**
+   * Resets the interval counter to 0.
+   */
+  reset: () => void;
+
+  /**
+   * Pauses the interval.
+   */
+  pause: () => void;
+
+  /**
+   * Resumes the interval.
+   */
+  resume: () => void;
+}
+
+export declare function useInterval(
+  interval: number,
+  options?: UseIntervalOptions
+): UseIntervalControls;
+```
+
+## Reference
+
+#### useInterval
+
+| Property   | Type                 | Default | Description                                                                |
+| ---------- | -------------------- | ------- | -------------------------------------------------------------------------- |
+| `interval` | `number`             | -       | The interval in ms.                                                        |
+| `options`  | `UseIntervalOptions` | `{}`    | (_Optional_) Configuration object for the interval behavior and callbacks. |
+
+#### UseIntervalOptions
+
+| Property    | Type                      | Default | Description                                                                     |
+| ----------- | ------------------------- | ------- | ------------------------------------------------------------------------------- |
+| `immediate` | `boolean`                 | `true`  | (_Optional_) If true, starts the interval immediately.                          |
+| `callback`  | `(count: number) => void` | -       | (_Optional_) Callback function invoked at each interval with the current count. |
+
+#### UseIntervalControls
+
+| Property  | Type         | Description                                       |
+| --------- | ------------ | ------------------------------------------------- |
+| `counter` | `number`     | The current count of intervals that have elapsed. |
+| `reset`   | `() => void` | Resets the interval counter to 0.                 |
+| `pause`   | `() => void` | Pauses the interval.                              |
+| `resume`  | `() => void` | Resumes the interval.                             |

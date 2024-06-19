@@ -74,33 +74,3 @@ export declare type RoundNumberFn = (number: number) => void;
 | Type                       | Description                          |
 | :------------------------- | :----------------------------------- |
 | `(number: number) => void` | Function type for rounding a number. |
-
-## Common Pitfalls
-
-### Passing Non-Number Values
-
-Ensure that the value passed to the `roundNumber` function is a number. Passing non-number values will result in NaN (Not-a-Number) and an error message will be logged to the console.
-
-```tsx
-roundNumber('3.7'); // Incorrect usage
-```
-
-**Solution**: Pass a number value to the `roundNumber` function.
-
-```tsx
-roundNumber(3.7);
-```
-
-### Forgetting To Destructure The Hook Return Value
-
-Make sure to destructure the return value of the `useRound` hook into a rounded number and a function to update it.
-
-```tsx
-const roundedNumber = useRound(); // Incorrect usage
-```
-
-**Solution**: Destructure the return value of the `useRound` hook.
-
-```tsx
-const [roundedNumber, roundNumber] = useRound();
-```

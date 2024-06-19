@@ -62,19 +62,3 @@ export declare type SupportCheckCallback = () => boolean;
 | Type      | Description                                                          |
 | --------- | -------------------------------------------------------------------- |
 | `boolean` | A boolean indicating whether the feature or capability is supported. |
-
-## Common Pitfalls
-
-### Handling Exceptions
-
-The `useSupported` hook catches any exceptions that may occur during the support check and returns `false` in such cases. It's important to ensure that the callbackf unction doesn't have any unintended side effects.
-
-```tsx
-const isSupported = useSupported(() => {
-  // Perform support check that may throw an exception
-  throw new Error('Something went wrong');
-});
-console.log(isSupported); // Output: false
-```
-
-**Solution**: Make sure the callback function only performs the necessary checks and doesn't have any side effects that could throw exceptions.

@@ -47,21 +47,3 @@ export declare function useCeil(value: Resolvable<number>): number;
 | Type     | Description        |
 | -------- | ------------------ |
 | `number` | The clamped value. |
-
-## Common Pitfalls
-
-### Incorrect Data Type
-
-Ensure that the value passed to `useCeil` is a number or a function returning a number.
-
-```tsx
-const ceilValue = useCeil("4.2"); // Incorrect, should be a number
-```
-
-### Function Not Returning a Number
-
-When using a function as the input, make sure the function returns a valid number.
-
-```tsx
-const ceilValue = useCeil(() => "4.7"); // Incorrect, should return a number
-```

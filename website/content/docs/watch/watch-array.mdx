@@ -76,24 +76,3 @@ export function useArrayWatcher<T>(
 | `oldArray` | `T[]` | The previous version of the array.                             |
 | `added`    | `T[]` | Elements added to the new array compared to the old array.     |
 | `removed`  | `T[]` | Elements removed from the old array compared to the new array. |
-
-## Common Pitfalls
-
-### Incorrect Array Reference
-
-Ensure that the callback function is correctly updating or referencing the array.
-
-```tsx
-const handleArrayChange = (
-  newArray: number[],
-  oldArray: number[],
-  added: number[],
-  removed: number[]
-) => {
-  // Correct usage
-};
-```
-
-### Inconsistent Data Types
-
-Make sure that the arrays being compared contain consistent data types.

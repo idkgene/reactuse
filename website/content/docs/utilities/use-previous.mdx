@@ -70,29 +70,3 @@ export declare type PreviousValue<T> = T | undefined;
 | Type               | Description                                                                 |
 | ------------------ | --------------------------------------------------------------------------- |
 | `PreviousValue<T>` | The previous value of the given variable, or the initial value if provided. |
-
-## Common Pitfalls
-
-### Acceessing Previous Value on Initial Render
-
-On the initial render, the previous value will be `undefined`unless an initialValue is provided.
-
-```tsx
-const [count, setCount] = useState(0);
-const prevCount = usePrevious(count);
-console.log(prevCount); // Output: undefined
-```
-
-**Solution**: Provide an `initialValue` if you want to return a specific value before the first update.
-
-### Comparing Previous and Current Values
-
-Be cautious when comparing the previous and current values, if they are objects or arrays, as they are compared by reference.
-
-```tsx
-const [obj, setObj] = useState({ id: 1 });
-const prevObj = usePrevious(obj);
-console.log(prevObj === obj); // Output: true
-```
-
-**Solution**: If you need to compare the contents of objects or arrays, use deep equality comparison or compare specific properties.

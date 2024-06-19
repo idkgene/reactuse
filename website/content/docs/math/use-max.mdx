@@ -74,21 +74,3 @@ export declare type Resolvable<T> = T | (() => T);
 | Type     | Description                                                                                                                                                                     |
 | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `number` | The maximum value from the given arguments or array of values. If any of the provided values or functions are functions, they are called and their return values are evaluated. |
-
-## Common Pitfalls
-
-### Passing Non-Numeric Values
-
-Ensure that the values passed to `useMax` are numeric or can be coerced to numbers. Passing non-numeric values may lead to unexpected behavior.
-
-```tsx
-const maxValue = useMax(1, '2', true); // Incorrect usage
-```
-
-**Solution**: Pass numeric values or values that can be coerced to numbers.
-
-```tsx
-const maxValue = useMax(1, 2, 3);
-// or
-const maxValue = useMax([1, 2, 3]);
-```

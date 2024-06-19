@@ -77,28 +77,3 @@ export declare const useDefault: <T>(
 | Type                                         | Description                                                                                                                                            |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `[T \| null, (newValue: T \| null) => void]` | An array containing the current state value or the default value and a function to update the state value (falls back to default if `null` is passed). |
-
-## Common Pitfalls
-
-### Changing the Default Value
-
-Be cautious when changing the `defaultValue` after the initial render. The hook uses the `defaultValue` provided during the first render and will not update if it changes later.
-
-```ts
-const [value, setValue] = useDefault('default');
-// Changing the default value later will not have an effect
-setValue('new default'); // This will set the value to 'new default', but not change the fallback default
-```
-
-**Solution**: If you need to change the default value dynamically, consider using a separate state variable for the default value and pass it to useDefault. 
-
-### Nullable Default Value
-
-If you provide `null` as the `defaultValue`, setting the state value to `null` will have no effect since it will fall back to the default value, which is already `null`.
-
-```ts
-const [value, setValue] = useDefault(null);
-setValue(null); // This will have no effect since the default value is already null
-```
-
-**Solution**: Consider using a non-null default value or handle the case when both the state value and default value are `null`.

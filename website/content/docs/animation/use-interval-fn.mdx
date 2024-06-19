@@ -1,4 +1,122 @@
 ---
 title: useIntervalFn
-description: A custom hook that runs a callback fn at a specified interval
+description: Collection of useful React hooks and utilities.
 ---
+
+`useIntervalFn` is a custom hook that acts as a wrapper for `setInterval` with controls to pause and resume the interval. It allows for calling a callback function periodically with customizable options.
+
+## Usage
+
+```tsx
+import { useIntervalFn } from '#';
+
+const Component = () => {
+  const { isActive, pause, resume } = useIntervalFn(() => {
+    console.log('Interval executed');
+  }, 1000);
+
+  return (
+    <div>
+      <p>Interval Active: {JSON.stringify(isActive)}</p>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+```tsx
+import { useIntervalFn } from '#';
+
+const Component = () => {
+  const { isActive, pause, resume } = useIntervalFn(
+    () => {
+      console.log('Executing interval callback');
+    },
+    () => Math.random() * 2000 + 1000,
+    {
+      immediate: false,
+      immediateCallback: true,
+    }
+  );
+
+  return (
+    <div>
+      <p>Interval Active: {JSON.stringify(isActive)}</p>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```ts
+export type Fn = () => void;
+
+export type Resolvable<T> = T | (() => T);
+
+export interface Pausable {
+  /**
+   * Indicates whether the function is currently active.
+   */
+  isActive: boolean;
+
+  /**
+   * Pauses the function.
+   */
+  pause: () => void;
+
+  /**
+   * Resumes the function.
+   */
+  resume: () => void;
+}
+
+export interface UseIntervalFnOptions {
+  /**
+   * Start the timer immediately.
+   * @default true
+   */
+  immediate?: boolean;
+
+  /**
+   * Execute the callback immediately after calling `resume`.
+   * @default false
+   */
+  immediateCallback?: boolean;
+}
+
+export function useIntervalFn(
+  cb: Fn,
+  interval: Resolvable<number> = 1000,
+  options?: UseIntervalFnOptions
+): Pausable;
+```
+
+## Reference
+
+#### useIntervalFn
+
+| Property   | Type                   | Default | Description                                                                |
+| ---------- | ---------------------- | ------- | -------------------------------------------------------------------------- |
+| `cb`       | `Fn`                   | -       | The callback function to be invoked at each interval.                      |
+| `interval` | `Resolvable<number>`   | `1000`  | The interval duration in milliseconds. Can be a constant or a function.    |
+| `options`  | `UseIntervalFnOptions` | `{}`    | (_Optional_) Configuration object for the interval behavior and callbacks. |
+
+#### UseIntervalFnOptions
+
+| Property            | Type      | Default | Description                                                               |
+| ------------------- | --------- | ------- | ------------------------------------------------------------------------- |
+| `immediate`         | `boolean` | `true`  | (_Optional_) If `true`, starts the interval immediately.                  |
+| `immediateCallback` | `boolean` | `false` | (_Optional_) If `true`, executes the callback immediately after `resume`. |
+|                     |
+
+#### Pausable
+
+| Property   | Type         | Description                                         |
+| ---------- | ------------ | --------------------------------------------------- |
+| `isActive` | `boolean`    | Indicates whether the function is currently active. |
+| `pause`    | `() => void` | Pauses the function.                                |
+| `resume`   | `() => void` | Resumes the function.                               |

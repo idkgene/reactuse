@@ -111,33 +111,3 @@ export declare type ProjectorFunction<I, O> = (
 | Type     | Description                              |
 | :------- | :--------------------------------------- |
 | `number` | The projected value ni the output range. |
-
-## Common Pitfalls
-
-### Passing Invalid Input Range
-
-Ensure that the `fromDomain` represents a valid range where the minimum value is less than the maximum value. Passing an invalid range may lead to unexpected behavior.
-
-```tsx
-const projectedValue = useProjection(0.5, [1, 0], [0, 100]); // Incorrect usage
-```
-
-**Solution**: Pass a valid input range where the minimum value is less than the maximum value.
-
-```tsx
-const projectedValue = useProjection(0.5, [0, 1], [0, 100]);
-```
-
-### Passing Invalid Output Range
-
-Ensure that the `toDomain` represents a valid range where the minimum value is less than the maximum value. Passing an invalid range may lead to unexpected behavior.
-
-```tsx
-const projectedValue = useProjection(0.5, [0, 1], [100, 0]); // Incorrect usage
-```
-
-**Solution**: Pass a valid output range where the minimum value is less than the maximum value.
-
-```tsx
-const projectedValue = useProjection(0.5, [0, 1], [0, 100]);
-```
