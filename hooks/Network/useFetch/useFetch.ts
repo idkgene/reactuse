@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface FetchOptions {
   method?: string;
@@ -67,7 +67,7 @@ export function useFetch<T>(
   );
   const onFetchErrorCallbacks = useRef<Array<(error: Error) => void>>([]);
 
-  const execute = async () => {
+  const execute = useCallback(async () => {
     setIsFetching(true);
     setError(null);
     setStatusCode(null);
@@ -124,7 +124,15 @@ export function useFetch<T>(
       setCanAbort(false);
       abortControllerRef.current = null;
     }
-  };
+  }, [
+    url,
+    options,
+    setData,
+    setError,
+    setStatusCode,
+    onFetchResponseCallbacks,
+    onFetchErrorCallbacks,
+  ]);
 
   const abort = () => {
     if (abortControllerRef.current) {
@@ -149,7 +157,7 @@ export function useFetch<T>(
     return () => {
       abort();
     };
-  }, [url, options.refetch]);
+  }, [url, options.refetch, execute, options.immediate]);
 
   useEffect(() => {
     if (options.timeout) {
