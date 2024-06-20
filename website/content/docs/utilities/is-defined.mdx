@@ -5,11 +5,64 @@ description: Your first document
 
 A type guard that checks if a gived value is defined meaning it neighter `null` nor `undefined`.
 
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <DefinedDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+'use client';
+
+import { useState } from 'react';
+import { isDefined } from './isDefined';
+
+export default function DefinedDemo() {
+  const [value, setValue] = useState<string | null | undefined>(null);
+
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+setValue(event.target.value);
+};
+
+const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
+setValue(null);
+};
+
+return (
+
+<div className="container mx-auto p-8">
+  <input
+    type="text"
+    className="border rounded px-3 py-2 mb-4"
+    placeholder="Enter a value"
+    value={value ?? ''}
+    maxLength={10}
+    onChange={handleChange}
+  />
+  <button type="button" onClick={handleClear}>
+    Clear Input
+  </button>
+  <p className="text-lg">
+    {isDefined(value)
+      ? `The value "${value}" is defined.`
+      : 'The value is not defined.'}
+  </p>
+</div>
+); }
+
+````
+</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add isDefined
+````
+
 ## Usage
 
 ```tsx
 import { isDefined } from '#';
-import * as React from 'react';
 
 const Component = () => {
   const maybeValue: string | null | undefined = 'Hello';
@@ -42,8 +95,15 @@ export declare function isDefined<T>(value: T): value is Defined<T>;
 | --------- | ---- | ------------------- |
 | `value`   | `T`  | The value to check. |
 
-### Return
+<TypeTable
+  type={{
+    value: {
+      description: 'The value to check.',
+      type: 'T',
+    },
+  }}
+/>
 
-| Type                  | Description                                                                                |
-| --------------------- | ------------------------------------------------------------------------------------------ |
-| `value is Defined<T>` | `true` if the value is defined, meaning it is neither null nor undefined, otherwise false. |
+import DefinedDemo from '../../../../hooks/Utilities/isDefined/isDefined.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
