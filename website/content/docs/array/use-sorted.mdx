@@ -5,6 +5,81 @@ description: Collection of useful React hooks and utilities.
 
 `useSorted` is a custom hook that provides a sorted version of an input array. It allows for sorting with a custom comparison function or sorting options.
 
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <UseSortedDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { useSorted } from './useSorted';
+
+export default function UseSortedDemo() {
+  const [array, setArray] = useState([3, 1, 4, 1, 5, 9, 2, 6, 5, 3]);
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+
+  const compareFn = (a: number, b: number) => {
+    if (order === 'asc') {
+      return a - b;
+    } else {
+      return b - a;
+    }
+  };
+
+  const sortedArray = useSorted(array, compareFn);
+
+  const handleShuffle = () => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    setArray(shuffled);
+  };
+
+  return (
+    <div className="border rounded-lg bg-card p-6">
+      <div className="mb-4">
+        <label htmlFor="order" className="">
+          Sort Order:
+        </label>
+        <select
+          id="order"
+          className=""
+          value={order}
+          onChange={e => setOrder(e.target.value as 'asc' | 'desc')}
+        >
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+      <div className="mb-4">
+        <p className="">Original Array:</p>
+        <p className="">{array.join(', ')}</p>
+      </div>
+      <div className="mb-4">
+        <p className="">Sorted Array:</p>
+        <p className="">{sortedArray.join(', ')}</p>
+      </div>
+      <button className="" onClick={handleShuffle}>
+        Shuffle Array
+      </button>
+    </div>
+  );
+}
+  ```
+  </Tab>
+  </Tabs>
+
+  ## Installation
+
+```bash
+npx changeelog/reactuse@latest add useSorted
+```
+
 ## Usage
 
 ```tsx
@@ -155,4 +230,8 @@ export function useSorted<T>(
   }}
 />
 
+import UseSortedDemo from '../../../../hooks/Array/useSorted/useSorted.demo'; 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Pre, CodeBlock } from 'fumadocs-ui/components/codeblock';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
