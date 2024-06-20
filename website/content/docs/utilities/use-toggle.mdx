@@ -1,0 +1,137 @@
+---
+title: useToggle
+description: Collection of useful React hooks and utilities.
+---
+
+A boolean switcher with utility functions.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <UseToggleDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useToggle } from './useToggle';
+
+export default function UseToggleDemo() {
+  const [isMounted, setIsMounted] = useState(false);
+
+const [isActive, toggleActive] = useToggle();
+
+const [status, toggleStatus] = useToggle('off', {
+truthyValue: 'on',
+falsyValue: 'off',
+});
+
+const [currentNumber, toggleNumber] = useToggle(0, {
+truthyValue: 1,
+falsyValue: 0,
+});
+
+useEffect(() => {
+setIsMounted(true);
+}, []);
+
+if (!isMounted) return null;
+
+return (
+
+<div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+  <p>
+    <span>Is Active:</span> {String(isActive)}
+  </p>
+  <button
+    onClick={() => toggleActive()}
+    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+  >
+    Toggle Active
+  </button>
+</div>
+); }
+
+````
+</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useToggle
+````
+
+## Usage
+
+```tsx
+import { useToggle } from '#';
+
+const Component = () => {
+  const [isActive, toggleActive] = useToggle();
+
+  return (
+    <div>
+      <button onClick={toggleActive}>{isActive ? 'ON' : 'OFF'}</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+/**
+ * A hook to toggle between two values, typically representing "true" and "false".
+ *
+ * @template Truthy - The type of the "truthy" value.
+ * @template Falsy - The type of the "falsy" value.
+ * @param {Truthy | Falsy} [initialValue=false as Falsy] - The initial value of the toggle.
+ * @param {UseToggleOptions<Truthy, Falsy>} [options={}] - Options to customize the truthy and falsy values.
+ * @returns {[Truthy | Falsy, (value?: Truthy | Falsy) => void]} The current state and a function to toggle the value.
+ */
+export function useToggle<Truthy = true, Falsy = false>(
+  initialValue: Truthy | Falsy = false as Falsy,
+  options: UseToggleOptions<Truthy, Falsy> = {}
+): [Truthy | Falsy, (value?: Truthy | Falsy) => void];
+
+/**
+ * Options for the `useToggle` hook.
+ *
+ * @interface UseToggleOptions
+ * @template Truthy - The type of the "truthy" value.
+ * @template Falsy - The type of the "falsy" value.
+ * @property {Truthy} [truthyValue=true as Truthy] - The value representing the "truthy" state.
+ * @property {Falsy} [falsyValue=false as Falsy] - The value representing the "falsy" state.
+ */
+export interface UseToggleOptions<Truthy, Falsy> {
+  truthyValue?: Truthy;
+  falsyValue?: Falsy;
+}
+```
+
+## Reference
+
+<TypeTable
+  type={{
+    initialValue: {
+      description: 'The initial value of the toggle.',
+      type: 'Truthy | Falsy',
+    },
+    options: {
+      description: 'Options to customize the truthy and falsy values.',
+      type: 'UseToggleOptions<Truthy, Falsy>',
+      default: '{}',
+    },
+    return: {
+      description: 'The current state and a function to toggle the value.',
+      type: '[Truthy | Falsy, (value?: Truthy | Falsy) => void]',
+    },
+  }}
+/>
+
+import UseToggleDemo from '../../../../hooks/Utilities/useToggle/useToggle.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+
 import { UseToggleOptions } from '../utilities'
 
 /**
@@ -15,8 +16,10 @@ import { UseToggleOptions } from '../utilities'
  * @example
  * Basic toggle between true and false
  * const [isActive, toggleActive] = useToggle();
+ * 
  * Toggle between specific strings
  * const [status, toggleStatus] = useToggle('on', { truthyValue: 'on', falsyValue: 'off' });
+ * 
  * Toggle between numbers
  * const [currentNumber, toggleNumber] = useToggle(1, { truthyValue: 1, falsyValue: 0 });
  */

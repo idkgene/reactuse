@@ -25,55 +25,16 @@ export default function UseToggleDemo() {
   if (!isMounted) return null;
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-4">useToggle Hook Demo</h1>
-      <div className="space-y-6">
-        {/* Basic Toggle */}
-        <section className="p-4 bg-white shadow-sm rounded-lg border border-gray-200">
-          <h2 className="text-xl font-semibold mb-2">Basic Toggle</h2>
-          <p>
-            <span className="font-medium text-gray-600">Is Active:</span>{' '}
-            {String(isActive)}
-          </p>
-          <button
-            onClick={() => toggleActive()}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-          >
-            Toggle Active
-          </button>
-        </section>
-
-        {/* Toggle between specific strings */}
-        <section className="p-4 bg-white shadow-sm rounded-lg border border-gray-200">
-          <h2 className="text-xl font-semibold mb-2">
-            Toggle between Specific Strings
-          </h2>
-          <p>
-            <span className="font-medium text-gray-600">Status:</span> {status}
-          </p>
-          <button
-            onClick={() => toggleStatus()}
-            className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-          >
-            Toggle Status
-          </button>
-        </section>
-
-        {/* Toggle between numbers */}
-        <section className="p-4 bg-white shadow-sm rounded-lg border border-gray-200">
-          <h2 className="text-xl font-semibold mb-2">Toggle between Numbers</h2>
-          <p>
-            <span className="font-medium text-gray-600">Current Number:</span>{' '}
-            {currentNumber}
-          </p>
-          <button
-            onClick={() => toggleNumber()}
-            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-          >
-            Toggle Number
-          </button>
-        </section>
-      </div>
+    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+      <p>
+        <span>Is Active:</span> {String(isActive)}
+      </p>
+      <button
+        onClick={() => toggleActive()}
+        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      >
+        Toggle Active
+      </button>
     </div>
   );
 }
