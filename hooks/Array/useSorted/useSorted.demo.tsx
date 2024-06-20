@@ -28,37 +28,32 @@ export default function UseSortedDemo() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <div className="mb-4">
-          <label htmlFor="order" className="block text-gray-700 font-bold mb-2">
-            Sort Order:
-          </label>
-          <select
-            id="order"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={order}
-            onChange={e => setOrder(e.target.value as 'asc' | 'desc')}
-          >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <p className="text-gray-700 font-bold mb-2">Original Array:</p>
-          <p className="text-gray-600">{array.join(', ')}</p>
-        </div>
-        <div className="mb-4">
-          <p className="text-gray-700 font-bold mb-2">Sorted Array:</p>
-          <p className="text-gray-600">{sortedArray.join(', ')}</p>
-        </div>
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded"
-          onClick={handleShuffle}
+    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+      <div className="mb-4">
+        <label htmlFor="order" className="">
+          Sort Order:
+        </label>
+        <select
+          id="order"
+          className="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 w-[180px]"
+          value={order}
+          onChange={e => setOrder(e.target.value as 'asc' | 'desc')}
         >
-          Shuffle Array
-        </button>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
       </div>
+      <div className="mb-4">
+        <p>Original Array: <span>{array.join(', ')}</span></p>
+      </div>
+      <div className="mb-4">
+        <p>Sorted Array: <span>{sortedArray.join(', ')}</span></p>
+      </div>
+      <button 
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      onClick={handleShuffle}>
+        Shuffle Array
+      </button>
     </div>
   );
 }
