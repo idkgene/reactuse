@@ -64,23 +64,6 @@ npx changeelog/reactuse@latest add useInterval
 import { useInterval } from '#';
 
 const Component = () => {
-  const { counter, reset, pause, resume } = useInterval(1000);
-
-  return (
-    <div>
-      <p>Counter: {counter}</p>
-      <button onClick={reset}>Reset</button>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-    </div>
-  );
-};
-```
-
-```tsx
-import { useInterval } from '#';
-
-const Component = () => {
   const { counter, reset, pause, resume } = useInterval(500, {
     immediate: false,
     callback: count => {
