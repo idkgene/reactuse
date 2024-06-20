@@ -19,49 +19,38 @@ export default function ArraySomeDemo() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-4">
-            <label
-              htmlFor="input"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter numbers (comma-separated):
-            </label>
-            <input
-              id="input"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="predicateFunction"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter predicate function:
-            </label>
-            <input
-              id="predicateFunction"
-              type="text"
-              value={predicateFunction}
-              onChange={e => setPredicateFunction(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md">
-            <p className="text-lg font-semibold mb-2">Result:</p>
-            <p className="text-gray-800">
-              {hasSomeMatch
-                ? 'At least one element matches the predicate'
-                : 'No elements match the predicate'}
-            </p>
-          </div>
-        </div>
+    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+      <div className="mb-4">
+        <label htmlFor="input" className="block mb-2">
+          Enter numbers (comma-separated):
+        </label>
+        <input
+          id="input"
+          type="text"
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-6">
+        <label htmlFor="predicateFunction" className="block mb-2">
+          Enter predicate function:
+        </label>
+        <input
+          id="predicateFunction"
+          type="text"
+          value={predicateFunction}
+          onChange={e => setPredicateFunction(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div>
+        <p>Result:</p>
+        <p>
+          {hasSomeMatch
+            ? 'At least one element matches the predicate'
+            : 'No elements match the predicate'}
+        </p>
       </div>
     </div>
   );
