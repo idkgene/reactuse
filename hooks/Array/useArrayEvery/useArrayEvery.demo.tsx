@@ -50,7 +50,7 @@ const ArrayEveryDemo = () => {
   const firstPersonBelowThreshold = getFirstPersonBelowThreshold();
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
       <div className="mb-4">
         <label htmlFor="ageThreshold" className="block mb-2 font-bold">
           Age Threshold:
