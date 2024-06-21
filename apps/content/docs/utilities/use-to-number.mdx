@@ -1,0 +1,91 @@
+---
+title: useToNumber
+description: Collection of useful React hooks and utilities.
+---
+
+`useToNumber` is a hook that converts a string or a number to a numeric value using specified options. It provides flexibility in choosing the conversion method (`parseFloat` or `parseInt`) and handling NaN values.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Demo itself</Tab>
+  <Tab value="Code">```tsx // demo code ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useToNumber
+```
+
+## Usage
+
+```tsx
+import { useToNumber } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const stringValue = '42';
+  const number = useToNumber(stringValue, { method: 'parseInt', radix: 10 });
+
+  return (
+    <div>
+      <p>Number: {number}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { useToNumber } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const invalidValue = 'invalid';
+  const number = useToNumber(invalidValue, { nanToZero: true });
+
+  return (
+    <div>
+      <p>Number: {number}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```typescript
+export declare function useToNumber(
+  value: string | number,
+  options?: UseToNumberOptions,
+): number;
+
+export interface UseToNumberOptions {
+  method?: 'parseFloat' | 'parseInt';
+  radix?: number;
+  nanToZero?: boolean;
+}
+```
+
+## Reference
+
+<TypeTable
+  type={{
+    x: {
+      description: 'The array to check. ',
+      type: 'T[]',
+    },
+    predicate: {
+      description: 'A function to test each element.',
+      type: 'UseArrayEveryPredicate<T>',
+    },
+  }}
+/>
+
+import ToNumberDemo from '../../../../hooks/Utilities/useToNumber/useToNumber.demo';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+;

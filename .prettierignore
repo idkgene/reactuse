@@ -1,29 +1,17 @@
-node_modules
-npm-debug.log
-.npm
+CHANGELOG.md
+pnpm-lock.yaml
+.changeset/*.md
+.github/**/*.md
 
-.next
-build
+packages/create-app/versions.json
 
-public/static/documents
+apps/docs/shaders/*
 
-coverage
-.swc
-junit.xml
+**/test/out/**/*
+**/test/fixtures/*.output.*
 
-storybook-static
-build-storybook.log
-.nyc_output
+apps/docs/content/docs/ui/museum/events.mdx
+apps/docs/content/docs/ui/museum/operations.mdx
+apps/docs/content/docs/ui/museum/tickets.mdx
 
-.vercel
-.turbo
-cache
-
-.eslintjscache
-.eslintmdcache
-.stylelintcache
-.prettiercache
-
-tsconfig.tsbuildinfo
-
-scripts/release-post/template.hbs
+apps/docs/content/docs/ui/typescript.mdx

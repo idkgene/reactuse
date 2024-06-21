@@ -1,0 +1,85 @@
+---
+title: useCloned
+description: Collection of useful React hooks and utilities.
+---
+
+`useCloned` provides a way to keep a cloned reference of a given source object with the option to manually or automatically sync changes.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <ClonedDemo />
+  </Tab>
+  <Tab value="Code">```tsx // demo code ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useCloned
+```
+
+## Usage
+
+```tsx
+import { useCloned } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [source, setSource] = React.useState({ name: 'Alice', age: 25 });
+  const { cloned, sync } = useCloned(source);
+
+  const updateSource = () => {
+    setSource((prev) => ({ ...prev, age: prev.age + 1 }));
+  };
+
+  return (
+    <div>
+      <p>Source: {JSON.stringify(source)}</p>
+      <p>Cloned: {JSON.stringify(cloned.current)}</p>
+      <button onClick={updateSource}>Update Source</button>
+      <button onClick={sync}>Sync Clone</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```ts
+export declare function cloneFnJSON<T>(source: T): T;
+
+export declare function useCloned<T>(
+  source: T,
+  options?: UseClonedOptions<T>,
+): UseClonedReturn<T>;
+
+export interface UseClonedOptions<T> {
+  clone?: (source: T) => T;
+  manual?: boolean;
+}
+
+export interface UseClonedReturn<T> {
+  cloned: React.MutableRefObject<T>;
+  sync: () => void;
+}
+```
+
+## Reference
+
+<TypeTable
+  type={{
+    source: {
+      description: 'The source object to be cloned.',
+      type: 'T',
+    },
+    options: {
+      description: '(Optional) Options for customizing the cloning behavior.',
+      type: 'T',
+      default: 'cloneFnJSON',
+    },
+  }}
+/>
+
+import ClonedDemo from '../../../../hooks/Utilities/useCloned/useCloned.demo';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';

@@ -1,0 +1,167 @@
+---
+title: useNow
+description: Collection of useful React hooks and utilities.
+---
+
+`useInterval` is a custom hook that runs a callback function at a specified interval. It provides controls to pause, resume, and reset the interval counter.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <NowDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+  'use client';
+
+import { useInterval } from './useInterval';
+
+export default function IntervalDemo() {
+  const { counter, reset, pause, resume } = useInterval(1000, {
+    immediate: true,
+  });
+
+  return (
+    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+      <div className="text-[12px] font-medium leading-[28px] margin-[0.5rem]  text-[rgba(235,235,245,.6)]">
+        Interal Fired: {counter}
+      </div>
+      <div className="flex my-4 gap-2">
+        <button
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+          onClick={reset}
+        >
+          Reset
+        </button>
+        <button
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+          onClick={pause}
+        >
+          Pause
+        </button>
+        <button
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+          onClick={resume}
+        >
+          Resume
+        </button>
+      </div>
+    </div>
+  );
+}
+  ```
+  </Tab>
+  </Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useInterval
+```
+
+## Usage
+
+```tsx
+import { useInterval } from '#';
+
+const Component = () => {
+  const { counter, reset, pause, resume } = useInterval(1000);
+
+  return (
+    <div>
+      <p>Counter: {counter}</p>
+      <button onClick={reset}>Reset</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+```tsx
+import { useInterval } from '#';
+
+const Component = () => {
+  const { counter, reset, pause, resume } = useInterval(500, {
+    immediate: false,
+    callback: count => {
+      console.log(`Interval count: ${count}`);
+    },
+  });
+
+  return (
+    <div>
+      <p>Counter: {counter}</p>
+      <button onClick={reset}>Reset</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+## Type Declarations
+
+```ts
+export declare interface UseIntervalOptions {
+  /**
+   * Determines whether the interval starts immediately.
+   * @default true
+   */
+  immediate?: boolean;
+
+  /**
+   * Optional callback function to be invoked at each interval.
+   * @param count - The current interval count.
+   */
+  callback?: (count: number) => void;
+}
+
+export declare interface UseIntervalControls {
+  /**
+   * The current count of intervals that have elapsed.
+   */
+  counter: number;
+
+  /**
+   * Resets the interval counter to 0.
+   */
+  reset: () => void;
+
+  /**
+   * Pauses the interval.
+   */
+  pause: () => void;
+
+  /**
+   * Resumes the interval.
+   */
+  resume: () => void;
+}
+
+export declare function useInterval(
+  interval: number,
+  options?: UseIntervalOptions
+): UseIntervalControls;
+```
+
+## Reference
+
+<TypeTable
+  type={{
+    interval: {
+      description: 'The interval in ms.',
+      type: 'number',
+    },
+    options: {
+      description: '(Optional) Configuration object for the interval behavior and callbacks.',
+      type: 'UseIntervalOptions',
+      default: '{}',
+    },
+  }}
+/> 
+
+import NowDemo from '../../../../hooks/Animation/useNow/useNow.demo.tsx';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Pre, CodeBlock } from 'fumadocs-ui/components/codeblock';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { TypeTable } from 'fumadocs-ui/components/type-table';

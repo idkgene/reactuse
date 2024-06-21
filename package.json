@@ -1,35 +1,31 @@
 {
-  "name": "changeelog-reactuse",
-  "version": "0.0.1",
-  "description": "Collection of React hooks and utilities",
+  "name": "root",
+  "version": "0.0.0",
   "private": true,
-  "author": "changeelog",
-  "packageManager": "pnpm@9.2.0",
-  "type": "commonjs",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "typecheck": "tsc --noEmit",
+    "build": "turbo run build",
+    "check-types": "tsc --noEmit",
     "clean": "rimraf dist && rimraf comments",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "dev": "turbo run dev",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
-    "start": "next start",
-    "lint": "next lint && eslint . --ext .ts,.tsx",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "lint": "turbo run lint",
     "prettier": "prettier --check",
+    "start": "next start",
     "test": "jest",
     "test:watch": "jest --watch",
-    "check-types": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
+  "prettier": "@vercel/style-guide/prettier",
   "dependencies": {
     "@babel/preset-env": "^7.24.7",
+    "@hookform/resolvers": "^3.6.0",
     "@next/bundle-analyzer": "^14.2.3",
     "@types/jest": "^29.5.12",
     "@types/jsdom": "^21.1.7",
     "@types/web-animations-js": "^2.2.16",
-    "axios": "^1.7.2",
     "babel-jest": "^29.7.0",
     "babel-plugin-prismjs": "^2.1.0",
-    "browserslist": "^4.23.0",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
@@ -42,17 +38,16 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-test-renderer": "^18.3.1",
-    "rimraf": "^5.0.7",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "ts-node": "^10.9.2"
+    "rimraf": "^5.0.7"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.24.7",
+    "@changesets/cli": "^2.27.5",
     "@eslint/js": "^9.4.0",
     "@tailwindcss/typography": "^0.5.13",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^16.0.0",
+    "@types/eslint__js": "^8.42.3",
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -68,15 +63,25 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-slow-test-reporter": "^1.0.0",
     "jsdom": "^24.1.0",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.38",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.6.2",
-    "tailwindcss": "^3.4.4",
+    "syncpack": "^12.3.2",
     "ts-jest": "^29.1.4",
     "tsup": "^8.1.0",
     "turbo": "^2.0.3",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.13.0"
+    "typescript-eslint": "^7.13.1"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "esbuild",
+        "next"
+      ]
+    }
   }
 }
