@@ -1,9 +1,7 @@
 ---
 title: useIntervalFn
-description: Collection of useful React hooks and utilities.
+description: Wrapper for setInterval with controls
 ---
-
-`useIntervalFn` is a custom hook that acts as a wrapper for `setInterval` with controls to pause and resume the interval. It allows for calling a callback function periodically with customizable options.
 
 <Tabs items={['Preview', 'Code']}>
   <Tab value="Preview">
@@ -11,11 +9,6 @@ description: Collection of useful React hooks and utilities.
   </Tab>
   <Tab value="Code">
 ```tsx
-'use client';
-
-import React, { useState } from 'react';
-import { useIntervalFn } from './useIntervalFn';
-
 const greetings = [
   'Hello',
   'こんにちは',
@@ -36,34 +29,26 @@ const IntervalFnDemo = () => {
       setCurrentGreeting(greetings[randomIndex]);
     },
     interval,
-    { immediate: false }
+    { immediate: false },
   );
 
   return (
-    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
-      <div className="py-8 text-base">
-        <div className="my-4">
+    <div>
+      <div>
+        <div>
           <span>{currentGreeting}</span>
         </div>
-        <div className="my-4">
-          <label htmlFor="interval" className="block">
-            Interval (ms):
-          </label>
+        <div>
+          <label htmlFor="interval">Interval (ms):</label>
           <input
             id="interval"
             type="number"
             value={interval}
-            onChange={e => setInterval(Number(e.target.value))}
-            className="flex h-10 max-w-[15rem] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            onChange={(e) => setInterval(Number(e.target.value))}
           />
         </div>
-        <div className="my-4 flex gap-3">
-          <button
-            onClick={isActive ? pause : resume}
-            className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ${
-              isActive ? 'bg-red-500' : 'bg-green-500'
-            } focus:outline-none`}
-          >
+        <div>
+          <button onClick={isActive ? pause : resume}>
             {isActive ? 'Pause' : 'Resume'}
           </button>
         </div>
@@ -71,8 +56,6 @@ const IntervalFnDemo = () => {
     </div>
   );
 };
-
-export default IntervalFnDemo;
 ```
   </Tab>
 </Tabs>
@@ -97,7 +80,7 @@ const Component = () => {
     {
       immediate: false,
       immediateCallback: true,
-    }
+    },
   );
 
   return (
@@ -110,66 +93,11 @@ const Component = () => {
 };
 ```
 
-## Type Declarations
-
-```ts
-/**
- * Type for a function without parameters and return type.
- *
- * @typedef {() => void} Fn
- */
-export type Fn = () => void;
-
-/**
- * Type for a value that can be a constant or a function that returns the value.
- *
- * @template T - The type of the value.
- * @typedef {T | (() => T)} Resolvable
- */
-export type Resolvable<T> = T | (() => T);
-
-/**
- * Interface for a function that can be paused and resumed.
- *
- * @interface Pausable
- * @property {boolean} isActive - Indicates whether the function is currently active.
- * @property {() => void} pause - Pauses the function.
- * @property {() => void} resume - Resumes the function.
- */
-export interface Pausable {
-  isActive: boolean;
-  pause: () => void;
-  resume: () => void;
-}
-
-/**
- * Options for the useIntervalFn hook.
- *
- * @interface UseIntervalFnOptions
- * @property {boolean} [immediate=true] - Start the timer immediately.
- * @property {boolean} [immediateCallback=false] - Execute the callback immediately after calling `resume`.
- */
-export interface UseIntervalFnOptions {
-  immediate?: boolean;
-  immediateCallback?: boolean;
-}
-
-/**
- * Wrapper for `setInterval` with controls.
- *
- * @param {Fn} callback - The callback function to be invoked at each interval.
- * @param {Resolvable<number>} [interval=1000] - The interval in milliseconds.
- * @param {UseIntervalFnOptions} [options] - Options for the useIntervalFn hook.
- * @returns {Pausable} An object with `isActive` state and `pause` and `resume` functions to control the interval.
- */
-export function useIntervalFn(
-  callback: Fn,
-  interval: Resolvable<number> = 1000,
-  options?: UseIntervalFnOptions
-): Pausable
-```
-
 ## Reference
+
+### useIntervalFn
+
+`useIntervalFn` takes three parameters and returns a `Pausable` object.
 
 <TypeTable
   type={{
@@ -178,7 +106,8 @@ export function useIntervalFn(
       type: 'Fn',
     },
     interval: {
-      description: 'The interval duration in milliseconds. Can be a constant or a function.',
+      description:
+        'The interval duration in milliseconds. Can be a constant or a function.',
       type: 'Resolvable<number>',
       default: '1000',
     },
@@ -189,10 +118,46 @@ export function useIntervalFn(
       default: '{}',
     },
   }}
-/>                            
+/>
 
-import IntervalFnDemo from '../../../../hooks/Animation/useIntervalFn/useIntervalFn.demo.tsx';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Pre, CodeBlock } from 'fumadocs-ui/components/codeblock';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
+### UseIntervalFnOptions
+
+An interface defining optional configuration for the interval:
+
+<TypeTable
+  type={{
+    immediate: {
+      description: 'Start the timer immediately.',
+      type: 'boolean',
+      default: 'true',
+    },
+    immediateCallback: {
+      description: 'Execute the callback immediately after calling `resume`.',
+      type: 'boolean',
+      default: 'false',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `Pausable` object with the following properties:
+
+<TypeTable
+  type={{
+    isActive: {
+      description: 'Indicates whether the interval is currently active.',
+      type: 'boolean',
+    },
+    pause: {
+      description: 'Function to pause the interval.',
+      type: '() => void',
+    },
+    resume: {
+      description: 'Function to resume the interval.',
+      type: '() => void',
+    },
+  }}
+/>
+
+import IntervalFnDemo from '../../../hooks/Animation/useIntervalFn/useIntervalFn.demo';

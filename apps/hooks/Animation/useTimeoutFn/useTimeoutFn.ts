@@ -1,76 +1,62 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export interface UseTimeoutFnOptions {
-  /**
-   * Start the timer immediate after calling this function
-   *
-   * @default true
-   */
+interface UseTimeoutFnOptions {
   immediate?: boolean;
 }
 
-export interface Stoppable<CallbackArgs extends any[]> {
+interface UseTimeoutFnReturn<T extends (...args: any[]) => any> {
   isPending: boolean;
-  start: (...args: CallbackArgs) => void;
+  start: (...args: Parameters<T>) => void;
   stop: () => void;
 }
 
-/**
- * Wrapper for `setTimeout` with controls.
- *
- * @param cb - The callback function to be invoked after the timeout
- * @param interval - The timeout interval in milliseconds
- * @param options - Options for the useTimeoutFn hook
- * @returns An object with `isPending` state and `start` and `stop` functions to control the timeout
- */
-export function useTimeoutFn<CallbackFn extends (...args: any[]) => void>(
-  cb: CallbackFn,
+function useTimeoutFn<T extends (...args: any[]) => any>(
+  callback: T,
   interval: number | (() => number),
-  options?: UseTimeoutFnOptions
-): Stoppable<Parameters<CallbackFn>> {
-  const { immediate = true } = options || {};
-  const timeoutRef = useRef<number | null>(null);
-  const callbackRef = useRef<CallbackFn>(cb);
-  const isPendingRef = useRef(false);
+  options: UseTimeoutFnOptions = {},
+): UseTimeoutFnReturn<T> {
+  const { immediate = true } = options;
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const callbackRef = useRef<T>(callback);
+  const argsRef = useRef<Parameters<T>>();
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
 
   const stop = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
-      isPendingRef.current = false;
     }
+    setIsPending(false);
   }, []);
 
   const start = useCallback(
-    (...args: Parameters<CallbackFn>): void => {
+    (...args: Parameters<T>) => {
+      argsRef.current = args;
       stop();
-      isPendingRef.current = true;
-      const delay = typeof interval === 'function' ? interval() : interval;
-      timeoutRef.current = window.setTimeout(() => {
-        callbackRef.current(...(args.length > 0 ? args : []));
-        isPendingRef.current = false;
-      }, delay);
+      setIsPending(true);
+      timeoutRef.current = setTimeout(
+        () => {
+          setIsPending(false);
+          callbackRef.current(...(argsRef.current as Parameters<T>));
+        },
+        typeof interval === 'function' ? interval() : interval,
+      );
     },
-    [interval, stop]
+    [interval, stop],
   );
 
   useEffect(() => {
-    callbackRef.current = cb;
-  }, [cb]);
-
-  useEffect(() => {
     if (immediate) {
-      start();
+      start(...([] as unknown as Parameters<T>));
     }
-
-    return () => {
-      stop();
-    };
+    return stop;
   }, [immediate, start, stop]);
 
-  return {
-    isPending: isPendingRef.current,
-    start,
-    stop,
-  };
+  return { isPending, start, stop };
 }
+
+export default useTimeoutFn;

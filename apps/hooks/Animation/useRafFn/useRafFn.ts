@@ -1,70 +1,78 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-export interface UseRafFnCallbackArguments {
+interface UseRafFnCallbackArguments {
   delta: number;
   timestamp: DOMHighResTimeStamp;
 }
 
-export interface UseRafFnOptions {
+interface UseRafFnOptions {
   immediate?: boolean;
   fpsLimit?: number;
 }
 
-export interface Pausable {
+interface Pausable {
   pause: () => void;
   resume: () => void;
+  isActive: () => boolean;
 }
 
-export function useRafFn(
+function useRafFn(
   fn: (args: UseRafFnCallbackArguments) => void,
   options: UseRafFnOptions = {},
 ): Pausable {
   const { immediate = true, fpsLimit } = options;
-  const [isActive, setIsActive] = useState(immediate);
-  const rafIdRef = useRef<number | null>(null);
+
   const lastTimeRef = useRef<number>(0);
+  const rafIdRef = useRef<number | null>(null);
   const fnRef = useRef(fn);
+  const activeRef = useRef(immediate);
 
   fnRef.current = fn;
 
   const loop = useCallback(
-    (time: DOMHighResTimeStamp) => {
-      if (!isActive) return;
+    (timestamp: number) => {
+      if (!activeRef.current) return;
 
-      const delta = lastTimeRef.current ? time - lastTimeRef.current : 0;
+      const delta = timestamp - lastTimeRef.current;
 
       if (!fpsLimit || delta >= 1000 / fpsLimit) {
-        fnRef.current({ delta, timestamp: time });
-        lastTimeRef.current = time;
+        fnRef.current({ delta, timestamp });
+        lastTimeRef.current = timestamp;
       }
 
       rafIdRef.current = requestAnimationFrame(loop);
     },
-    [isActive, fpsLimit],
+    [fpsLimit],
   );
 
+  const resume = useCallback(() => {
+    if (!activeRef.current) {
+      activeRef.current = true;
+      rafIdRef.current = requestAnimationFrame(loop);
+    }
+  }, [loop]);
+
   const pause = useCallback(() => {
-    setIsActive(false);
-    if (rafIdRef.current !== null) {
+    activeRef.current = false;
+    if (rafIdRef.current != null) {
       cancelAnimationFrame(rafIdRef.current);
       rafIdRef.current = null;
     }
   }, []);
 
-  const resume = useCallback(() => {
-    if (!isActive) {
-      setIsActive(true);
-      lastTimeRef.current = 0;
-      rafIdRef.current = requestAnimationFrame(loop);
-    }
-  }, [isActive, loop]);
-
   useEffect(() => {
-    if (isActive) {
-      rafIdRef.current = requestAnimationFrame(loop);
+    if (immediate) {
+      resume();
     }
-    return pause;
-  }, [isActive, loop, pause]);
 
-  return { pause, resume };
+    return () => {
+      pause();
+    };
+  }, [immediate, pause, resume]);
+
+  const isActive = useCallback(() => activeRef.current, []);
+
+  return { pause, resume, isActive };
 }
+
+export default useRafFn;

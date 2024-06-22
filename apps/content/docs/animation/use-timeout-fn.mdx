@@ -1,4 +1,131 @@
 ---
 title: useTimeoutFn
-description: A custom hook that runs a callback fn at a specified interval
+description: Wrapper for setTimeout with controls.
 ---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <TimeoutFnDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+const TimeoutFnDemo: React.FC = () => {
+  const [text, setText] = React.useState('Fired');
+
+  const { isPending, start } = useTimeoutFn(
+    () => {
+      setText('Fired');
+    },
+    3000,
+    { immediate: false },
+  );
+
+  const handleRestart = () => {
+    setText('Please wait 3 seconds');
+    start();
+  };
+
+  return (
+    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+      <p>{text}</p>
+      <button onClick={handleRestart} disabled={isPending}>
+        Restart
+      </button>
+    </div>
+  );
+};
+  ```
+  </Tab>
+  </Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useTimeoutFn
+```
+
+## Usage
+
+```tsx
+import { useTimeoutFn } from '#';
+
+const Component = () => {
+  const { isPending, start, stop } = useTimeoutFn(
+    (message: string) => {
+      console.log(`Timeout finished with message: ${message}`);
+    },
+    2000,
+    { immediate: false },
+  );
+
+  return (
+    <div>
+      <p>Timeout Pending: {JSON.stringify(isPending)}</p>
+      <button onClick={() => start('Hello')}>Start Timeout</button>
+      <button onClick={stop}>Stop Timeout</button>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useTimeoutFn
+
+`useTimeoutFn` takes three parameters and returns a `UseTimeoutFnReturn` object.
+
+<TypeTable
+  type={{
+    callback: {
+      description: 'The callback function to be invoked after the timeout.',
+      type: 'Fn',
+    },
+    interval: {
+      description:
+        'The timeout duration in milliseconds. Can be a constant or a function.',
+      type: 'Resolvable',
+    },
+    options: {
+      description: '(Optional) Configuration object for the timeout behavior.',
+      type: 'UseTimeoutFnOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### UseTimeoutFnOptions
+
+An interface defining optional configuration for the timeout:
+
+<TypeTable
+  type={{
+    immediate: {
+      description: 'Start the timeout immediately.',
+      type: 'boolean',
+      default: 'true',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UseTimeoutFnReturn` object with the following properties:
+
+<TypeTable
+  type={{
+    isPending: {
+      description: 'Indicates whether the timeout is currently pending.',
+      type: 'boolean',
+    },
+    start: {
+      description: 'Function to start the timeout with optional arguments.',
+      type: '(...args: Parameters) => void',
+    },
+    stop: {
+      description: 'Function to stop the timeout.',
+      type: '() => void',
+    },
+  }}
+/>
+
+import TimeoutFnDemo from '../../../hooks/Animation/useTimeoutFn/useTimeoutFn.demo';

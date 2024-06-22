@@ -35,9 +35,7 @@ export default async function Page({
       <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
         {page.data.title}
       </h1>
-      <p className="text-muted-foreground text-lg space-y-2>:not([hidden])~:not([hidden])">
-        {page.data.description}
-      </p>
+      <p className="text-muted-foreground text-lg">{page.data.description}</p>
       <DocsBody>
         <Content />
         <RollButton />
