@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useStep, StepValue } from '../useStep';
+import { expect, it, describe } from 'vitest';
 
 describe('useStep Hook', () => {
   it('should initialize with default values', () => {
@@ -20,12 +21,12 @@ describe('useStep Hook', () => {
 
   it('should handle initial values out of bounds', () => {
     const { result: resultLow } = renderHook(() =>
-      useStep({ max: 5, initial: 0 })
+      useStep({ max: 5, initial: 0 }),
     );
     expect(resultLow.current.currentStep).toBe(1);
 
     const { result: resultHigh } = renderHook(() =>
-      useStep({ max: 5, initial: 6 })
+      useStep({ max: 5, initial: 6 }),
     );
     expect(resultHigh.current.currentStep).toBe(5);
   });

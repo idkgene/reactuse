@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useWindowResize } from '../useWindowResize';
+import { expect, it, describe, beforeEach, vi } from 'vitest';
 
 describe('useWindowResize', () => {
   beforeEach(() => {
@@ -53,14 +54,14 @@ describe('useWindowResize', () => {
   });
 
   it('should remove event listener on unmount', () => {
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderHook(() => useWindowResize());
 
     unmount();
 
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'resize',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 });

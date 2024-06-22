@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { logicOr, or } from '../logicOr';
+import { expect, it, describe } from 'vitest';
 
 describe('logicOr', () => {
   it('should return true when at least one argument is truthy', () => {
@@ -16,8 +17,8 @@ describe('logicOr', () => {
     const { result } = renderHook(() =>
       logicOr(
         () => false,
-        () => true
-      )
+        () => true,
+      ),
     );
     expect(result.current).toBe(true);
   });
@@ -27,7 +28,7 @@ describe('logicOr', () => {
     const obj2 = { value: false };
     const { result, rerender } = renderHook(
       ({ obj1, obj2 }) => logicOr(obj1.value, obj2.value),
-      { initialProps: { obj1, obj2 } }
+      { initialProps: { obj1, obj2 } },
     );
 
     expect(result.current).toBe(false);

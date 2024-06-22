@@ -1,5 +1,12 @@
 import { renderHook, act } from '@testing-library/react';
 import useActiveElement from './useActiveElement';
+import {
+  expect,
+  it,
+  describe,
+  beforeEach,
+  vi,
+} from 'vitest';
 
 describe('useActiveElement', () => {
   beforeEach(() => {
@@ -46,24 +53,24 @@ describe('useActiveElement', () => {
 
   it('should clean up event listeners and mutation observer on unmount', () => {
     const { unmount } = renderHook(() =>
-      useActiveElement({ triggerOnRemoval: true })
+      useActiveElement({ triggerOnRemoval: true }),
     );
 
-    const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
-    const observeSpy = jest.spyOn(MutationObserver.prototype, 'observe');
-    const disconnectSpy = jest.spyOn(MutationObserver.prototype, 'disconnect');
+    const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+    const observeSpy = vi.spyOn(MutationObserver.prototype, 'observe');
+    const disconnectSpy = vi.spyOn(MutationObserver.prototype, 'disconnect');
 
     unmount();
 
     expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'focusin',
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'focusout',
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(disconnectSpy).toHaveBeenCalled();
 

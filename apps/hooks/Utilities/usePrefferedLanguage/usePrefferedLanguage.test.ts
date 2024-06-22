@@ -1,21 +1,22 @@
 import { renderHook } from '@testing-library/react';
 import { usePreferredLanguage } from './usePrefferedLanguage';
 import { LanguageCode } from '../utilities';
+import { expect, it, describe, afterEach, vi } from 'vitest';
 
 describe('usePreferredLanguage', () => {
-  const mockNavigatorLanguageGetter = jest.spyOn(
+  const mockNavigatorLanguageGetter = vi.spyOn(
     window.navigator,
     'language',
-    'get'
+    'get',
   );
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return the initialLanguage if specified', () => {
     const { result } = renderHook(() =>
-      usePreferredLanguage({ initialLanguage: 'en' as LanguageCode })
+      usePreferredLanguage({ initialLanguage: 'en' as LanguageCode }),
     );
     expect(result.current).toBe('en');
   });
@@ -28,12 +29,12 @@ describe('usePreferredLanguage', () => {
 
   it('should trigger onLanguageChange when the language changes', () => {
     mockNavigatorLanguageGetter.mockReturnValue('es-ES');
-    const onLanguageChange = jest.fn();
+    const onLanguageChange = vi.fn();
     const { result } = renderHook(() =>
       usePreferredLanguage({
         onLanguageChange,
         initialLanguage: 'en' as LanguageCode,
-      })
+      }),
     );
     expect(result.current).toBe('es');
     expect(onLanguageChange).toHaveBeenCalledWith('es');
@@ -41,12 +42,12 @@ describe('usePreferredLanguage', () => {
 
   it('should handle window languagechange event', () => {
     mockNavigatorLanguageGetter.mockReturnValue('es-ES');
-    const onLanguageChange = jest.fn();
+    const onLanguageChange = vi.fn();
     const { result, rerender } = renderHook(() =>
       usePreferredLanguage({
         onLanguageChange,
         initialLanguage: 'en' as LanguageCode,
-      })
+      }),
     );
     expect(result.current).toBe('es');
     expect(onLanguageChange).toHaveBeenCalledWith('es');
@@ -59,18 +60,18 @@ describe('usePreferredLanguage', () => {
   });
 
   it('should clean up the event listener on unmount', () => {
-    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
     const { unmount } = renderHook(() => usePreferredLanguage());
     expect(addEventListenerSpy).toHaveBeenCalledWith(
       'languagechange',
-      expect.any(Function)
+      expect.any(Function),
     );
     unmount();
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'languagechange',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -82,7 +83,7 @@ describe('usePreferredLanguage', () => {
     });
 
     const { result } = renderHook(() =>
-      usePreferredLanguage({ initialLanguage: 'en' as LanguageCode })
+      usePreferredLanguage({ initialLanguage: 'en' as LanguageCode }),
     );
     expect(result.current).toBe('en');
 

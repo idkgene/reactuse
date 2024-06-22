@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useAbs } from '../useAbs';
+import { expect, it, describe } from 'vitest';
 
 const createGetter = (value: number) => () => value;
 

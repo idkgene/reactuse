@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useScrollPosition } from '../useWindowScroll';
+import { expect, it, describe, beforeEach, vi } from 'vitest';
 
 describe('useWindowScroll', () => {
   beforeEach(() => {
@@ -26,14 +27,14 @@ describe('useWindowScroll', () => {
   });
 
   it('should remove scroll event listener on unmount', () => {
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderHook(() => useScrollPosition());
 
     unmount();
 
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'scroll',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

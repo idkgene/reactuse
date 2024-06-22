@@ -1,14 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import { useWindowFocus } from '../useWindowFocus';
+import { expect, it, describe, beforeEach, afterEach, vi } from 'vitest';
 
 describe('useWindowFocus', () => {
   beforeEach(() => {
-    jest.spyOn(window, 'addEventListener');
-    jest.spyOn(window, 'removeEventListener');
+    vi.spyOn(window, 'addEventListener');
+    vi.spyOn(window, 'removeEventListener');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should return false initially', () => {
@@ -20,11 +21,11 @@ describe('useWindowFocus', () => {
     renderHook(() => useWindowFocus());
     expect(window.addEventListener).toHaveBeenCalledWith(
       'focus',
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(window.addEventListener).toHaveBeenCalledWith(
       'blur',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -33,11 +34,11 @@ describe('useWindowFocus', () => {
     unmount();
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'focus',
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'blur',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

@@ -1,5 +1,13 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDocumentVisibility } from '../useDocumentVisibility';
+import {
+  expect,
+  it,
+  describe,
+  beforeEach,
+  afterEach,
+  vi,
+} from 'vitest';
 
 const mockVisibilityState = (state: DocumentVisibilityState) => {
   Object.defineProperty(document, 'visibilityState', {
@@ -14,7 +22,7 @@ describe('useDocumentVisibility', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return initial visibility state', () => {

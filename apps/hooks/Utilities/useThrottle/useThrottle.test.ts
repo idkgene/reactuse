@@ -1,17 +1,26 @@
 import { renderHook, act } from '@testing-library/react';
 import { useThrottle } from './useThrottle';
+import {
+  expect,
+  it,
+  describe,
+  beforeAll,
+  afterEach,
+  afterAll,
+  vi,
+} from 'vitest';
 
 describe('useThrottle', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.clearAllTimers();
+    vi.clearAllTimers();
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should return the initial value', () => {
@@ -32,7 +41,7 @@ describe('useThrottle', () => {
     expect(result.current).toBe(1);
 
     act(() => {
-      jest.advanceTimersByTime(200);
+      vi.advanceTimersByTime(200);
     });
 
     expect(result.current).toBe(2);
@@ -52,7 +61,7 @@ describe('useThrottle', () => {
     expect(result.current).toBe(1);
 
     act(() => {
-      jest.advanceTimersByTime(500);
+      vi.advanceTimersByTime(500);
     });
 
     expect(result.current).toBe(2);
@@ -66,14 +75,14 @@ describe('useThrottle', () => {
     expect(result.current).toBe(1);
 
     act(() => {
-      jest.advanceTimersByTime(200);
+      vi.advanceTimersByTime(200);
     });
 
     rerender({ value: 2 });
     expect(result.current).toBe(2);
 
     act(() => {
-      jest.advanceTimersByTime(200);
+      vi.advanceTimersByTime(200);
     });
 
     rerender({ value: 3 });
@@ -96,7 +105,7 @@ describe('useThrottle', () => {
     unmount();
 
     act(() => {
-      jest.advanceTimersByTime(200);
+      vi.advanceTimersByTime(200);
     });
 
     expect(result.current).toBe(1);

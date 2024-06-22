@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { logicNot, not } from '../logicNot';
+import { expect, it, describe } from 'vitest';
 
 describe('logicNot', () => {
   it('should return true when the argument is falsy', () => {
@@ -19,10 +20,9 @@ describe('logicNot', () => {
 
   it('should memoize the result', () => {
     const obj = { value: true };
-    const { result, rerender } = renderHook(
-      ({ obj }) => logicNot(obj.value),
-      { initialProps: { obj } }
-    );
+    const { result, rerender } = renderHook(({ obj }) => logicNot(obj.value), {
+      initialProps: { obj },
+    });
 
     expect(result.current).toBe(false);
 
@@ -36,4 +36,4 @@ describe('logicNot', () => {
     const { result } = renderHook(() => not(false));
     expect(result.current).toBe(true);
   });
-})
+});

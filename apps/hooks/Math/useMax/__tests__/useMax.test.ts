@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useMax } from '../useMax';
+import { expect, it, describe } from 'vitest';
 
 describe('useMax', () => {
   it('should return the maximum value from an array', () => {
@@ -53,7 +54,7 @@ describe('useMax', () => {
       ({ value1, value2 }) => useMax(value1, value2),
       {
         initialProps: { value1, value2 },
-      }
+      },
     );
 
     expect(result.current).toBe(20);

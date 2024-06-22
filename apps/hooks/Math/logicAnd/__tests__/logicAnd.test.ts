@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { logicAnd, and } from '../logicAnd';
+import { expect, it, describe } from 'vitest';
 
 describe('logicAnd', () => {
   it('should return true when all arguments are truthy', () => {
@@ -16,8 +17,8 @@ describe('logicAnd', () => {
     const { result } = renderHook(() =>
       logicAnd(
         () => true,
-        () => false
-      )
+        () => false,
+      ),
     );
     expect(result.current).toBe(false);
   });
@@ -27,7 +28,7 @@ describe('logicAnd', () => {
     const obj2 = { value: true };
     const { result, rerender } = renderHook(
       ({ obj1, obj2 }) => logicAnd(obj1.value, obj2.value),
-      { initialProps: { obj1, obj2 } }
+      { initialProps: { obj1, obj2 } },
     );
 
     expect(result.current).toBe(true);

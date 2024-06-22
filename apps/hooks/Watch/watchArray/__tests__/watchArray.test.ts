@@ -1,18 +1,19 @@
 import { renderHook } from '@testing-library/react';
 import { useArrayWatcher } from '../watchArray';
+import { expect, it, describe, vi } from 'vitest';
 
 type WatchArrayCallback<T> = (
   newArray: T[],
   oldArray: T[],
   added: T[],
-  removed: T[]
+  removed: T[],
 ) => void;
 
 describe('useArrayWatcher', () => {
-  let callback: jest.Mock<WatchArrayCallback<number>>;
+  let callback: vi.Mock<WatchArrayCallback<number>>;
 
   beforeEach(() => {
-    callback = jest.fn();
+    callback = vi.fn();
   });
 
   it('does not call the callback on the initial render', () => {
@@ -28,7 +29,7 @@ describe('useArrayWatcher', () => {
       ({ array }) => useArrayWatcher(array, callback),
       {
         initialProps: { array: [1, 2, 3] },
-      }
+      },
     );
 
     rerender({ array: [1, 2, 3, 4, 5] });
@@ -38,7 +39,7 @@ describe('useArrayWatcher', () => {
       [1, 2, 3, 4, 5],
       [1, 2, 3],
       [4, 5],
-      []
+      [],
     );
   });
 
@@ -47,7 +48,7 @@ describe('useArrayWatcher', () => {
       ({ array }) => useArrayWatcher(array, callback),
       {
         initialProps: { array: [1, 2, 3, 4, 5] },
-      }
+      },
     );
 
     rerender({ array: [1, 2] });
@@ -57,7 +58,7 @@ describe('useArrayWatcher', () => {
       [1, 2],
       [1, 2, 3, 4, 5],
       [],
-      [3, 4, 5]
+      [3, 4, 5],
     );
   });
 
@@ -66,7 +67,7 @@ describe('useArrayWatcher', () => {
       ({ array }) => useArrayWatcher(array, callback),
       {
         initialProps: { array: [1, 2, 3, 4] },
-      }
+      },
     );
 
     rerender({ array: [2, 3, 4, 5, 6] });
@@ -76,7 +77,7 @@ describe('useArrayWatcher', () => {
       [2, 3, 4, 5, 6],
       [1, 2, 3, 4],
       [5, 6],
-      [1]
+      [1],
     );
   });
 
@@ -85,7 +86,7 @@ describe('useArrayWatcher', () => {
       ({ array }) => useArrayWatcher(array, callback),
       {
         initialProps: { array: [1, 2, 3] },
-      }
+      },
     );
 
     rerender({ array: [1, 2, 3] });

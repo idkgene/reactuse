@@ -1,20 +1,21 @@
 import { renderHook, act } from '@testing-library/react';
 import { useElementByPoint } from '../useElementByPoint';
+import { expect, it, describe, beforeAll, afterEach, vi } from 'vitest';
 
 const mockElement = document.createElement('div');
 const mockElements = [mockElement, document.createElement('div')];
 
 beforeAll(() => {
   Object.defineProperty(document, 'elementFromPoint', {
-    value: jest.fn().mockReturnValue(mockElement),
+    value: vi.fn().mockReturnValue(mockElement),
   });
   Object.defineProperty(document, 'elementsFromPoint', {
-    value: jest.fn().mockReturnValue(mockElements),
+    value: vi.fn().mockReturnValue(mockElements),
   });
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 describe('useElementByPoint', () => {
@@ -26,7 +27,7 @@ describe('useElementByPoint', () => {
 
   it('should return an array of elements when multiple = true', () => {
     const { result } = renderHook(() =>
-      useElementByPoint({ x: 100, y: 50, multiple: true })
+      useElementByPoint({ x: 100, y: 50, multiple: true }),
     );
     expect(result.current.element).toEqual(mockElements);
     expect(document.elementsFromPoint).toHaveBeenCalledWith(100, 50);
@@ -35,7 +36,7 @@ describe('useElementByPoint', () => {
   it('should update the element when coordinates change', () => {
     const { result, rerender } = renderHook(
       ({ x, y }) => useElementByPoint({ x, y }),
-      { initialProps: { x: 100, y: 50 } }
+      { initialProps: { x: 100, y: 50 } },
     );
 
     expect(result.current.element).toBe(mockElement);
@@ -50,15 +51,15 @@ describe('useElementByPoint', () => {
   });
 
   it('should return null, if elementFromPoint returned null', () => {
-    (document.elementFromPoint as jest.Mock).mockReturnValue(null);
+    (document.elementFromPoint as vi.Mock).mockReturnValue(null);
     const { result } = renderHook(() => useElementByPoint({ x: 100, y: 50 }));
     expect(result.current.element).toBeNull();
   });
 
   it('should return null, if elementsFromPoint returned null', () => {
-    (document.elementsFromPoint as jest.Mock).mockReturnValue(null);
+    (document.elementsFromPoint as vi.Mock).mockReturnValue(null);
     const { result } = renderHook(() =>
-      useElementByPoint({ x: 100, y: 50, multiple: true })
+      useElementByPoint({ x: 100, y: 50, multiple: true }),
     );
     expect(result.current.element).toBeNull();
   });

@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useFloor } from '../useFloor';
+import { expect, it, describe, vi } from 'vitest';
 
 describe('useFloor', () => {
   it('should floor a positive number', () => {
@@ -54,7 +55,7 @@ describe('useFloor', () => {
   });
 
   test('should memoize the floored value', () => {
-    const getter = jest.fn(() => 2.3);
+    const getter = vi.fn(() => 2.3);
     const { result, rerender } = renderHook(() => useFloor(getter));
 
     expect(result.current).toBe(2);

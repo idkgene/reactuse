@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDevicePixelRatio } from '../useDevicePixelRatio';
+import { expect, it, describe, vi } from 'vitest';
 
 describe('useDevicePixelRatio', () => {
   beforeEach(() => {
@@ -25,32 +26,32 @@ describe('useDevicePixelRatio', () => {
   it('should use the provided window object instead of the default window', () => {
     const customWindow = {
       devicePixelRatio: 3,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
     } as unknown as Window;
 
     const { result } = renderHook(() =>
-      useDevicePixelRatio({ window: customWindow })
+      useDevicePixelRatio({ window: customWindow }),
     );
     expect(result.current.pixelRatio).toBe(3);
   });
 
   it('should add and remove event listeners correctly', () => {
-    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
     const { unmount } = renderHook(() => useDevicePixelRatio());
 
     expect(addEventListenerSpy).toHaveBeenCalledWith(
       'resize',
-      expect.any(Function)
+      expect.any(Function),
     );
 
     unmount();
 
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'resize',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

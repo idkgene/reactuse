@@ -1,10 +1,11 @@
 import { renderHook, act } from '@testing-library/react';
 import useDebounceFn from './useDebounceFn';
+import { expect, it, describe, vi } from 'vitest';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('useDebounceFn', () => {
-  const callback = jest.fn();
+  const callback = vi.fn();
 
   beforeEach(() => {
     callback.mockClear();
@@ -22,7 +23,7 @@ describe('useDebounceFn', () => {
 
     expect(callback).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(200);
+    vi.advanceTimersByTime(200);
     await Promise.resolve();
 
     expect(callback).toHaveBeenCalledTimes(1);
@@ -36,7 +37,7 @@ describe('useDebounceFn', () => {
       debouncedFn('arg1', 'arg2');
     });
 
-    jest.advanceTimersByTime(200);
+    vi.advanceTimersByTime(200);
     await Promise.resolve();
 
     expect(callback).toHaveBeenCalledWith('arg1', 'arg2');
@@ -44,7 +45,7 @@ describe('useDebounceFn', () => {
 
   it('should respect the maxWait option', async () => {
     const { result } = renderHook(() =>
-      useDebounceFn(callback, 200, { maxWait: 100 })
+      useDebounceFn(callback, 200, { maxWait: 100 }),
     );
     const debouncedFn = result.current;
 
@@ -52,7 +53,7 @@ describe('useDebounceFn', () => {
       debouncedFn();
     });
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
     await Promise.resolve();
 
     expect(callback).toHaveBeenCalledTimes(1);
@@ -60,7 +61,7 @@ describe('useDebounceFn', () => {
 
   it('should reject the promise when rejectOnCancel is true', async () => {
     const { result } = renderHook(() =>
-      useDebounceFn(callback, 200, { rejectOnCancel: true })
+      useDebounceFn(callback, 200, { rejectOnCancel: true }),
     );
     const debouncedFn = result.current;
 

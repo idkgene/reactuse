@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useCloned, cloneFnJSON } from '../useCloned';
+import { expect, it, describe } from 'vitest';
 
 describe('cloneFnJSON', () => {
   it('should create a deep clone of the input object', () => {
@@ -36,7 +37,7 @@ describe('useCloned', () => {
     const source = { count: 0 };
     const customClone = (obj: any) => ({ ...obj, custom: true });
     const { result } = renderHook(() =>
-      useCloned(source, { clone: customClone })
+      useCloned(source, { clone: customClone }),
     );
 
     expect(result.current.cloned?.current.custom).toBe(true);
@@ -45,7 +46,7 @@ describe('useCloned', () => {
   it('should manually synchronize the cloned object when the manual option is true', () => {
     let source = { count: 0 };
     const { result, rerender } = renderHook(() =>
-      useCloned(source, { manual: true })
+      useCloned(source, { manual: true }),
     );
 
     expect(result.current.cloned?.current.count).toBe(0);

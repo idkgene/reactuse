@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useCeil } from '../useCeil';
+import { expect, it, describe, vi } from 'vitest';
 
 describe('useCeil', () => {
   it('should round up a positive number', () => {
@@ -57,7 +58,7 @@ describe('useCeil', () => {
   });
 
   it('should memoize the rounded value', () => {
-    const getter = jest.fn(() => 2.3);
+    const getter = vi.fn(() => 2.3);
     const { result, rerender } = renderHook(() => useCeil(getter));
 
     expect(result.current).toBe(3);

@@ -1,17 +1,26 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDebounce } from '../useDebounce';
+import {
+  expect,
+  it,
+  describe,
+  beforeAll,
+  afterEach,
+  afterAll,
+  vi,
+} from 'vitest';
 
 describe('useDebounce', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.clearAllTimers();
+    vi.clearAllTimers();
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should return the initial value without debounce', () => {
@@ -34,7 +43,7 @@ describe('useDebounce', () => {
   it('should debounce the value with custom wait time', () => {
     const { result, rerender } = renderHook(
       ({ value }) => useDebounce(value, { wait: 500 }),
-      { initialProps: { value: 'initial' } }
+      { initialProps: { value: 'initial' } },
     );
 
     expect(result.current).toBe('initial');
@@ -43,12 +52,12 @@ describe('useDebounce', () => {
     expect(result.current).toBe('initial');
 
     act(() => {
-      jest.advanceTimersByTime(499);
+      vi.advanceTimersByTime(499);
     });
     expect(result.current).toBe('initial');
 
     act(() => {
-      jest.advanceTimersByTime(1);
+      vi.advanceTimersByTime(1);
     });
     expect(result.current).toBe('updated');
   });
@@ -56,7 +65,7 @@ describe('useDebounce', () => {
   it('should update the value immediately on leading edge', () => {
     const { result, rerender } = renderHook(
       ({ value }) => useDebounce(value, { wait: 500, leading: true }),
-      { initialProps: { value: 'initial' } }
+      { initialProps: { value: 'initial' } },
     );
 
     expect(result.current).toBe('initial');
@@ -65,7 +74,7 @@ describe('useDebounce', () => {
     expect(result.current).toBe('updated');
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     expect(result.current).toBe('updated');
   });
@@ -73,7 +82,7 @@ describe('useDebounce', () => {
   it('should not update the value on trailing edge when trailing is false', () => {
     const { result, rerender } = renderHook(
       ({ value }) => useDebounce(value, { wait: 500, trailing: false }),
-      { initialProps: { value: 'initial' } }
+      { initialProps: { value: 'initial' } },
     );
 
     expect(result.current).toBe('initial');
@@ -82,7 +91,7 @@ describe('useDebounce', () => {
     expect(result.current).toBe('initial');
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     expect(result.current).toBe('initial');
   });
@@ -90,7 +99,7 @@ describe('useDebounce', () => {
   it('should update the value immediately when wait is 0', () => {
     const { result, rerender } = renderHook(
       ({ value }) => useDebounce(value, { wait: 0 }),
-      { initialProps: { value: 'initial' } }
+      { initialProps: { value: 'initial' } },
     );
 
     expect(result.current).toBe('initial');

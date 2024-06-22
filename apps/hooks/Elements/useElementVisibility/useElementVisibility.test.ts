@@ -1,12 +1,13 @@
 import { renderHook, act } from '@testing-library/react';
 import { useElementVisibility } from './useElementVisibility';
+import { expect, it, describe, beforeEach, afterEach, vi } from 'vitest';
 
-const mockIntersectionObserver = jest.fn();
-const mockObserve = jest.fn();
-const mockDisconnect = jest.fn();
+const mockIntersectionObserver = vi.fn();
+const mockObserve = vi.fn();
+const mockDisconnect = vi.fn();
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 beforeEach(() => {

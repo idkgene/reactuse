@@ -1,5 +1,11 @@
 import { renderHook } from '@testing-library/react';
 import { useAverage } from '../useAverage';
+import {
+  expect,
+  it,
+  describe,
+
+} from 'vitest';
 
 describe('useAverage', () => {
   it('should calculate the average of an array of numbers', () => {
@@ -17,8 +23,8 @@ describe('useAverage', () => {
       useAverage(
         () => 1,
         () => 2,
-        () => 3
-      )
+        () => 3,
+      ),
     );
     expect(result.current).toBe(2);
   });

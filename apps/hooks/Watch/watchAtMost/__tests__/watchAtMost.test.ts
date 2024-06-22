@@ -1,14 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import { watchAtMost } from '../watchAtMost';
+import { expect, it, describe, vi } from 'vitest';
 
 describe('watchAtMost', () => {
   it('should trigger the callback at most the specified number of times', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     const { result, rerender } = renderHook(
       ({ source, options }) => watchAtMost(source, callback, options),
       {
         initialProps: { source: 'initial', options: { count: 2 } },
-      }
+      },
     );
 
     expect(callback).not.toHaveBeenCalled();
@@ -30,12 +31,12 @@ describe('watchAtMost', () => {
   });
 
   it('should stop triggering the callback when stop is called', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     const { result, rerender } = renderHook(
       ({ source, options }) => watchAtMost(source, callback, options),
       {
         initialProps: { source: 'initial', options: { count: 3 } },
-      }
+      },
     );
 
     rerender({ source: 'updated1', options: { count: 3 } });

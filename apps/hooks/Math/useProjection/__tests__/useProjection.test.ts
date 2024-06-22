@@ -1,13 +1,14 @@
 import { renderHook } from '@testing-library/react';
 import { useProjection } from '../useProjection';
 import { ProjectorFunction } from '../../math';
+import { expect, it, describe, vi } from 'vitest';
 
 const customProjector: ProjectorFunction<number, number> = (
   value,
   fromMin,
   fromMax,
   toMin,
-  toMax
+  toMax,
 ) => {
   return ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
 };
@@ -38,28 +39,28 @@ describe('useProjection', () => {
       useProjection(
         () => 5,
         () => [0, 10] as const,
-        () => [0, 100] as const
-      )
+        () => [0, 100] as const,
+      ),
     );
     expect(result.current).toBe(50);
   });
 
   it('should project a value using a custom projector function', () => {
-    const customProjector = jest.fn((value, fromMin, fromMax, toMin, toMax) => {
+    const customProjector = vi.fn((value, fromMin, fromMax, toMin, toMax) => {
       return (
         ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin
       );
     });
 
     const { result } = renderHook(() =>
-      useProjection(5, [0, 10], [0, 100], customProjector)
+      useProjection(5, [0, 10], [0, 100], customProjector),
     );
     expect(result.current).toBe(50);
     expect(customProjector).toHaveBeenCalledWith(5, 0, 10, 0, 100);
   });
 
   it('should memoize the projected value', () => {
-    const projector = jest.fn((value, fromMin, fromMax, toMin, toMax) => {
+    const projector = vi.fn((value, fromMin, fromMax, toMin, toMax) => {
       return (
         ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin
       );
@@ -74,7 +75,7 @@ describe('useProjection', () => {
           fromDomain: [0, 10] as const,
           toDomain: [0, 100] as const,
         },
-      }
+      },
     );
 
     expect(result.current).toBe(50);
@@ -93,7 +94,7 @@ describe('useProjection', () => {
   test('should handle fromDomain as a function returning an array', () => {
     const fromDomainFn = () => [0, 10] as const;
     const { result } = renderHook(() =>
-      useProjection(5, fromDomainFn, [0, 100])
+      useProjection(5, fromDomainFn, [0, 100]),
     );
     expect(result.current).toBe(50);
   });
@@ -108,7 +109,7 @@ describe('useProjection', () => {
     const fromDomainFn = () => [0, 10] as const;
     const toDomainFn = () => [0, 100] as const;
     const { result } = renderHook(() =>
-      useProjection(5, fromDomainFn, toDomainFn)
+      useProjection(5, fromDomainFn, toDomainFn),
     );
     expect(result.current).toBe(50);
   });
@@ -120,7 +121,7 @@ describe('useProjection', () => {
 
   test('should project input value using a custom projector', () => {
     const { result } = renderHook(() =>
-      useProjection(5, [0, 10], [0, 100], customProjector)
+      useProjection(5, [0, 10], [0, 100], customProjector),
     );
     expect(result.current).toBe(50);
   });
@@ -131,7 +132,7 @@ describe('useProjection', () => {
   });
 
   it('should handle toDomain as an array', () => {
-  const { result } = renderHook(() => useProjection(5, [0, 10], [0, 100]));
-  expect(result.current).toBe(50);
-});
+    const { result } = renderHook(() => useProjection(5, [0, 10], [0, 100]));
+    expect(result.current).toBe(50);
+  });
 });
