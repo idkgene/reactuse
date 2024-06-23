@@ -1,145 +1,149 @@
 import { useState, useEffect, useMemo } from 'react';
 
-type TimeAgoMessages = {
+type TimeUnit =
+  | 'second'
+  | 'minute'
+  | 'hour'
+  | 'day'
+  | 'week'
+  | 'month'
+  | 'year';
+
+interface TimeAgoUnit {
+  max: number;
+  value: number;
+  name: TimeUnit;
+}
+
+interface TimeAgoMessages {
   justNow: string;
-  past: string;
-  future: string;
-  year: string;
-  month: string;
-  day: string;
-  week: string;
-  hour: string;
-  minute: string;
-  second: string;
-};
+  past: string | ((value: number | string) => string);
+  future: string | ((value: number | string) => string);
+  invalid: string;
+  [key: string]: string | ((value: number) => string);
+}
+
+interface TimeAgoOptions {
+  max?: TimeUnit | number;
+  fullDateFormatter?: (date: Date) => string;
+  messages?: Partial<TimeAgoMessages>;
+  showSecond?: boolean;
+  rounding?: 'round' | 'ceil' | 'floor' | number;
+  updateInterval?: number;
+}
 
 const DEFAULT_MESSAGES: TimeAgoMessages = {
   justNow: 'just now',
-  past: '{0} ago',
-  future: 'in {0}',
-  year: '{0} year',
-  month: '{0} month',
-  day: '{0} day',
-  week: '{0} week',
-  hour: '{0} hour',
-  minute: '{0} minute',
-  second: '{0} second',
+  past: (n) => `${n} ago`,
+  future: (n) => `in ${n}`,
+  invalid: 'invalid date',
+  second: (n) => `${n} second${n > 1 ? 's' : ''}`,
+  minute: (n) => `${n} minute${n > 1 ? 's' : ''}`,
+  hour: (n) => `${n} hour${n > 1 ? 's' : ''}`,
+  day: (n) => `${n} day${n > 1 ? 's' : ''}`,
+  week: (n) => `${n} week${n > 1 ? 's' : ''}`,
+  month: (n) => `${n} month${n > 1 ? 's' : ''}`,
+  year: (n) => `${n} year${n > 1 ? 's' : ''}`,
 };
 
-function formatTimeAgo(
-  time: Date | number,
-  options?: { messages?: Partial<TimeAgoMessages> },
+const DEFAULT_UNITS: TimeAgoUnit[] = [
+  { max: 60000, value: 1000, name: 'second' },
+  { max: 2760000, value: 60000, name: 'minute' },
+  { max: 72000000, value: 3600000, name: 'hour' },
+  { max: 518400000, value: 86400000, name: 'day' },
+  { max: 2419200000, value: 604800000, name: 'week' },
+  { max: 28512000000, value: 2592000000, name: 'month' },
+  { max: Infinity, value: 31536000000, name: 'year' },
+];
+
+function useTimeAgo(
+  date: Date | number | string,
+  options: TimeAgoOptions = {},
 ): string {
-  const messages = { ...DEFAULT_MESSAGES, ...options?.messages };
+  const [now, setNow] = useState(() => new Date());
 
-  const SECOND = 1000;
-  const MINUTE = 60 * SECOND;
-  const HOUR = 60 * MINUTE;
-  const DAY = 24 * HOUR;
-  const WEEK = 7 * DAY;
-  const MONTH = 30 * DAY;
-  const YEAR = 365 * DAY;
+  const {
+    max,
+    fullDateFormatter,
+    messages: customMessages,
+    showSecond = false,
+    rounding = 'round',
+    updateInterval = 30000,
+  } = options;
 
-  const units = [
-    {
-      max: 30 * SECOND,
-      divisor: 1,
-      past1: messages.second,
-      pastN: messages.second,
-      future1: messages.second,
-      futureN: messages.second,
-    },
-    {
-      max: MINUTE,
-      divisor: SECOND,
-      past1: messages.second,
-      pastN: messages.second,
-      future1: messages.second,
-      futureN: messages.second,
-    },
-    {
-      max: HOUR,
-      divisor: MINUTE,
-      past1: messages.minute,
-      pastN: messages.minute,
-      future1: messages.minute,
-      futureN: messages.minute,
-    },
-    {
-      max: DAY,
-      divisor: HOUR,
-      past1: messages.hour,
-      pastN: messages.hour,
-      future1: messages.hour,
-      futureN: messages.hour,
-    },
-    {
-      max: WEEK,
-      divisor: DAY,
-      past1: messages.day,
-      pastN: messages.day,
-      future1: messages.day,
-      futureN: messages.day,
-    },
-    {
-      max: 4 * WEEK,
-      divisor: WEEK,
-      past1: messages.week,
-      pastN: messages.week,
-      future1: messages.week,
-      futureN: messages.week,
-    },
-    {
-      max: YEAR,
-      divisor: MONTH,
-      past1: messages.month,
-      pastN: messages.month,
-      future1: messages.month,
-      futureN: messages.month,
-    },
-    {
-      max: Infinity,
-      divisor: YEAR,
-      past1: messages.year,
-      pastN: messages.year,
-      future1: messages.year,
-      futureN: messages.year,
-    },
-  ];
-
-  const diff = +new Date(time) - +new Date();
-  const diffAbs = Math.abs(diff);
-
-  for (const unit of units) {
-    if (diffAbs < unit.max) {
-      const isFuture = diff < 0;
-      const x = Math.round(Math.abs(diff) / unit.divisor);
-      if (x <= 1) return isFuture ? unit.future1 : unit.past1;
-      return (isFuture ? messages.future : messages.past).replace(
-        '{0}',
-        x.toString() + ' ' + (isFuture ? unit.futureN : unit.pastN),
-      );
-    }
-  }
-
-  return messages.justNow;
-}
-
-export function useTimeAgo(
-  time: Date | number,
-  options?: { messages?: Partial<TimeAgoMessages> },
-) {
-  const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const timeAgo = useMemo(
-    () => formatTimeAgo(time, options),
-    [time, options, now],
+  const messages = useMemo(
+    () => ({ ...DEFAULT_MESSAGES, ...customMessages }),
+    [customMessages],
   );
 
-  return timeAgo;
+  useEffect(() => {
+    if (updateInterval === 0) return;
+
+    const timer = setInterval(() => setNow(new Date()), updateInterval);
+    return () => clearInterval(timer);
+  }, [updateInterval]);
+
+  return useMemo(() => {
+    const target = new Date(date);
+    const diff = now.getTime() - target.getTime();
+
+    if (Number.isNaN(diff)) {
+      return messages.invalid;
+    }
+
+    if (max !== undefined) {
+      const maxValue =
+        typeof max === 'string'
+          ? DEFAULT_UNITS.find((unit) => unit.name === max)?.max
+          : max;
+
+      if (maxValue !== undefined && Math.abs(diff) > maxValue) {
+        return fullDateFormatter
+          ? fullDateFormatter(target)
+          : target.toLocaleString();
+      }
+    }
+
+    const absDiff = Math.abs(diff);
+    const unit =
+      DEFAULT_UNITS.find((unit) => absDiff < unit.max) ||
+      DEFAULT_UNITS[DEFAULT_UNITS.length - 1];
+
+    if (unit.name === 'second' && !showSecond) {
+      return messages.justNow;
+    }
+
+    const value = absDiff / unit.value;
+    const roundedValue =
+      typeof rounding === 'number'
+        ? Math.round(value * rounding) / rounding
+        : Math[rounding](value);
+
+    const formatter =
+      messages[unit.name] || ((n: number) => `${n} ${unit.name}s`);
+    const formatted =
+      typeof formatter === 'function'
+        ? formatter(roundedValue)
+        : formatter.replace('{0}', roundedValue.toString());
+
+    if (diff > 0) {
+      return typeof messages.past === 'function'
+        ? messages.past(formatted)
+        : messages.past.replace('{0}', formatted);
+    } else {
+      return typeof messages.future === 'function'
+        ? messages.future(formatted)
+        : messages.future.replace('{0}', formatted);
+    }
+  }, [date, now, max, fullDateFormatter, messages, showSecond, rounding]);
 }
+
+function formatTimeAgo(
+  date: Date | number | string,
+  options: TimeAgoOptions = {},
+): string {
+  const now = new Date();
+  return useTimeAgo(date, { ...options, updateInterval: 0 });
+}
+
+export { useTimeAgo, formatTimeAgo };
