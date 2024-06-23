@@ -25,68 +25,65 @@ export default function ArrayFindIndexDemo() {
   ]);
   const [searchId, setSearchId] = useState('');
 
-  const findUserIndexById = (user: { id: number }) =>
-    user.id === parseInt(searchId);
-  const userIndex = useArrayFindIndex(users, findUserIndexById);
+const findUserIndexById = (user: { id: number }) =>
+user.id === parseInt(searchId);
+const userIndex = useArrayFindIndex(users, findUserIndexById);
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-6">
-            <label
-              htmlFor="users"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Users:
-            </label>
-            <textarea
-              id="users"
-              value={JSON.stringify(users, null, 2)}
-              onChange={e => setUsers(JSON.parse(e.target.value))}
-              className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-              rows={6}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="searchId"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Search User ID:
-            </label>
-            <input
-              type="text"
-              id="searchId"
-              value={searchId}
-              onChange={e => setSearchId(e.target.value)}
-              className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-          </div>
-          <div>
-            <p className="text-gray-700 font-bold mb-2">User Index:</p>
-            {userIndex !== -1 ? (
-              <p className="text-gray-600">{userIndex}</p>
-            ) : (
-              <p className="text-gray-600">User not found.</p>
-            )}
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-6">
+        <label htmlFor="users" className="block text-gray-700 font-bold mb-2">
+          Users:
+        </label>
+        <textarea
+          id="users"
+          value={JSON.stringify(users, null, 2)}
+          onChange={(e) => setUsers(JSON.parse(e.target.value))}
+          className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+          rows={6}
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="searchId"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Search User ID:
+        </label>
+        <input
+          type="text"
+          id="searchId"
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
+          className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+        />
+      </div>
+      <div>
+        <p className="text-gray-700 font-bold mb-2">User Index:</p>
+        {userIndex !== -1 ? (
+          <p className="text-gray-600">{userIndex}</p>
+        ) : (
+          <p className="text-gray-600">User not found.</p>
+        )}
       </div>
     </div>
-  );
-}
+  </div>
+</div>
+); }
 
-  ```
-  </Tab>
-  </Tabs>
+````
+</Tab>
+</Tabs>
 
-  ## Installation
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayFindIndex
-```
+````
 
 ## Usage
 
@@ -140,56 +137,56 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```typescript
-/**
- * Represents a predicate function used in the `useArrayFindIndex` function.
- *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function. If `true`, the current element passes the test.
- */
-export type UseArrayFindIndexPredicate<T> = (
-  element: T,
-  index: number,
-  array: T[]
-) => boolean;
-
-/**
- * A React hook that provides a memoized implementation of the
- * [`Array.prototype.findIndex`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex) method.
- *
- * @template T - The type of elements in the array.
- * @param {T[]} list - The array to search. If `list` is not an array, an error message is logged to the console and the hook returns `-1`.
- * @param {UseArrayFindIndexPredicate<T>} predicate - A function to test each element in the array.
- * @returns {number} The index of the first element in the array that passes the test. Otherwise, `-1`.
- */
-export function useArrayFindIndex<T>(
-  list: T[],
-  predicate: UseArrayFindIndexPredicate<T>
-): number;
-```
-
 ## Reference
+
+### useArrayFindIndex
+
+`useArrayFindIndex` is a React hook that provides a memoized implementation of the `Array.prototype.findIndex` method.
 
 <TypeTable
   type={{
     list: {
-      description: 'The primary array to search',
+      description:
+        'The array to search. If list is not an array, an error message is logged to the console and the hook returns -1.',
       type: 'T[]',
     },
     predicate: {
-      description:
-        'A function called for every element of the `list`, returning `true` for the element to include in the new array.',
-      type: 'UseArrayFindIndexPredicate<T>',
-      default: '(element: T, index: number, array: T[]) => boolean',
+      description: 'A function to test each element in the array.',
+      type: 'UseArrayFindIndexPredicate',
     },
   }}
 />
 
-import ArrayFindIndexDemo from '../../../../hooks/Array/useArrayFindIndex/useArrayFindIndex.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### UseArrayFindIndexPredicate
+
+Represents a predicate function used in the `useArrayFindIndex` function.
+
+<TypeTable
+  type={{
+    element: {
+      description: 'The current element being processed.',
+      type: 'T',
+    },
+    index: {
+      description: 'The index of the current element.',
+      type: 'number',
+    },
+    array: {
+      description: 'The array being processed.',
+      type: 'T[]',
+    },
+  }}
+/>
+
+### Return Value
+
+<TypeTable
+  type={{
+    number: {
+      description:
+        'The index of the first element in the array that passes the test. Otherwise, -1 is returned.',
+    },
+  }}
+/>
+
+import ArrayFindIndexDemo from '../../../hooks/Array/useArrayFindIndex/useArrayFindIndex.demo';

@@ -11,12 +11,6 @@ description: Collection of useful React hooks and utilities.
   </Tab>
   <Tab value="Code">
   ```tsx
-'use client';
-
-import { useState } from 'react';
-
-import { useSorted } from './useSorted';
-
 export default function UseSortedDemo() {
   const [array, setArray] = useState([3, 1, 4, 1, 5, 9, 2, 6, 5, 3]);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
@@ -41,14 +35,13 @@ export default function UseSortedDemo() {
   };
 
   return (
-    <div className="border rounded-lg bg-card p-6">
-      <div className="mb-4">
-        <label htmlFor="order" className="">
+    <div>
+      <div>
+        <label htmlFor="order">
           Sort Order:
         </label>
         <select
           id="order"
-          className=""
           value={order}
           onChange={e => setOrder(e.target.value as 'asc' | 'desc')}
         >
@@ -56,25 +49,24 @@ export default function UseSortedDemo() {
           <option value="desc">Descending</option>
         </select>
       </div>
-      <div className="mb-4">
-        <p className="">Original Array:</p>
-        <p className="">{array.join(', ')}</p>
+      <div>
+        <p>Original Array: <span>{array.join(', ')}</span></p>
       </div>
-      <div className="mb-4">
-        <p className="">Sorted Array:</p>
-        <p className="">{sortedArray.join(', ')}</p>
+      <div>
+        <p>Sorted Array: <span>{sortedArray.join(', ')}</span></p>
       </div>
-      <button className="" onClick={handleShuffle}>
+      <button 
+      onClick={handleShuffle}>
         Shuffle Array
       </button>
     </div>
   );
 }
-  ```
-  </Tab>
-  </Tabs>
+```
+</Tab>
+</Tabs>
 
-  ## Installation
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useSorted
@@ -137,99 +129,111 @@ const Component = () => {
 };
 ```
 
-## Type Declarations
-
-```ts
-/**
- * Comparison function type for sorting elements in an array.
- *
- * @typedef {Function} UseSortedCompareFn
- * @param {T} a - The first element to compare.
- * @param {T} b - The second element to compare.
- * @returns {number} A negative value if `a` should be sorted before `b`,
- * a positive value if `b` should be sorted before `a`, or zero if they're equal.
- * @template T
- */
-export type UseSortedCompareFn<T> = (a: T, b: T) => number;
-
-/**
- * Options for the `useSorted` hook.
- *
- * @interface UseSortedOptions
- * @template TestComponent
- * @property {Function} [sortFn] - Custom sort function to use instead of the default.
- * @property {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
- * @property {boolean} [dirty] - Flag indicating whether to mutate the original array.
- */
-export interface UseSortedOptions<T> {
-  sortFn?: (arr: T[], compareFn?: UseSortedCompareFn<T>) => T[];
-  compareFn?: UseSortedCompareFn<T>;
-  dirty?: boolean;
-}
-
-/**
- * Default sort function that creates a new sorted array using the provided comparison function.
- *
- * @template T - The type of elements in the array.
- * @param {T[]} arr - The array to be sorted.
- * @param {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
- * @returns {T[]} A new sorted array.
- */
-export function defaultSortFn<T>(
-  arr: T[],
-  compareFn?: UseSortedCompareFn<T>
-): T[];
-
-/**
- * Sorts an array based on the provided comparison function and options.
- *
- * @template T - The type of elements in the array.
- * @param {T[]} source - The array to be sorted.
- * @param {UseSortedCompareFn<T>} [compareFn] - Comparison function for sorting elements.
- * @param {UseSortedOptions<T>} [options] - Additional options for sorting.
- * @returns {T[]} A sorted array.
- */
-export function sortArray<T>(
-  source: T[],
-  compareFn?: UseSortedCompareFn<T>,
-  options?: UseSortedOptions<T>
-): T[];
-
-/**
- * React hook that returns a sorted version of the provided array.
- *
- * @template T - The type of elements in the array.
- * @param {T[]} source - The array to be sorted.
- * @param {UseSortedCompareFn<T> | UseSortedOptions<T>} [compareFnOrOptions] - Comparison function or options object.
- * @param {Omit<UseSortedOptions<T>, 'compareFn'>} [options] - Additional options for sorting.
- * @returns {T[]} A sorted array.
- */
-export function useSorted<T>(
-  source: T[],
-  compareFnOrOptions?: UseSortedCompareFn<T> | UseSortedOptions<T> | null,
-  options?: Omit<UseSortedOptions<T>, 'compareFn'> | null
-): T[];
-```
-
 ## Reference
+
+### useSorted
+
+`useSorted` is a React hook that returns a sorted version of the provided aray.
 
 <TypeTable
   type={{
     source: {
-      description: 'The type of elements in the array.',
+      description: 'The array to be sorted.',
       type: 'T[]',
     },
     compareFnOrOptions: {
       description: 'Comparison function or options object.',
-      type: 'UseSortedCompareFn<T> | UseSortedOptions<T> | null',
+      type: 'UseSortedCompareFn | UseSortedOptions | null',
+      default: 'undefined',
     },
     options: {
       description: 'Additional options for sorting.',
-      type: 'UseSortedOptions<T>',
+      type: 'UseSortedOptions',
+      default: 'undefined',
     },
   }}
 />
 
-import UseSortedDemo from '../../../../hooks/Array/useSorted/useSorted.demo'; 
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### UseSortedOptions
+
+`UseSortedOptions` is an interface defining options for the `useSorted` hook.
+
+<TypeTable
+  type={{
+    sortFn: {
+      description: 'Custom sort function to use instead of the default.',
+      type: '(arr: T[], compareFn?: UseSortedCompareFn) => T[]',
+      default: 'undefined',
+    },
+    compareFn: {
+      description: 'Comparison function for sorting elements.',
+      type: 'UseSortedCompareFn',
+      default: 'undefined',
+    },
+    dirty: {
+      description: 'Flag indicating whether to mutate the original array.',
+      type: 'boolean',
+      default: 'undefined',
+    },
+  }}
+/>
+
+### UseSortedCompareFn
+
+`UseSortedCompareFn` is a comparison function type for sorting elements in an array.
+
+<TypeTable
+  type={{
+    a: {
+      description: 'The first element to compare.',
+      type: 'T',
+    },
+    b: {
+      description: 'The second element to compare.',
+      type: 'T',
+    },
+  }}
+/>
+
+### defaultSortFn
+
+`defaultSortFn` is the default function that creates a new sorted array using the provided comparison function/
+
+<TypeTable
+  type={{
+    arr: {
+      description: 'The array to be sorted.',
+      type: 'T[]',
+    },
+    compareFn: {
+      description: 'Comparison function for sorting elements.',
+      type: 'UseSortedCompareFn',
+      default: 'undefined',
+    },
+  }}
+/>
+
+### sortArray
+
+`sortArray` is a function that sorts an array based on the provided comparison function and options.
+
+<TypeTable
+  type={{
+    source: {
+      description: 'The array to be sorted.',
+      type: 'T[]',
+    },
+    compareFn: {
+      description: 'Comparison function for sorting elements.',
+      type: 'UseSortedCompareFn',
+      default: 'undefined',
+    },
+    options: {
+      description: 'Additional options for sorting.',
+      type: 'UseSortedOptions',
+      default: 'undefined',
+    },
+  }}
+/>
+
+import UseSortedDemo from '../../../hooks/Array/useSorted/useSorted.demo';

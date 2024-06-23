@@ -23,59 +23,57 @@ export default function ArrayJoinDemo() {
   const items = inputValue.split(',').map(item => item.trim());
   const joinedItems = useArrayJoin(items, separator);
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-4">
-            <label
-              htmlFor="input"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter items (comma-separated):
-            </label>
-            <input
-              id="input"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="separator"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter separator:
-            </label>
-            <input
-              id="separator"
-              type="text"
-              value={separator}
-              onChange={e => setSeparator(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md">
-            <p className="text-lg font-semibold mb-2">Joined items:</p>
-            <p className="text-gray-800">{joinedItems}</p>
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-4">
+        <label htmlFor="input" className="block text-gray-700 font-bold mb-2">
+          Enter items (comma-separated):
+        </label>
+        <input
+          id="input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="separator"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Enter separator:
+        </label>
+        <input
+          id="separator"
+          type="text"
+          value={separator}
+          onChange={(e) => setSeparator(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md">
+        <p className="text-lg font-semibold mb-2">Joined items:</p>
+        <p className="text-gray-800">{joinedItems}</p>
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayJoin
-```
+````
 
 ## Usage
 
@@ -119,22 +117,11 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```ts
-/**
- * A React hook that provides a memoized implementation of the
- * [`Array.prototype.join`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) method.
- *
- * @template T - The type of elements in the array.
- * @param {T[]} list - The array to join. If `list` is not an array, the hook returns an empty string.
- * @param {string} [separator] - A string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated by a comma (",").
- * @returns {string} A string with all array elements joined. If `list.length` is `0`, an empty string is returned.
- */
-export function useArrayJoin<T>(list: T[], separator?: string): string;
-```
-
 ## Reference
+
+### useArrayJoin
+
+`useArrayJoin` is a React hook that provides a memoized implementation of the `Array.prototype.join` method.
 
 <TypeTable
   type={{
@@ -151,6 +138,15 @@ export function useArrayJoin<T>(list: T[], separator?: string): string;
   }}
 />
 
-import ArrayJoinDemo from '../../../../hooks/Array/useArrayJoin/useArrayJoin.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### Return Value
+
+<TypeTable
+  type={{
+    string: {
+      description:
+        'A string with all array elements joined. If list.length is 0, an empty string is returned.',
+    },
+  }}
+/>
+
+import ArrayJoinDemo from '../../../hooks/Array/useArrayJoin/useArrayJoin.demo';

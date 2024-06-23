@@ -20,43 +20,44 @@ export default function IntervalDemo() {
     immediate: true,
   });
 
-  return (
-    <div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
-      <div className="text-[12px] font-medium leading-[28px] margin-[0.5rem]  text-[rgba(235,235,245,.6)]">
-        Interal Fired: {counter}
-      </div>
-      <div className="flex my-4 gap-2">
-        <button
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-          onClick={reset}
-        >
-          Reset
-        </button>
-        <button
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-          onClick={pause}
-        >
-          Pause
-        </button>
-        <button
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-          onClick={resume}
-        >
-          Resume
-        </button>
-      </div>
-    </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+return (
 
-  ## Installation
+<div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+  <div className="text-[12px] font-medium leading-[28px] margin-[0.5rem]  text-[rgba(235,235,245,.6)]">
+    Interal Fired: {counter}
+  </div>
+  <div className="flex my-4 gap-2">
+    <button
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      onClick={reset}
+    >
+      Reset
+    </button>
+    <button
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      onClick={pause}
+    >
+      Pause
+    </button>
+    <button
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      onClick={resume}
+    >
+      Resume
+    </button>
+  </div>
+</div>
+); }
+
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayDifference
-```
+````
 
 ## Usage
 
@@ -132,70 +133,71 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```typescript
-/**
- * A React hook that returns the difference between two arrays.
- *
- * @template T - The type of elements in the arrays.
- * @param {T[]} list - The first array.
- * @param {T[]} values - The second array.
- * @param {UseArrayDifferenceKey<T>} keyOrCompareFn - Optional.
- * A key of an object or a custom comparator function.
- * @returns {T[]} The difference between the two arrays.
- */
-export function useArrayDifference<T>(
-  list: T[],
-  values: T[],
-  keyOrCompareFn?: keyof T | UseArrayDifferenceComparatorFn<T>
-): T[];
-
-/**
- * A function that compares two elements for equality.
- *
- * @template T The type of elements being compared.
- * @param {T} element The first element to compare.
- * @param {T} value The second element to compare.
- * @returns {boolean} `true` if the elements are equal, `false` otherwise.
- */
-export type UseArrayDifferenceComparatorFn<T> = (
-  element: T,
-  value: T
-) => boolean;
-
-/**
- * A key of an object or a custom comparator function used to determine
- * the uniqueness of elements in array.
- *
- * @template T The type of elements in the array.
- * @typedef {keyof T | UseArrayDifferenceComparatorFn<T>} UseArrayDifferenceKey
- */
-export type UseArrayDifferenceKey<T> =
-  | keyof T
-  | UseArrayDifferenceComparatorFn<T>;
-```
-
 ## Reference
+
+### useArrayDifference
+
+`useArrayDifference` is a React hook that returns the difference between two arrays.
 
 <TypeTable
   type={{
     list: {
-      description: 'The primary array',
+      description: 'The first array.',
       type: 'T[]',
     },
     values: {
-      description: 'The array to compare against',
+      description: 'The second array.',
       type: 'T[]',
     },
     keyOrCompareFn: {
       description:
-        '(Optional) The key to use for comparison or a comparator function.',
-      type: 'keyof T | UseArrayDifferenceComparatorFn<T>',
+        'Optional. A key of an object or a custom comparator function.',
+      type: 'keyof T | UseArrayDifferenceComparatorFn',
+      default: 'undefined',
     },
   }}
 />
 
-import ArrayDifferenceDemo from '../../../../hooks/Array/useArrayDifference/useArrayDifference.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### UseArrayDifferenceComparatorFn
+
+A function that compares two elements for equality.
+
+<TypeTable
+  type={{
+    element: {
+      description: 'The first element to compare.',
+      type: 'T',
+    },
+    value: {
+      description: 'The second element to compare.',
+      type: 'T',
+    },
+  }}
+/>
+
+### UseArrayDifferenceKey
+
+A key of an object or a custom comparator function used to determine the uniqueness of elements in an array.
+
+<TypeTable
+  type={{
+    'keyof T': {
+      description: 'A key of an object.',
+    },
+    UseArrayDifferenceComparatorFn: {
+      description: 'A custom comparator function.',
+    },
+  }}
+/>
+
+### Return Value
+
+<TypeTable
+  type={{
+    'T[]': {
+      description: 'The difference between the two arrays.',
+    },
+  }}
+/>
+
+import ArrayDifferenceDemo from '../../../hooks/Array/useArrayDifference/useArrayDifference.demo';

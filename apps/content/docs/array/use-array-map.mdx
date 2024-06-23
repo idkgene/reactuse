@@ -11,12 +11,6 @@ A hook providing a memoized version of the `Array.map` method for React, creatin
   </Tab>
   <Tab value="Code">
   ```tsx
-'use client';
-
-import { useState } from 'react';
-
-import { useArrayMap } from './useArrayMap';
-
 export default function ArrayMapDemo() {
   const [inputValue, setInputValue] = useState('');
   const [mapFunction, setMapFunction] = useState('(item) => item * 2');
@@ -30,63 +24,61 @@ export default function ArrayMapDemo() {
     }
   });
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-4">
-            <label
-              htmlFor="input"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter numbers (comma-separated):
-            </label>
-            <input
-              id="input"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="mapFunction"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter map function:
-            </label>
-            <input
-              id="mapFunction"
-              type="text"
-              value={mapFunction}
-              onChange={e => setMapFunction(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md">
-            <p className="text-lg font-semibold mb-2">Original items:</p>
-            <p className="text-gray-800">{items.join(', ')}</p>
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md mt-4">
-            <p className="text-lg font-semibold mb-2">Mapped items:</p>
-            <p className="text-gray-800">{mappedItems.join(', ')}</p>
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-4">
+        <label htmlFor="input" className="block text-gray-700 font-bold mb-2">
+          Enter numbers (comma-separated):
+        </label>
+        <input
+          id="input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="mapFunction"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Enter map function:
+        </label>
+        <input
+          id="mapFunction"
+          type="text"
+          value={mapFunction}
+          onChange={(e) => setMapFunction(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md">
+        <p className="text-lg font-semibold mb-2">Original items:</p>
+        <p className="text-gray-800">{items.join(', ')}</p>
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md mt-4">
+        <p className="text-lg font-semibold mb-2">Mapped items:</p>
+        <p className="text-gray-800">{mappedItems.join(', ')}</p>
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayMap
-```
+````
 
 ## Usage
 
@@ -98,7 +90,7 @@ import { useState } from 'react';
 const Component = () => {
   const [numbers, setNumbers] = useState([1, 2, 3, 4]);
 
-  const squaredNumbers = useArrayMap(numbers, number => number * number);
+  const squaredNumbers = useArrayMap(numbers, (number) => number * number);
 
   return (
     <div>
@@ -118,7 +110,7 @@ import { useState } from 'react';
 const Component = () => {
   const [users, setUsers] = useState([{ name: 'Alice' }, { name: 'Bob' }]);
 
-  const userNames = useArrayMap(users, user => user.name);
+  const userNames = useArrayMap(users, (user) => user.name);
 
   return (
     <div>
@@ -130,41 +122,36 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```ts
-/**
- * A React hook that provides a memoized implementation of the
- * [`Array.prototype.map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) method.
- *
- * @template T - The type of elements in the input array.
- * @template U - The type of elements in the output array.
- * @param {T[]} list - The array to map over. If `list` is not an array, an error message is logged to the console and the hook returns an empty array.
- * @param {(element: T, index: number, array: T[]) => U} callback - A function that is called for every element of the given `list`. Each time `callback` executes, the returned value is added to the new array.
- * @returns {U[]} A new array with each element being the result of the callback function.
- */
-export declare function useArrayMap<T, U = T>(
-  list: T[],
-  callback: (element: T, index: number, array: T[]) => U
-): U[];
-```
-
 ## Reference
+
+### useArrayMap
+
+`useArrayMap` is a React hook that provides a memoized implementation of the `Array.prototype.map` method.
 
 <TypeTable
   type={{
     list: {
-      description: 'The primary array to map over.',
+      description:
+        'The array to map over. If list is not an array, an error message is logged to the console and the hook returns an empty array.',
       type: 'T[]',
     },
     callback: {
       description:
-        'A function that is called for every element of the given list.',
+        'A function that is called for every element of the given list. Each time callback executes, the returned value is added to the new array.',
       type: '(element: T, index: number, array: T[]) => U',
     },
   }}
 />
 
-import ArrayMapDemo from '../../../../hooks/Array/useArrayMap/useArrayMap.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### Return Value
+
+<TypeTable
+  type={{
+    'U[]': {
+      description:
+        'A new array with each element being the result of the callback function.',
+    },
+  }}
+/>
+
+import ArrayMapDemo from '../../../hooks/Array/useArrayMap/useArrayMap.demo';

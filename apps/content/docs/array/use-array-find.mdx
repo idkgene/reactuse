@@ -25,68 +25,66 @@ export default function ArrayFindDemo() {
   ]);
   const [searchId, setSearchId] = useState('');
 
-  const findUserById = (user: { id: number }) => user.id === parseInt(searchId);
-  const foundUser = useArrayFind(users, findUserById);
+const findUserById = (user: { id: number }) => user.id === parseInt(searchId);
+const foundUser = useArrayFind(users, findUserById);
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-6">
-            <label
-              htmlFor="users"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Users:
-            </label>
-            <textarea
-              id="users"
-              value={JSON.stringify(users, null, 2)}
-              onChange={e => setUsers(JSON.parse(e.target.value))}
-              className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
-              rows={6}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="searchId"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Search User ID:
-            </label>
-            <input
-              type="text"
-              id="searchId"
-              value={searchId}
-              onChange={e => setSearchId(e.target.value)}
-              className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
-            />
-          </div>
-          <div>
-            <p className="text-gray-700 font-bold mb-2">Found User:</p>
-            {foundUser ? (
-              <pre className="text-gray-600 bg-gray-100 p-4 rounded-md">
-                {JSON.stringify(foundUser, null, 2)}
-              </pre>
-            ) : (
-              <p className="text-gray-600">No user found.</p>
-            )}
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-6">
+        <label htmlFor="users" className="block text-gray-700 font-bold mb-2">
+          Users:
+        </label>
+        <textarea
+          id="users"
+          value={JSON.stringify(users, null, 2)}
+          onChange={(e) => setUsers(JSON.parse(e.target.value))}
+          className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
+          rows={6}
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="searchId"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Search User ID:
+        </label>
+        <input
+          type="text"
+          id="searchId"
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
+          className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
+        />
+      </div>
+      <div>
+        <p className="text-gray-700 font-bold mb-2">Found User:</p>
+        {foundUser ? (
+          <pre className="text-gray-600 bg-gray-100 p-4 rounded-md">
+            {JSON.stringify(foundUser, null, 2)}
+          </pre>
+        ) : (
+          <p className="text-gray-600">No user found.</p>
+        )}
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayFind
-```
+````
 
 ## Usage
 
@@ -142,56 +140,59 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```typescript
-/**
- * Represents a predicate function used in the `useArrayFind` function.
- *
- * @template T - The type of elements in the array.
- * @param {T} element - The current element being processed.
- * @param {number} index - The index of the current element.
- * @param {T[]} array - The array being processed.
- * @returns {boolean} - The result of the predicate function. If `true`, the element is considered a match.
- */
-export type UseArrayFindPredicate<T> = (
-  element: T,
-  index: number,
-  array: T[]
-) => boolean;
-
-/**
- * A React hook that provides a memoized implementation of the
- * [`Array.prototype.find`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) method.
- *
- * @template T - The type of elements in the array
- * @param {T[]} list - The array to search.
- * @param {UseArrayFindPredicate<T>} predicate - A function to test each element in the array.
- * @returns {T | undefined} - The first element in the array that satisfies the provided testing function. Otherwise, `undefined` is returned.
- */
-export function useArrayFind<T>(
-  list: T[],
-  predicate: UseArrayFindPredicate<T>
-): T | undefined;
-```
-
 ## Reference
+
+### useArrayFind
+
+`useArrayFind` is a React hook that provides a memoized implementation of the `Array.prototype.find` method.
 
 <TypeTable
   type={{
     list: {
-      description: 'The primary array to search',
+      description: 'The array to search.',
       type: 'T[]',
     },
     predicate: {
-      description:
-        'A function called for every element of the `list`, returning `true` for the element to include in the new array.',
-      type: 'UseArrayFindPredicate<T>',
-      default: '(element: T, index: number, array: T[]) => boolean',
+      description: 'A function to test each element in the array.',
+      type: 'UseArrayFindPredicate',
     },
   }}
 />
 
-import ArrayFindDemo from '../../../../hooks/Array/useArrayFind/useArrayFind.demo';
+### UseArrayFindPredicate
+
+Represents a predicate function used in the `useArrayFind` function.
+
+<TypeTable
+  type={{
+    element: {
+      description: 'The current element being processed.',
+      type: 'T',
+    },
+    index: {
+      description: 'The index of the current element.',
+      type: 'number',
+    },
+    array: {
+      description: 'The array being processed.',
+      type: 'T[]',
+    },
+  }}
+/>
+
+### Return Value
+
+<TypeTable
+  type={{
+    'T | undefined': {
+      description:
+        'The first element in the array that satisfies the provided testing function. Otherwise, undefined is returned.',
+    },
+  }}
+/>
+
+import ArrayFindDemo from '../../../hooks/Array/useArrayFind/useArrayFind.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+;

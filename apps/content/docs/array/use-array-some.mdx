@@ -31,63 +31,61 @@ export default function ArraySomeDemo() {
     }
   });
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-4">
-            <label
-              htmlFor="input"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter numbers (comma-separated):
-            </label>
-            <input
-              id="input"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="predicateFunction"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter predicate function:
-            </label>
-            <input
-              id="predicateFunction"
-              type="text"
-              value={predicateFunction}
-              onChange={e => setPredicateFunction(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md">
-            <p className="text-lg font-semibold mb-2">Result:</p>
-            <p className="text-gray-800">
-              {hasSomeMatch
-                ? 'At least one element matches the predicate'
-                : 'No elements match the predicate'}
-            </p>
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-4">
+        <label htmlFor="input" className="block text-gray-700 font-bold mb-2">
+          Enter numbers (comma-separated):
+        </label>
+        <input
+          id="input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="predicateFunction"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Enter predicate function:
+        </label>
+        <input
+          id="predicateFunction"
+          type="text"
+          value={predicateFunction}
+          onChange={(e) => setPredicateFunction(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md">
+        <p className="text-lg font-semibold mb-2">Result:</p>
+        <p className="text-gray-800">
+          {hasSomeMatch
+            ? 'At least one element matches the predicate'
+            : 'No elements match the predicate'}
+        </p>
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArraySome
-```
+````
 
 ## Usage
 
@@ -99,7 +97,7 @@ import { useState } from 'react';
 const Component = () => {
   const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
 
-  const hasEvenNumber = useArraySome(numbers, number => number % 2 === 0);
+  const hasEvenNumber = useArraySome(numbers, (number) => number % 2 === 0);
 
   return (
     <div>
@@ -124,7 +122,7 @@ const Component = () => {
     { id: 2, isAdmin: true },
   ]);
 
-  const hasAdmin = useArraySome(users, user => user.isAdmin);
+  const hasAdmin = useArraySome(users, (user) => user.isAdmin);
 
   return (
     <div>
@@ -150,26 +148,39 @@ export default Component;
  */
 export declare function useArraySome<T>(
   list: T[],
-  predicate: (element: T, index: number, array: T[]) => unknown
+  predicate: (element: T, index: number, array: T[]) => unknown,
 ): boolean;
 ```
 
 ## Reference
 
+### useArraySome
+
+`useArraySome` is a React hook that provides a memoized implementation of the `Array.prototype.some` method.
+
 <TypeTable
   type={{
     list: {
-      description: 'The primary array to check',
+      description:
+        'The array to check. If list is not an array, an error message is logged to the console and the hook returns false.',
       type: 'T[]',
     },
-    separator: {
-      description:
-        'A function that receives each element of the array as an argument. Returns `true` or `false`.',
+    predicate: {
+      description: 'A function to test each element in the array.',
       type: '(element: T, index: number, array: T[]) => unknown',
     },
   }}
 />
 
-import ArraySomeDemo from '../../../../hooks/Array/useArraySome/useArraySome.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### Return Value
+
+<TypeTable
+  type={{
+    boolean: {
+      description:
+        'true if the predicate function returns a truthy value for any element in the array, otherwise false.',
+    },
+  }}
+/>
+
+import ArraySomeDemo from '../../../hooks/Array/useArraySome/useArraySome.demo';

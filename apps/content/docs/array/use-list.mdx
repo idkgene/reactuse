@@ -23,81 +23,79 @@ export default function UseListDemo() {
   );
   const [inputValue, setInputValue] = useState('');
 
-  const handleAddItem = () => {
-    if (inputValue.trim() !== '') {
-      push(Number(inputValue));
-      setInputValue('');
-    }
-  };
+const handleAddItem = () => {
+if (inputValue.trim() !== '') {
+push(Number(inputValue));
+setInputValue('');
+}
+};
 
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <div className="mb-4">
-          <label
-            htmlFor="inputItem"
-            className="block text-gray-700 font-bold mb-2"
-          >
-            Add Item:
-          </label>
-          <div className="flex">
-            <input
-              type="text"
-              id="inputItem"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-            />
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-r-md"
-              onClick={handleAddItem}
-            >
-              Add
-            </button>
-          </div>
-        </div>
-        <ul className="space-y-2">
-          {list.map((item, index) => (
-            <li key={index} className="flex items-center justify-between">
-              <span>{item}</span>
-              <div>
-                <button
-                  className="text-blue-500 hover:text-blue-600 font-bold px-2 py-1"
-                  onClick={() => removeAt(index)}
-                >
-                  Remove
-                </button>
-                <button
-                  className="text-blue-500 hover:text-blue-600 font-bold px-2 py-1"
-                  onClick={() => updateAt(index, Number(`${item}`))}
-                >
-                  Update
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-4">
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded"
-            onClick={clear}
-          >
-            Clear List
-          </button>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="mb-4">
+      <label htmlFor="inputItem" className="block text-gray-700 font-bold mb-2">
+        Add Item:
+      </label>
+      <div className="flex">
+        <input
+          type="text"
+          id="inputItem"
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-r-md"
+          onClick={handleAddItem}
+        >
+          Add
+        </button>
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+    <ul className="space-y-2">
+      {list.map((item, index) => (
+        <li key={index} className="flex items-center justify-between">
+          <span>{item}</span>
+          <div>
+            <button
+              className="text-blue-500 hover:text-blue-600 font-bold px-2 py-1"
+              onClick={() => removeAt(index)}
+            >
+              Remove
+            </button>
+            <button
+              className="text-blue-500 hover:text-blue-600 font-bold px-2 py-1"
+              onClick={() => updateAt(index, Number(`${item}`))}
+            >
+              Update
+            </button>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div className="mt-4">
+      <button
+        className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded"
+        onClick={clear}
+      >
+        Clear List
+      </button>
+    </div>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useList
-```
+````
 
 ## Usage
 
@@ -129,82 +127,75 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```typescript
-/**
- * Utility functions for managing a list.
- *
- * @template T - The type of elements in the list.
- */
-export interface UseListActions<T> {
-  /**
-   * Sets a new list, replacing the existing one.
-   *
-   * @param {T[]} l - The new array to set as the list.
-   */
-  set: (l: T[]) => void;
-
-  /**
-   * Adds a new element to the end of the list.
-   *
-   * @param {T} element - The element to be added to the list.
-   */
-  push: (element: T) => void;
-
-  /**
-   * Removes the element at the specified index.
-   *
-   * @param {number} index - The index of the element to be removed.
-   */
-  removeAt: (index: number) => void;
-
-  /**
-   * Inserts an element at the specified index.
-   *
-   * @param {number} index - The index at which the element should be inserted.
-   * @param {T} element - The element to be inserted into the list.
-   */
-  insertAt: (index: number, element: T) => void;
-
-  /**
-   * Updates the element at the specified index.
-   *
-   * @param {number} index - The index of the element to be updated.
-   * @param {T} element - The new element to replace the existing one.
-   */
-  updateAt: (index: number, element: T) => void;
-
-  /**
-   * Clears the list by setting it to an empty array.
-   */
-  clear: () => void;
-}
-
-/**
- * A hook providing a list and utility functions for managing it.
- *
- * @template T - The type of elements in the list.
- * @param {T[]} [defaultList=[]] - The initial list of elements.
- * @returns {[T[], UseListActions<T>]} An array containing:
- *  - The current state of the list.
- *  - An object containing utility functions to manage the list.
- */
-export function useList<T>(defaultList: T[] = []): [T[], UseListActions<T>];
-```
-
 ## Reference
+
+### useList
+
+`useList` is a hook that provides a list and utility functions for managing it.
 
 <TypeTable
   type={{
     defaultList: {
-      description: 'TThe initial array of elements.',
+      description: 'The initial list of elements.',
       type: 'T[]',
       default: '[]',
     },
   }}
 />
 
-import UseListDemo from '../../../../hooks/Array/useList/useList.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### UseListActions
+
+`UseListActions` is an interface that defines utility functions for managing a list.
+
+<TypeTable
+  type={{
+    set: {
+      description: 'Sets a new list, replacing the existing one.',
+      type: '(l: T[]) => void',
+    },
+    push: {
+      description: 'Adds a new element to the end of the list.',
+      type: '(element: T) => void',
+    },
+    removeAt: {
+      description: 'Removes the element at the specified index.',
+      type: '(index: number) => void',
+    },
+    insertAt: {
+      description: 'Inserts an element at the specified index.',
+      type: '(index: number, element: T) => void',
+    },
+    updateAt: {
+      description: 'Updates the element at the specified index.',
+      type: '(index: number, element: T) => void',
+    },
+    clear: {
+      description: 'Clears the list by setting it to an empty array.',
+      type: '() => void',
+    },
+  }}
+/>
+
+### Return Value
+
+<TypeTable
+  type={{
+    '[T[], UseListActions]': {
+      description: 'An array containing:',
+      type: 'tuple',
+      children: [
+        {
+          description: 'The current state of the list.',
+          type: 'T[]',
+        },
+        {
+          description:
+            'An object containing utility functions to manage the list.',
+          type: 'UseListActions',
+        },
+      ],
+    },
+  }}
+/>
+
+import UseListDemo from '../../../hooks/Array/useList/useList.demo';

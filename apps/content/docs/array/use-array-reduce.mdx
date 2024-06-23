@@ -37,74 +37,72 @@ export default function ArrayReduceDemo() {
     parseInt(initialValue, 10)
   );
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-4">
-            <label
-              htmlFor="input"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter numbers (comma-separated):
-            </label>
-            <input
-              id="input"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="reducerFunction"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter reducer function:
-            </label>
-            <input
-              id="reducerFunction"
-              type="text"
-              value={reducerFunction}
-              onChange={e => setReducerFunction(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="initialValue"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter initial value:
-            </label>
-            <input
-              id="initialValue"
-              type="text"
-              value={initialValue}
-              onChange={e => setInitialValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md">
-            <p className="text-lg font-semibold mb-2">Reduced value:</p>
-            <p className="text-gray-800">{reducedValue}</p>
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-4">
+        <label htmlFor="input" className="block text-gray-700 font-bold mb-2">
+          Enter numbers (comma-separated):
+        </label>
+        <input
+          id="input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="reducerFunction"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Enter reducer function:
+        </label>
+        <input
+          id="reducerFunction"
+          type="text"
+          value={reducerFunction}
+          onChange={(e) => setReducerFunction(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="initialValue"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Enter initial value:
+        </label>
+        <input
+          id="initialValue"
+          type="text"
+          value={initialValue}
+          onChange={(e) => setInitialValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md">
+        <p className="text-lg font-semibold mb-2">Reduced value:</p>
+        <p className="text-gray-800">{reducedValue}</p>
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayReduce
-```
+````
 
 ## Usage
 
@@ -119,7 +117,7 @@ const Component = () => {
   const sum = useArrayReduce(
     numbers,
     (accumulator, number) => accumulator + number,
-    0
+    0,
   );
 
   return (
@@ -143,7 +141,7 @@ const Component = () => {
   const totalCount = useArrayReduce(
     objects,
     (accumulator, obj) => accumulator + obj.count,
-    0
+    0,
   );
 
   return (
@@ -156,52 +154,17 @@ const Component = () => {
 export default Component;
 ```
 
-## Type Declarations
-
-```ts
-/**
- * Represents a reducer function used in the `useArrayReduce` function.
- *
- * @template PV - The type of the accumulated value.
- * @template CV - The type of the current value being processed.
- * @template R - The type of the returned value.
- * @param {PV} previousValue - The value previously returned in the last invocation of the reducer.
- * @param {CV} currentValue - The current element being processed.
- * @param {number} currentIndex - The index of the current element.
- * @param {CV[]} array - The array being processed.
- * @returns {R} - The result of applying the reducer.
- */
-export type UseArrayReduceCallback<PV, CV, R> = (
-  previousValue: PV,
-  currentValue: CV,
-  currentIndex: number,
-  array: CV[]
-) => R;
-
-/**
- * A React hook that provides a memoized implementation of the
- * [`Array.prototype.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) method.
- *
- * @template T - The type of elements in the input array.
- * @template U - The type of the accumulated value.
- * @param {T[]} list - The array to reduce. If `list` is not an array, an error message is logged to the console and the hook returns the initial value.
- * @param {UseArrayReduceCallback<U, T, U>} reducer - A "reducer" function that accumulates the array elements.
- * @param {U} initialValue - A value to initialize the accumulator the first time the callback is called.
- * @returns {U} The value that results from running the "reducer" callback function to completion over the entire array.
- */
-export function useArrayReduce<T, U>(
-  list: T[],
-  reducer: UseArrayReduceCallback<U, T, U>,
-  initialValue: U
-): U;
-```
-
 ## Reference
+
+### useArrayReduce
+
+`useArrayReduce` is a React hook that provides a memoized implementation of the `Array.prototype.reduce` method.
 
 <TypeTable
   type={{
     list: {
-      description: 'The primary array to redyce.',
+      description:
+        'The array to reduce. If list is not an array, an error message is logged to the console and the hook returns the initial value.',
       type: 'T[]',
     },
     reducer: {
@@ -216,6 +179,41 @@ export function useArrayReduce<T, U>(
   }}
 />
 
-import ArrayReduceDemo from '../../../../hooks/Array/useArrayReduce/useArrayReduce.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### UseArrayReduceCallback
+
+Represents a reducer function used in the `useArrayReduce` function.
+
+<TypeTable
+  type={{
+    previousValue: {
+      description:
+        'The value previously returned in the last invocation of the reducer.',
+      type: 'PV',
+    },
+    currentValue: {
+      description: 'The current element being processed.',
+      type: 'CV',
+    },
+    currentIndex: {
+      description: 'The index of the current element.',
+      type: 'number',
+    },
+    array: {
+      description: 'The array being processed.',
+      type: 'CV[]',
+    },
+  }}
+/>
+
+### Return Value
+
+<TypeTable
+  type={{
+    U: {
+      description:
+        'The value that results from running the "reducer" callback function to completion over the entire array.',
+    },
+  }}
+/>
+
+import ArrayReduceDemo from '../../../hooks/Array/useArrayReduce/useArrayReduce.demo';

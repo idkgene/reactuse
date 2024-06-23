@@ -34,71 +34,69 @@ export default function ArrayUniqueDemo() {
     }
   });
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="mb-4">
-            <label
-              htmlFor="input"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter items (comma-separated):
-            </label>
-            <input
-              id="input"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="compareFn"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Enter custom compare function:
-            </label>
-            <input
-              id="compareFn"
-              type="text"
-              value={compareFnValue}
-              onChange={e => setCompareFnValue(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md">
-            <p className="text-lg font-semibold mb-2">Original items:</p>
-            <ul className="list-disc pl-6">
-              {items.map(item => (
-                <li key={item.id}>{item.value}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-gray-100 p-4 rounded-md mt-4">
-            <p className="text-lg font-semibold mb-2">Unique items:</p>
-            <ul className="list-disc pl-6">
-              {uniqueItems.map(item => (
-                <li key={item.id}>{item.value}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+return (
+
+<div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div className="mb-4">
+        <label htmlFor="input" className="block text-gray-700 font-bold mb-2">
+          Enter items (comma-separated):
+        </label>
+        <input
+          id="input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="compareFn"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Enter custom compare function:
+        </label>
+        <input
+          id="compareFn"
+          type="text"
+          value={compareFnValue}
+          onChange={(e) => setCompareFnValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md">
+        <p className="text-lg font-semibold mb-2">Original items:</p>
+        <ul className="list-disc pl-6">
+          {items.map((item) => (
+            <li key={item.id}>{item.value}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="bg-gray-100 p-4 rounded-md mt-4">
+        <p className="text-lg font-semibold mb-2">Unique items:</p>
+        <ul className="list-disc pl-6">
+          {uniqueItems.map((item) => (
+            <li key={item.id}>{item.value}</li>
+          ))}
+        </ul>
       </div>
     </div>
-  );
-}
-  ```
-  </Tab>
-  </Tabs>
+  </div>
+</div>
+); }
 
-  ## Installation
+````
+</Tab>
+</Tabs>
+
+## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useArrayUnique
-```
+````
 
 ## Usage
 
@@ -119,7 +117,7 @@ const Component = () => {
 
   return (
     <ul>
-      {uniqueItems.map(item => (
+      {uniqueItems.map((item) => (
         <li key={item.id}>{item.name}</li>
       ))}
     </ul>
@@ -144,25 +142,41 @@ export default Component;
  */
 export function useArrayUnique<T>(
   items: T[],
-  compareFn?: (a: T, b: T, array: T[]) => boolean
+  compareFn?: (a: T, b: T, array: T[]) => boolean,
 ): T[];
 ```
 
 ## Reference
 
+### useArrayUnique
+
+`useArrayUnique` is a React hook that returns a unique array of items based on a custom comparison function.
+
 <TypeTable
   type={{
     items: {
-      description: 'The array of items to filter for unique values.',
+      description:
+        'The array of items to filter for unique values. If items is not an array, the hook returns an empty array.',
       type: 'T[]',
     },
     compareFn: {
-      description: 'A custom function to compare two elements.',
+      description:
+        'Optional custom comparison function. If provided, this function will be used to determine the equality of two items. The function should take two items (a and b) and the original array as arguments and return true if they are considered equal, false otherwise.',
       type: '(a: T, b: T, array: T[]) => boolean',
+      default: 'undefined',
     },
   }}
 />
 
-import ArrayUniqueDemo from '../../../../hooks/Array/useArrayUnique/useArrayUnique.demo';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+### Return Value
+
+<TypeTable
+  type={{
+    'T[]': {
+      description:
+        'A new array containing only the unique items from the input array.',
+    },
+  }}
+/>
+
+import ArrayUniqueDemo from '../../../hooks/Array/useArrayUnique/useArrayUnique.demo';
