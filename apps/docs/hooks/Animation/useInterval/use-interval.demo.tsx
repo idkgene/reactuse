@@ -3,8 +3,8 @@
 import { Button } from '../../../components/ui/button';
 import { useInterval } from './use-interval';
 
-export default function IntervalDemo() {
-  const { counter, reset, pause, resume } = useInterval(1000, {
+export default function IntervalDemo(): JSX.Element {
+  const { counter, reset, pause, resume } = useInterval(250, {
     immediate: true,
   });
 

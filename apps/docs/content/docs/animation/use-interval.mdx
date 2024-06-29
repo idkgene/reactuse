@@ -7,28 +7,25 @@ description: Counter increases on every interval
   <Tab value="Preview">
     <IntervalDemo />
   </Tab>
-  <Tab value="Code">
-  ```tsx
-export default function IntervalDemo() {
-  
-  const { counter, reset, pause, resume } = useInterval(1000, {
+  ```tsx tab="Code"
+  export default function IntervalDemo(): JSX.Element {
+  const { counter, reset, pause, resume } = useInterval(250, {
     immediate: true,
   });
 
 return (
 
-<div>
+<div className="relative mb-[10px] p-[2em] transition-colors">
   <div>Interval Fired: {counter}</div>
-  <div>
-    <button onClick={reset}>Reset</button>
-    <button onClick={pause}>Pause</button>
-    <button onClick={resume}>Resume</button>
+  <div className="my-4 flex gap-2">
+    <Button onClick={reset}>Reset</Button>
+    <Button onClick={pause}>Pause</Button>
+    <Button onClick={resume}>Resume</Button>
   </div>
 </div>
 ); }
 
 ````
-</Tab>
 </Tabs>
 
 ## Installation
@@ -40,25 +37,21 @@ npx changeelog/reactuse@latest add useInterval
 ## Usage
 
 ```tsx
-import { useInterval } from '#';
+const { counter, reset, pause, resume } = useInterval(1000, {
+  immediate: true,
+  callback: (count) => {
+    console.log(`Interval count: ${count}`);
+  },
+});
 
-const Component = () => {
-  const { counter, reset, pause, resume } = useInterval(500, {
-    immediate: false,
-    callback: (count) => {
-      console.log(`Interval count: ${count}`);
-    },
-  });
-
-  return (
-    <div>
-      <p>Counter: {counter}</p>
-      <button onClick={reset}>Reset</button>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-    </div>
-  );
-};
+return (
+  <div>
+    <p>Counter: {counter}</p>
+    <button onClick={reset}>Reset</button>
+    <button onClick={pause}>Pause</button>
+    <button onClick={resume}>Resume</button>
+  </div>
+);
 ```
 
 ## Reference
@@ -81,6 +74,10 @@ const Component = () => {
   }}
 />
 
+<Callout title="Note">
+  If the `interval` is set to a non-positive number, an error will be thrown.
+</Callout>
+
 ### UseIntervalOptions
 
 An interface defining optional configuration for the interval:
@@ -93,9 +90,10 @@ An interface defining optional configuration for the interval:
       default: 'true',
     },
     callback: {
-      description: 'Optional callback function to be invoked at each interval.',
+      description:
+        'Optional callback function to be invoked on each interval tick. It receives the current count as an argument.',
       type: '(count: number) => void',
-      default: '{}',
+      default: 'undefined',
     },
   }}
 />
@@ -112,15 +110,15 @@ Returns a `UseIntervalControls` object with the following properties:
     },
     reset: {
       description: 'Function to reset the interval counter to 0.',
-      type: '(count: number) => void',
+      type: '() => void',
     },
     pause: {
       description: 'Function to pause the interval.',
-      type: '(count: number) => void',
+      type: '() => void',
     },
     resume: {
       description: 'Function to resume the interval.',
-      type: '(count: number) => void',
+      type: '() => void',
     },
   }}
 />
@@ -130,3 +128,4 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Callout } from 'fumadocs-ui/components/callout';
