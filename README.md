@@ -1,3 +1,3 @@
 <p align="center">
-  <img src="./public/banner.png" alt="banner">
+  <img src="https://github.com/changeelog/static/blob/main/reactuse-banner.png?raw=true" alt="banner">
 </p>
