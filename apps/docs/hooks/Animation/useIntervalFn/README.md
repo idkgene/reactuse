@@ -2,7 +2,7 @@
 
 Wrapper for `setInterval` with controls.
 
-Please refer to the [documentation](#) for more information.
+Please refer to the documentation for more information.
 
 ## Installation
 

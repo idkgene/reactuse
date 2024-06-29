@@ -43,15 +43,6 @@ const { counter, reset, pause, resume } = useInterval(1000, {
     console.log(`Interval count: ${count}`);
   },
 });
-
-return (
-  <div>
-    <p>Counter: {counter}</p>
-    <button onClick={reset}>Reset</button>
-    <button onClick={pause}>Pause</button>
-    <button onClick={resume}>Resume</button>
-  </div>
-);
 ```
 
 ## Reference

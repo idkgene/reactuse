@@ -2,7 +2,7 @@
 
 Creates an interval that invokes a callback function at a specified delay
 
-Please refer to the [documentation](#) for more information.
+Please refer to the documentation for more information.
 
 ## Installation
 

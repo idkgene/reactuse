@@ -7,8 +7,7 @@ description: Wrapper for setInterval with controls
   <Tab value="Preview">
     <IntervalFnDemo />
   </Tab>
-  <Tab value="Code">
-```tsx
+```tsx tab="Code"
 const greetings = [
   'Hello',
   'こんにちは',
@@ -19,46 +18,47 @@ const greetings = [
   'Yo!',
 ];
 
-const IntervalFnDemo = () => {
-const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
-const [interval, setInterval] = useState(500);
+export default function IntervalFnDemo(): JSX.Element {
+  const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
+  const [interval, setInterval] = useState(250);
 
-const { isActive, pause, resume } = useIntervalFn(
-() => {
-const randomIndex = Math.floor(Math.random() \* greetings.length);
-setCurrentGreeting(greetings[randomIndex]);
-},
-interval,
-{ immediate: false },
-);
+  const { isActive, pause, resume } = useIntervalFn(
+    () => {
+      const randomIndex = Math.floor(Math.random() * greetings.length);
+      setCurrentGreeting(greetings[randomIndex]);
+    },
+    interval,
+    { immediate: false },
+  );
 
-return (
-
-<div>
-  <div>
-    <div>
-      <span>{currentGreeting}</span>
+  return (
+    <div className="relative mb-[10px] p-[2em] transition-colors">
+      <div className="py-8 text-base">
+        <div className="my-4">
+          <span>{currentGreeting}</span>
+        </div>
+        <div className="my-4">
+          <label htmlFor="interval">Interval (ms):</label>
+          <Input
+            id="interval"
+            type="number"
+            className="mt-1"
+            value={interval}
+            onChange={(e) => {
+              setInterval(Number(e.target.value));
+            }}
+          />
+        </div>
+        <div className="my-4 flex gap-3">
+          <Button onClick={isActive ? pause : resume}>
+            {isActive ? 'Pause' : 'Resume'}
+          </Button>
+        </div>
+      </div>
     </div>
-    <div>
-      <label htmlFor="interval">Interval (ms):</label>
-      <input
-        id="interval"
-        type="number"
-        value={interval}
-        onChange={(e) => setInterval(Number(e.target.value))}
-      />
-    </div>
-    <div>
-      <button onClick={isActive ? pause : resume}>
-        {isActive ? 'Pause' : 'Resume'}
-      </button>
-    </div>
-  </div>
-</div>
-); };
-
+  );
+}
 ````
-  </Tab>
 </Tabs>
 
 ## Installation
@@ -70,28 +70,11 @@ npx changeelog/reactuse@latest add useIntervalFn
 ## Usage
 
 ```tsx
-import { useIntervalFn } from '#';
-
-const Component = () => {
-  const { isActive, pause, resume } = useIntervalFn(
-    () => {
-      console.log('Executing interval callback');
-    },
-    () => Math.random() * 2000 + 1000,
-    {
-      immediate: false,
-      immediateCallback: true,
-    },
-  );
-
-  return (
-    <div>
-      <p>Interval Active: {JSON.stringify(isActive)}</p>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-    </div>
-  );
-};
+const { isActive, pause, resume } = useIntervalFn(
+  () => console.log('Tick'),
+  1000,
+  { immediateCallback: true },
+);
 ```
 
 ## Reference
@@ -114,9 +97,9 @@ const Component = () => {
     },
     options: {
       description:
-        '(Optional) Configuration object for the interval behavior and callbacks.',
+        '(Optional) configuration object for the interval behavior and callbacks.',
       type: 'UseIntervalFnOptions',
-      default: '{}',
+      default: '{} (immediate: true, immediateCallback: false)',
     },
   }}
 />

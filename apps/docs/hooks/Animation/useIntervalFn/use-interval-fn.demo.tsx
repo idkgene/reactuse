@@ -15,9 +15,9 @@ const greetings = [
   'Yo!',
 ];
 
-function IntervalFnDemo() {
+export default function IntervalFnDemo(): JSX.Element {
   const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
-  const [interval, setInterval] = useState(500);
+  const [interval, setInterval] = useState(250);
 
   const { isActive, pause, resume } = useIntervalFn(
     () => {
@@ -55,5 +55,3 @@ function IntervalFnDemo() {
     </div>
   );
 }
-
-export default IntervalFnDemo;
