@@ -1,0 +1,116 @@
+---
+title: useVector
+description: 3D vector operations
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useVector
+```
+
+## Usage
+
+```tsx
+import { useVector } from '#';
+
+const Component = () => {
+  const { vector, add, scale, magnitude } = useVector({ x: 3, y: 4, z: 0 });
+
+  return (
+    <div>
+      <p>
+        Vector: ({vector.x}, {vector.y}, {vector.z})
+      </p>
+      <p>Magnitude: {magnitude()}</p>
+      <button onClick={() => add({ x: 1, y: 1, z: 1 })}>Add (1, 1, 1)</button>
+      <button onClick={() => scale(2)}>Double</button>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useVector
+
+`useVector` is a hook that provides functionality for 3D vector operations.
+
+<TypeTable
+  type={{
+    initialVector: {
+      description: 'The initial vector.',
+      type: 'Vector',
+      default: '{ x: 0, y: 0, z: 0 }',
+    },
+  }}
+/>
+
+### Vector
+
+An interface representing a 3D vector:
+
+<TypeTable
+  type={{
+    x: {
+      description: 'The x-component of the vector.',
+      type: 'number',
+    },
+    y: {
+      description: 'The y-component of the vector.',
+      type: 'number',
+    },
+    z: {
+      description: 'The z-component of the vector.',
+      type: 'number',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UseVectorReturn` object with the following properties:
+
+<TypeTable
+  type={{
+    vector: {
+      description: 'The current vector.',
+      type: 'Vector',
+    },
+    setVector: {
+      description: 'Function to set a new vector.',
+      type: 'React.Dispatch<React.SetStateAction>',
+    },
+    add: {
+      description: 'Function to add another vector to the current vector.',
+      type: '(v: Vector) => void',
+    },
+    subtract: {
+      description:
+        'Function to subtract another vector from the current vector.',
+      type: '(v: Vector) => void',
+    },
+    scale: {
+      description: 'Function to scale the current vector by a scalar value.',
+      type: '(scalar: number) => void',
+    },
+    magnitude: {
+      description: 'Function to calculate the magnitude of the current vector.',
+      type: '() => number',
+    },
+    normalize: {
+      description: 'Function to normalize the current vector.',
+      type: '() => void',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

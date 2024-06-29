@@ -1,0 +1,95 @@
+---
+title: useExponential
+description: Exponential calculations.
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useExponential
+```
+
+## Usage
+
+```tsx
+import { useExponential } from '#';
+
+const Component = () => {
+  const { base, setBase, calculate } = useExponential();
+
+  return (
+    <div>
+      <p>Base: {base}</p>
+      <button onClick={() => setBase(Math.random())}>Set Base</button>
+      <button onClick={() => console.log(calculate(2))}>Calculate</button>
+    </div>
+  );
+};
+```
+
+## Insallation
+
+```bash
+npx changeelog/reactuse@latest add useExponential
+```
+
+## Reference
+
+### useExponential
+
+`useExponential` is a custom React hook for exponential calculations.
+
+<TypeTable
+  type={{
+    options: {
+      description: 'Configuration object for the exponential behavior.',
+      type: 'UseExponentialOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### UseExponentialOptions
+
+An interface defining optional configuration for the exponential calculations:
+
+<TypeTable
+  type={{
+    initialBase: {
+      description: 'The initial base value for exponential calculations.',
+      type: 'number',
+      default: 'Math.E',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UseExponentialReturn` object with the following properties: 
+
+<TypeTable
+  type={{
+    base: {
+      description: 'The current base value used for calculations.',
+      type: 'number',
+    },
+    setBase: {
+      description: 'Function to update the base value.',
+      type: 'React.Dispatch<React.SetStateAction>',
+    },
+    calculate: {
+      description: 'Function to calculate the exponential value.',
+      type: '(exponent: number) => number | null',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

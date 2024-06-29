@@ -1,0 +1,74 @@
+---
+title: useGCD
+description: Greatest Common Divisor
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useGCD
+```
+
+## Usage
+
+```tsx
+import { useGCD } from '#';
+
+const Component = () => {
+  const calculateGCD = useGCD();
+  const result = calculateGCD(48, 18);
+
+  return (
+    <div>
+      <p>GCD of 48 and 18: {result !== null ? result : 'Error'}</p>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useGCD
+
+`useGCD` is a hook that returns a memoized function for calculating the Greatest Common Divisor of two integers.
+
+<TypeTable
+  type={{
+    returns: {
+      description: 'A function that calculates the GCD of two given integers.',
+      type: 'GCDFunction',
+    },
+  }}
+/>
+
+### GCDFunction
+
+The type of the function returned by `useGCD`:
+
+<TypeTable
+  type={{
+    a: {
+      description: 'The first integer.',
+      type: 'number',
+    },
+    b: {
+      description: 'The second integer.',
+      type: 'number',
+    },
+    returns: {
+      description:
+        'The GCD of the two input numbers, or null if an error occurs.',
+      type: 'number | null',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

@@ -1,0 +1,99 @@
+---
+title: useLongPress
+description: Detect long press events on elements
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Some Code</Tab>
+  <Tab value="Code">Some Code</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useLongPress
+```
+
+## Usage
+
+```tsx
+import { useLongPress } from '#';
+
+const Component = () => {
+  const longPressHandlers = useLongPress(
+    () => {
+      console.log('Long pressed!');
+    },
+    { duration: 1000 },
+  );
+
+  return (
+    <div
+      {...longPressHandlers}
+      style={{ width: '100px', height: '100px', backgroundColor: 'skyblue' }}
+    >
+      Press and hold me
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useLongPress
+
+`useLongPress` is a hook that provides handlers for detecting long press events on elements.
+
+<TypeTable
+  type={{
+    callback: {
+      description: 'The function to call when a long press is detected.',
+      type: '() => void',
+    },
+    options: {
+      description: 'Configuration options for the long press action.',
+      type: 'LongPressOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### LongPressOptions
+
+An interface defining optional configuration for the hook:
+
+<TypeTable
+  type={{
+    duration: {
+      description:
+        'The duration (in milliseconds) required for a press to be considered long.',
+      type: 'number',
+      default: '500',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns an object with the following event handlers:
+
+<TypeTable
+  type={{
+    onMouseDown: {
+      description: 'Handler to start the timer on mouse down.',
+      type: '() => void',
+    },
+    onMouseUp: {
+      description: 'Handler to cancel the timer on mouse up.',
+      type: '() => void',
+    },
+    onTouchStart: {
+      description: 'Handler to start the timer on touch start.',
+      type: '() => void',
+    },
+    onTouchEnd: {
+      description: 'Handler to cancel the timer on touch end.',
+      type: '() => void',
+    },
+  }}
+/>

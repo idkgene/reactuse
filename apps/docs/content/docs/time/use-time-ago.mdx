@@ -1,0 +1,151 @@
+---
+title: useTimeAgo
+description: Converts dates to human-readable relative time strings
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <TimeAgo />
+  </Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useTimeAgo
+```
+
+## Usage
+
+```tsx
+import { useTimeAgo } from '#';
+
+const Component = () => {
+  const date = new Date(Date.now() - 24 * 60 * 60 * 1000); // 1 day ago
+  const timeAgo = useTimeAgo(date, {
+    max: 'week',
+    messages: {
+      justNow: 'right now',
+      past: (n) => `${n} in the past`,
+    },
+  });
+
+  return <div>Time ago: {timeAgo}</div>;
+};
+```
+
+Reference
+useTimeAgo
+useTimeAgo is a hook that converts a date to a human-readable relative time string.
+
+<TypeTable
+  type={{
+    date: {
+      description: 'The date to format.',
+      type: 'Date | number | string',
+    },
+    options: {
+      description: 'Configuration object for time ago formatting.',
+      type: 'TimeAgoOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+TimeAgoOptions
+An interface defining optional configuration for time ago formatting:
+
+<TypeTable
+  type={{
+    max: {
+      description:
+        'Maximum time unit or value to display before using full date.',
+      type: 'TimeUnit | number',
+      default: 'undefined',
+    },
+    fullDateFormatter: {
+      description: 'Custom function to format full date when max is exceeded.',
+      type: '(date: Date) => string',
+      default: 'undefined',
+    },
+    messages: {
+      description: 'Custom messages for formatting.',
+      type: 'Partial',
+      default: '{}',
+    },
+    showSecond: {
+      description: 'Whether to show seconds for recent times.',
+      type: 'boolean',
+      default: 'false',
+    },
+    rounding: {
+      description: 'Rounding method for time values.',
+      type: '"round" | "ceil" | "floor" | number',
+      default: '"round"',
+    },
+    updateInterval: {
+      description: 'Interval in milliseconds to update the time ago string.',
+      type: 'number',
+      default: '30000',
+    },
+  }}
+/>
+
+TimeAgoMessages
+An interface defining customizable messages for time ago formatting:
+
+<TypeTable
+  type={{
+    justNow: {
+      description: 'Message for very recent times.',
+      type: 'string',
+    },
+    past: {
+      description: 'Message format for past times.',
+      type: 'string | ((value: number | string) => string)',
+    },
+    future: {
+      description: 'Message format for future times.',
+      type: 'string | ((value: number | string) => string)',
+    },
+    invalid: {
+      description: 'Message for invalid dates.',
+      type: 'string',
+    },
+    second: {
+      description: 'Message format for seconds.',
+      type: 'string | ((value: number) => string)',
+    },
+    minute: {
+      description: 'Message format for minutes.',
+      type: 'string | ((value: number) => string)',
+    },
+    hour: {
+      description: 'Message format for hours.',
+      type: 'string | ((value: number) => string)',
+    },
+    day: {
+      description: 'Message format for days.',
+      type: 'string | ((value: number) => string)',
+    },
+    week: {
+      description: 'Message format for weeks.',
+      type: 'string | ((value: number) => string)',
+    },
+    month: {
+      description: 'Message format for months.',
+      type: 'string | ((value: number) => string)',
+    },
+    year: {
+      description: 'Message format for years.',
+      type: 'string | ((value: number) => string)',
+    },
+  }}
+/>
+
+import TimeAgo from '../../../hooks/Time/useTimeAgo/use-time-ago.demo';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

@@ -12,7 +12,7 @@
     "module": "esnext",
     "outDir": "dist",
     "sourceMap": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -46,7 +46,9 @@
     "**/*.ts",
     "**/*.tsx",
     "jest.config.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "sadfsadf.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "extends": "@vercel/style-guide/typescript/node18"
 }

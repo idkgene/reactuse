@@ -1,0 +1,208 @@
+---
+title: useToggle
+description: Toggle between two values, typically representing "true" or "false"
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <UseToggleDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useToggle } from './useToggle';
+
+export default function UseToggleDemo() {
+  const [isMounted, setIsMounted] = useState(false);
+
+const [isActive, toggleActive] = useToggle();
+
+const [status, toggleStatus] = useToggle('off', {
+truthyValue: 'on',
+falsyValue: 'off',
+});
+
+const [currentNumber, toggleNumber] = useToggle(0, {
+truthyValue: 1,
+falsyValue: 0,
+});
+
+useEffect(() => {
+setIsMounted(true);
+}, []);
+
+if (!isMounted) return null;
+
+return (
+
+<div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
+  <p>
+    <span>Is Active:</span> {String(isActive)}
+  </p>
+  <button
+    onClick={() => toggleActive()}
+    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+  >
+    Toggle Active
+  </button>
+</div>
+); }
+```
+</Tab>
+</Tabs>
+
+## Installation
+
+<Tabs items={['CLI', 'Manual']}>
+```bash tab="CLI"
+npx changeelog/reactuse@latest add useToggle
+```
+
+  <Tab value="Manual">
+<Steps>
+<Step>
+**If not already created, create a folder for hooks in your project. Your structure could look like this:**
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="page.tsx" />
+    <File name="global.css" />
+  </Folder>
+  <Folder name="components">
+    <File name="button.tsx" />
+    <File name="tabs.tsx" />
+    <File name="dialog.tsx" />
+  </Folder>
+    <Folder name="hooks">
+    <File name="hook.ts" />
+    <File name="custom-hook.ts" />
+  </Folder>
+  <File name="package.json" />
+</Files>
+ </Step>
+<Step>
+**Copy and paste the following code into your project.**
+
+```ts tab="Manual"
+import { useCallback, useState } from 'react';
+
+export interface UseToggleOptions<Truthy, Falsy> {
+  truthyValue?: Truthy;
+  falsyValue?: Falsy;
+}
+
+export function useToggle<Truthy = true, Falsy = false>(
+  initialValue: Truthy | Falsy = false as Falsy,
+  options: UseToggleOptions<Truthy, Falsy> = {},
+): [Truthy | Falsy, (value?: Truthy | Falsy) => void] {
+  const { truthyValue = true as Truthy, falsyValue = false as Falsy } = options;
+  const [state, setState] = useState<Truthy | Falsy>(initialValue);
+
+  const toggle = useCallback(
+    (value?: Truthy | Falsy) => {
+      if (value !== undefined) {
+        setState(value);
+      } else {
+        setState((prevState) =>
+          prevState === truthyValue ? falsyValue : truthyValue,
+        );
+      }
+    },
+    [truthyValue, falsyValue],
+  );
+
+  return [state, toggle];
+}
+```
+
+</Step>
+<Step>
+**Update the import paths to match your project setup if needed.**
+</Step>
+</Steps></Tab>
+  </Tabs>
+
+## Usage
+
+```tsx
+import { useToggle } from '#';
+
+const Component = () => {
+  const [isActive, toggleActive] = useToggle();
+
+  return (
+    <div>
+      <button onClick={toggleActive}>{isActive ? 'ON' : 'OFF'}</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Reference
+
+## useToggle
+
+`useToggle` is a hook that provides a way to toggle between two values, typically representing "true" or "false".
+
+<TypeTable
+  type={{
+    initialValue: {
+      description: 'The initial value of the toggle.',
+      type: 'Truthy | Falsy',
+      default: 'false as Falsy',
+    },
+    options: {
+      description: 'Options to customize the truthy and falsy values.',
+      type: 'UseToggleOptions<Truthy, Falsy>',
+      default: '{}',
+    },
+  }}
+/>
+
+### UseToggleOptions
+
+An interface defining optional configuration for the toggle:
+
+<TypeTable
+  type={{
+    truthyValue: {
+      description: 'The value representing the "truthy" state.',
+      type: 'Truthy',
+      default: 'true as Truthy',
+    },
+    falsyValue: {
+      description: 'The value representing the "falsy" state.',
+      type: 'Falsy',
+      default: 'false as Falsy',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a tuple with the following elements:
+
+<TypeTable
+  type={{
+    state: {
+      description: 'The current state of the toggle.',
+      type: 'Truthy | Falsy',
+    },
+    toggle: {
+      description:
+        'A function to toggle the value between the truthy and falsy states.',
+      type: '(value?: Truthy | Falsy) => void',
+    },
+  }}
+/>
+
+import UseToggleDemo from '../../../hooks/Utilities/useToggle/use-toggle.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

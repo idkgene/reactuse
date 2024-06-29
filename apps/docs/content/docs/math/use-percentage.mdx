@@ -1,0 +1,98 @@
+---
+title: usePercentage
+description: Percentage calculations
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add usePercentage
+```
+
+## Usage
+
+```tsx
+import { usePercentage } from '#';
+
+const Component = () => {
+  const { value, setPercentage, getAbsolute } = usePercentage({
+    initialValue: 25,
+    total: 1000,
+  });
+
+  return (
+    <div>
+      <p>Percentage: {value}%</p>
+      <p>Absolute Value: {getAbsolute()}</p>
+      <button onClick={() => setPercentage(50)}>Set to 50%</button>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### usePercentage
+
+`usePercentage` is a hook that provides functionality for managing percentage values.
+
+<TypeTable
+  type={{
+    options: {
+      description: 'Configuration object for the percentage behavior.',
+      type: 'UsePercentageOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### UsePercentageOptions
+
+An interface defining optional configuration for the percentage calculations:
+
+<TypeTable
+  type={{
+    initialValue: {
+      description: 'The initial percentage value.',
+      type: 'number',
+      default: '0',
+    },
+    total: {
+      description: 'The total value that 100% represents.',
+      type: 'number',
+      default: '100',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UsePercentageReturn` object with the following properties:
+
+<TypeTable
+  type={{
+    value: {
+      description: 'The current percentage value.',
+      type: 'number',
+    },
+    setPercentage: {
+      description: 'Function to set a new percentage value.',
+      type: '(newValue: number) => void',
+    },
+    getAbsolute: {
+      description:
+        'Function to get the absolute value based on the current percentage and total.',
+      type: '() => number',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

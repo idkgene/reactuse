@@ -1,0 +1,105 @@
+---
+title: useClipboard
+description: Manage clipobard operations such as copying, cutting, and pasting text
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Some Code</Tab>
+  <Tab value="Code">Some Code</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useClipboard
+```
+
+## Usage
+
+```tsx
+import { useCopyToClipboard } from '#';
+
+const Component = () => {
+  const { copiedValue, copy, cut, paste } = useCopyToClipboard();
+
+  return (
+    <div>
+      <button onClick={() => copy('Hello, World!')}>Copy Text</button>
+      <button onClick={() => cut('Cut me')}>Cut Text</button>
+      <button onClick={async () => console.log(await paste())}>Paste</button>
+      {copiedValue && <p>Last copied/cut value: {copiedValue}</p>}
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useCopyToClipboard
+
+`useCopyToClipboard` is a hook for managing clipboard operations such as copying, cutting, and pasting text.
+
+<TypeTable
+  type={{
+    options: {
+      description: 'Configuration options for the clipboard operations.',
+      type: 'UseCopyToClipboardOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### UseCopyToClipboardOptions
+
+An interface defining optional configuration for clipboard operations:
+
+<TypeTable
+  type={{
+    initialValue: {
+      description: 'The initial value to be set for the copied text.',
+      type: 'string | null',
+      default: 'null',
+    },
+    copyFn: {
+      description: 'A custom function to handle the copy operation.',
+      type: '(text: string) => Promise',
+      default: 'undefined',
+    },
+    legacy: {
+      description:
+        'Whether to use the legacy method for copying text if the Clipboard API is not available.',
+      type: 'boolean',
+      default: 'false',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UseCopyToClipboardOptions` object with the following properties:
+
+<TypeTable
+  type={{
+    copiedValue: {
+      description: 'The current copied or cut value.',
+      type: 'string | null',
+    },
+    copy: {
+      description: 'Function to copy text to clipboard.',
+      type: '(text: string) => Promise',
+    },
+    cut: {
+      description: 'Function to cut text to clipboard.',
+      type: '(text: string) => Promise',
+    },
+    paste: {
+      description: 'Function to paste text from clipboard.',
+      type: '() => Promise<string | null>',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

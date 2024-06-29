@@ -1,0 +1,62 @@
+---
+title: useSupported
+description: Collection of useful React hooks and utilitie.
+---
+
+`useSupported` is a hook that checks if a feature or capability is supported using a callback function.
+
+## Usage
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Demo itself</Tab>
+  <Tab value="Code">```tsx // demo code ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useSupported
+```
+
+```tsx
+import { useSupported } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const isGeolocationSupported = useSupported(() => 'geolocation' in navigator);
+
+  return (
+    <div>
+      <p>Geolocation Supported: {isGeolocationSupported ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare function useSupported(callback: SupportCheckCallback): boolean;
+
+export declare type SupportCheckCallback = () => boolean;
+```
+
+## Reference
+
+#### useSupported
+
+<TypeTable
+  type={{
+    callback: {
+      description: 'A function that checks for feature or capability support.',
+      type: '() => boolean',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

@@ -1,0 +1,77 @@
+---
+title: useDestructable
+description: Collection of useful React hooks and utilities.
+---
+
+`useDestructable` is a hook that combines an object and an array into a destructable object, allowing both structured and array destructuring.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Demo itself</Tab>
+  <Tab value="Code">```tsx // demo code ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useDestructable
+```
+
+## Usage
+
+```tsx
+import { useDestructible } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [title, content, { author, date }] = useDestructible(
+    { author: 'John Doe', date: '2023-06-10' },
+    ['My Blog Post', 'Lorem ipsum dolor sit amet...'],
+  );
+
+  return (
+    <div>
+      <h1>{title}</h1>
+      <p>{content}</p>
+      <p>Author: {author}</p>
+      <p>Date: {date}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```ts
+export declare function useDestructible<
+  T extends Record<string, unknown>,
+  A extends readonly any[],
+>(obj: T, arr: A): MakeDestructibleResult<T, A>;
+
+export declare type MakeDestructibleResult<T, A extends readonly any[]> = T & {
+  [K in keyof A]: A[K];
+};
+```
+
+## Reference
+
+<TypeTable
+  type={{
+    obj: {
+      description:
+        'The object whose properties will be included in the destructible result.',
+      type: 'T',
+    },
+    arr: {
+      description:
+        'The array whose elements will be included in the destructible result.',
+      type: 'A',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

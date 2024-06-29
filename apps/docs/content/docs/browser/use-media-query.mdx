@@ -1,0 +1,57 @@
+---
+title: useMediaQuery
+description: React hook to detect if a media query matches the current environment
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Some Code</Tab>
+  <Tab value="Code">Some Code</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useMediaQuery
+```
+
+## Usage
+
+```tsx
+import { useMediaQuery } from '#';
+
+const Component = () => {
+  const isWideScreen = useMediaQuery('(min-width: 1200px)');
+
+  return (
+    <div>{isWideScreen ? <WideScreenLayout /> : <NarrowScreenLayout />}</div>
+  );
+};
+```
+
+## Reference
+
+### useMediaQuery
+
+`useMediaQuery` is a hook that detects if a media query matches the current environment.
+
+<TypeTable
+  type={{
+    queryString: {
+      description: 'The media query string to evaluate.',
+      type: 'string',
+    },
+  }}
+/>
+
+## Return Value
+
+Returns a `boolean | undefined` value:
+
+- `true` if the media query matches
+- `false` if the media query doesn't match
+- `undefined` if the match status is not yet determined (e.g., during server-side rendering)
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

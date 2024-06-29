@@ -1,0 +1,53 @@
+---
+title: useMouseWheel
+description: Track the mouse wheel scroll amout and direction
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Some Code</Tab>
+  <Tab value="Code">Some Code</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useMouseWheel
+```
+
+## Usage
+
+```tsx
+import { useMouseWheel } from '#';
+
+const Component = () => {
+  const deltaY = useMouseWheel();
+
+  return (
+    <div>
+      <p>
+        Scroll Direction: {deltaY > 0 ? 'Down' : deltaY < 0 ? 'Up' : 'None'}
+      </p>
+      <p>Scroll Amount: {Math.abs(deltaY)}</p>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useMouseWheel
+
+`useMouseWheel` is a hook that listens for 'wheel' events on the window object to capture the vertical scroll amount (deltaY) when the user scrolls using the mouse wheel.
+
+### Return Value
+
+Returns a number representing the deltaY scroll amount:
+
+<TypeTable
+  type={{
+    deltaY: {
+      description: 'The vertical scroll amount from the mouse wheel event.',
+      type: 'number',
+    },
+  }}
+/>

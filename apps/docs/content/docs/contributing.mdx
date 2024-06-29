@@ -1,0 +1,88 @@
+---
+title: Contributing
+description: Contributing to ReactUse
+---
+
+Thank you for your interest in our project! We welcome any input and strive to make the process of making changes as simple and straightforward as possible. This web page contains information on how you can participate in the development.
+
+1. Setting up the environment
+2. Project structure
+3. Workflow
+4. Opeaning an Issue
+5. Sending Pull Requests
+6. Code Style
+7. Testing
+8. Documentation
+
+## Settin up the environment
+
+1. Make sure you have Node.js installed (the recommended version is listed in `.nvmrc`).
+2. Clone the repository: `git clone url`
+3. Go to the project directory: `cd your-project`
+4. Install dependencies: `pnpm install`
+5. Run the project:
+
+## Project Structure
+
+Our project uses Turborepo to manage a monorepository. Here is a brief overview of the structure:
+
+```
+├── apps/
+│   └── docs/
+├── packages/
+│   └── folder/
+```
+
+Describe the structure of the project here.
+
+## Workflow
+
+1. Create a new branch for your task: `git checkout -b feature/your-feature-name`
+2. Make the necessary changes
+3. Make sure all tests pass: `pnpm test`
+4. Commit the changes: `git commit -am 'Add some feature'`
+5. Send changes to your fork: `git push origin feature/your-feature-name`
+6. Create a Pull Request
+
+## Opening an Issue
+
+If you find a bug or have a suggestion for improvement, please create an issue. Make sure that a similar issue has not already been described and provide as much detail as possible:
+
+## Sending Pull Requests
+
+1. Make sure your code matches the project's code style
+2. Add tests for new functionality
+3. Update documentation as needed
+4. Make sure all CI checks pass
+
+## Code Style
+
+We use ESLint and Prettier to maintain a consistent code style throughout the project. Make sure your code follows the rules before submitting a PR:
+
+1. Run lint:
+2. Fix errors automatically:
+3. Format the code:
+
+## Testing
+
+We use Vitest for unit testing. Before submitting a PR, make sure all existing tests pass and add new tests for your functionality.
+
+Running Tests:
+
+1. Run tests: `pnpm test`
+
+## Documentation
+
+Good documentation is critical to our project. If you add new functionality or modify existing functionality, please update the relevant documentation:
+
+1. README.md files in the project directories
+2. README.md for each hook
+3. JSDoc comments for functions and hooks
+4. User manuals in apps/docs
+
+<Callout type="error">
+  This page is a work in progress. We're still working on the best way to
+  document how to contribute to this project.
+</Callout>
+
+import { Callout } from 'fumadocs-ui/components/callout';

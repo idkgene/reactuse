@@ -1,0 +1,104 @@
+---
+title: useObjectUrl
+description: A hook that creates and manages object URLs for File, Blob, or MediaSource objects.
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Demo itself</Tab>
+  <Tab value="Code">```tsx // demo code ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useObjectUrl
+```
+
+## Usage
+
+```tsx
+import { useObjectUrl } from '#';
+import * as React from 'react';
+
+const Component = () => {
+const [file, setFile] = React.useState<File | null>(null);
+const objectUrl = useObjectUrl(file);
+
+const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const selectedFile = event.target.files?.[0] || null;
+setFile(selectedFile);
+};
+
+return (
+
+<div>
+  <input type="file" onChange={handleFileChange} />
+  {objectUrl && <img src={objectUrl} alt="Selected file preview" />}
+</div>
+); };
+
+export default Component;
+```
+
+## Reference
+
+### useObjectUrl
+
+`useObjectUrl` is a hook that creates and manages object URLs for File, Blob, or MediaSource objects.
+
+<TypeTable
+  type={{
+    object: {
+      description:
+        'The object to create a URL for, or a function that returns such an object.',
+      type: 'ObjectType | (() => ObjectType)',
+    },
+  }}
+/>
+
+### ObjectType
+
+A type representing the possible objects that can be used to create a URL:
+
+<TypeTable
+  type={{
+    File: {
+      description: 'A file object.',
+      type: 'File',
+    },
+    Blob: {
+      description: 'A blob object.',
+      type: 'Blob',
+    },
+    MediaSource: {
+      description: 'A media source object.',
+      type: 'MediaSource',
+    },
+    null: {
+      description: 'Null value.',
+      type: 'null',
+    },
+    undefined: {
+      description: 'Undefined value.',
+      type: 'undefined',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a string representing the created object URL, or undefined if no object is provided.
+
+<TypeTable
+  type={{
+    returnValue: {
+      description: 'The created object URL or undefined.',
+      type: 'string | undefined',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

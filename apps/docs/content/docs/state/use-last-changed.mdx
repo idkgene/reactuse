@@ -1,0 +1,192 @@
+---
+title: useLastChanged
+description: Collection of useful React hooks and utilities.
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <UseLastChangedDemo />
+  </Tab>
+  ```tsx tab="Code"
+export default function UseLastChangedDemo() {
+  const [source, setSource] = useState('Initial value');
+  const lastChanged = useLastChanged(source);
+
+  return (
+    <div>
+      <p>Source: {source}</p>
+      <p>
+        Last changed:{' '}
+        {lastChanged.current
+          ? new Date(lastChanged.current).toLocaleString()
+          : 'Never'}
+      </p>
+      <input value={source} onChange={(e) => setSource(e.target.value)} />
+    </div>
+  );
+}
+```
+</Tabs>
+
+## Installation
+
+<Tabs items={['CLI', 'Manual']}>
+```bash tab="CLI"
+npx changeelog/reactuse@latest add useLastChangeed
+```
+
+  <Tab value="Manual">
+<Steps>
+<Step>
+**If not already created, create a folder for hooks in your project. Your structure could look like this:**
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="page.tsx" />
+    <File name="global.css" />
+  </Folder>
+  <Folder name="components">
+    <File name="button.tsx" />
+    <File name="tabs.tsx" />
+    <File name="dialog.tsx" />
+  </Folder>
+    <Folder name="hooks">
+    <File name="hook.ts" />
+    <File name="custom-hook.ts" />
+  </Folder>
+  <File name="package.json" />
+</Files>
+ </Step>
+<Step>
+**Copy and paste the following code into your project.**
+
+```ts tab="Manual"
+import { useRef, useEffect } from 'react';
+
+import type { MutableRefObject } from 'react';
+
+interface UseLastChangedOptions<T> {
+  initialValue?: number | null;
+  equalityFn?: (prev: T, next: T) => boolean;
+}
+
+export function useLastChanged<T>(
+  source: T,
+  options: UseLastChangedOptions<T> = {},
+): MutableRefObject<number | null> {
+  const { initialValue = null, equalityFn } = options;
+  const lastChanged = useRef<number | null>(initialValue);
+  const prevSource = useRef<T>(source);
+
+  useEffect(() => {
+    const isEqual = equalityFn
+      ? equalityFn(prevSource.current, source)
+      : prevSource.current === source;
+
+    if (!isEqual) {
+      lastChanged.current = Date.now();
+      prevSource.current = source;
+    }
+  }, [source, equalityFn]);
+
+  return lastChanged;
+}
+```
+
+</Step>
+<Step>
+**Update the import paths to match your project setup if needed.**
+</Step>
+</Steps></Tab>
+  </Tabs>
+
+## Usage
+
+```tsx
+import { useLastChanged } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value, setValue] = React.useState(0);
+  const lastChanged = useLastChanged(value);
+
+  return (
+    <div>
+      <p>Last changed: {lastChanged.current}</p>
+      <button onClick={() => setValue((prev) => prev + 1)}>Increment</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Reference
+
+### useLastChanged
+
+`useLastChanged` is a custom hook that returns a mutable ref containing the timestamp of the last change of the provided source value.
+
+<TypeTable
+  type={{
+    source: {
+      description: 'The source value to monitor for changes.',
+      type: 'T',
+    },
+    options: {
+      description: 'Optional configuration options.',
+      type: 'UseLastChangedOptions<T>',
+      default: '{}',
+    },
+  }}
+/>
+
+### UseLastChangedOptions
+
+An interface defining optional configuration for the hook:
+
+<TypeTable
+  type={{
+    initialValue: {
+      description: 'The initial timestamp value or `null`.',
+      type: 'number | null',
+      default: 'null',
+    },
+    equalityFn: {
+      description: 'Custom equality function to compare values.',
+      type: '(prev: T, next: T) => boolean',
+      default: 'undefined',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `MutableRefObject` with the following property:
+
+<TypeTable
+  type={{
+    current: {
+      description: 'The timestamp of the last change or null.',
+      type: 'number | null',
+    },
+  }}
+/>
+
+### Generic Type
+
+<TypeTable
+  type={{
+    T: {
+      description: 'The type of the source value being monitored.',
+      type: 'any',
+    },
+  }}
+/>
+
+import UseLastChangedDemo from '../../../hooks/State/useLastChanged/use-last-changed.demo'
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

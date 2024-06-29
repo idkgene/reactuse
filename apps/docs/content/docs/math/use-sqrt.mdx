@@ -1,0 +1,94 @@
+---
+title: useSqrt
+description: Square root calculations
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useSqrt
+```
+
+## Usage
+
+```tsx
+import { useSqrt } from '#';
+
+const Component = () => {
+  const { value, setValue, calculate } = useSqrt({ initialValue: 25 });
+  const result = calculate();
+
+  return (
+    <div>
+      <p>Value: {value}</p>
+      <p>Square Root: {result !== null ? result : 'Error'}</p>
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => setValue(Number(e.target.value))}
+      />
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useSqrt
+
+`useSqrt` is a hook that provides functionality for square root calculations.
+
+<TypeTable
+type={{
+options: {
+description: 'Configuration object for the square root behavior.',
+type: 'UseSqrtOptions',
+default: '{}',
+},
+}}
+/>
+
+### UseSqrtOptions
+
+An interface defining optional configuration for the square root calculations:
+
+<TypeTable
+type={{
+initialValue: {
+description: 'The initial value for square root calculation.',
+type: 'number',
+default: '0',
+},
+}}
+/>
+
+### Return Value
+
+Returns a `UseSqrtReturn` object with the following properties:
+
+<TypeTable
+type={{
+value: {
+description: 'The current value for square root calculation.',
+type: 'number',
+},
+setValue: {
+description: 'Function to set the value for square root calculation.',
+type: 'React.Dispatch<React.SetStateAction>',
+},
+calculate: {
+description: 'Function to calculate the square root of the current value.',
+type: '() => number | null',
+},
+}}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

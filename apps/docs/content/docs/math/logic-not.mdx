@@ -1,0 +1,80 @@
+---
+title: logicNot
+description: Your first document
+---
+
+The `logicNot` function (also available as `not` for convenience) performs a logical NOT operation on a provided value or function. It returns the opposite boolean value of the resolved input. The
+
+## Usage
+
+```tsx
+import { logicNot } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const value = true;
+
+  const result = logicNot(value);
+
+  return (
+    <div>
+      <p>Logical NOT result: {result.toString()}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { logicNot } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const [value, setValue] = React.useState(false);
+
+  const result = logicNot(() => value);
+
+  return (
+    <div>
+      <p>Logical NOT result: {result.toString()}</p>
+      <button onClick={() => setValue(true)}>Set value to true</button>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```typescript
+export declare function logicNot(v: Resolvable<any>): boolean;
+
+export declare type Resolvable<T> = T | (() => T);
+```
+
+## API Details
+
+#### logicNot
+
+| Property | Type              | Default | Description                                   |
+| -------- | ----------------- | ------- | --------------------------------------------- |
+| `v`      | `Resolvable<any>` | -       | The value or a function that returns a value. |
+
+#### Resolvable
+
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
+
+### Returns
+
+| Type      | Description                                 |
+| :-------- | :------------------------------------------ |
+| `boolean` | The logical negation of the provided value. |
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

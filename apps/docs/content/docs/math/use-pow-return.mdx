@@ -1,0 +1,111 @@
+---
+title: usePow
+description: Exponentiation calculations
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add usePow
+```
+
+## Usage
+
+```tsx
+import { usePow } from '#';
+
+const Component = () => {
+  const { base, setBase, exponent, setExponent, calculate } = usePow({
+    initialBase: 2,
+    initialExponent: 3,
+  });
+  const result = calculate();
+
+  return (
+    <div>
+      <p>Base: {base}</p>
+      <p>Exponent: {exponent}</p>
+      <p>Result: {result !== null ? result : 'Error'}</p>
+      <button onClick={() => setBase(base + 1)}>Increase Base</button>
+      <button onClick={() => setExponent(exponent + 1)}>
+        Increase Exponent
+      </button>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### usePow
+
+`usePow` is a hook that provides functionality for exponentiation calculations.
+
+<TypeTable
+  type={{
+    options: {
+      description: 'Configuration object for the exponentiation behavior.',
+      type: 'UsePowOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### UsePowOptions
+
+An interface defining optional configuration for the exponentiation calculations:
+
+<TypeTable
+  type={{
+    initialBase: {
+      description: 'The initial base value.',
+      type: 'number',
+      default: '0',
+    },
+    initialExponent: {
+      description: 'The initial exponent value.',
+      type: 'number',
+      default: '1',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UsePowReturn` object with the following properties:
+
+<TypeTable
+  type={{
+    base: {
+      description: 'The current base value.',
+      type: 'number',
+    },
+    setBase: {
+      description: 'Function to set the base value.',
+      type: 'React.Dispatch<React.SetStateAction>',
+    },
+    exponent: {
+      description: 'The current exponent value.',
+      type: 'number',
+    },
+    setExponent: {
+      description: 'Function to set the exponent value.',
+      type: 'React.Dispatch<React.SetStateAction>',
+    },
+    calculate: {
+      description:
+        'Function to calculate the result of base raised to the power of exponent.',
+      type: '() => number | null',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

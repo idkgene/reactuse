@@ -1,0 +1,81 @@
+---
+title: useMax
+description: Your first document
+---
+
+`useMax` is a hook that returns the maximum value from the given arguments or an array of values.
+
+## Usage
+
+```tsx
+import { useMax } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const value1 = 5;
+  const value2 = 10;
+  const value3 = 3;
+
+  const maxValue = useMax(value1, value2, value3);
+
+  return (
+    <div>
+      <p>Maximum value: {maxValue}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+```tsx
+import { useMax } from '#';
+import * as React from 'react';
+
+const Component = () => {
+  const values = [8, 2, 6, 4];
+
+  const maxValueFromArray = useMax(values);
+
+  return (
+    <div>
+      <p>Maximum value from array: {maxValueFromArray}</p>
+    </div>
+  );
+};
+
+export default Component;
+```
+
+## Type Declarations
+
+```typescript
+export declare function useMax(...args: any[]): number;
+
+export declare type Resolvable<T> = T | (() => T);
+```
+
+## Reference
+
+#### useMax
+
+| Property | Type    | Default | Description                                |
+| -------- | ------- | ------- | ------------------------------------------ |
+| `args`   | `any[]` | -       | The values or arrays of values to compare. |
+
+#### Resolvable
+
+| Property | Type               | Description                                            |
+| :------- | :----------------- | ------------------------------------------------------ |
+| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
+
+### Returns
+
+| Type     | Description                                                                                                                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `number` | The maximum value from the given arguments or array of values. If any of the provided values or functions are functions, they are called and their return values are evaluated. |
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

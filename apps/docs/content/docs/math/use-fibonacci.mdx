@@ -1,0 +1,74 @@
+---
+title: useFibonacci
+description: Fibonacci sequences
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useFibonacci
+```
+
+## Usage
+
+```tsx
+import { useFibonacci } from '#';
+
+const Component = () => {
+  const { sequence, generate } = useFibonacci();
+
+  useEffect(() => {
+    generate(10);
+  }, [generate]);
+
+  return (
+    <div>
+      <p>Fibonacci Sequence: {sequence.join(', ')}</p>
+      <button onClick={() => generate(15)}>Generate 15 Numbers</button>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useFibonacci
+
+`useFibonacci` is a hook that provides functionality for generating Fibonacci sequences.
+
+<TypeTable
+  type={{
+    returns: {
+      description:
+        'An object containing the current sequence and a generate function.',
+      type: 'UseFibonacciReturn',
+    },
+  }}
+/>
+
+### UseFibonacciReturn
+
+An interface defining the return value of the `useFibonacci` hook:
+
+<TypeTable
+  type={{
+    sequence: {
+      description: 'The current Fibonacci sequence.',
+      type: 'number[]',
+    },
+    generate: {
+      description: 'Function to generate a new Fibonacci sequence.',
+      type: '(n: number) => number[] | null',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

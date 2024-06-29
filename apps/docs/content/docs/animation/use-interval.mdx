@@ -1,0 +1,132 @@
+---
+title: useInterval
+description: Counter increases on every interval
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <IntervalDemo />
+  </Tab>
+  <Tab value="Code">
+  ```tsx
+export default function IntervalDemo() {
+  
+  const { counter, reset, pause, resume } = useInterval(1000, {
+    immediate: true,
+  });
+
+return (
+
+<div>
+  <div>Interval Fired: {counter}</div>
+  <div>
+    <button onClick={reset}>Reset</button>
+    <button onClick={pause}>Pause</button>
+    <button onClick={resume}>Resume</button>
+  </div>
+</div>
+); }
+
+````
+</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useInterval
+````
+
+## Usage
+
+```tsx
+import { useInterval } from '#';
+
+const Component = () => {
+  const { counter, reset, pause, resume } = useInterval(500, {
+    immediate: false,
+    callback: (count) => {
+      console.log(`Interval count: ${count}`);
+    },
+  });
+
+  return (
+    <div>
+      <p>Counter: {counter}</p>
+      <button onClick={reset}>Reset</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useInterval
+
+`useInterval` is a hook that creates an interval timer and returns controls for managing it.
+
+<TypeTable
+  type={{
+    interval: {
+      description: 'The interval in milliseconds.',
+      type: 'number',
+    },
+    options: {
+      description: 'Configuration object for the interval behavior.',
+      type: 'UseIntervalOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### UseIntervalOptions
+
+An interface defining optional configuration for the interval:
+
+<TypeTable
+  type={{
+    immediate: {
+      description: 'Determines whether the interval starts immediately.',
+      type: 'boolean',
+      default: 'true',
+    },
+    callback: {
+      description: 'Optional callback function to be invoked at each interval.',
+      type: '(count: number) => void',
+      default: '{}',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UseIntervalControls` object with the following properties:
+
+<TypeTable
+  type={{
+    counter: {
+      description: 'The current count of intervals that have elapsed.',
+      type: 'number',
+    },
+    reset: {
+      description: 'Function to reset the interval counter to 0.',
+      type: '(count: number) => void',
+    },
+    pause: {
+      description: 'Function to pause the interval.',
+      type: '(count: number) => void',
+    },
+    resume: {
+      description: 'Function to resume the interval.',
+      type: '(count: number) => void',
+    },
+  }}
+/>
+
+import IntervalDemo from '../../../hooks/Animation/useInterval/use-interval.demo';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

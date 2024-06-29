@@ -1,0 +1,77 @@
+---
+title: useInterpolation
+description: Linear interpolation between numbers
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Preview</Tab>
+  <Tab value="Code">```tsx ```</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useInterpolation
+```
+
+## Usage
+
+```tsx
+import { useInterpolation } from '#';
+
+const Component = () => {
+  const interpolate = useInterpolation();
+  const result = interpolate(0, 100, 0.5);
+
+  return (
+    <div>
+      <p>Interpolated value: {result}</p>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useInterpolation
+
+`useInterpolation` is a hook that returns a memoized function for performing linear interpolation between two numbers.
+
+<TypeTable
+  type={{
+    returns: {
+      description: 'A function that performs linear interpolation.',
+      type: 'InterpolationFunction',
+    },
+  }}
+/>
+
+### InterpolationFunction
+
+The type of the function returned by `useInterpolation`:
+
+<TypeTable
+  type={{
+    start: {
+      description: 'The starting value of the interpolation.',
+      type: 'number',
+    },
+    end: {
+      description: 'The ending value of the interpolation.',
+      type: 'number',
+    },
+    amount: {
+      description: 'The interpolation factor (typically between 0 and 1).',
+      type: 'number',
+    },
+    returns: {
+      description: 'The interpolated value.',
+      type: 'number',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';

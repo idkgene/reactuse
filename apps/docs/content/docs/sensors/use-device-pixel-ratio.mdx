@@ -1,0 +1,74 @@
+---
+title: useDevicePixelRatio
+description: Get and track the device pixel ratio
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">Some Code</Tab>
+  <Tab value="Code">Some Code</Tab>
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useDevicePixelRatio
+```
+
+## Usage
+
+```tsx
+import { useDevicePixelRatio } from '#';
+
+const Component = () => {
+  const { pixelRatio } = useDevicePixelRatio();
+
+  return (
+    <div>
+      <p>Device Pixel Ratio: {pixelRatio}</p>
+    </div>
+  );
+};
+```
+
+## Reference
+
+### useDevicePixelRatio
+
+`useDevicePixelRatio` is a hook that returns the current device pixel ratio and updates when it changes. 
+
+<TypeTable
+type={{
+options: {
+description: 'Configuration object for the hook.',
+type: 'UseDevicePixelRatioOptions',
+default: '{}',
+},
+}}
+/>
+
+### UseDevicePixelRatioOptions
+
+An interface defining optional configuration for the hook:
+
+<TypeTable
+type={{
+window: {
+description: 'The window object to use instead of the default window object.',
+type: 'Window',
+default: 'window',
+},
+}}
+/>
+
+### Return Value
+
+Returns a `UseDevicePixelRatioReturn` object with the following property:
+
+<TypeTable
+type={{
+pixelRatio: {
+description: 'The current device pixel ratio.',
+type: 'number',
+},
+}}
+/>
