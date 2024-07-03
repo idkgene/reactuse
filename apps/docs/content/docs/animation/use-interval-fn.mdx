@@ -3,69 +3,13 @@ title: useIntervalFn
 description: Wrapper for setInterval with controls
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">
-    <IntervalFnDemo />
-  </Tab>
-```tsx tab="Code"
-const greetings = [
-  'Hello',
-  'こんにちは',
-  'Bonjour',
-  'Привет',
-  'Hey',
-  '你好',
-  'Yo!',
-];
-
-export default function IntervalFnDemo(): JSX.Element {
-  const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
-  const [interval, setInterval] = useState(250);
-
-  const { isActive, pause, resume } = useIntervalFn(
-    () => {
-      const randomIndex = Math.floor(Math.random() * greetings.length);
-      setCurrentGreeting(greetings[randomIndex]);
-    },
-    interval,
-    { immediate: false },
-  );
-
-  return (
-    <div className="relative mb-[10px] p-[2em] transition-colors">
-      <div className="py-8 text-base">
-        <div className="my-4">
-          <span>{currentGreeting}</span>
-        </div>
-        <div className="my-4">
-          <label htmlFor="interval">Interval (ms):</label>
-          <Input
-            id="interval"
-            type="number"
-            className="mt-1"
-            value={interval}
-            onChange={(e) => {
-              setInterval(Number(e.target.value));
-            }}
-          />
-        </div>
-        <div className="my-4 flex gap-3">
-          <Button onClick={isActive ? pause : resume}>
-            {isActive ? 'Pause' : 'Resume'}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
-````
-</Tabs>
+<IntervalFnDemo />
 
 ## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useIntervalFn
-````
+```
 
 ## Usage
 
@@ -146,6 +90,3 @@ Returns a `Pausable` object with the following properties:
 
 import IntervalFnDemo from '../../../hooks/Animation/useIntervalFn/use-interval-fn.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
