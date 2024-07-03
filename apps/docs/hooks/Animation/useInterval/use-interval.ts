@@ -4,9 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * Options for configuring the useInterval hook.
  * @param immediate - Whether to start the interval immediately.
  * @param callback - Optional callback function to be invoked on each interval tick.
- * @public
  */
-export interface UseIntervalOptions {
+interface UseIntervalOptions {
   immediate?: boolean;
   callback?: (count: number) => void;
 }
@@ -18,7 +17,7 @@ export interface UseIntervalOptions {
  * @param pause - Function to pause the interval.
  * @param resume - Function to resume the interval.
  */
-export interface UseIntervalControls {
+interface UseIntervalControls {
   counter: number;
   reset: () => void;
   pause: () => void;
@@ -53,7 +52,7 @@ export interface UseIntervalControls {
  *
  * @throws Error - If the provided interval is not a positive number.
  */
-export function useInterval(
+function useInterval(
   interval: number,
   options?: UseIntervalOptions,
 ): UseIntervalControls {
@@ -112,3 +111,6 @@ export function useInterval(
 
   return { counter, reset, pause, resume };
 }
+
+export { useInterval };
+export type { UseIntervalOptions, UseIntervalControls };

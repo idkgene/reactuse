@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
-import useRafFn from './use-raf-fn';
+import { useRafFn } from './use-raf-fn';
+import Demo from '@/components/Common/Demo/demo';
 
-function RafDemo() {
+export default function RafDemo(): JSX.Element {
   const [count, setCount] = useState(0);
   const [delta, setDelta] = useState(0);
 
@@ -17,7 +18,7 @@ function RafDemo() {
   );
 
   return (
-    <div className="relative mb-[10px] p-[2em] transition-colors">
+    <Demo category="Animation" title="useRafFn">
       <p>
         <strong>Frames: </strong>
         {count}
@@ -32,8 +33,6 @@ function RafDemo() {
         <Button onClick={pause}>Pause</Button>
         <Button onClick={resume}>Resume</Button>
       </div>
-    </div>
+    </Demo>
   );
 }
-
-export default RafDemo;

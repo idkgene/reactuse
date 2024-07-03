@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import { useNow } from './use-now';
+import Demo from '@/components/Common/Demo/demo';
 
-function NowDemo() {
+export default function NowDemo(): JSX.Element {
   const { now, pause, resume } = useNow({ controls: true, interval: 1000 });
   const [isClient, setIsClient] = useState(false);
 
@@ -13,7 +14,7 @@ function NowDemo() {
   }, []);
 
   return (
-    <div className="relative mb-[10px] p-[2em] transition-colors">
+    <Demo category="Animation" title="useNow">
       <div className="flex items-center justify-center space-x-4">
         {isClient ? (
           <span className="text-2xl">{now.toLocaleTimeString()}</span>
@@ -23,8 +24,6 @@ function NowDemo() {
         <Button onClick={pause}>Pause</Button>
         <Button onClick={resume}>Resume</Button>
       </div>
-    </div>
+    </Demo>
   );
 }
-
-export default NowDemo;

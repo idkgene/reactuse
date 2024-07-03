@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { useIntervalFn } from './use-interval-fn';
+import Demo from '@/components/Common/Demo/demo';
 
 const greetings = [
   'Hello',
@@ -29,8 +30,8 @@ export default function IntervalFnDemo(): JSX.Element {
   );
 
   return (
-    <div className="relative mb-[10px] p-[2em] transition-colors">
-      <div className="py-8 text-base">
+    <Demo category="Animation" title="useIntervalFn">
+      <div>
         <div className="my-4">
           <span>{currentGreeting}</span>
         </div>
@@ -52,6 +53,6 @@ export default function IntervalFnDemo(): JSX.Element {
           </Button>
         </div>
       </div>
-    </div>
+    </Demo>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useTimestamp } from './use-timestamp';
+import Demo from '@/components/Common/Demo/demo';
+import { Button } from '@/components/Common/Button/button';
 
 function TimestampDemo(): JSX.Element {
   const { pause, resume } = useTimestamp({
@@ -9,9 +11,6 @@ function TimestampDemo(): JSX.Element {
     offset: 0,
     immediate: true,
     interval: 1,
-    callback: (ts) => {
-      console.log('Timestamp:', ts);
-    },
   });
 
   const [timestamp, setTimestamp] = useState(0);
@@ -27,16 +26,17 @@ function TimestampDemo(): JSX.Element {
   }, []);
 
   return (
-    <div>
-      <h1>useTimestamp Demo</h1>
-      <p>Current Timestamp: {timestamp}</p>
-      <button type="button" onClick={pause}>
-        Pause
-      </button>
-      <button type="button" onClick={resume}>
-        Resume
-      </button>
-    </div>
+    <Demo category="Animation" title="useTimestamp">
+      <p className="text-sm font-semibold">Current Timestamp: {timestamp}</p>
+      <div className="flex gap-2">
+        <Button type="button" onClick={pause}>
+          Pause
+        </Button>
+        <Button type="button" onClick={resume}>
+          Resume
+        </Button>
+      </div>
+    </Demo>
   );
 }
 

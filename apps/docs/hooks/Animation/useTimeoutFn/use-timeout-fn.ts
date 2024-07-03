@@ -4,22 +4,25 @@ interface UseTimeoutFnOptions {
   immediate?: boolean;
 }
 
-interface UseTimeoutFnReturn<T extends (...args: any[]) => any> {
+type TimeoutCallback<T extends unknown[]> = (...args: T) => void;
+
+interface UseTimeoutFnReturn<T extends unknown[]> {
   isPending: boolean;
-  start: (...args: Parameters<T>) => void;
+  start: (...args: T) => void;
   stop: () => void;
 }
 
-function useTimeoutFn<T extends (...args: any[]) => any>(
-  callback: T,
+function useTimeoutFn<T extends unknown[]>(
+  callback: TimeoutCallback<T>,
   interval: number | (() => number),
   options: UseTimeoutFnOptions = {},
 ): UseTimeoutFnReturn<T> {
   const { immediate = true } = options;
+
   const [isPending, setIsPending] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const callbackRef = useRef<T>(callback);
-  const argsRef = useRef<Parameters<T>>();
+  const callbackRef = useRef<TimeoutCallback<T>>(callback);
+  const argsRef = useRef<T | undefined>();
 
   useEffect(() => {
     callbackRef.current = callback;
@@ -34,24 +37,38 @@ function useTimeoutFn<T extends (...args: any[]) => any>(
   }, []);
 
   const start = useCallback(
-    (...args: Parameters<T>) => {
-      argsRef.current = args;
+    (...args: T | []) => {
+      if (typeof interval !== 'number' && typeof interval !== 'function') {
+        throw new Error(
+          'Interval must be a number or a function returning a number',
+        );
+      }
+
+      argsRef.current = args.length ? (args as T) : undefined;
       stop();
       setIsPending(true);
-      timeoutRef.current = setTimeout(
-        () => {
-          setIsPending(false);
-          callbackRef.current(...(argsRef.current!));
-        },
-        typeof interval === 'function' ? interval() : interval,
-      );
+
+      const delay = typeof interval === 'function' ? interval() : interval;
+
+      if (delay < 0) {
+        throw new Error('Interval must be a non-negative number');
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        setIsPending(false);
+        if (argsRef.current) {
+          callbackRef.current(...argsRef.current);
+        } else {
+          callbackRef.current(...([] as unknown as T));
+        }
+      }, delay);
     },
     [interval, stop],
   );
 
   useEffect(() => {
     if (immediate) {
-      start(...([] as unknown as Parameters<T>));
+      start();
     }
     return stop;
   }, [immediate, start, stop]);
@@ -60,3 +77,4 @@ function useTimeoutFn<T extends (...args: any[]) => any>(
 }
 
 export default useTimeoutFn;
+export type { UseTimeoutFnOptions, UseTimeoutFnReturn };

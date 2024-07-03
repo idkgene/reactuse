@@ -3,13 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 /**
  * A type that represents a function that does not return a value.
  */
-export type Fn = () => void;
+type Fn = () => void;
 
 /**
  * A type that represents a function that returns a value.
  * @param T - The type of the value returned by the function.
  */
-export type Resolvable<T> = T | (() => T);
+type Resolvable<T> = T | (() => T);
 
 /**
  * The control functions and counter value returned by the useIntervalFn hook.
@@ -17,7 +17,7 @@ export type Resolvable<T> = T | (() => T);
  * @param pause - Function to pause the interval.
  * @param resume - Function to resume the interval.
  */
-export interface Pausable {
+interface Pausable {
   isActive: boolean;
   pause: () => void;
   resume: () => void;
@@ -28,7 +28,7 @@ export interface Pausable {
  * @param immediate - Whether to start the interval immediately.
  * @param immediateCallback - Whether to execute the callback immediately after calling `resume`.
  */
-export interface UseIntervalFnOptions {
+interface UseIntervalFnOptions {
   immediate?: boolean;
   immediateCallback?: boolean;
 }
@@ -46,7 +46,7 @@ export interface UseIntervalFnOptions {
  * const { isActive, pause, resume } = useIntervalFn(() => console.log('Tick'), 1000, { immediateCallback: true });
  * ```
  */
-export function useIntervalFn(
+function useIntervalFn(
   callback: Fn,
   interval: Resolvable<number> = 1000,
   options?: UseIntervalFnOptions,
@@ -118,3 +118,6 @@ export function useIntervalFn(
 
   return { isActive, pause, resume };
 }
+
+export { useIntervalFn };
+export type { Fn, Resolvable, UseIntervalFnOptions, Pausable };

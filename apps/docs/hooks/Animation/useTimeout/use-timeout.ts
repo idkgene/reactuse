@@ -1,79 +1,69 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-type CallbackFn = () => void;
-
-interface UseTimeoutFnOptions {
-  immediate?: boolean;
+interface UseTimeoutOptions {
+  controls?: boolean;
+  callback?: () => void;
 }
 
-interface UseTimeoutOptions<Controls extends boolean>
-  extends UseTimeoutFnOptions {
-  controls?: Controls;
-  callback?: CallbackFn;
-}
-
-interface Stoppable {
+interface UseTimeoutReturn {
+  ready: boolean;
   start: () => void;
   stop: () => void;
 }
 
-type UseTimeoutReturn<Controls extends boolean> = Controls extends true
-  ? { ready: boolean } & Stoppable
-  : boolean;
-
-export function useTimeout<Controls extends boolean = false>(
+function useTimeout(
   interval: number | (() => number),
-  options?: UseTimeoutOptions<Controls>,
-): UseTimeoutReturn<Controls> {
-  const { immediate = true, controls = false, callback } = options ?? {};
-  const [ready, setReady] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  options: UseTimeoutOptions = {},
+): UseTimeoutReturn {
+  const { controls = false, callback } = options;
 
-  const stop = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    setReady(false);
-  }, []);
+  const [ready, setReady] = useState<boolean>(true);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const callbackRef = useRef<(() => void) | undefined>(callback);
 
   const start = useCallback(() => {
     setReady(false);
-    stop();
-    const delay = typeof interval === 'function' ? interval() : interval;
-    timeoutRef.current = window.setTimeout(() => {
-      setReady(true);
-      callback?.();
-    }, delay);
-  }, [interval, stop, callback]);
-
-  useEffect(() => {
-    if (immediate) {
-      start();
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
     }
 
+    const ms = typeof interval === 'function' ? interval() : interval;
+
+    if (typeof ms !== 'number' || isNaN(ms) || ms < 0) {
+      throw new Error('Invalid interval value');
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setReady(true);
+      if (callbackRef.current) {
+        callbackRef.current();
+      }
+    }, ms);
+  }, [interval]);
+
+  const stop = useCallback(() => {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setReady(true);
+  }, []);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!controls) {
+      start();
+    }
     return () => {
       stop();
     };
-  }, [immediate, start, stop]);
+  }, [controls, start, stop]);
 
-  const controlFunctions = useCallback(
-    () => ({
-      start: () => {
-        stop();
-        start();
-      },
-      stop,
-    }),
-    [start, stop],
-  );
-
-  if (controls) {
-    return {
-      ready,
-      ...controlFunctions(),
-    } as UseTimeoutReturn<Controls>;
-  }
-
-  return ready as UseTimeoutReturn<Controls>;
+  return { ready, start, stop };
 }
+
+export { useTimeout };
+export type { UseTimeoutOptions, UseTimeoutReturn };

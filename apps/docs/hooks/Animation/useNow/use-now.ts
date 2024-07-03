@@ -15,7 +15,7 @@ type UseNowReturn<T extends boolean> = T extends true
   ? UseNowReturnWithControls
   : Date;
 
-export function useNow<T extends boolean = false>(
+function useNow<T extends boolean = false>(
   options?: UseNowOptions & { controls?: T },
 ): UseNowReturn<T> {
   const [now, setNow] = useState(() => new Date());
@@ -68,12 +68,6 @@ export function useNow<T extends boolean = false>(
     return clearTimers;
   }, [isActive, options?.interval, clearTimers]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      console.warn('useNow: This hook requires a browser environment');
-    }
-  }, []);
-
   if (options?.controls) {
     return {
       now,
@@ -84,3 +78,6 @@ export function useNow<T extends boolean = false>(
 
   return now as UseNowReturn<T>;
 }
+
+export { useNow };
+export type { UseNowOptions, UseNowReturnWithControls, UseNowReturn };

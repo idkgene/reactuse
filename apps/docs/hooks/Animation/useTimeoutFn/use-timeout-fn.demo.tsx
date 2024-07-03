@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import useTimeoutFn from './use-timeout-fn';
+import Demo from '@/components/Common/Demo/demo';
 
-const TimeoutFnDemo: React.FC = () => {
-  const [text, setText] = React.useState('Fired');
+function TimeoutFnDemo(): JSX.Element {
+  const [text, setText] = useState('Fired');
 
   const { isPending, start } = useTimeoutFn(
     () => {
@@ -15,19 +16,19 @@ const TimeoutFnDemo: React.FC = () => {
     { immediate: false },
   );
 
-  const handleRestart = () => {
+  const handleRestart = (): void => {
     setText('Please wait 3 seconds');
     start();
   };
 
   return (
-    <div className="relative mb-[10px] p-[2em] transition-colors">
-      <p>{text}</p>
+    <Demo category="Animation" title="useTimeoutFn">
+      <p className="text-sm font-semibold">{text}</p>
       <Button onClick={handleRestart} disabled={isPending}>
         Restart
       </Button>
-    </div>
+    </Demo>
   );
-};
+}
 
 export default TimeoutFnDemo;

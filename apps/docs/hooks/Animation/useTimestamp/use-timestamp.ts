@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-interface UseTimestampOptions<Controls extends boolean> {
+type IntervalType = 'requestAnimationFrame' | number;
+
+interface UseTimestampOptions<Controls extends boolean = false> {
   controls?: Controls;
   offset?: number;
   immediate?: boolean;
-  interval?: 'requestAnimationFrame' | number;
+  interval?: IntervalType;
   callback?: (timestamp: number) => void;
 }
 
@@ -17,14 +19,14 @@ type UseTimestampReturn<Controls extends boolean> = Controls extends true
   ? { timestamp: number } & Pausable
   : number;
 
-export function useTimestamp<Controls extends boolean = false>(
+function useTimestamp<Controls extends boolean = false>(
   options?: UseTimestampOptions<Controls>,
 ): UseTimestampReturn<Controls> {
   const {
-    controls = false,
+    controls = false as Controls,
     offset = 0,
     immediate = true,
-    interval = 'requestAnaimationFrame',
+    interval = 'requestAnimationFrame',
     callback,
   } = options ?? {};
 
@@ -72,17 +74,19 @@ export function useTimestamp<Controls extends boolean = false>(
       };
       animationFrameRef.current = requestAnimationFrame(animate);
     } else {
-      if (typeof interval !== 'number' || interval <= 0) {
+      if (
+        typeof interval !== 'number' ||
+        interval <= 0 ||
+        !Number.isFinite(interval)
+      ) {
         throw new Error(
-          'Invalid interval value. Interval must be a positive number.',
+          'Invalid interval value. Interval must be a positive finite number.',
         );
       }
       intervalRef.current = window.setInterval(tick, interval);
     }
 
-    return () => {
-      pause();
-    };
+    return pause;
   }, [isActive, interval, updateTimestamp, pause]);
 
   useEffect(() => {
@@ -101,3 +105,6 @@ export function useTimestamp<Controls extends boolean = false>(
 
   return timestamp as UseTimestampReturn<Controls>;
 }
+
+export { useTimestamp };
+export type { UseTimestampOptions, UseTimestampReturn };
