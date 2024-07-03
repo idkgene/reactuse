@@ -1,0 +1,259 @@
+---
+title: useWizard
+description: Manage multi-step wizards wit ease
+---
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+    <WizardDemo />
+  </Tab>
+  ```tsx tab="Code"
+  'use client';
+
+const wizardMap: WizardItem[] = [
+{ id: 'step1', nodes: ['step2'] },
+{ id: 'step2', nodes: ['step3', 'step4'] },
+{ id: 'step3', nodes: ['step5'] },
+{ id: 'step4', nodes: ['step5'] },
+{ id: 'step5', nodes: [] },
+];
+
+function WizardDemo(): JSX.Element {
+const wizard = useWizard(wizardMap, { allowCyclicNavigation: true });
+
+const renderStepContent = (): JSX.Element => {
+switch (wizard.currentStepId) {
+case 'step1':
+return <h2>Welcome to Step 1</h2>;
+case 'step2':
+return <h2>You&apos;re now at Step 2</h2>;
+case 'step3':
+return <h2>This is Step 3</h2>;
+case 'step4':
+return <h2>You&apos;ve reached Step 4</h2>;
+case 'step5':
+return <h2>Congratulations! You&apos;re at the final Step 5</h2>;
+default:
+return <h2>Unknown step</h2>;
+}
+};
+
+return (
+<div>
+{renderStepContent()}
+<div>
+<Button
+          type="button"
+          onClick={wizard.back}
+          disabled={!wizard.canGoBack}
+        >
+Back
+</Button>
+<Button
+          type="button"
+          onClick={wizard.forward}
+          disabled={!wizard.canGoForward}
+        >
+Forward
+</Button>
+</div>
+<div>
+<Button
+type="button"
+onClick={() => {
+wizard.set('step1');
+}} >
+Go to Step 1
+</Button>
+<Button
+type="button"
+onClick={() => {
+wizard.set('step2');
+}} >
+Go to Step 2
+</Button>
+<Button
+type="button"
+onClick={() => {
+wizard.set('step3');
+}} >
+Go to Step 3
+</Button>
+<Button
+type="button"
+onClick={() => {
+wizard.set('step4');
+}} >
+Go to Step 4
+</Button>
+<Button
+type="button"
+onClick={() => {
+wizard.set('step5');
+}} >
+Go to Step 5
+</Button>
+<Button type="button" onClick={wizard.reset}>
+Reset
+</Button>
+</div>
+<div>
+<p>
+Current Step: <span>{wizard.currentStepId}</span>
+</p>
+<p>
+History: {wizard.history.join(' -> ')}
+</p>
+</div>
+</div>
+);
+}
+
+export default WizardDemo;
+```
+</Tabs>
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useWizard
+```
+
+## Usage
+
+```ts
+const wizardMap = [
+  { id: 'step1', nodes: ['step2'] },
+  { id: 'step2', nodes: ['step3'] },
+  { id: 'step3', nodes: [] },
+];
+
+const {
+  currentStepId,
+  set,
+  reset,
+  back,
+  forward,
+  canGoBack,
+  canGoForward,
+  history,
+  isFirstStep,
+  isLastStep,
+} = useWizard(wizardMap, {
+  initialStepId: 'step1',
+  allowCyclicNavigation: false,
+});
+```
+
+## Reference
+
+### useWizard
+
+`useWizard` is a hook that manages the state and navigation of a multi-step wizard.
+
+<TypeTable
+  type={{
+    map: {
+      description:
+        'An array of WizardItem objects defining the wizard structure.',
+      type: 'WizardItem[]',
+    },
+    options: {
+      description: 'Configuration options for the wizard.',
+      type: 'UseWizardOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### WizardItem
+
+An interface defining the structure of each step in the wizard:
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Unique identifier for the step.',
+      type: 'string',
+    },
+    nodes: {
+      description: 'Array of step IDs that can be navigated to from this step.',
+      type: 'string[]',
+    },
+  }}
+/>
+
+### UseWizardOptions
+
+An interface defining optional configuration for the wizard:
+
+<TypeTable
+  type={{
+    initialStepId: {
+      description: 'The ID of the initial step in the wizard.',
+      type: 'string',
+    },
+    allowCyclicNavigation: {
+      description:
+        'Whether to allow navigation between any steps, even if not directly connected.',
+      type: 'boolean',
+      default: 'false',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a `UseWizardReturn` object with the following properties:
+
+<TypeTable
+  type={{
+    currentStepId: {
+      description: 'The ID of the current step.',
+      type: 'string',
+    },
+    set: {
+      description: 'Function to set the current step to a specific ID.',
+      type: '(id: string) => void',
+    },
+    reset: {
+      description: 'Function to reset the wizard to the initial step.',
+      type: '() => void',
+    },
+    back: {
+      description: 'Function to navigate to the previous step.',
+      type: '() => void',
+    },
+    forward: {
+      description: 'Function to navigate to the next step.',
+      type: '() => void',
+    },
+    canGoBack: {
+      description: 'Whether the wizard can navigate back to the previous step.',
+      type: 'boolean',
+    },
+    canGoForward: {
+      description: 'Whether the wizard can navigate forward to the next step.',
+      type: 'boolean',
+    },
+    history: {
+      description: 'An array of step IDs representing the wizard history.',
+      type: 'string[]',
+    },
+    isFirstStep: {
+      description: 'Whether the current step is the first step in the wizard.',
+      type: 'boolean',
+    },
+    isLastStep: {
+      description: 'Whether the current step is the last step in the wizard.',
+      type: 'boolean',
+    },
+  }}
+/>
+
+import WizardDemo from '../../../hooks/Utilities/useWizard/use-wizard.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Callout } from 'fumadocs-ui/components/callout';
