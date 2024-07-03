@@ -3,70 +3,22 @@ title: useTimeoutFn
 description: Wrapper for setTimeout with controls.
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">
-    <TimeoutFnDemo />
-  </Tab>
-  <Tab value="Code">
-  ```tsx
-const TimeoutFnDemo: React.FC = () => {
-  const [text, setText] = React.useState('Fired');
-
-const { isPending, start } = useTimeoutFn(
-() => {
-setText('Fired');
-},
-3000,
-{ immediate: false },
-);
-
-const handleRestart = () => {
-setText('Please wait 3 seconds');
-start();
-};
-
-return (
-
-<div className="border rounded-lg p-[2em] relative mb-[10px] transition-colors">
-  <p>{text}</p>
-  <button onClick={handleRestart} disabled={isPending}>
-    Restart
-  </button>
-</div>
-); };
-
-````
-</Tab>
-</Tabs>
+<TimeoutFnDemo />
 
 ## Installation
 
 ```bash
 npx changeelog/reactuse@latest add useTimeoutFn
-````
+```
 
 ## Usage
 
 ```tsx
-import { useTimeoutFn } from '#';
-
-const Component = () => {
-  const { isPending, start, stop } = useTimeoutFn(
-    (message: string) => {
-      console.log(`Timeout finished with message: ${message}`);
-    },
-    2000,
-    { immediate: false },
-  );
-
-  return (
-    <div>
-      <p>Timeout Pending: {JSON.stringify(isPending)}</p>
-      <button onClick={() => start('Hello')}>Start Timeout</button>
-      <button onClick={stop}>Stop Timeout</button>
-    </div>
-  );
-};
+const { isPending, start, stop } = useTimeoutFn(
+  (message: string) => console.log(`Timeout: ${message}`),
+  2000,
+  { immediate: false },
+);
 ```
 
 ## Reference
@@ -131,6 +83,3 @@ Returns a `UseTimeoutFnReturn` object with the following properties:
 
 import TimeoutFnDemo from '../../../hooks/Animation/useTimeoutFn/use-timeout-fn.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
