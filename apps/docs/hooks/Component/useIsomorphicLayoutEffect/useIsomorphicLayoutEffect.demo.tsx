@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 
 function UseIsomorphicLayoutEffectDemo() {
   const [count, setCount] = React.useState(0);
@@ -11,7 +11,13 @@ function UseIsomorphicLayoutEffectDemo() {
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => { setCount(count + 1); }}>Increment</button>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Increment
+      </button>
     </div>
   );
 }
