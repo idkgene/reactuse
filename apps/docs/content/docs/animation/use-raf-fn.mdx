@@ -3,41 +3,7 @@ title: useRafFn
 description: Call function on every requestAnimationFrame. With controls of pausing and resuming.
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">
-    <RafDemo />
-  </Tab>
-  <Tab value="Code">
-```tsx
-const RafDemo = () => {
-  const [count, setCount] = useState(0);
-  const [delta, setDelta] = useState(0);
-
-const { pause, resume, isActive } = useRafFn(
-({ delta: frameDelta }) => {
-setCount((prevCount) => prevCount + 1);
-setDelta(frameDelta);
-},
-{ fpsLimit: 60 },
-);
-
-return (
-
-<div>
-  <p>Frames: {count}</p>
-  <p>Delta: {delta.toFixed(2)}ms</p>
-  <p>FPS Limit: {60}</p>
-  <div>
-    <Button onClick={pause}>Pause</Button>
-    <Button onClick={resume}>Resume</Button>
-  </div>
-</div>
-); };
-
-export default RafDemo;
-```
-  </Tab>
-</Tabs>
+<RafDemo />
 
 ## Installation
 
@@ -146,6 +112,3 @@ Returns a `Pausable` object with the following properties:
 
 import RafDemo from '../../../hooks/Animation/useRafFn/use-raf-fn.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
