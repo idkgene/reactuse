@@ -14,28 +14,15 @@ npx changeelog/reactuse@latest add useTimestamp
 ## Usage
 
 ```tsx
-import { useTimestamp } from '#';
-
-const Component = () => {
-  // Basic usage
-  const timestamp = useTimestamp();
-
-  // With controls
-  const {
-    timestamp: controlledTimestamp,
-    pause,
-    resume,
-  } = useTimestamp({ controls: true });
-
-  return (
-    <div>
-      <p>Timestamp: {timestamp}</p>
-      <p>Controlled Timestamp: {controlledTimestamp}</p>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-    </div>
-  );
-};
+const { pause, resume } = useTimestamp({
+  controls: true,
+  offset: 0,
+  immediate: true,
+  interval: 1,
+  callback: (ts) => {
+    console.log('Timestamp:', ts);
+  },
+});
 ```
 
 ## Reference
@@ -97,7 +84,7 @@ The `useTimestamp` hook provides the current timestamp and optionally exposes co
 
 If `controls` is `false`, the hook returns the current `timestamp` as a `number`.
 
-If `controls` is `true`, the hook returna an object containing the following properties:
+If `controls` is `true`, the hook return an object containing the following properties:
 
 <TypeTable
   type={{
