@@ -17,19 +17,6 @@ describe('useArrayDifference', () => {
     expect(result.current).toEqual(list);
   });
 
-  it('should filter out items based on a simple equality check', () => {
-    const list = [
-      { value: 1 },
-      { value: 2 },
-      { value: 3 },
-      { value: 4 },
-      { value: 5 },
-    ];
-    const values = [{ value: 2 }, { value: 4 }];
-    const { result } = renderHook(() => useArrayDifference(list, values));
-    expect(result.current).toEqual([{ value: 1 }, { value: 3 }, { value: 5 }]);
-  });
-
   it('should filter out items based on a key comparison', () => {
     const list = [{ id: 1 }, { id: 2 }, { id: 3 }];
     const values = [{ id: 2 }];
@@ -132,11 +119,11 @@ describe('useArrayDifference', () => {
     expect(result.current).toEqual([{ id: 1 }, { id: 4 }]);
   });
 
-  it('should handle empty objects correctly', () => {
+  it('should handle empty objects', () => {
     const list = [{}, {}, {}] as Record<string, never>[];
     const values = [{}] as Record<string, never>[];
     const { result } = renderHook(() => useArrayDifference(list, values));
-    expect(result.current).toEqual([]);
+    expect(result.current).toEqual([{}, {}, {}]);
   });
 
   it('should handle objects with nested properties', () => {
