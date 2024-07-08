@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { expect, it, describe, vi } from 'vitest';
-import { useFloor } from '../useFloor';
+import { type Resolvable, useFloor } from '../use-floor';
 
 describe('useFloor', () => {
   it('should floor a positive number', () => {
@@ -33,9 +33,10 @@ describe('useFloor', () => {
     expect(result.current).toBe(-Infinity);
   });
 
-  it('should handle a value of NaN', () => {
-    const { result } = renderHook(() => useFloor(NaN));
-    expect(result.current).toBe(NaN);
+  it('should throw an error for NaN input', () => {
+    expect(() => {
+      renderHook(() => useFloor(NaN));
+    }).toThrow('Invalid input: expected a number');
   });
 
   it('should update the floored value when the input value changes', () => {
@@ -65,5 +66,16 @@ describe('useFloor', () => {
 
     expect(result.current).toBe(2);
     expect(getter).toHaveBeenCalledTimes(1);
+  });
+
+  it('should handle a direct number value', () => {
+    const { result } = renderHook(() => useFloor(4.7));
+    expect(result.current).toBe(4);
+  });
+
+  it('should handle a function returning a number', () => {
+    const numberFunc: Resolvable<number> = () => 5.8;
+    const { result } = renderHook(() => useFloor(numberFunc));
+    expect(result.current).toBe(5);
   });
 });
