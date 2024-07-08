@@ -1,55 +1,32 @@
 ---
 title: useAbs
-description: Your first document
+description: Calculating the absolute value of a number
 ---
 
-`useAbs` is a custom React hook that takes a number or a function that returns a number and computes it's absolute value. The hook returns the absolute value as a number.
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useAbs
+```
 
 ## Usage
 
 ```tsx
 import { useAbs } from '#';
-import * as React from 'react';
 
-const Component = () => {
-  const value = -10;
+function AbsoluteValueDisplay() {
+  const value = -5;
   const absValue = useAbs(value);
 
   return (
-    <div>
-      <p>
-        Absolute value of {value}: {absValue}
-      </p>
-    </div>
+    <p>
+      The absolute value of {value} is {absValue}
+    </p>
   );
-};
-
-export default Component;
+}
 ```
 
-```tsx
-import { useAbs } from '#';
-import * as React from 'react';
-
-const Component = () => {
-  const [value, setValue] = React.useState(-5);
-
-  const absValue = useAbs(() => value);
-
-  return (
-    <div>
-      <p>
-        Absolute value of {value}: {absValue}
-      </p>
-      <button onClick={() => setValue(-10)}>Update value to -10</button>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-## Type Declarations
+## Reference
 
 ```typescript
 export declare function useAbs(value: number | (() => number)): number;
@@ -57,17 +34,39 @@ export declare function useAbs(value: number | (() => number)): number;
 
 ## Reference
 
-| Property | Type                     | Default | Description                                                   |
-| :------- | :----------------------- | :------ | :------------------------------------------------------------ |
-| `value`  | `number \| () => number` | -       | The value or a function that returns a value to be evaluated. |
+### useAbs
 
-### Returns
+`useAbs` is a hook that calculates the absolute value of a given number or a function that returns a number.
 
-| Type     | Description                               |
-| :------- | :---------------------------------------- |
-| `number` | The absolute value of the provided value. |
+<TypeTable
+  type={{
+    value: {
+      description:
+        'The number or function returning a number to calculate the absolute value of',
+      type: 'Resolvable',
+    },
+  }}
+/>
 
+### Return Value
+
+Returns a number representing the absolute value of the input.
+
+Types
+
+<TypeTable
+  type={{
+    Resolvable: {
+      description:
+        'A type that can be either the value itself or a function that returns the value',
+      type: 'T | (() => T)',
+    },
+  }}
+/>
+
+<Callout type="info">
+  If the input cannot be resolved to a number, the hook will throw an error.
+</Callout>
+
+import { Callout } from 'fumadocs-ui/components/callout';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

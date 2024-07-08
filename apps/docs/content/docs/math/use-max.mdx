@@ -1,81 +1,61 @@
 ---
 title: useMax
-description: Your first document
+description: Finding the maximum value among a set of numebers
 ---
 
-`useMax` is a hook that returns the maximum value from the given arguments or an array of values.
+Preview
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useMax
+```
 
 ## Usage
 
 ```tsx
-import { useMax } from '#';
-import * as React from 'react';
+import { useMax } from '@changeelog/reactuse';
 
-const Component = () => {
-  const value1 = 5;
-  const value2 = 10;
-  const value3 = 3;
+function MaxValueDisplay() {
+  const maxValue = useMax(1, 5, 3, 9, 2);
 
-  const maxValue = useMax(value1, value2, value3);
-
-  return (
-    <div>
-      <p>Maximum value: {maxValue}</p>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-```tsx
-import { useMax } from '#';
-import * as React from 'react';
-
-const Component = () => {
-  const values = [8, 2, 6, 4];
-
-  const maxValueFromArray = useMax(values);
-
-  return (
-    <div>
-      <p>Maximum value from array: {maxValueFromArray}</p>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```typescript
-export declare function useMax(...args: any[]): number;
-
-export declare type Resolvable<T> = T | (() => T);
+  return <p>The maximum value is: {maxValue}</p>;
+}
 ```
 
 ## Reference
 
-#### useMax
+### useMax
 
-| Property | Type    | Default | Description                                |
-| -------- | ------- | ------- | ------------------------------------------ |
-| `args`   | `any[]` | -       | The values or arrays of values to compare. |
+`useMax` is a hook that finds the maximum value among a set of numbers or functions that return numbers.
 
-#### Resolvable
+<TypeTable
+  type={{
+    args: {
+      description: 'Numbers, functions returning numbers, or an array of these',
+      type: '...MaxInput[]',
+    },
+  }}
+/>
 
-| Property | Type               | Description                                            |
-| :------- | :----------------- | ------------------------------------------------------ |
-| `T`      | `T   \| (() => T)` | A value or a function that returns a value of type`T`. |
+### Return Value
 
-### Returns
+Returns a number representing the maximum value among the inputs.
 
-| Type     | Description                                                                                                                                                                     |
-| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `number` | The maximum value from the given arguments or array of values. If any of the provided values or functions are functions, they are called and their return values are evaluated. |
+### Types
+
+<TypeTable
+  type={{
+    Resolvable: {
+      description:
+        'A type that can be either the value itself or a function that returns the value',
+      type: 'T | (() => T)',
+    },
+    MaxInput: {
+      description: 'Input type for the useMax hook',
+      type: 'Resolvable | Resolvable[]',
+    },
+  }}
+/>
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

@@ -1,12 +1,9 @@
 ---
 title: useFibonacci
-description: Fibonacci sequences
+description: Generating Fibonacci sequences
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">Preview</Tab>
-  <Tab value="Code">```tsx ```</Tab>
-</Tabs>
+Preview
 
 ## Installation
 
@@ -17,58 +14,45 @@ npx changeelog/reactuse@latest add useFibonacci
 ## Usage
 
 ```tsx
-import { useFibonacci } from '#';
+import { useFibonacci } from '@changeelog/reactuse';
 
-const Component = () => {
+function FibonacciSequence() {
   const { sequence, generate } = useFibonacci();
 
-  useEffect(() => {
+  const handleGenerate = () => {
     generate(10);
-  }, [generate]);
+  };
 
   return (
     <div>
-      <p>Fibonacci Sequence: {sequence.join(', ')}</p>
-      <button onClick={() => generate(15)}>Generate 15 Numbers</button>
+      <button onClick={handleGenerate}>Generate 10 Fibonacci Numbers</button>
+      <p>Sequence: {sequence.join(', ')}</p>
     </div>
   );
-};
+}
 ```
 
 ## Reference
 
 ### useFibonacci
 
-`useFibonacci` is a hook that provides functionality for generating Fibonacci sequences.
+`useFibonacci` is a hook that provides functionality to generate Fibonacci sequences.
 
-<TypeTable
-  type={{
-    returns: {
-      description:
-        'An object containing the current sequence and a generate function.',
-      type: 'UseFibonacciReturn',
-    },
-  }}
-/>
+### Return Value
 
-### UseFibonacciReturn
-
-An interface defining the return value of the `useFibonacci` hook:
+Returns an object with the following properties:
 
 <TypeTable
   type={{
     sequence: {
-      description: 'The current Fibonacci sequence.',
+      description: 'The current Fibonacci sequence',
       type: 'number[]',
     },
     generate: {
-      description: 'Function to generate a new Fibonacci sequence.',
+      description: 'Function to generate a new Fibonacci sequence',
       type: '(n: number) => number[] | null',
     },
   }}
 />
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

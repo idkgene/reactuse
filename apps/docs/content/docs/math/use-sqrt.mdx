@@ -1,12 +1,9 @@
 ---
 title: useSqrt
-description: Square root calculations
+description: Manage a numeric value and calculate its square root
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">Preview</Tab>
-  <Tab value="Code">```tsx ```</Tab>
-</Tabs>
+Preview
 
 ## Installation
 
@@ -17,75 +14,69 @@ npx changeelog/reactuse@latest add useSqrt
 ## Usage
 
 ```tsx
-import { useSqrt } from '#';
+const { value, setValue, sqrt } = useSqrt({ initialValue: 16 });
 
-const Component = () => {
-  const { value, setValue, calculate } = useSqrt({ initialValue: 25 });
-  const result = calculate();
+console.log(value); // 16
+console.log(sqrt()); // 4
 
-  return (
-    <div>
-      <p>Value: {value}</p>
-      <p>Square Root: {result !== null ? result : 'Error'}</p>
-      <input
-        type="number"
-        value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
-      />
-    </div>
-  );
-};
+setValue(25);
+console.log(sqrt()); // 5
+
+setValue((prev) => prev + 11);
+console.log(value); // 36
+console.log(sqrt()); // 6
 ```
 
 ## Reference
 
 ### useSqrt
 
-`useSqrt` is a hook that provides functionality for square root calculations.
+`useSqrt` is a hook that manages a numeric value and provides a function to calculate its square root.
 
 <TypeTable
-type={{
-options: {
-description: 'Configuration object for the square root behavior.',
-type: 'UseSqrtOptions',
-default: '{}',
-},
-}}
+  type={{
+    options: {
+      description: 'Configuration object for the initial value.',
+      type: 'UseSqrtOptions',
+      default: '{}',
+    },
+  }}
 />
 
 ### UseSqrtOptions
 
-An interface defining optional configuration for the square root calculations:
+An interface defining optional configuration for the initial value:
 
 <TypeTable
-type={{
-initialValue: {
-description: 'The initial value for square root calculation.',
-type: 'number',
-default: '0',
-},
-}}
+  type={{
+    initialValue: {
+      description: 'The initial numeric value.',
+      type: 'number',
+      default: '0',
+    },
+  }}
 />
 
 ### Return Value
 
-Returns a `UseSqrtReturn` object with the following properties:
+Returns an object with the following properties:
 
 <TypeTable
-type={{
-value: {
-description: 'The current value for square root calculation.',
-type: 'number',
-},
-setValue: {
-description: 'Function to set the value for square root calculation.',
-type: 'React.Dispatch<React.SetStateAction>',
-},
-calculate: {
-description: 'Function to calculate the square root of the current value.',
-type: '() => number | null',
-},
-}}
+  type={{
+    value: {
+      description: 'The current numeric value.',
+      type: 'number',
+    },
+    setValue: {
+      description: 'Function to update the numeric value.',
+      type: '(action: SetStateAction) => void',
+    },
+    sqrt: {
+      description:
+        'Function to calculate the square root of the current value.',
+      type: '() => number',
+    },
+  }}
 />
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';

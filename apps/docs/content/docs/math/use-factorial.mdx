@@ -1,12 +1,9 @@
 ---
 title: useFactorial
-description: Factorial calculations.
+description: Calculating factorials of non-negative integers
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">Preview</Tab>
-  <Tab value="Code">```tsx ```</Tab>
-</Tabs>
+Preview
 
 ## Installation
 
@@ -17,56 +14,38 @@ npx changeelog/reactuse@latest add useFactorial
 ## Usage
 
 ```tsx
-import { useFactorial } from '#';
+import { useFactorial } from '@changeelog/reactuse';
 
-const Component = () => {
-  const calculateFactorial = useFactorial();
-  const result = calculateFactorial(5);
+function FactorialCalculator() {
+  const factorial = useFactorial();
+  const number = 5;
+  const result = factorial(number);
 
   return (
-    <div>
-      <p>Factorial of 5: {result !== null ? result : 'Error'}</p>
-    </div>
+    <p>
+      The factorial of {number} is {result.toString()}
+    </p>
   );
-};
+}
 ```
 
 ## Reference
 
 ### useFactorial
 
-`useFactorial` is a hook that returns a memoized function for calculating factorials.
+`useFactorial` is a hook that returns a function for calculating factorials of non-negative integers.
+
+### Return Value
+
+Returns a function with the following signature:
 
 <TypeTable
   type={{
-    returns: {
-      description:
-        'A function that calculates the factorial of a given number.',
-      type: 'FactorialFunction',
-    },
-  }}
-/>
-
-### FactorialFunction
-
-The type of the function returned by `useFactorial`:
-
-<TypeTable
-  type={{
-    input: {
-      description:
-        'The non-negative integer for which to calculate the factorial.',
-      type: 'number',
-    },
-    returns: {
-      description:
-        'The factorial of the input number, or null if an error occurs.',
-      type: 'number | null',
+    factorial: {
+      description: 'Function to calculate factorial',
+      type: '(n: number) => bigint',
     },
   }}
 />
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

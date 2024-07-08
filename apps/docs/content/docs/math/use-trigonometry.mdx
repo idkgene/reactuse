@@ -1,0 +1,106 @@
+---
+title: useTrigonometry
+description: Trigonometric calculations
+---
+
+Demo
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useTrigonometry
+```
+
+## Usage
+
+```tsx
+const {
+  sin,
+  cos,
+  tan,
+  asin,
+  acos,
+  atan,
+  atan2,
+  sinh,
+  cosh,
+  tanh,
+  asinh,
+  acosh,
+  atanh,
+} = useTrigonometry();
+
+console.log(sin(Math.PI / 2)); // 1
+console.log(cos(Math.PI)); // -1
+console.log(tan(Math.PI / 4)); // ~1
+
+try {
+  console.log(asin(2)); // Throws an error
+} catch (error) {
+  console.error(error); // Error: asin calculation resulted in a non-finite number
+}
+```
+
+## Reference
+
+### useTrigonometry
+
+`useTrigonometry` is a hook that provides validated trigonometric functions.
+
+### Return Value
+
+Returns an object with the following trigonometric functions:
+
+<TypeTable
+  type={{
+    sin: { description: 'Sine function', type: '(angle: number) => number' },
+    cos: { description: 'Cosine function', type: '(angle: number) => number' },
+    tan: { description: 'Tangent function', type: '(angle: number) => number' },
+    asin: {
+      description: 'Arcsine function',
+      type: '(value: number) => number',
+    },
+    acos: {
+      description: 'Arccosine function',
+      type: '(value: number) => number',
+    },
+    atan: {
+      description: 'Arctangent function',
+      type: '(value: number) => number',
+    },
+    atan2: {
+      description: 'Two-argument arctangent function',
+      type: '(y: number, x: number) => number',
+    },
+    sinh: {
+      description: 'Hyperbolic sine function',
+      type: '(value: number) => number',
+    },
+    cosh: {
+      description: 'Hyperbolic cosine function',
+      type: '(value: number) => number',
+    },
+    tanh: {
+      description: 'Hyperbolic tangent function',
+      type: '(value: number) => number',
+    },
+    asinh: {
+      description: 'Inverse hyperbolic sine function',
+      type: '(value: number) => number',
+    },
+    acosh: {
+      description: 'Inverse hyperbolic cosine function',
+      type: '(value: number) => number',
+    },
+    atanh: {
+      description: 'Inverse hyperbolic tangent function',
+      type: '(value: number) => number',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Callout } from 'fumadocs-ui/components/callout';

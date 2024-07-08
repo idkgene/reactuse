@@ -1,54 +1,59 @@
 ---
 title: useAverage
-description: Your first document
+description: Calculating the average of a set of numbers
 ---
-
-`useAverage` is a custom React hook that calculates the average of the provided values.
 
 ## Usage
 
-```tsx
+```bash
 import { useAverage } from '#';
-import * as React from 'react';
 
-const Component = () => {
-  const avg = useAverage(1, 2, 3, 4); // Returns `2.5`
-  const avgArray = useAverage([1, 2, 3, 4]); // Returns `2.5`
+function AverageDisplay() {
+  const avg1 = useAverage(1, 2, 3, 4, 5);
+  const avg2 = useAverage([10, 20, 30, 40, 50]);
 
   return (
     <div>
-      <p>Average: {avg}</p>
-      <p>Average (Array): {avgArray}</p>
+      <p>Average 1: {avg1}</p>
+      <p>Average 2: {avg2}</p>
     </div>
   );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```typescript
-export declare type Resolvable<T> = T | (() => T);
-
-export declare function resolveValue<T>(value: Resolvable<T>): T;
-
-export declare function useAverage(...args: any[]): number;
+}
 ```
 
 ## Reference
 
-| Parameter | Type | Description                |
-| --------- | ---- | -------------------------- |
-| `args`    | `T`  | The values to be averaged. |
+### useAverage
 
-### Returns
+`useAverage` is a hook that calculates the average of a set of numbers. It can accept either individual number arguments or an array of numbers.
 
-| Type     | Description        |
-| -------- | ------------------ |
-| `number` | The average value. |
+<TypeTable
+  type={{
+    args: {
+      description:
+        'Numbers or functions returning numbers to calculate the average of',
+      type: 'NumericResolvable[] | [NumericResolvable[]]',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a number representing the average of the input values.
+
+<TypeTable
+  type={{
+    Resolvable: {
+      description:
+        'A type that can be either the value itself or a function that returns the value',
+      type: 'T | (() => T)',
+    },
+    NumericResolvable: {
+      description: 'A Resolvable type specifically for numbers',
+      type: 'Resolvable',
+    },
+  }}
+/>
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Callout } from 'fumadocs-ui/components/callout';

@@ -1,12 +1,9 @@
 ---
 title: useLogarithm
-description: Logarithmic calculations
+description: Logarithmic calculations with a customizable base
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">Preview</Tab>
-  <Tab value="Code">```tsx ```</Tab>
-</Tabs>
+Preview
 
 ## Installation
 
@@ -19,46 +16,34 @@ npx changeelog/reactuse@latest add useLogarithm
 ```tsx
 import { useLogarithm } from '#';
 
-const Component = () => {
+function LogarithmCalculator() {
   const { base, setBase, calculate } = useLogarithm({ initialBase: 10 });
-  const result = calculate(100);
+  const value = 100;
+  const result = calculate(value);
 
   return (
     <div>
-      <p>Base: {base}</p>
       <p>
-        Log{base}(100) = {result !== null ? result : 'Error'}
+        log{base}({value}) = {result}
       </p>
-      <button onClick={() => setBase(2)}>Change to base 2</button>
+      <button onClick={() => setBase(2)}>Change Base to 2</button>
     </div>
   );
-};
+}
 ```
 
 ## Reference
 
 ### useLogarithm
 
-`useLogarithm` is a hook that provides functionality for logarithmic calculations.
+`useLogarithm` is a hook that provides functionality for logarithmic calculations with a customizable base.
 
-<TypeTable
-  type={{
-    options: {
-      description: 'Configuration object for the logarithm behavior.',
-      type: 'UseLogarithmOptions',
-      default: '{}',
-    },
-  }}
-/>
-
-### UseLogarithmOptions
-
-An interface defining optional configuration for the logarithmic calculations:
+### Options
 
 <TypeTable
   type={{
     initialBase: {
-      description: 'The initial base value for logarithmic calculations.',
+      description: 'The initial base value for logarithmic calculations',
       type: 'number',
       default: 'Math.E',
     },
@@ -67,21 +52,21 @@ An interface defining optional configuration for the logarithmic calculations:
 
 ### Return Value
 
-Returns a `UseLogarithmReturn` object with the following properties:
+Returns an object with the following properties:
 
 <TypeTable
   type={{
     base: {
-      description: 'The current base value used for calculations.',
+      description: 'The current base value (read-only)',
       type: 'number',
     },
     setBase: {
-      description: 'Function to update the base value.',
-      type: 'React.Dispatch<React.SetStateAction>',
+      description: 'Function to update the base value',
+      type: 'SetState',
     },
     calculate: {
-      description: 'Function to calculate the logarithm.',
-      type: '(value: number) => number | null',
+      description: 'Function to calculate the logarithm',
+      type: '(value: number) => number',
     },
   }}
 />

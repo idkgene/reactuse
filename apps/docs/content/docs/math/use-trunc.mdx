@@ -1,81 +1,67 @@
 ---
 title: useTrunc
-description: Your first document
+description: Truncate a number to its integer part
 ---
 
-`useTrunc` is a custom React hook that provides a truncated number and a function to update it by removing the fractional part of a given number. It uses the `Math.trunc()` function internally to perform the truncation operation.
+Demo
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useTrunc
+```
 
 ## Usage
 
 ```tsx
-import { useTrunc } from '#';
-import * as React from 'react';
+const { value, truncate } = useTrunc(3.14);
 
-const Component = () => {
-  const [truncatedNumber, truncateNumber] = useTrunc();
+console.log(value); // 3
 
-  return (
-    <div>
-      <p>Truncated number: {truncatedNumber}</p>
-      <button onClick={() => truncateNumber(3.14)}>Truncate 3.14</button>
-      <button onClick={() => truncateNumber(2.78)}>Truncate 2.78</button>
-    </div>
-  );
-};
+truncate(5.67);
+console.log(value); // 5
 
-export default Component;
-```
-
-```tsx
-import { useTrunc } from '#';
-import * as React from 'react';
-
-const Component = () => {
-  const [truncatedNumber, truncateNumber] = useTrunc(5);
-
-  return (
-    <div>
-      <p>Truncated number: {truncatedNumber}</p>
-      <button onClick={() => truncateNumber(7.89)}>Truncate 7.89</button>
-      <button onClick={() => truncateNumber(4.23)}>Truncate 4.23</button>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```ts
-export declare function useTrunc(
-  initialValue?: number,
-): [number, TruncateNumberFn];
-
-export declare type TruncateNumberFn = (number: number) => void;
+truncate(-7.89);
+console.log(value); // -7
 ```
 
 ### Reference
 
-#### useTrunc
+### useTrunc
 
-| Property       | Type     | Default | Description                                                            |
-| -------------- | -------- | ------- | ---------------------------------------------------------------------- |
-| `initialValue` | `number` | `0`     | (_Optional_) The initial value of the truncated number. Defaults to 0. |
+`useTrunc` is a hook that manages a truncated numeric value and provides a function to update it.
 
-### Returns
+<TypeTable
+  type={{
+    initialValue: {
+      description: 'The initial value to be truncated.',
+      type: 'number',
+      default: '0',
+    },
+  }}
+/>
 
-| Type                         | Description                                                                   |
-| ---------------------------- | ----------------------------------------------------------------------------- |
-| `[number, TruncateNumberFn]` | An array containing the current truncated number and a function to update it. |
+<Callout>
+  The hook validates that the initial value is a finite number. If it's not, an
+  error is thrown.
+</Callout>
 
-#### TruncateNumberFn
+#### Return Value
 
-| Property | Type     | Description                 |
-| -------- | -------- | --------------------------- |
-| `number` | `number` | The number to be truncated. |
+Returns an object with the following properties:
+
+<TypeTable
+  type={{
+    value: {
+      description: 'The current truncated value.',
+      type: 'number',
+    },
+    truncate: {
+      description: 'Function to truncate and update the value.',
+      type: '(input: number) => void',
+    },
+  }}
+/>
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Callout } from 'fumadocs-ui/components/callout';

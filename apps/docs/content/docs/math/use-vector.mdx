@@ -1,12 +1,9 @@
 ---
 title: useVector
-description: 3D vector operations
+description: Manage and operate on 3D vectors
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">Preview</Tab>
-  <Tab value="Code">```tsx ```</Tab>
-</Tabs>
+Demo
 
 ## Installation
 
@@ -17,98 +14,100 @@ npx changeelog/reactuse@latest add useVector
 ## Usage
 
 ```tsx
-import { useVector } from '#';
+const {
+  vector,
+  setVector,
+  add,
+  subtract,
+  scale,
+  normalize,
+  dot,
+  cross,
+  magnitude,
+  isZero,
+  unit,
+} = useVector({ x: 1, y: 2, z: 3 });
 
-const Component = () => {
-  const { vector, add, scale, magnitude } = useVector({ x: 3, y: 4, z: 0 });
-
-  return (
-    <div>
-      <p>
-        Vector: ({vector.x}, {vector.y}, {vector.z})
-      </p>
-      <p>Magnitude: {magnitude()}</p>
-      <button onClick={() => add({ x: 1, y: 1, z: 1 })}>Add (1, 1, 1)</button>
-      <button onClick={() => scale(2)}>Double</button>
-    </div>
-  );
-};
+console.log(vector); // { x: 1, y: 2, z: 3 }
+add({ x: 1, y: 1, z: 1 });
+console.log(vector); // { x: 2, y: 3, z: 4 }
+scale(2);
+console.log(vector); // { x: 4, y: 6, z: 8 }
+console.log(magnitude); // ~10.95
+console.log(unit); // { x: ~0.37, y: ~0.55, z: ~0.73 }
 ```
 
 ## Reference
 
 ### useVector
 
-`useVector` is a hook that provides functionality for 3D vector operations.
+`useVector` is a hook that manages a 3D vector and provides various operations on it.
 
 <TypeTable
   type={{
     initialVector: {
-      description: 'The initial vector.',
-      type: 'Vector',
+      description: 'The initial 3D vector.',
+      type: 'Readonly',
       default: '{ x: 0, y: 0, z: 0 }',
-    },
-  }}
-/>
-
-### Vector
-
-An interface representing a 3D vector:
-
-<TypeTable
-  type={{
-    x: {
-      description: 'The x-component of the vector.',
-      type: 'number',
-    },
-    y: {
-      description: 'The y-component of the vector.',
-      type: 'number',
-    },
-    z: {
-      description: 'The z-component of the vector.',
-      type: 'number',
     },
   }}
 />
 
 ### Return Value
 
-Returns a `UseVectorReturn` object with the following properties:
+Returns an object with the following properties and methods:
 
 <TypeTable
   type={{
-    vector: {
-      description: 'The current vector.',
-      type: 'Vector',
-    },
+    vector: { description: 'The current vector.', type: 'Readonly' },
     setVector: {
-      description: 'Function to set a new vector.',
+      description: 'Function to set the vector.',
       type: 'React.Dispatch<React.SetStateAction>',
     },
-    add: {
-      description: 'Function to add another vector to the current vector.',
-      type: '(v: Vector) => void',
-    },
+    add: { description: 'Add another vector.', type: 'VectorOperation' },
     subtract: {
-      description:
-        'Function to subtract another vector from the current vector.',
-      type: '(v: Vector) => void',
+      description: 'Subtract another vector.',
+      type: 'VectorOperation',
     },
     scale: {
-      description: 'Function to scale the current vector by a scalar value.',
-      type: '(scalar: number) => void',
+      description: 'Scale the vector by a scalar.',
+      type: 'ScalarOperation',
     },
-    magnitude: {
-      description: 'Function to calculate the magnitude of the current vector.',
-      type: '() => number',
+    normalize: { description: 'Normalize the vector.', type: '() => void' },
+    dot: {
+      description: 'Calculate dot product with another vector.',
+      type: '(v: Readonly) => number',
     },
-    normalize: {
-      description: 'Function to normalize the current vector.',
-      type: '() => void',
+    cross: {
+      description: 'Calculate cross product with another vector.',
+      type: 'VectorOperation',
+    },
+    magnitude: { description: 'The magnitude of the vector.', type: 'number' },
+    isZero: {
+      description: 'Whether the vector is effectively zero.',
+      type: 'boolean',
+    },
+    unit: {
+      description: 'The unit vector in the same direction.',
+      type: 'Vector3D',
     },
   }}
 />
+
+### Types
+
+```ts
+type Numeric = number | { valueOf: () => number };
+
+interface Vector3D {
+  readonly x: number;
+  readonly y: number;
+  readonly z: number;
+}
+
+type VectorOperation = (v: Readonly<Vector3D>) => void;
+type ScalarOperation = (scalar: Numeric) => void;
+```
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';

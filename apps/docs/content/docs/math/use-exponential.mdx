@@ -1,12 +1,9 @@
 ---
 title: useExponential
-description: Exponential calculations.
+description: Exponential calculations with a customizable base
 ---
 
-<Tabs items={['Preview', 'Code']}>
-  <Tab value="Preview">Preview</Tab>
-  <Tab value="Code">```tsx ```</Tab>
-</Tabs>
+Preview
 
 ## Installation
 
@@ -19,17 +16,20 @@ npx changeelog/reactuse@latest add useExponential
 ```tsx
 import { useExponential } from '#';
 
-const Component = () => {
-  const { base, setBase, calculate } = useExponential();
+function ExponentialCalculator() {
+  const { base, setBase, calculate } = useExponential({ initialBase: 2 });
+  const exponent = 3;
+  const result = calculate(exponent);
 
   return (
     <div>
-      <p>Base: {base}</p>
-      <button onClick={() => setBase(Math.random())}>Set Base</button>
-      <button onClick={() => console.log(calculate(2))}>Calculate</button>
+      <p>
+        {base}^{exponent} = {result}
+      </p>
+      <button onClick={() => setBase(3)}>Change Base to 3</button>
     </div>
   );
-};
+}
 ```
 
 ## Insallation
@@ -42,26 +42,12 @@ npx changeelog/reactuse@latest add useExponential
 
 ### useExponential
 
-`useExponential` is a custom React hook for exponential calculations.
-
-<TypeTable
-  type={{
-    options: {
-      description: 'Configuration object for the exponential behavior.',
-      type: 'UseExponentialOptions',
-      default: '{}',
-    },
-  }}
-/>
-
-### UseExponentialOptions
-
-An interface defining optional configuration for the exponential calculations:
+`useExponential` is a hook that provides functionality for exponential calculations with a customizable base.
 
 <TypeTable
   type={{
     initialBase: {
-      description: 'The initial base value for exponential calculations.',
+      description: 'The initial base value for exponential calculations',
       type: 'number',
       default: 'Math.E',
     },
@@ -70,26 +56,23 @@ An interface defining optional configuration for the exponential calculations:
 
 ### Return Value
 
-Returns a `UseExponentialReturn` object with the following properties: 
+Returns an object with the following properties:
 
 <TypeTable
   type={{
     base: {
-      description: 'The current base value used for calculations.',
+      description: 'The current base value',
       type: 'number',
     },
     setBase: {
-      description: 'Function to update the base value.',
-      type: 'React.Dispatch<React.SetStateAction>',
+      description: 'Function to update the base value',
+      type: '(newBase: number) => void',
     },
     calculate: {
-      description: 'Function to calculate the exponential value.',
-      type: '(exponent: number) => number | null',
+      description: 'Function to calculate the exponential value',
+      type: '(exponent: number) => number',
     },
   }}
 />
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

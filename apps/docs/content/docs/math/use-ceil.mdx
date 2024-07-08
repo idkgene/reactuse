@@ -1,54 +1,59 @@
 ---
 title: useCeil
-description: Your first document
+description: Calculating the ceiling of a number
 ---
 
-`useCeil` is a React hook that returns the smallest integer greater than or equal to a given number using `Math.ceil`.
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useCeil
+```
 
 ## Usage
 
 ```tsx
 import { useCeil } from '#';
-import * as React from 'react';
 
-const Component = () => {
-  const ceilValue = useCeil(4.2); // Returns `5`
-  const ceilValueFromFn = useCeil(() => 4.7); // Returns `5`
+function CeilingDisplay() {
+  const value = 3.14;
+  const ceiling = useCeil(value);
 
   return (
-    <div>
-      <p>Ceiling Value: {ceilValue}</p>
-      <p>Ceiling Value (Function): {ceilValueFromFn}</p>
-    </div>
+    <p>
+      The ceiling of {value} is {ceiling}
+    </p>
   );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```ts
-export declare type Resolvable<T> = T | (() => T);
-
-export declare function resolveValue<T>(value: Resolvable<T>): T;
-
-export declare function useCeil(value: Resolvable<number>): number;
+}
 ```
 
 ## Reference
 
-| Parameter | Type                 | Description              |
-| --------- | -------------------- | ------------------------ |
-| `value`   | `Resolvable<number>` | The value to be clamped. |
+### useCeil
 
-### Returns
+`useCeil` is a hook that calculates the ceiling of a given number or a function that returns a number.
 
-| Type     | Description        |
-| -------- | ------------------ |
-| `number` | The clamped value. |
+<TypeTable
+  type={{
+    value: {
+      description:
+        'The number or function returning a number to calculate the ceiling of',
+      type: 'Resolvable',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a number representing the ceiling of the input value.
+
+<TypeTable
+  type={{
+    Resolvable: {
+      description:
+        'A type that can be either the value itself or a function that returns the value',
+      type: 'T | (() => T)',
+    },
+  }}
+/>
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

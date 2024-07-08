@@ -1,73 +1,50 @@
 ---
 title: useSum
-description: Your first document
+description: Calculating the sum of an array of numbers
 ---
 
-`useSum` is a custom React hook that takes an array of numbers and calculates the sum of those numbers. It returns the calculated sum as a number.
+Demo
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useSum
+```
 
 ## Usage
 
 ```tsx
-import { useSum } from '#';
-import * as React from 'react';
+const numbers = [1, 2, 3, 4, 5];
+const sum = useSum(numbers);
 
-const Component = () => {
-  const numbers = [1, 2, 3, 4, 5];
-  const sum = useSum(numbers);
-
-  return (
-    <div>
-      <p>Sum: {sum}</p>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-```tsx
-import { useSum } from '#';
-import * as React from 'react';
-
-const Component = () => {
-  const [numbers, setNumbers] = React.useState([10, 20, 30]);
-  const sum = useSum(numbers);
-
-  const handleAddNumber = () => {
-    setNumbers([...numbers, 40]);
-  };
-
-  return (
-    <div>
-      <p>Sum: {sum}</p>
-      <button onClick={handleAddNumber}>Add Number</button>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```ts
-export declare function useSum(array: number[]): number;
+console.log(sum); // 15
 ```
 
 ## Reference
 
-| Property | Type       | Default | Description                                  |
-| -------- | ---------- | ------- | -------------------------------------------- |
-| `array`  | `number[]` | -       | An array of numbers to calculate the sum of. |
+### useSum
 
-### Returns
+`useSum` is a hook that calculates the sum of an array of numbers.
 
-| Type     | Description                                |
-| -------- | ------------------------------------------ |
-| `number` | The sum of the numbers in the input array. |
+<TypeTable
+  type={{
+    array: {
+      description: 'An array of numbers to sum.',
+      type: 'NumericArray',
+    },
+  }}
+/>
 
+### NumericArray
+
+`NumericArray` is a type alias for a readonly array of numbers:
+
+```ts
+type NumericArray = readonly number[];
+```
+
+### Return Value
+
+Returns a number representing the sum of all elements in the input array.
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

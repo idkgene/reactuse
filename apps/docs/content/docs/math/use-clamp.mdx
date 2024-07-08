@@ -1,60 +1,78 @@
 ---
 title: useClamp
-description: Your first document
+description: Clamping a number between a minimum and maximum value
 ---
 
-`useClamp` is a React hook that limits a numerical value to stay within a specified range.
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useClamp
+```
 
 ## Usage
 
 ```tsx
-import { useClamp } from '#';
-import * as React from 'react';
+import { useClamp } from '@changeelog/reactuse';
 
-const Component = () => {
-  const clamped = useClamp(5, 0, 10); // Returns `5`
-  const clampedWithFn = useClamp(() => 15, 0, 10); // Returns `10`
+function ClampedValueDisplay() {
+  const value = 15;
+  const min = 0;
+  const max = 10;
+  const clampedValue = useClamp(value, min, max);
 
   return (
-    <div>
-      <p>Clamped Value: {clamped}</p>
-      <p>Clamped Value (Function): {clampedWithFn}</p>
-    </div>
+    <p>
+      The value {value} clamped between {min} and {max} is {clampedValue}
+    </p>
   );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```ts
-export declare type Resolvable<T> = T | (() => T);
-
-export declare function resolveValue<T>(value: Resolvable<T>): T;
-
-export declare function useClamp(
-  value: Resolvable<number>,
-  min: Resolvable<number>,
-  max: Resolvable<number>,
-): number;
+}
 ```
 
 ## Reference
 
-| Parameter | Type | Description              |
-| --------- | ---- | ------------------------ |
-| `value`   | `T`  | The value to be clamped. |
-| `min`     | `T`  | The minimum value.       |
-| `max`     | `T`  | The maximum value.       |
+### useClamp
 
-### Returns
+`useClamp` is a hook that clamps a given number between a minimum and maximum value.
 
-| Type     | Description        |
-| -------- | ------------------ |
-| `number` | The floored value. |
+<TypeTable
+  type={{
+    value: {
+      description: 'The number or function returning a number to be clamped',
+      type: 'Resolvable',
+    },
+    min: {
+      description: 'The minimum value or function returning the minimum value',
+      type: 'Resolvable',
+    },
+    max: {
+      description: 'The maximum value or function returning the maximum value',
+      type: 'Resolvable',
+    },
+  }}
+/>
+
+### Return Value
+
+Returns a number representing the clamped value.
+
+### Types
+
+<TypeTable
+  type={{
+    Primitive: {
+      description: 'Union type of primitive values',
+      type: 'string | number | boolean | null | undefined',
+    },
+    Func: {
+      description: 'Function type that returns a primitive value',
+      type: '() => T',
+    },
+    Resolvable: {
+      description:
+        'A type that can be either the primitive value itself or a function that returns the value',
+      type: 'T | Func',
+    },
+  }}
+/>
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';

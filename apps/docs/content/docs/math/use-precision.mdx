@@ -1,99 +1,75 @@
 ---
 title: usePrecision
-description: Your first document
+description: Format numeries values with specified precision
 ---
 
-`usePrecision` is a hook that formats a number to a specified precision.
+## Inslattion
+
+```bash
+npx changeelog/reactuse@latest add usePrecision
+```
 
 ## Usage
 
 ```tsx
-import { usePrecision } from '#';
-import * as React from 'react';
+const value = 3.14159;
+const precision = 2;
+const formattedValue = usePrecision({ value, precision });
 
-const Component = () => {
-  const value = 3.14159;
-  const precision = 2;
-
-  const formattedValue = usePrecision({ precision, value });
-
-  return (
-    <div>
-      <p>Original value: {value}</p>
-      <p>Formatted value: {formattedValue}</p>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-```tsx
-import { usePrecision } from '#';
-import * as React from 'react';
-
-const Component = () => {
-  const [value, setValue] = React.useState(1.23456);
-  const [precision, setPrecision] = React.useState(3);
-
-  const formattedValue = usePrecision({ precision, value });
-
-  return (
-    <div>
-      <p>Original value: {value}</p>
-      <p>Formatted value: {formattedValue}</p>
-      <button onClick={() => setValue(4.56789)}>Update value</button>
-      <button onClick={() => setPrecision(1)}>Update precision</button>
-    </div>
-  );
-};
-
-export default Component;
-```
-
-## Type Declarations
-
-```typescript
-export declare function usePrecision(
-  options: PrecisionOptions,
-): UsePrecisionReturn;
-
-export declare type PrecisionOptions = {
-  precision: number;
-  value: number;
-};
-
-export declare type FormattedValue = number;
-
-export declare type UsePrecisionReturn = FormattedValue;
+console.log(formattedValue); // 3.14
 ```
 
 ## Reference
 
-#### usePrecision
+### usePrecision
 
-| Property  | Type               | Default | Description                                             |
-| :-------- | :----------------- | :------ | :------------------------------------------------------ |
-| `options` | `PrecisionOptions` | -       | An object containing the precision and value to format. |
+`usePrecision` is a hook that formats a numeric value to a specified precision.
 
-#### PrecisionOptions
+<TypeTable
+  type={{
+    options: {
+      description: 'Configuration object for the precision formatting.',
+      type: 'PrecisionOptions',
+    },
+  }}
+/>
 
-| Property    | Type     | Default | Description                                         |
-| :---------- | :------- | :------ | :-------------------------------------------------- |
-| `precision` | `number` | -       | The number of decimal places to round the value to. |
-| `value`     | `number` | -       | The number to format.                               |
+### PrecisionOptions
 
-#### FormattedValue
+An interface defining the required configuration for precision formatting:
 
-| Type     | Description                                                                |
-| :------- | :------------------------------------------------------------------------- |
-| `number` | The formatted value, which is a number rounded to the specified precision. |
+<TypeTable
+  type={{
+    precision: {
+      description: 'The number of decimal places to round to.',
+      type: 'Precision (number)',
+    },
+    value: {
+      description: 'The numeric value to format.',
+      type: 'NumericValue (number)',
+    },
+  }}
+/>
 
-### Returns
+- `precision` must be a non-negative integer.
+- `value` must be a valid finite number.
 
-| Type     | Description                                                                |
-| :------- | :------------------------------------------------------------------------- |
-| `number` | The formatted value, which is a number rounded to the specified precision. |
+### Return Value
+
+Returns a `FormattedValue` (`number`) representing the input value rounded to the specified precision.
+
+### Types
+
+```ts
+type Precision = number;
+type NumericValue = number;
+type FormattedValue = number;
+
+interface PrecisionOptions {
+  precision: Precision;
+  value: NumericValue;
+}
+```
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
