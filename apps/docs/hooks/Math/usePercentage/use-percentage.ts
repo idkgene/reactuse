@@ -1,4 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+
+type SetStateAction<T> = T | ((prevState: T) => T);
+type Dispatch<A> = (value: A) => void;
 
 interface UsePercentageOptions {
   initialValue?: number;
@@ -6,32 +9,58 @@ interface UsePercentageOptions {
 }
 
 interface UsePercentageReturn {
-  value: number;
-  setPercentage: (newValue: number) => void;
+  readonly value: number;
+  setPercentage: Dispatch<SetStateAction<number>>;
   getAbsolute: () => number;
 }
 
-const usePercentage = (options: UsePercentageOptions = {}): UsePercentageReturn  => {
-  const { initialValue = 0, total = 100 } = options;
-  const [value, setValue] = useState<number>(initialValue);
+const validatePercentage = (value: number): void => {
+  if (!Number.isFinite(value) || value < 0 || value > 100) {
+    throw new Error('Percentage must be a finite number between 0 and 100');
+  }
+};
 
-  const setPercentage = useCallback((newValue: number) => {
-    try {
-      if (newValue < 0 || newValue > 100) {
-        throw new Error('Percentage must be between 0 and 100');
-      }
-      setValue(newValue);
-    } catch (error) {
-      console.error('Error in usePercentage:', error);
-    }
+const validateTotal = (value: number): void => {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error('Total must be a finite number greater than 0');
+  }
+};
+
+const usePercentage = ({
+  initialValue = 0,
+  total = 100,
+}: UsePercentageOptions = {}): UsePercentageReturn => {
+  const [value, setValue] = useState<number>(() => {
+    validatePercentage(initialValue);
+    return initialValue;
+  });
+
+  useMemo(() => {
+    validateTotal(total);
+  }, [total]);
+
+  const setPercentage = useCallback((newValue: SetStateAction<number>) => {
+    setValue((prevValue) => {
+      const nextValue =
+        typeof newValue === 'function' ? newValue(prevValue) : newValue;
+      validatePercentage(nextValue);
+      return nextValue;
+    });
   }, []);
 
-  const getAbsolute = useCallback(() => {
+  const getAbsolute = useCallback((): number => {
     return (value / 100) * total;
   }, [value, total]);
 
-  return { value, setPercentage, getAbsolute };
+  return useMemo(
+    () => ({
+      value,
+      setPercentage,
+      getAbsolute,
+    }),
+    [value, setPercentage, getAbsolute],
+  );
 };
 
-export { usePercentage };
-export const percentage = usePercentage;
+export { usePercentage, usePercentage as percentage };
+export type { UsePercentageOptions, UsePercentageReturn };
