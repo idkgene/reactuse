@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { expect, it, describe, vi } from 'vitest';
-import { useRound } from '../useRound';
+import { useRound } from '../use-round';
 
 describe('useRound', () => {
   it('should initialize with 0', () => {
