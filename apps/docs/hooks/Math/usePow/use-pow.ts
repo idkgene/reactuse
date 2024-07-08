@@ -1,4 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+
+type SetStateAction<T> = T | ((prevState: T) => T);
+type Dispatch<A> = (value: A) => void;
 
 interface UsePowOptions {
   initialBase?: number;
@@ -6,33 +9,81 @@ interface UsePowOptions {
 }
 
 interface UsePowReturn {
-  base: number;
-  setBase: React.Dispatch<React.SetStateAction<number>>;
-  exponent: number;
-  setExponent: React.Dispatch<React.SetStateAction<number>>;
-  calculate: () => number | null;
+  readonly base: number;
+  setBase: Dispatch<SetStateAction<number>>;
+  readonly exponent: number;
+  setExponent: Dispatch<SetStateAction<number>>;
+  readonly result: number;
 }
 
-const usePow = (options: UsePowOptions = {}): UsePowReturn => {
-  const { initialBase = 0, initialExponent = 1 } = options;
-  const [base, setBase] = useState<number>(initialBase);
-  const [exponent, setExponent] = useState<number>(initialExponent);
+const isValidNumber = (value: number): boolean => Number.isFinite(value);
 
-  const calculate = useCallback(() => {
+const validateNumber = (value: number, name: string): void => {
+  if (!isValidNumber(value)) {
+    throw new Error(`${name} must be a finite number`);
+  }
+};
+
+export const usePow = ({
+  initialBase = 0,
+  initialExponent = 1,
+}: UsePowOptions = {}): UsePowReturn => {
+  const [base, setBase] = useState(() => {
+    validateNumber(initialBase, 'initialBase');
+    return initialBase;
+  });
+
+  const [exponent, setExponent] = useState(() => {
+    validateNumber(initialExponent, 'initialExponent');
+    return initialExponent;
+  });
+
+  const setValidatedState = useCallback(
+    (setter: Dispatch<SetStateAction<number>>, name: string) =>
+      (value: SetStateAction<number>) => {
+        setter((prevValue) => {
+          const newValue =
+            typeof value === 'function' ? value(prevValue) : value;
+          validateNumber(newValue, name);
+          return newValue;
+        });
+      },
+    [],
+  );
+
+  const setBaseWithValidation = useMemo(
+    () => setValidatedState(setBase, 'base'),
+    [setValidatedState],
+  );
+
+  const setExponentWithValidation = useMemo(
+    () => setValidatedState(setExponent, 'exponent'),
+    [setValidatedState],
+  );
+
+  const result = useMemo(() => {
     try {
-      const result = Math.pow(base, exponent);
-      if (!isFinite(result)) {
+      const calculatedResult = Math.pow(base, exponent);
+      if (!isValidNumber(calculatedResult)) {
         throw new Error('Result is not a finite number');
       }
-      return result;
+      return calculatedResult;
     } catch (error) {
-      console.error('Error in usePow:', error);
-      return null;
+      console.error('Error calculating power:', error);
+      return NaN;
     }
   }, [base, exponent]);
 
-  return { base, setBase, exponent, setExponent, calculate };
+  return useMemo(
+    () => ({
+      base,
+      setBase: setBaseWithValidation,
+      exponent,
+      setExponent: setExponentWithValidation,
+      result,
+    }),
+    [base, setBaseWithValidation, exponent, setExponentWithValidation, result],
+  );
 };
 
-export { usePow };
-export const pow = usePow;
+export type { UsePowOptions, UsePowReturn };

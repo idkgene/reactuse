@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useProjection } from './useProjection';
+import { useProjection } from './use-projection';
 
 const UseProjectionDemo: React.FC = () => {
   const projectedValue = useProjection(5, [0, 10], [0, 100]);

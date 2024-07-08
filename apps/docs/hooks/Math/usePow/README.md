@@ -1,13 +1,13 @@
-# useProjection
+# usePow
 
-Numeric projection from one domain to another.
+`Math.pow`
 
 Please refer to the documentation for more information.
 
 ## Installation
 
 ```bash
-npx changeelog/reactuse@latest add useProjection
+npx changeelog/reactuse@latest add usePow
 ```
 
 ## Contribution

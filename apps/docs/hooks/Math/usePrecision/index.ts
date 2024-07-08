@@ -1,1 +1,1 @@
-export * from './usePrecision';
+export * from './use-precision';
