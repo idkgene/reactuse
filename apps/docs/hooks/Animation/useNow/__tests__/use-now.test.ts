@@ -7,6 +7,7 @@ vi.useFakeTimers();
 describe('useNow', () => {
   afterEach(() => {
     vi.clearAllTimers();
+    vi.restoreAllMocks();
   });
 
   it('should return the current date by default', () => {
@@ -83,5 +84,21 @@ describe('useNow', () => {
     unmount();
     expect(clearIntervalSpy).toHaveBeenCalled();
     clearIntervalSpy.mockRestore();
+  });
+
+  it('should clear requestAnimationFrame timer when unmounted', () => {
+    const cancelAnimationFrameSpy = vi.spyOn(global, 'cancelAnimationFrame');
+    const { unmount } = renderHook(() =>
+      useNow({ interval: 'requestAnimationFrame' }),
+    );
+    unmount();
+    expect(cancelAnimationFrameSpy).toHaveBeenCalled();
+    cancelAnimationFrameSpy.mockRestore();
+  });
+
+  it('should throw an error for invalid interval value', () => {
+    expect(() => {
+      renderHook(() => useNow({ interval: -100 }));
+    }).toThrowError('useNow: interval must be a positive number');
   });
 });
