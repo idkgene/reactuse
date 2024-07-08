@@ -1,1 +1,1 @@
-export * from './useAverage';
+export * from './use-average';
