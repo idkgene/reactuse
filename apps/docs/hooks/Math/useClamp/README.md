@@ -2,7 +2,7 @@
 
 A React hook that clamps a given number within a specified range.
 
-Please refer to the [documentation](#) for more information.
+Please refer to the documentation for more information.
 
 ## Installation
 
