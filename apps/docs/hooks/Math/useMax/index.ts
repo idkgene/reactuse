@@ -1,1 +1,1 @@
-export * from './useMax';
+export * from './use-max';

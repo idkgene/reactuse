@@ -1,1 +1,1 @@
-export * from './useMin';
+export * from './use-min';

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import type { Resolvable } from '../math';
+
+export type Resolvable<T> = T | (() => T);
 
 function resolveValue<T>(value: Resolvable<T>): T {
   return typeof value === 'function' ? (value as () => T)() : value;

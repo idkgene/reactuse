@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMin } from './useMin';
+import { useMin } from './use-min';
 
 function UseMinDemo() {
   const [num1, setNum1] = React.useState(5);

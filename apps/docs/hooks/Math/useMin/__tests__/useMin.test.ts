@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { expect, it, describe } from 'vitest';
-import { useMin } from '../useMin';
+import { useMin } from '../use-min';
 
 describe('useMin', () => {
   it('should return the minimum of a single array', () => {

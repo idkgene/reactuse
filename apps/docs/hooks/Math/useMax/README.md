@@ -2,7 +2,7 @@
 
 `Math.max`
 
-Please refer to the [documentation](#) for more information.
+Please refer to the documentation for more information.
 
 ## Installation
 

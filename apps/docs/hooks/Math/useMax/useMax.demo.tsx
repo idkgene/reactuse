@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMax } from './useMax';
+import { useMax } from './use-max';
 
 function UseMaxDemo() {
   const [num1, setNum1] = React.useState(5);
@@ -14,7 +14,9 @@ function UseMaxDemo() {
         <input
           type="number"
           value={num1}
-          onChange={(e) => { setNum1(parseInt(e.target.value, 10)); }}
+          onChange={(e) => {
+            setNum1(parseInt(e.target.value, 10));
+          }}
           max={10}
           min={-10}
           className="mr-2"
@@ -27,7 +29,9 @@ function UseMaxDemo() {
         <input
           type="number"
           value={num2}
-          onChange={(e) => { setNum2(parseInt(e.target.value, 10)); }}
+          onChange={(e) => {
+            setNum2(parseInt(e.target.value, 10));
+          }}
           max={10}
           min={-10}
           className="mr-2"
