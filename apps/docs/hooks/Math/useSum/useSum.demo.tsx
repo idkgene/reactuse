@@ -1,4 +1,4 @@
-import { useSum } from './useSum';
+import { useSum } from './use-sum';
 
 function UseSumDemo() {
   const number = [1, 2, 3, 4, 5];
@@ -6,9 +6,9 @@ function UseSumDemo() {
 
   return (
     <div>
-        <p>Input array: {number.join(', ')}</p>
-        <p>Sum: {sum}</p>
-      </div>
+      <p>Input array: {number.join(', ')}</p>
+      <p>Sum: {sum}</p>
+    </div>
   );
 }
 

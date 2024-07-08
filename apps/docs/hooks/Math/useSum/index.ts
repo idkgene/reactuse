@@ -1,1 +1,1 @@
-export * from './useSum';
+export * from './use-sum';
