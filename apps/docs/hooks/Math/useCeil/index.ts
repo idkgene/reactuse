@@ -1,1 +1,1 @@
-export * from './useCeil';
+export * from './use-ceil';

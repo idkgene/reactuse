@@ -2,7 +2,7 @@
 
 A React hook that returns the ceiling of a given number.
 
-Please refer to the [documentation](#) for more information.
+Please refer to the documentation for more information.
 
 ## Installation
 
