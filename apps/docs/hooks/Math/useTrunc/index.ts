@@ -1,1 +1,1 @@
-export * from './useTrunc';
+export * from './use-trunc';

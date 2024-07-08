@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTrunc } from './useTrunc';
+import { useTrunc } from './use-trunc';
 
 function UseTruncDemo() {
   const [inputValue, setInputValue] = React.useState('');
@@ -16,19 +16,19 @@ function UseTruncDemo() {
 
   return (
     <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="input">Enter a number:</label>
-          <input
-            type="text"
-            name="input"
-            id="input"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <button type="submit">Truncate</button>
-        </form>
-        <p>Trunctaed value: {truncatedValue}</p>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="input">Enter a number:</label>
+        <input
+          type="text"
+          name="input"
+          id="input"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button type="submit">Truncate</button>
+      </form>
+      <p>Trunctaed value: {truncatedValue}</p>
+    </div>
   );
 }
 
