@@ -23,10 +23,12 @@ function useTimeoutFn<T extends unknown[]>(
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const callbackRef = useRef<TimeoutCallback<T>>(callback);
   const argsRef = useRef<T | undefined>();
+  const intervalRef = useRef(interval);
 
   useEffect(() => {
     callbackRef.current = callback;
-  }, [callback]);
+    intervalRef.current = interval;
+  }, [callback, interval]);
 
   const stop = useCallback(() => {
     if (timeoutRef.current) {
@@ -38,7 +40,11 @@ function useTimeoutFn<T extends unknown[]>(
 
   const start = useCallback(
     (...args: T | []) => {
-      if (typeof interval !== 'number' && typeof interval !== 'function') {
+      const currentInterval = intervalRef.current;
+      if (
+        typeof currentInterval !== 'number' &&
+        typeof currentInterval !== 'function'
+      ) {
         throw new Error(
           'Interval must be a number or a function returning a number',
         );
@@ -48,7 +54,10 @@ function useTimeoutFn<T extends unknown[]>(
       stop();
       setIsPending(true);
 
-      const delay = typeof interval === 'function' ? interval() : interval;
+      const delay =
+        typeof currentInterval === 'function'
+          ? currentInterval()
+          : currentInterval;
 
       if (delay < 0) {
         throw new Error('Interval must be a non-negative number');
@@ -63,7 +72,7 @@ function useTimeoutFn<T extends unknown[]>(
         }
       }, delay);
     },
-    [interval, stop],
+    [stop],
   );
 
   useEffect(() => {
@@ -76,5 +85,5 @@ function useTimeoutFn<T extends unknown[]>(
   return { isPending, start, stop };
 }
 
-export default useTimeoutFn;
+export { useTimeoutFn };
 export type { UseTimeoutFnOptions, UseTimeoutFnReturn };

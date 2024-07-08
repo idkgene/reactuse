@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
-import useTimeoutFn from './use-timeout-fn';
+import { useTimeoutFn } from './use-timeout-fn';
 import Demo from '@/components/Common/Demo/demo';
 
 function TimeoutFnDemo(): JSX.Element {
