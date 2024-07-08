@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useAbs } from './useAbs';
+import { useAbs } from './use-abs';
 
 function UseAbsDemo() {
   const [num, setNum] = React.useState(-10);
@@ -14,7 +14,9 @@ function UseAbsDemo() {
         <input
           type="number"
           value={num}
-          onChange={(e) => { setNum(parseInt(e.target.value, 10)); }}
+          onChange={(e) => {
+            setNum(parseInt(e.target.value, 10));
+          }}
           max={10}
           min={-10}
           className="mr-2"

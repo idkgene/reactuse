@@ -1,1 +1,1 @@
-export * from './useAbs';
+export * from './use-abs';
