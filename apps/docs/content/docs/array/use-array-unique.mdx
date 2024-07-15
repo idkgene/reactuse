@@ -1,0 +1,65 @@
+---
+title: useArrayUnique
+description: Create an array with unique elements from the given array
+---
+
+<ArrayUniqueDemo />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayUnique
+```
+
+## Usage
+
+```ts
+const items = ['apple', 'banana', 'apple', 'cherry'];
+const uniqueItems = useArrayUnique(items);
+```
+
+## Reference
+
+`useArrayUnique` is a hook that creates a new array with unique elements from the given array.
+
+### Parameters
+
+The hook accepts two parameters:
+
+<TypeTable
+  type={{
+    list: {
+      description: 'The array to process or a function that returns an array.',
+      type: 'MaybeRef<MaybeRef[]>',
+    },
+    compareFn: {
+      description: 'Optional custom comparison function to determine equality.',
+      type: '(a: T, b: T) => boolean',
+      default: 'undefined',
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns a new array with unique elements.
+
+<TypeTable
+  type={{
+    returnValue: {
+      description: 'Array with unique elements.',
+      type: 'T[]',
+    },
+  }}
+/>
+
+## Notes
+
+- The `list` parameter can be either a direct array or a function that returns an array (`MaybeRef` type).
+- Each element in the `list` can also be a `MaybeRef`, allowing for dynamic values.
+- If no `compareFn` is provided, the hook uses a default comparison:
+- It first attempts to use `JSON.stringify` for comparison.
+- If that fails (e.g., for circular structures), it falls back to `Object.is`.
+
+import ArrayUniqueDemo from '../../../hooks/Array/useArrayUnique/use-array-unique.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';

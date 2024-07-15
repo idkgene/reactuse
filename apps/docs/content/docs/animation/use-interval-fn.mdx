@@ -23,44 +23,45 @@ const { isActive, pause, resume } = useIntervalFn(
 
 ## Reference
 
-### useIntervalFn
+`useIntervalFn` is a hook that executes a callback function at specified intervals and provides controls for managing the interval.
 
-`useIntervalFn` takes three parameters and returns a `Pausable` object.
+### Parameters
+
+The hook accepts three parameters:
 
 <TypeTable
   type={{
-    cb: {
-      description: 'The callback function to be invoked at each interval.',
-      type: 'Fn',
+    callback: {
+      description: 'The function to be executed at each interval.',
+      type: '() => void',
     },
     interval: {
       description:
-        'The interval duration in milliseconds. Can be a constant or a function.',
-      type: 'Resolvable<number>',
-      default: '1000',
+        'The interval duration in milliseconds or a function that returns the duration.',
+      type: 'number | (() => number)',
     },
     options: {
-      description:
-        '(Optional) configuration object for the interval behavior and callbacks.',
+      description: 'Optional configuration object.',
       type: 'UseIntervalFnOptions',
-      default: '{} (immediate: true, immediateCallback: false)',
+      default: '{}',
     },
   }}
 />
 
-### UseIntervalFnOptions
+### Options
 
-An interface defining optional configuration for the interval:
+The `options` object can include the following properties:
 
 <TypeTable
   type={{
     immediate: {
-      description: 'Start the timer immediately.',
+      description: 'Determines whether the interval starts immediately.',
       type: 'boolean',
       default: 'true',
     },
     immediateCallback: {
-      description: 'Execute the callback immediately after calling `resume`.',
+      description:
+        'Determines whether the callback should be invoked immediately on start.',
       type: 'boolean',
       default: 'false',
     },
@@ -69,7 +70,7 @@ An interface defining optional configuration for the interval:
 
 ### Return Value
 
-Returns a `Pausable` object with the following properties:
+The hook returns an object with the following properties:
 
 <TypeTable
   type={{
@@ -87,6 +88,14 @@ Returns a `Pausable` object with the following properties:
     },
   }}
 />
+
+## Notes
+
+- The `callback` parameter must be a function. If it's not, the hook will throw a TypeError.
+- The `interval` parameter must resolve to a positive number. If it doesn't, the hook will throw a RangeError.
+- If an error occurs in the callback function, it will be caught and logged to the console, allowing the interval to continue running.
+- The interval can be dynamically changed by passing a different value or function to the interval parameter.
+- The `pause` and `resume` functions can be used to control the execution of the interval.
 
 import IntervalFnDemo from '../../../hooks/Animation/useIntervalFn/use-interval-fn.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';

@@ -14,41 +14,36 @@ npx changeelog/reactuse@latest add useInterval
 ## Usage
 
 ```tsx
-const { counter, reset, pause, resume } = useInterval(1000, {
-  immediate: true,
-  callback: (count) => {
-    console.log(`Interval count: ${count}`);
-  },
+const { counter, isRunning, pause, resume } = useInterval(1000, {
+  callback: (count) => console.log(`Count: ${count}`),
 });
 ```
 
 ## Reference
 
-### useInterval
-
 `useInterval` is a hook that creates an interval timer and returns controls for managing it.
+
+### Parameters
+
+The hook accepts two parameters:
 
 <TypeTable
   type={{
     interval: {
-      description: 'The interval in milliseconds.',
+      description: 'The interval duration in milliseconds.',
       type: 'number',
     },
     options: {
-      description: 'Configuration object for the interval behavior.',
+      description: 'Optional configuration object.',
       type: 'UseIntervalOptions',
       default: '{}',
     },
   }}
 />
 
-<Callout title="Note">
-  If the `interval` is set to a non-positive number, an error will be thrown.
-</Callout>
+### Options
 
-### UseIntervalOptions
-
-An interface defining optional configuration for the interval:
+The `options` object can include the following properties:
 
 <TypeTable
   type={{
@@ -63,21 +58,30 @@ An interface defining optional configuration for the interval:
       type: '(count: number) => void',
       default: 'undefined',
     },
+    maxCount: {
+      description: 'Maximum number of times the interval should run.',
+      type: 'number',
+      default: 'undefined',
+    },
   }}
 />
 
 ### Return Value
 
-Returns a `UseIntervalControls` object with the following properties:
+The hook returns an object with the following properties:
 
 <TypeTable
   type={{
     counter: {
-      description: 'The current count of intervals that have elapsed.',
+      description: 'The current count of interval ticks.',
       type: 'number',
     },
+    isRunning: {
+      description: 'Indicates whether the interval is currently running.',
+      type: 'boolean',
+    },
     reset: {
-      description: 'Function to reset the interval counter to 0.',
+      description: 'Function to reset the counter to 0.',
       type: '() => void',
     },
     pause: {
@@ -88,8 +92,20 @@ Returns a `UseIntervalControls` object with the following properties:
       description: 'Function to resume the interval.',
       type: '() => void',
     },
+    setCounter: {
+      description: 'Function to manually set the counter value.',
+      type: '(value: number) => void',
+    },
   }}
 />
+
+## Notes
+
+- The `interval` parameter must be a positive number. If it's not, the hook will throw an error.
+- The `setCounter` function only accepts non-negative numbers. Attempting to set a negative value will result in an error.
+- If a `maxCount` is specified, the interval will automatically stop running when the counter reaches this value.
+- If an error occurs in the callback function, it will be caught and logged to the console, allowing the interval to continue running.
+
 
 import IntervalDemo from '../../../hooks/Animation/useInterval/use-interval.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';

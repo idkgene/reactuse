@@ -1,6 +1,6 @@
 ---
 title: useNow
-description: Current Date instance.
+description: Current Date instance
 ---
 
 <NowDemo />
@@ -14,69 +14,88 @@ npx changeelog/reactuse@latest add useInterval
 ## Usage
 
 ```tsx
-const { now, pause, resume } = useNow({ controls: true, interval: 1000 });
+// Basic usage
+const now = useNow();
+
+// With controls
+const { now, pause, resume, reset } = useNow({ controls: true });
 ```
 
 ## Reference
 
-### useNow
+`useNow` is a hook that provides the current date and time, with optional controls for pausing, resuming, and resetting.
 
-`useNow` is a custom hook that returns the current Date with optional controls.
+### Parameters
+
+The hook accepts a single optional parameter:
 
 <TypeTable
   type={{
     options: {
-      description: '(Optional) Options for the useNow hook.',
-      type: 'UseNowOptions & { controls?: T }',
+      description: 'Configuration object for the hook.',
+      type: 'UseNowOptions',
       default: '{}',
     },
   }}
 />
 
-### UseNowOptions
+### Options
 
-An interface defining the options for the useNow hook:
+The `options` object can include the following properties:
 
 <TypeTable
   type={{
     controls: {
-      description: 'Enable controls to pause and resume the interval.',
+      description: 'Determines whether to return control functions.',
       type: 'boolean',
       default: 'false',
     },
     interval: {
       description:
-        'The interval for the Date to update. Can be either a number in milliseconds or "requestAnimationFrame".',
+        'The update interval in milliseconds or "requestAnimationFrame".',
       type: '"requestAnimationFrame" | number',
       default: '1000',
+    },
+    initialDate: {
+      description: 'The initial date to use.',
+      type: 'Date',
+      default: 'new Date()',
     },
   }}
 />
 
 ### Return Value
 
-The return value of useNow depends on the controls option:
-
-If `controls` is `true`, it returns an object of type UseNowReturnWithControls:
+The hook returns either a Date object or an object with the following properties, depending on the controls option:
 
 <TypeTable
   type={{
     now: {
-      description: 'The current Date.',
+      description: 'The current date and time.',
       type: 'Date',
     },
     pause: {
-      description: 'Function to pause the interval.',
+      description: 'Function to pause the timer.',
       type: '() => void',
     },
     resume: {
-      description: 'Function to resume the interval.',
+      description: 'Function to resume the timer.',
       type: '() => void',
+    },
+    reset: {
+      description: 'Function to reset the date.',
+      type: '(date?: Date) => void',
     },
   }}
 />
 
-If `controls` is `false` or not provided, it returns the current Date.
+## Notes
+
+- If `controls` is set to `true`, the hook returns an object with the current date and control functions. Otherwise, it returns just the current date.
+- The `interval` option can be set to a number (in milliseconds) or "requestAnimationFrame". If set to "requestAnimationFrame", the date will update on each animation frame.
+- If a numeric `interval` is provided, it must be a positive number. Otherwise, an error will be thrown.
+- The `reset` function allows you to set a new date. If no date is provided, it resets to the current date and time.
+- The timer automatically starts when the hook is initialized. Use the `pause` and `resume` functions to control its execution.
 
 import NowDemo from '../../../hooks/Animation/useNow/use-now.demo';
 import { TypeTable } from 'fumadocs-ui/components/type-table';

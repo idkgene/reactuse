@@ -1,0 +1,61 @@
+---
+title: useArrayFindLast
+description: Find the last element in an array based on a predicate function
+---
+
+<ArrayFindLastDemo />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayFindLast
+```
+
+## Usage
+
+```ts
+const lastEvenNumber = useArrayFindLast(numbers, (num) => num % 2 === 0);
+```
+
+## Reference
+
+`useArrayFindLast` is a hook that finds the last element in an array that satisfies a given predicate function.
+
+### Parameters
+
+The hook accepts two parameters:
+
+<TypeTable
+  type={{
+    list: {
+      description: 'The array to search or a function that returns an array.',
+      type: 'readonly T[] | (() => readonly T[])',
+    },
+    predicate: {
+      description: 'Function to test each element of the array.',
+      type: '(element: T, index: number, array: readonly T[]) => boolean',
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns the last element in the array that satisfies the predicate function, or undefined if no element is found.
+
+<TypeTable
+  type={{
+    returnValue: {
+      description: 'The found element or undefined.',
+      type: 'T | undefined',
+    },
+  }}
+/>
+
+## Notes
+
+- The hook searches the array from the end to the beginning.
+- If `list` is a function, it will be called to get the array.
+- If `list` is neither an array nor a function returning an array, a `TypeError` will be thrown.
+
+import ArrayFindLastDemo from '../../../hooks/Array/useArrayFindLast/use-array-find-last.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';

@@ -1,0 +1,61 @@
+---
+title: useArrayJoin
+description: Join elements of an array into a string with a specified separator
+---
+
+<ArrayJoinDemo />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayJoin
+```
+
+## Usage
+
+```ts
+const items = ['apple', 'banana', 'cherry'];
+const joinedString = useArrayJoin(items, ', ');
+```
+
+## Reference
+
+`useArrayJoin` is a hook that joins the elements of an array into a string, using a specified separator.
+
+### Parameters
+
+The hook accepts two parameters:
+
+<TypeTable
+  type={{
+    list: {
+      description: 'The array to join or a function that returns an array.',
+      type: 'MaybeRef<readonly MaybeRef[]>',
+    },
+    separator: {
+      description: 'The string used to separate the array elements.',
+      type: 'MaybeRef',
+      default: "','",
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns a string with the joined array elements.
+
+<TypeTable
+  type={{
+    returnValue: {
+      description: 'The joined string.',
+      type: 'string',
+    },
+  }}
+/>
+
+## Notes
+
+- If the `list` or `separator` hasn't changed since the last render, the previously computed result is returned.
+
+import ArrayJoinDemo from '../../../hooks/Array/useArrayJoin/use-array-join.demo.tsx';
+import { TypeTable } from 'fumadocs-ui/components/type-table';

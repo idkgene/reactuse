@@ -1,0 +1,79 @@
+---
+title: useArrayFilter
+description: Filter an array based on a predicate function
+---
+
+Demo 
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayFilter
+```
+
+## Usage
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+const evenNumbers = useArrayFilter(numbers, (num) => num % 2 === 0);
+```
+
+## Reference
+
+`useArrayFilter` is a hook that filters an array based on a predicate function and returns the filtered array.
+
+### Parameters
+The hook accepts two parameters:
+
+<TypeTable
+type={{
+list: {
+description: 'The input array or a function that returns an array.',
+type: 'readonly T[] | (() => readonly T[])',
+},
+predicate: {
+description: 'The function used to test each element of the array.',
+type: 'PredicateFunction',
+},
+}}
+/>
+
+### Predicate Function
+The predicate function has the following signature:
+
+<TypeTable
+type={{
+element: {
+description: 'The current element being processed in the array.',
+type: 'T',
+},
+index: {
+description: 'The index of the current element being processed in the array.',
+type: 'number',
+},
+array: {
+description: 'The array on which the filter method was called.',
+type: 'readonly T[]',
+},
+}}
+/>
+
+### Return Value
+The hook returns a filtered array of the same type as the input:
+
+<TypeTable
+type={{
+filteredArray: {
+description: 'The resulting array after applying the filter.',
+type: 'readonly T[]',
+},
+}}
+/>
+
+## Notes
+- If the input is a function, it will be called to get the array.
+- If an error occurs during filtering, it will be caught, logged to the console, and an empty array will be returned.
+
+The filtered array is readonly to prevent accidental mutations. If you need to modify the array, create a copy first.
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
