@@ -1,0 +1,65 @@
+---
+title: 'useArrayChunk'
+description: Split an array into chunks of a specified size
+---
+
+<Demo name="useArrayChunk" category="Array" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayChunk
+```
+
+## Usage
+
+```ts
+const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const { chunks } = useArrayChunk(array, 3);
+// chunks: [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
+```
+
+## Reference
+
+`useArrayChunk` is a hook that splits an array into chunks of a specified size.
+
+### Parameters
+
+The hook accepts two parameters:
+
+<TypeTable
+  type={{
+    array: {
+      description:
+        'The array to be chunked or a function that returns the array.',
+      type: 'T[] | (() => T[])',
+    },
+    size: {
+      description: 'The size of each chunk.',
+      type: 'number',
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns an object with the following property:
+
+<TypeTable
+  type={{
+    chunks: {
+      description:
+        'An array of arrays, where each sub-array represents a chunk of the original array.',
+      type: 'T[][]',
+    },
+  }}
+/>
+
+## Notes
+
+- If the `array` parameter is a function, it will be memoized and called on each render to get the latest array value.
+- The `size` parameter must be a positive integer. If it's not, the hook will throw an error.
+- If the `array` parameter is not an array or a function returning an array, the hook will throw an error.
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Demo } from '@/components/Common/Preview/preview';

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useArrayChunk } from './use-array-chunk';
 import { Input } from '@/components/ui/input';
-import Demo from '@/components/Common/Demo/demo';
+import { Label } from '@/components/ui/label';
 
 function ArrayChunkDemo(): JSX.Element {
   const [inputArray, setInputArray] = useState('1, 2, 3, 4, 5');
@@ -13,11 +13,9 @@ function ArrayChunkDemo(): JSX.Element {
   const chunkedArray = useArrayChunk(parsedArray, chunkSize);
 
   return (
-    <Demo title="useArrayChunk" category="Array">
+    <div className="flex flex-col">
       <div>
-        <label htmlFor="inputArray" className="block text-sm font-medium">
-          Input Array:
-        </label>
+        <Label htmlFor="inputArray">Input Array:</Label>
         <Input
           id="inputArray"
           value={inputArray}
@@ -29,9 +27,7 @@ function ArrayChunkDemo(): JSX.Element {
         />
       </div>
       <div>
-        <label htmlFor="chunkSize" className="block text-sm font-medium">
-          Chunk Size:
-        </label>
+        <Label htmlFor="chunkSize">Chunk Size:</Label>
         <Input
           id="chunkSize"
           type="number"
@@ -45,11 +41,11 @@ function ArrayChunkDemo(): JSX.Element {
       </div>
       <div>
         <p className="text-sm font-medium">Chunked Array:</p>
-        <pre className="mt-2 rounded-md p-4">
-          {JSON.stringify(chunkedArray, null, 2)}
-        </pre>
+        <div className="bg-secondary rounded-md">
+          <pre>{JSON.stringify(chunkedArray, null, 0)}</pre>
+        </div>
       </div>
-    </Demo>
+    </div>
   );
 }
 
