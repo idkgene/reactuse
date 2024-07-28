@@ -1,38 +1,37 @@
 import { useMemo } from 'react';
 
-export type UseArrayFilterPredicate<T> = (
+type PredicateFunction<T> = (
   element: T,
   index: number,
-  array: T[],
+  array: readonly T[],
 ) => boolean;
 
-export function useArrayFilter<T>(
-  list: T[] | null | undefined,
-  predicate: UseArrayFilterPredicate<T>,
-): T[] {
-  return useMemo(() => {
-    if (list === null) {
-      console.warn('useArrayFilter: list is null or undefined');
-      return [];
-    }
-
-    if (!Array.isArray(list)) {
-      throw new Error('useArrayFilter: list must be an array');
-    }
-
-    if (typeof predicate !== 'function') {
-      throw new Error('useArrayFilter: predicate must be a function');
-    }
-
-    if (list.length === 0) {
-      return [];
-    }
-
+function useArrayFilter<T>(
+  list: readonly T[] | (() => readonly T[]),
+  predicate: PredicateFunction<T>,
+): readonly T[] {
+  const result = useMemo(() => {
     try {
-      return list.filter(predicate);
+      const array = typeof list === 'function' ? list() : list;
+
+      if (!Array.isArray(array)) {
+        throw new Error(
+          'Input must be an array or a function returning an array',
+        );
+      }
+
+      const typedArray = array as readonly T[];
+
+      return typedArray.filter((element, index, arr) =>
+        predicate(element, index, arr),
+      );
     } catch (error) {
-      console.error('useArrayFilter: Error during execution:', error);
-      return [];
+      console.error('Error in useArrayFilter:', error);
+      return [] as readonly T[];
     }
   }, [list, predicate]);
+
+  return result;
 }
+
+export { useArrayFilter };

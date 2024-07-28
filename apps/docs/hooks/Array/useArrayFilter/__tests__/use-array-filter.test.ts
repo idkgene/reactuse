@@ -1,76 +1,118 @@
 import { renderHook } from '@testing-library/react';
-import { expect, it, describe } from 'vitest';
+import { expect, it, describe, vi } from 'vitest';
 import { useArrayFilter } from '../use-array-filter';
 
 describe('useArrayFilter', () => {
-  it('should return an empty array when list is empty', () => {
-    const { result } = renderHook(() => useArrayFilter([], () => true));
-    expect(result.current).toEqual([]);
-  });
-
-  it('should return an empty array when predicate is not a function', () => {
-    const { result } = renderHook(() => useArrayFilter([1, 2, 3], null as any));
-    expect(result.current).toEqual([]);
-  });
-
-  it('should filter an array based on the provided predicate function', () => {
-    const numbers = [1, 2, 3, 4, 5];
-    const isEven = (number: number) => number % 2 === 0;
-    const { result } = renderHook(() => useArrayFilter(numbers, isEven));
-    expect(result.current).toEqual([2, 4]);
-  });
-
-  it('should return a new array instance when dependencies change', () => {
-    const { result, rerender } = renderHook(
-      ({ numbers, predicate }) => useArrayFilter(numbers, predicate),
-      {
-        initialProps: {
-          numbers: [1, 2, 3, 4, 5],
-          predicate: (number: number) => number % 2 === 0,
-        },
-      },
-    );
-
-    const firstResult = result.current;
-
-    rerender({
-      numbers: [1, 2, 3, 4, 5],
-      predicate: (number: number) => number > 2,
+  describe('basic functionality', () => {
+    it('should filter an array correctly', () => {
+      const { result } = renderHook(() =>
+        useArrayFilter([1, 2, 3, 4, 5], (num) => num % 2 === 0),
+      );
+      expect(result.current).toEqual([2, 4]);
     });
 
-    expect(result.current).not.toBe(firstResult);
-    expect(result.current).toEqual([3, 4, 5]);
+    it('should handle empty arrays', () => {
+      const { result } = renderHook(() => useArrayFilter([], () => true));
+      expect(result.current).toEqual([]);
+    });
+
+    it('should work with a function returning an array', () => {
+      const { result } = renderHook(() =>
+        useArrayFilter(
+          () => [1, 2, 3, 4, 5],
+          (num) => num % 2 === 0,
+        ),
+      );
+      expect(result.current).toEqual([2, 4]);
+    });
   });
 
-  it('should handle complex objects', () => {
-    const users = [
-      { name: 'Alice', age: 25 },
-      { name: 'Bob', age: 30 },
-      { name: 'Charlie', age: 15 },
-    ];
+  describe('edge cases', () => {
+    it('should return an empty array when all elements are filtered out', () => {
+      const { result } = renderHook(() =>
+        useArrayFilter([1, 3, 5], (num) => num % 2 === 0),
+      );
+      expect(result.current).toEqual([]);
+    });
 
-    const isAdult = (user: { name: string; age: number }) => user.age >= 18;
-
-    const { result } = renderHook(() => useArrayFilter(users, isAdult));
-
-    expect(result.current).toEqual([
-      { name: 'Alice', age: 25 },
-      { name: 'Bob', age: 30 },
-    ]);
+    it('should return the original array when no elements are filtered out', () => {
+      const original = [2, 4, 6];
+      const { result } = renderHook(() =>
+        useArrayFilter(original, (num) => num % 2 === 0),
+      );
+      expect(result.current).toEqual(original);
+    });
   });
 
-  it('should memoize the result when dependencies are the same', () => {
-    const numbers = [1, 2, 3, 4, 5];
-    const isEven = (number: number) => number % 2 === 0;
+  describe('error handling', () => {
+    it('should handle invalid input (non-array)', () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
+      const { result } = renderHook(() =>
+        useArrayFilter(42 as unknown as never, () => true),
+      );
+      expect(result.current).toEqual([]);
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      consoleErrorSpy.mockRestore();
+    });
 
-    const { result, rerender } = renderHook(() =>
-      useArrayFilter(numbers, isEven),
-    );
+    it('should handle a function returning a non-array', () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
+      const { result } = renderHook(() =>
+        useArrayFilter(
+          () => 42 as unknown as never,
+          () => true,
+        ),
+      );
+      expect(result.current).toEqual([]);
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      consoleErrorSpy.mockRestore();
+    });
+  });
 
-    const firstResult = result.current;
+  describe('memoization tests', () => {
+    it("should memoize the result when inputs don't change", () => {
+      const array = [1, 2, 3, 4, 5];
+      const predicate = vi.fn((num: number) => num % 2 === 0);
+      const { result, rerender } = renderHook(() =>
+        useArrayFilter(array, predicate),
+      );
 
-    rerender();
+      const firstResult = result.current;
 
-    expect(result.current).toBe(firstResult);
+      predicate.mockClear();
+
+      rerender();
+
+      expect(result.current).toBe(firstResult);
+      expect(predicate).not.toHaveBeenCalled();
+    });
+
+    it('should update the result when the array changes', () => {
+      const predicate = (num: number): boolean => num % 2 === 0;
+      const { result, rerender } = renderHook(
+        ({ array }) => useArrayFilter(array, predicate),
+        { initialProps: { array: [1, 2, 3, 4, 5] } },
+      );
+
+      expect(result.current).toEqual([2, 4]);
+      rerender({ array: [1, 2, 3, 4, 5, 6] });
+      expect(result.current).toEqual([2, 4, 6]);
+    });
+
+    it('should update the result when the predicate changes', () => {
+      const array = [1, 2, 3, 4, 5];
+      const { result, rerender } = renderHook(
+        ({ predicate }) => useArrayFilter(array, predicate),
+        { initialProps: { predicate: (num: number) => num % 2 === 0 } },
+      );
+
+      expect(result.current).toEqual([2, 4]);
+      rerender({ predicate: (num: number) => num > 3 });
+      expect(result.current).toEqual([4, 5]);
+    });
   });
 });

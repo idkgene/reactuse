@@ -1,74 +1,84 @@
 'use client';
 
-import { type SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { Input } from '../../../components/ui/input';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-  SelectContent,
-} from '../../../components/ui/select';
 import { useArrayFilter } from './use-array-filter';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
-function ArrayFilterDemo() {
-  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
-  const [filterType, setFilterType] = useState('even');
+function ArrayFilterDemo(): JSX.Element {
+  const [inputArray, setInputArray] = useState('1, 2, 3, 4, 5');
+  const [filterConditions, setFilterConditions] = useState({
+    even: false,
+    odd: false,
+    greaterThan3: false,
+  });
 
-  const isEven = (number: number) => number % 2 === 0;
-  const isOdd = (number: number) => number % 2 !== 0;
+  const parsedArray = inputArray
+    .split(',')
+    .map((item) => parseInt(item.trim(), 10));
 
-  const filteredNumbers = useArrayFilter(
-    numbers,
-    filterType === 'even' ? isEven : isOdd,
-  );
+  const filterFunctions: Record<string, (item: number) => boolean> = {
+    even: (item) => item % 2 === 0,
+    odd: (item) => item % 2 !== 0,
+    greaterThan3: (item) => item > 3,
+  };
+
+  const combinedFilterFunction = (item: number): boolean => {
+    return Object.entries(filterConditions).some(
+      ([key, isActive]) => isActive && filterFunctions[key](item),
+    );
+  };
+
+  const filteredArray = useArrayFilter(parsedArray, combinedFilterFunction);
+
+  const handleCheckboxChange = (condition: string): void => {
+    setFilterConditions((prev) => ({
+      ...prev,
+      [condition]: !prev[condition as keyof typeof filterConditions],
+    }));
+  };
 
   return (
-    <div className="relative mb-[10px] rounded-lg border p-[2em] transition-colors">
-      <div className="mb-6">
-        <Label htmlFor="numbers" className="mb-2 block font-bold">
-          Numbers:
+    <div className="space-y-4">
+      <div>
+        <Label htmlFor="inputArray" className="block text-sm font-medium">
+          Input Array:
         </Label>
         <Input
-          type="text"
-          id="numbers"
-          maxLength={20}
-          value={numbers.join(', ')}
-          onChange={(e) => {
-            setNumbers(e.target.value.split(',').map(Number));
+          id="inputArray"
+          value={inputArray}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setInputArray(e.target.value);
           }}
-          className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
         />
       </div>
-      <div className="mb-6">
-        <label htmlFor="filterType" className="mb-2 block font-bold">
-          Filter Type:
-        </label>
-        <Select
-          id="filterType"
-          value={filterType}
-          onChange={(e: { target: { value: SetStateAction<string> } }) => {
-            setFilterType(e.target.value);
-          }}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select an order" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Filter</SelectLabel>
-              <SelectItem value="even">Even</SelectItem>
-              <SelectItem value="odd">Odd</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+      <div>
+        <p className="mb-2 text-sm font-medium">Filter Conditions:</p>
+        <div className="space-y-2">
+          {Object.keys(filterConditions).map((condition) => (
+            <div key={condition} className="flex items-center space-x-2">
+              <Checkbox
+                id={condition}
+                checked={
+                  filterConditions[condition as keyof typeof filterConditions]
+                }
+                onCheckedChange={() => {
+                  handleCheckboxChange(condition);
+                }}
+              />
+              <Label htmlFor={condition} className="text-sm">
+                {condition === 'greaterThan3' ? 'Greater than 3' : condition}
+              </Label>
+            </div>
+          ))}
+        </div>
       </div>
       <div>
-        <p className="text-sm font-bold">
-          Filtered Numbers: {filteredNumbers.join(', ')}
-        </p>
+        <p className="text-sm font-medium">Filtered Array:</p>
+        <pre className="bg-secondary mt-2 rounded-md p-4 text-sm">
+          {JSON.stringify(filteredArray, null, 2)}
+        </pre>
       </div>
     </div>
   );

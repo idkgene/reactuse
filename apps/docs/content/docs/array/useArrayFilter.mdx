@@ -1,0 +1,83 @@
+---
+title: useArrayFilter
+description: Filter an array based on a predicate function
+---
+
+<Demo name="useArrayFilter" category="Array" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayFilter
+```
+
+## Usage
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+const evenNumbers = useArrayFilter(numbers, (num) => num % 2 === 0);
+console.log(evenNumbers); // Output: [2, 4]
+```
+
+## Reference
+
+`useArrayFilter` is a hook that filters an array based on a provided predicate function and returns the filtered array.
+
+### Parameters
+
+The hook accepts two parameters:
+
+<TypeTable
+  type={{
+    list: {
+      description: 'The input array or a function that returns an array.',
+      type: 'readonly T[] | (() => readonly T[])',
+    },
+    predicate: {
+      description: 'The predicate function used to filter the array elements.',
+      type: 'PredicateFunction',
+    },
+  }}
+/>
+
+### Predicate Function
+
+The predicate function has the following signature:
+
+```ts
+type PredicateFunction<T> = (
+  element: T,
+  index: number,
+  array: readonly T[],
+) => boolean;
+```
+
+It receives three arguments:
+
+- `element`: The current element being processed in the array.
+- `index`: The index of the current element being processed in the array.
+- `array`: The array on which the filter method was called.
+
+The predicate function should return a boolean value indicating whether the element should be included in the filtered array.
+
+### Return Value
+
+The hook returns the filtered array as a readonly array of type T.
+
+<TypeTable
+  type={{
+    result: {
+      description: 'The filtered array.',
+      type: 'readonly T[]',
+    },
+  }}
+/>
+
+## Notes
+
+- If the `list` parameter is a function, it will be called to obtain the array.
+- If the `list` parameter is not an array or a function returning an array, an error will be thrown.
+- If an error occurs during the filtering process, it will be caught, logged to the console, and an empty array will be returned.
+
+import { Demo } from '@/components/Common/Preview/preview';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
