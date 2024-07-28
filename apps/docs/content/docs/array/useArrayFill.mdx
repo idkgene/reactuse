@@ -1,0 +1,60 @@
+---
+title: useArrayFill
+description: Fills an array with a given value
+---
+
+<Demo name="useArrayFill" category="Array" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayFill
+```
+
+## Usage
+
+```ts
+const [array, fillArray] = useArrayFill([1, 2, 3]);
+fillArray(0); // array becomes [0, 0, 0]
+```
+
+## Reference
+
+`useArrayFill` is a hook that manages an array state and provides a function to fill the entire array with a specific value.
+
+### Parameters
+
+The hook accepts one parameter:
+
+<TypeTable
+  type={{
+    initialArray: {
+      description: 'The initial array to be managed by the hook.',
+      type: 'T[]',
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns a tuple with two elements:
+
+<TypeTable
+  type={{
+    array: {
+      description: 'The current state of the array.',
+      type: 'T[]',
+    },
+    fillArray: {
+      description: 'Function to fill the entire array with a specific value.',
+      type: '(value: T) => void',
+    },
+  }}
+/>
+
+## Notes
+
+The `fillArray` function replaces all elements in the array with the provided value, regardless of the array's length.
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Demo } from '@/components/Common/Preview/preview';
