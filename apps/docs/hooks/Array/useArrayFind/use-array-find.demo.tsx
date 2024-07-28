@@ -2,58 +2,63 @@
 
 import { useState } from 'react';
 import { useArrayFind } from './use-array-find';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
-export default function ArrayFindDemo() {
-  const [users, setUsers] = useState([
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' },
-    { id: 3, name: 'Charlie' },
-  ]);
-  const [searchId, setSearchId] = useState('');
+function ArrayFindDemo(): JSX.Element {
+  const [numbers, setNumbers] = useState([2, 3, 4, 5]);
+  const [threshold, setThreshold] = useState(3);
 
-  const findUserById = (user: { id: number }) => user.id === parseInt(searchId);
-  const foundUser = useArrayFind(users, findUserById);
+  const foundNumber = useArrayFind(numbers, (num) => num > threshold);
+
+  const handleAddNumber = (): void => {
+    const newNumber = Math.floor(Math.random() * 10) + 1;
+    setNumbers([...numbers, newNumber]);
+  };
+
+  const handleRemoveNumber = (): void => {
+    if (numbers.length > 0) {
+      setNumbers(numbers.slice(0, -1));
+    }
+  };
+
+  const handleThresholdChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setThreshold(Number(e.target.value));
+  };
 
   return (
-    <div className="relative mb-[10px] rounded-lg border p-[2em] transition-colors">
-      <div className="mb-6">
-        <label htmlFor="users" className="mb-2 block font-bold">
-          Users:
-        </label>
-        <textarea
-          id="users"
-          value={JSON.stringify(users, null, 2)}
-          onChange={(e) => {
-            setUsers(JSON.parse(e.target.value));
-          }}
-          className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-          rows={6}
+    <>
+      <div>
+        <Label htmlFor="threshold" className="mr-2 font-semibold">
+          Threshold:
+        </Label>
+        <Input
+          type="number"
+          value={threshold}
+          onChange={handleThresholdChange}
         />
       </div>
-      <div className="mb-6">
-        <label htmlFor="searchId" className="mb-2 block font-bold">
-          Search User ID:
-        </label>
-        <input
-          type="text"
-          id="searchId"
-          value={searchId}
-          onChange={(e) => {
-            setSearchId(e.target.value);
-          }}
-          className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-        />
+      <div className="mt-2 flex gap-3">
+        <Button type="button" onClick={handleAddNumber}>
+          Add Random Number
+        </Button>
+        <Button type="button" onClick={handleRemoveNumber}>
+          Remove Last Number
+        </Button>
+      </div>
+      <div className="mt-2">
+        <span className="font-semibold">Current numbers:</span>{' '}
+        {numbers.join(', ')}
       </div>
       <div>
-        <p className="mb-2 font-bold">Found User:</p>
-        {foundUser ? (
-          <pre className="rounded-md p-4">
-            {JSON.stringify(foundUser, null, 2)}
-          </pre>
-        ) : (
-          <p>No user found.</p>
-        )}
+        <span className="font-semibold">First number above {threshold}:</span>{' '}
+        {foundNumber ?? 'None'}
       </div>
-    </div>
+    </>
   );
 }
+
+export default ArrayFindDemo;
