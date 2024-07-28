@@ -1,12 +1,8 @@
 import { useCallback, useMemo } from 'react';
 
 type ArrayOrGetter<T> = T[] | (() => T[]);
-type UseArrayChunkReturn<T> = T[][];
 
-function useArrayChunk<T>(
-  array: ArrayOrGetter<T>,
-  size: number,
-): UseArrayChunkReturn<T> {
+function useArrayChunk<T>(array: ArrayOrGetter<T>, size: number): T[][] {
   const memoizedGetter = useCallback(() => {
     return typeof array === 'function' ? array() : array;
   }, [array]);

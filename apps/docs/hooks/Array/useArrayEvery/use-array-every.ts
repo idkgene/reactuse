@@ -1,38 +1,32 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
-export type UseArrayEveryPredicate<T> = (
+type ArrayElement<T> = T extends (infer U)[] ? U : never;
+
+type UseArrayEveryPredicate<T> = (
   element: T,
   index: number,
-  array: T[],
-) => unknown;
+  array: readonly T[],
+) => boolean;
 
-export function useArrayEvery<T>(
-  list: T[] | null | undefined,
-  predicate: UseArrayEveryPredicate<T>,
+function useArrayEvery<T>(
+  list: readonly T[] | null | undefined,
+  predicate: UseArrayEveryPredicate<ArrayElement<T>>,
 ): boolean {
-  return useMemo(() => {
-    if (list === null) {
-      console.warn('useArrayEvery: list is null or undefined');
-      return false;
-    }
+  const memoizedPredicate = useCallback(predicate, [predicate]);
 
+  const result = useMemo(() => {
     if (!Array.isArray(list)) {
-      throw new Error('useArrayEvery: list must be an array');
-    }
-
-    if (typeof predicate !== 'function') {
-      throw new Error('useArrayEvery: predicate must be a function');
+      return true;
     }
 
     if (list.length === 0) {
       return true;
     }
 
-    try {
-      return list.every(predicate);
-    } catch (error) {
-      console.error('useArrayEvery: Error during execution:', error);
-      return false;
-    }
-  }, [list, predicate]);
+    return list.every(memoizedPredicate);
+  }, [list, memoizedPredicate]);
+
+  return result;
 }
+
+export { useArrayEvery };
