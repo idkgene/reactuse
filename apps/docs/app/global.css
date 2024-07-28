@@ -65,3 +65,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+.shiki-wrapper {
+  background-color: transparent !important;
+}
+
+.shiki-wrapper pre {
+  margin: 0;
+  padding: 0;
+}
+
+.shiki-wrapper code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.shiki-wrapper code .line {
+  display: inline-block;
+  width: 100%;
+}
+
+.shiki-wrapper code .line:empty::after {
+  content: "\00a0";
+}
+
+.shiki-wrapper pre.shiki {
+  background-color: transparent !important;
+}

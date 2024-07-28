@@ -24,13 +24,13 @@ module.exports = {
   },
   settings: {
     tailwindcss: {
-      config: resolve(process.cwd(), './tailwind.config.js'),
+      config: resolve(process.cwd(), './tailwind.config.ts'),
       callees: ['clsx', 'cva', 'cn'],
     },
     'import/resolver': {
       typescript: {
         project,
-      },
+      },  
     },
   },
   ignorePatterns: ['node_modules/', 'dist/'],
@@ -47,5 +47,25 @@ module.exports = {
     'import/no-unresolved': 'off',
 
     '@next/next/no-html-link-for-pages': 'off',
+    'tailwindcss/no-custom-classname': [
+      'warn',
+      {
+        whitelist: [
+          'bg-(primary|destructive|secondary)(|/90|/80)?',
+          'text-(primary|destructive|secondary|foreground)(-foreground)?',
+          'hover:bg-(primary|destructive|accent|secondary)(|/90|/80)?',
+          'hover:text-(accent|secondary)-foreground',
+          'border-input',
+          'bg-background',
+          'h-10',
+          'border',
+          'px-4',
+          'py-2',
+          'underline-offset-4',
+          'hover:underline',
+          'zoom-in-95',
+        ],
+      },
+    ],
   },
 };

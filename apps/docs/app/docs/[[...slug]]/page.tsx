@@ -35,8 +35,10 @@ export default async function Page({
       full={page.data.full}
     >
       <DocsBody>
-        <h1 className="!m-0">{page.data.title}</h1>
-        <p className="text-muted-foreground !mt-2 text-lg">
+        <h1 className="not-prose scroll-m-20 text-3xl font-bold tracking-tight">
+          {page.data.title}
+        </h1>
+        <p className="text-muted-foreground mt-2 text-base">
           {page.data.description}
         </p>
         <MDX />
