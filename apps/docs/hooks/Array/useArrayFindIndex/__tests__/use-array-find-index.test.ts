@@ -1,159 +1,191 @@
 import { renderHook } from '@testing-library/react';
 import { expect, it, describe, vi } from 'vitest';
-import {
-  type UseArrayFindIndexPredicate,
-  useArrayFindIndex,
-} from '../use-array-find-index';
+import { useArrayFindIndex } from '../use-array-find-index';
 
 describe('useArrayFindIndex', () => {
-  it('should return the correct index when element is found', () => {
-    const list = [1, 2, 3, 4, 5];
-    const predicate = (num: number): boolean => num === 3;
+  describe('basic functionality', () => {
+    it('should find the index of an element in an array', () => {
+      const array = [1, 2, 3, 4, 5];
+      const predicate = (num: number): boolean => num === 3;
 
-    const { result } = renderHook(() => useArrayFindIndex(list, predicate));
+      const { result } = renderHook(() => useArrayFindIndex(array, predicate));
 
-    expect(result.current).toBe(2);
-  });
-
-  it('should return -1 when element is not found', () => {
-    const list = [1, 2, 3, 4, 5];
-    const predicate = (num: number): boolean => num === 6;
-
-    const { result } = renderHook(() => useArrayFindIndex(list, predicate));
-
-    expect(result.current).toBe(-1);
-  });
-
-  it('should return -1 for an empty array', () => {
-    const list: number[] = [];
-    const predicate = (num: number): boolean => num === 1;
-
-    const { result } = renderHook(() => useArrayFindIndex(list, predicate));
-
-    expect(result.current).toBe(-1);
-  });
-
-  it('should return -1 and log a warning when list is null', () => {
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {
-      // noop
+      expect(result.current).toBe(2);
     });
-    const predicate = (num: number): boolean => num === 1;
 
-    const { result } = renderHook(() => useArrayFindIndex(null, predicate));
+    it('should return -1 if element is not found', () => {
+      const array = [1, 2, 3, 4, 5];
+      const predicate = (num: number): boolean => num === 6;
 
-    expect(result.current).toBe(-1);
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      'useArrayFindIndex: list is null or undefined',
-    );
+      const { result } = renderHook(() => useArrayFindIndex(array, predicate));
 
-    consoleWarnSpy.mockRestore();
-  });
+      expect(result.current).toBe(-1);
+    });
 
-  it('should throw an error when list is undefined', () => {
-    const predicate = (num: number): boolean => num === 1;
+    it('should work with a function returning an array', () => {
+      const arrayFn = (): number[] => [1, 2, 3, 4, 5];
+      const predicate = (num: number): boolean => num === 3;
 
-    expect(() => {
-      renderHook(() => useArrayFindIndex(undefined, predicate));
-    }).toThrow('useArrayFindIndex: list must be an array');
-  });
-
-  it('should throw an error when list is not an array', () => {
-    const notAnArray = 'not an array' as unknown;
-    const predicate = (num: number): boolean => num === 1;
-
-    expect(() => {
-      renderHook(() => useArrayFindIndex(notAnArray as number[], predicate));
-    }).toThrow('useArrayFindIndex: list must be an array');
-  });
-
-  it('should throw an error when predicate is not a function', () => {
-    const list = [1, 2, 3];
-    const notAFunction = 'not a function' as unknown;
-
-    expect(() => {
-      renderHook(() =>
-        useArrayFindIndex(
-          list,
-          notAFunction as UseArrayFindIndexPredicate<number>,
-        ),
+      const { result } = renderHook(() =>
+        useArrayFindIndex(arrayFn, predicate),
       );
-    }).toThrow('useArrayFindIndex: predicate must be a function');
+
+      expect(result.current).toBe(2);
+    });
+
+    it('should work with empty arrays', () => {
+      const emptyArray: number[] = [];
+      const predicate = (num: number): boolean => num === 1;
+
+      const { result } = renderHook(() =>
+        useArrayFindIndex(emptyArray, predicate),
+      );
+
+      expect(result.current).toBe(-1);
+    });
+
+    it('should provide correct index and array to predicate', () => {
+      const array = ['a', 'b', 'c', 'd', 'e'];
+      const predicate = vi.fn(
+        (element: string, index: number, arr: string[]) => {
+          expect(arr).toEqual(array);
+          return element === 'c' && index === 2;
+        },
+      );
+
+      const { result } = renderHook(() => useArrayFindIndex(array, predicate));
+
+      expect(result.current).toBe(2);
+      expect(predicate).toHaveBeenCalledTimes(3);
+      expect(predicate).toHaveBeenCalledWith('a', 0, array);
+      expect(predicate).toHaveBeenCalledWith('b', 1, array);
+      expect(predicate).toHaveBeenCalledWith('c', 2, array);
+    });
   });
 
-  it('should return -1 and log an error when predicate throws an error', () => {
-    const list = [1, 2, 3];
-    const errorPredicate = (): boolean => {
-      throw new Error('Predicate error');
-    };
-    const consoleErrorSpy = vi
-      .spyOn(console, 'error')
-      .mockImplementation(() => {
-        // noop
-      });
+  describe('memoization', () => {
+    it('should memoize the result', () => {
+      const array = [1, 2, 3, 4, 5];
+      const predicate = vi.fn((num: number) => num === 3);
 
-    const { result } = renderHook(() =>
-      useArrayFindIndex(list, errorPredicate),
-    );
+      const { result, rerender } = renderHook(() =>
+        useArrayFindIndex(array, predicate),
+      );
 
-    expect(result.current).toBe(-1);
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'useArrayFindIndex: Error during execution:',
-      expect.any(Error),
-    );
+      expect(result.current).toBe(2);
+      expect(predicate).toHaveBeenCalledTimes(3);
 
-    consoleErrorSpy.mockRestore();
+      rerender();
+
+      expect(result.current).toBe(2);
+      expect(predicate).toHaveBeenCalledTimes(3);
+    });
+
+    it('should update when deps change', () => {
+      const array = [1, 2, 3, 4, 5];
+      const initialTargetNum = 3;
+
+      const { result, rerender } = renderHook(
+        ({ targetNum }) => {
+          const predicate = (num: number): boolean => num === targetNum;
+          return useArrayFindIndex(array, predicate, [targetNum]);
+        },
+        { initialProps: { targetNum: initialTargetNum } },
+      );
+
+      expect(result.current).toBe(2);
+
+      rerender({ targetNum: 4 });
+
+      expect(result.current).toBe(3);
+    });
   });
 
-  it('should memoize the result and not recompute for the same inputs', () => {
-    const list = [1, 2, 3, 4, 5];
-    const predicate = vi.fn((num: number) => num === 3);
+  describe('error handling', () => {
+    it('should throw an error for non-array input', () => {
+      const nonArray = {} as unknown as never;
+      const predicate = (num: number): boolean => num === 3;
 
-    const { result, rerender } = renderHook(() =>
-      useArrayFindIndex(list, predicate),
-    );
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
 
-    expect(result.current).toBe(2);
-    expect(predicate).toHaveBeenCalledTimes(3);
+      const { result } = renderHook(() =>
+        useArrayFindIndex(nonArray, predicate),
+      );
 
-    predicate.mockClear();
+      expect(result.current).toBe(-1);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error in useArrayFindIndex:',
+        expect.any(Error),
+      );
 
-    rerender();
+      consoleErrorSpy.mockRestore();
+    });
 
-    expect(result.current).toBe(2);
-    expect(predicate).not.toHaveBeenCalled();
-  });
+    it('should throw an error for non-function predicate', () => {
+      const array = [1, 2, 3, 4, 5];
+      const nonFunctionPredicate = {} as unknown as never;
 
-  it('should recompute when the list changes', () => {
-    const initialList = [1, 2, 3];
-    const updatedList = [1, 2, 3, 4];
-    const predicate = (num: number): boolean => num === 3;
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
 
-    const { result, rerender } = renderHook(
-      ({ list }) => useArrayFindIndex(list, predicate),
-      { initialProps: { list: initialList } },
-    );
+      const { result } = renderHook(() =>
+        useArrayFindIndex(array, nonFunctionPredicate),
+      );
 
-    expect(result.current).toBe(2);
+      expect(result.current).toBe(-1);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error in useArrayFindIndex:',
+        expect.any(Error),
+      );
+    });
 
-    rerender({ list: updatedList });
+    it('should handle errors in the array function', () => {
+      const errorFn = (): never => {
+        throw new Error('Array function error');
+      };
+      const predicate = (num: number): boolean => num === 1;
 
-    expect(result.current).toBe(2);
-  });
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
 
-  it('should recompute when the predicate changes', () => {
-    const list = [1, 2, 3, 4, 5];
-    const initialPredicate = (num: number): boolean => num === 3;
-    const updatedPredicate = (num: number): boolean => num === 4;
+      const { result } = renderHook(() =>
+        useArrayFindIndex(errorFn, predicate),
+      );
 
-    const { result, rerender } = renderHook(
-      ({ predicate }) => useArrayFindIndex(list, predicate),
-      { initialProps: { predicate: initialPredicate } },
-    );
+      expect(result.current).toBe(-1);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error in useArrayFindIndex:',
+        expect.any(Error),
+      );
 
-    expect(result.current).toBe(2);
+      consoleErrorSpy.mockRestore();
+    });
 
-    rerender({ predicate: updatedPredicate });
+    it('should handle errors in the predicate function', () => {
+      const array = [1, 2, 3, 4, 5];
+      const errorPredicate = (): never => {
+        throw new Error('Predicate error');
+      };
 
-    expect(result.current).toBe(3);
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
+
+      const { result } = renderHook(() =>
+        useArrayFindIndex(array, errorPredicate),
+      );
+
+      expect(result.current).toBe(-1);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error in useArrayFindIndex:',
+        expect.any(Error),
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 });

@@ -1,38 +1,37 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
-export type UseArrayFindIndexPredicate<T> = (
-  element: T,
-  index: number,
-  array: T[],
-) => boolean;
+type ArrayOrFunction<T> = T[] | (() => T[]);
 
-export function useArrayFindIndex<T>(
-  list: T[] | null | undefined,
-  predicate: UseArrayFindIndexPredicate<T>,
+function useArrayFindIndex<T>(
+  list: ArrayOrFunction<T>,
+  predicate: (element: T, index: number, array: T[]) => boolean,
+  deps: React.DependencyList = [],
 ): number {
-  return useMemo(() => {
-    if (list === null) {
-      console.warn('useArrayFindIndex: list is null or undefined');
-      return -1;
-    }
+  const memoizedPredicate = useCallback(predicate, [predicate, ...deps]);
 
-    if (!Array.isArray(list)) {
-      throw new Error('useArrayFindIndex: list must be an array');
-    }
-
-    if (typeof predicate !== 'function') {
-      throw new Error('useArrayFindIndex: predicate must be a function');
-    }
-
-    if (list.length === 0) {
-      return -1;
-    }
-
+  const result = useMemo(() => {
     try {
-      return list.findIndex(predicate);
+      const array = typeof list === 'function' ? list() : list;
+
+      if (!Array.isArray(array)) {
+        throw new Error(
+          'Input must be an array or a function returning an array',
+        );
+      }
+
+      return array.findIndex((element, index, arr) => {
+        if (typeof memoizedPredicate !== 'function') {
+          throw new Error('Predicate must be a function');
+        }
+        return memoizedPredicate(element, index, arr);
+      });
     } catch (error) {
-      console.error('useArrayFindIndex: Error during execution:', error);
+      console.error('Error in useArrayFindIndex:', error);
       return -1;
     }
-  }, [list, predicate]);
+  }, [list, memoizedPredicate]);
+
+  return result;
 }
+
+export { useArrayFindIndex };
