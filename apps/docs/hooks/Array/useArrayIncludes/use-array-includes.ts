@@ -1,31 +1,29 @@
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 
-export type UseArrayIncludesComparatorFn<T, V> = (
+type UseArrayIncludesComparatorFn<T, V> = (
   element: T,
   value: V,
   index: number,
-  array: T[],
+  array: readonly T[],
 ) => boolean;
 
-export interface UseArrayIncludesOptions<T, V> {
+interface UseArrayIncludesOptions<T, V> {
   fromIndex?: number;
   comparator?: UseArrayIncludesComparatorFn<T, V> | keyof T;
 }
 
-export function useArrayIncludes<T, V = T>(
-  list: T[] | null | undefined,
+function useArrayIncludes<T, V = T>(
+  list: readonly T[] | null | undefined,
   value: V,
   options?: UseArrayIncludesOptions<T, V>,
 ): boolean {
-  const { fromIndex = 0, comparator } = options ?? {};
-
-  return useMemo(() => {
-    if (list === null || !Array.isArray(list)) {
-      console.warn(
-        'useArrayIncludes: list is null, undefined, or not an array',
-      );
+  const checkIncludes = useCallback(() => {
+    if (!Array.isArray(list)) {
+      console.warn('useArrayIncludes: list is not an array');
       return false;
     }
+
+    const { fromIndex = 0, comparator } = options ?? {};
 
     if (list.length === 0) {
       return false;
@@ -33,32 +31,31 @@ export function useArrayIncludes<T, V = T>(
 
     if (typeof comparator === 'function') {
       return list.some((element, index, array) =>
-        comparator(element, value, index, array),
+        comparator(element as T, value, index, array),
       );
     }
 
     if (typeof comparator === 'string') {
-      if (
-        typeof list[0] !== 'object' ||
-        list[0] === null ||
-        !(comparator in list[0])
-      ) {
-        console.error(
-          `useArrayIncludes: Invalid comparator key: ${comparator}`,
-        );
-        return false;
-      }
       return list.some((element) => {
-        const typedElement = element as Record<keyof T, unknown>;
-        return typedElement[comparator] === value;
+        if (typeof element !== 'object' || element === null) {
+          console.error('useArrayIncludes: Element is not an object');
+          return false;
+        }
+        return (element as Record<keyof T, unknown>)[comparator] === value;
       });
     }
 
-    if (typeof fromIndex === 'number' && fromIndex >= 0) {
-      return list.includes(value as unknown as T, fromIndex);
+    if (typeof fromIndex !== 'number' || fromIndex < 0) {
+      console.error('useArrayIncludes: Invalid fromIndex');
+      return false;
     }
 
-    console.error('useArrayIncludes: Invalid options provided');
-    return false;
-  }, [list, value, fromIndex, comparator]);
+    return list.slice(fromIndex).includes(value as unknown as T);
+  }, [list, value, options]);
+
+  const result = checkIncludes();
+
+  return result;
 }
+
+export { useArrayIncludes };
