@@ -1,0 +1,67 @@
+---
+title: useArrayConcat
+description: Concatenate multiple arrays or array getters
+---
+
+<Demo name="useArrayConcat" category="Array" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayConcat
+```
+
+## Usage
+
+```ts
+const array1 = [1, 2, 3];
+const array2 = [4, 5, 6];
+const getArray3 = () => [7, 8, 9];
+
+const concatenatedArray = useArrayConcat(array1, array2, getArray3);
+// Result: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+## Reference
+
+`useArrayConcat` is a hook that concatenates multiple arrays or functions that return arrays.
+
+### Parameters
+
+The hook accepts a variable number of parameters:
+
+<TypeTable
+  type={{
+    arrays: {
+      description: 'Arrays or functions that return arrays to be concatenated.',
+      type: 'ArrayOrGetter[]',
+    },
+  }}
+/>
+
+Where `ArrayOrGetter&lt;T&gt;` is defined as:
+
+```ts
+type ArrayOrGetter<T> = T[] | (() => T[]);
+```
+
+Return Value
+The hook returns a single array that is the result of concatenating all input arrays:
+
+<TypeTable
+  type={{
+    concatenatedArray: {
+      description: 'The resulting array after concatenation.',
+      type: 'T[]',
+    },
+  }}
+/>
+
+## Notes
+
+- If any of the inputs is a function, it will be called to get the actual array.
+- The hook will throw an error if any of the inputs is neither an array nor a function returning an array.
+- The order of concatenation follows the order of the input parameters.
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Demo } from '@/components/Common/Preview/preview';
