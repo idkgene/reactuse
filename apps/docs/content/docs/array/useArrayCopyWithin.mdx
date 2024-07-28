@@ -1,0 +1,71 @@
+---
+title: useArrayCopyWithin
+description: Shallow copy part of an array to another location in the same array
+---
+
+<Demo name="useArrayCopyWithin" category="Array" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayCopyWithin
+```
+
+## Usage
+
+```ts
+const { array, copyWithin } = useArrayCopyWithin([1, 2, 3, 4, 5]);
+
+// Copy elements from index 2 to index 4 to index 0
+copyWithin(0, 2, 4);
+console.log(array); // [3, 4, 3, 4, 5]
+
+// Copy elements from index 1 to the end to index 2
+copyWithin(2, 1);
+console.log(array); // [3, 4, 4, 5, 5]
+```
+
+## Reference
+
+`useArrayCopyWithin` is a hook that provides a way to shallow copy part of an array to another location in the same array without modifying its length.
+
+### Parameters
+
+The hook accepts one parameter:
+
+<TypeTable
+  type={{
+    initialArray: {
+      description: 'The initial array to be used.',
+      type: 'T[]',
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns an `object` with two properties:
+
+<TypeTable
+  type={{
+    array: {
+      description: 'The current state of the array.',
+      type: 'T[]',
+    },
+    copyWithin: {
+      description: 'A function to perform the copyWithin operation.',
+      type: '(target: number, start: number, end?: number) => void',
+    },
+  }}
+/>
+
+## Notes
+
+- The `copyWithin` function modifies the array in-place and returns the modified array.
+- If `end` is omitted, copyWithin will copy until the last index (default to `array.length`).
+- If `target` is greater than or equal to array.length, nothing will be copied.
+- If `start` is negative, it will be treated as `array.length + start`.
+- If `end` is negative, it will be treated as `array.length + end`.
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Demo } from '@/components/Common/Preview/preview';
