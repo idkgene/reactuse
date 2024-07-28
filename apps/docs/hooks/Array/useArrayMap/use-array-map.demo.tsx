@@ -2,56 +2,65 @@
 
 import { useState } from 'react';
 import { useArrayMap } from './use-array-map';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
-export default function ArrayMapDemo() {
-  const [inputValue, setInputValue] = useState('');
-  const [mapFunction, setMapFunction] = useState('(item) => item * 2');
-  const items = inputValue.split(',').map((item) => parseInt(item.trim(), 10));
-  const mappedItems = useArrayMap(items, (item) => {
-    try {
-      const func = eval(mapFunction);
-      return func(item);
-    } catch (error) {
-      return item;
+function ArrayMapDemo(): JSX.Element {
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
+  const [multiplier, setMultiplier] = useState(2);
+
+  const multipliedNumbers = useArrayMap(numbers, (num) => num * multiplier);
+
+  const handleAddNumber = (): void => {
+    const newNumber = Math.floor(Math.random() * 10) + 1;
+    setNumbers([...numbers, newNumber]);
+  };
+
+  const handleRemoveNumber = (): void => {
+    if (numbers.length > 0) {
+      setNumbers(numbers.slice(0, -1));
     }
-  });
+  };
+
+  const handleMultiplierChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setMultiplier(Number(e.target.value));
+  };
 
   return (
-    <div className="relative mb-[10px] rounded-lg border p-[2em] transition-colors">
-      <div className="mb-4">
-        <label htmlFor="input" className="mb-2 block">
-          Enter numbers (comma-separated):
-        </label>
-        <input
-          id="input"
-          type="text"
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-          }}
-          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight shadow focus:outline-none"
+    <>
+      <div>
+        <Label htmlFor="multiplier" className="mr-2 font-semibold">
+          Multiplier:
+        </Label>
+        <Input
+          type="number"
+          value={multiplier}
+          onChange={handleMultiplierChange}
+          min={1}
+          max={10}
         />
       </div>
-      <div className="mb-6">
-        <label htmlFor="mapFunction" className="mb-2 block">
-          Enter map function:
-        </label>
-        <input
-          id="mapFunction"
-          type="text"
-          value={mapFunction}
-          onChange={(e) => {
-            setMapFunction(e.target.value);
-          }}
-          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight shadow focus:outline-none"
-        />
+      <div className="mt-2 flex gap-3">
+        <Button type="button" onClick={handleAddNumber}>
+          Add Random Number
+        </Button>
+        <Button type="button" onClick={handleRemoveNumber}>
+          Remove Last Number
+        </Button>
+      </div>
+      <div className="mt-2">
+        <span className="font-semibold">Original numbers:</span>{' '}
+        {numbers.join(', ')}
       </div>
       <div>
-        <p className="text-lg">Original items: {items.join(', ')}</p>
+        <span className="font-semibold">Multiplied numbers:</span>{' '}
+        {multipliedNumbers.join(', ')}
       </div>
-      <div>
-        <p className="text-lg">Mapped items: {mappedItems.join(', ')}</p>
-      </div>
-    </div>
+    </>
   );
 }
+
+export default ArrayMapDemo;

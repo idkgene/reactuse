@@ -1,30 +1,30 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
-export function useArrayMap<T, U = T>(
-  list: T[] | null | undefined,
-  callback: (element: T, index: number, array: T[]) => U,
-): U[] {
-  return useMemo(() => {
-    if (list === null) {
-      console.warn(
-        'useArrayMap: list is null or undefined, returning empty array',
-      );
+type MaybeRef<T> = T | (() => T);
+
+function useArrayMap<T, U = T>(
+  list: MaybeRef<readonly MaybeRef<T>[]>,
+  fn: (element: T, index: number, array: readonly T[]) => U,
+): readonly U[] {
+  const memoizedFn = useCallback(fn, [fn]);
+
+  const result = useMemo(() => {
+    const resolveRef = <V>(ref: MaybeRef<V>): V =>
+      typeof ref === 'function' ? (ref as () => V)() : ref;
+
+    const resolvedList = resolveRef(list);
+
+    if (!Array.isArray(resolvedList)) {
+      console.warn('useArrayMap: provided list is not an array');
       return [];
     }
 
-    if (!Array.isArray(list)) {
-      throw new Error('useArrayMap: list must be an array');
-    }
+    const resolvedArray = resolvedList.map(resolveRef);
 
-    if (typeof callback !== 'function') {
-      throw new Error('useArrayMap: callback must be a function');
-    }
+    return Object.freeze(resolvedArray.map(memoizedFn));
+  }, [list, memoizedFn]);
 
-    try {
-      return list.map(callback);
-    } catch (error) {
-      console.error('useArrayMap: Error during mapping:', error);
-      return [];
-    }
-  }, [list, callback]);
+  return result;
 }
+
+export { useArrayMap };
