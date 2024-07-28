@@ -1,119 +1,95 @@
 'use client';
 
-import { useState } from 'react';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '../../../components/ui/select';
+import { useState, useMemo } from 'react';
 import { useArrayDifference } from './use-array-difference';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface Person {
   id: number;
   name: string;
 }
 
-const initialList: Person[] = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' },
-];
+function ArrayDifferenceDemo(): JSX.Element {
+  const list: Person[] = useMemo(
+    () => [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' },
+      { id: 3, name: 'Charlie' },
+    ],
+    [],
+  );
 
-function ArrayDifferenceDemo() {
-  const [list, setList] = useState<Person[]>(initialList);
-  const [values, setValues] = useState<Person[]>([]);
-  const [key, setKey] = useState<keyof Person>('id');
+  const values: Person[] = useMemo(
+    () => [
+      { id: 2, name: 'Bobby' },
+      { id: 3, name: 'Charles' },
+    ],
+    [],
+  );
 
-  const difference = useArrayDifference(list, values, key);
+  const [useKeySelector, setUseKeySelector] = useState(false);
+  const [useComparator, setUseComparator] = useState(false);
 
-  const handleListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedIds = Array.from(event.target.selectedOptions, (option) =>
-      Number(option.value),
-    );
-    const selectedList = initialList.filter((person) =>
-      selectedIds.includes(person.id),
-    );
-    setList(selectedList);
-  };
+  const keySelector = useKeySelector ? (item: Person) => item.id : undefined;
+  const comparator = useComparator
+    ? (a: Person, b: Person) => a.id === b.id && a.name.startsWith(b.name[0])
+    : undefined;
 
-  const handleValuesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedIds = Array.from(event.target.selectedOptions, (option) =>
-      Number(option.value),
-    );
-    const selectedValues = initialList.filter((person) =>
-      selectedIds.includes(person.id),
-    );
-    setValues(selectedValues);
-  };
-
-  const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setKey(event.target.value as keyof Person);
-  };
+  const difference = useArrayDifference(list, values, keySelector, comparator);
 
   return (
-    <div className="relative mb-[10px] rounded-lg border p-[2em] transition-colors">
-      <div className="mb-4">
-        <label htmlFor="list" className="mb-2 block font-bold">
-          List:
-        </label>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a person" />
-          </SelectTrigger>
-          <SelectContent>
-            {initialList.map((person) => (
-              <SelectItem key={person.id} value={person.id.toString()}>
-                {person.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label className="block text-sm font-medium">List:</Label>
+          <pre className="bg-secondary rounded-md p-2 text-xs">
+            {JSON.stringify(list, null, 1)}
+          </pre>
+        </div>
+        <div>
+          <Label className="block text-sm font-medium">
+            Values to exclude:
+          </Label>
+          <pre className="bg-secondary rounded-md p-2 text-xs">
+            {JSON.stringify(values, null, 1)}
+          </pre>
+        </div>
       </div>
-
-      <div className="mb-4">
-        <label htmlFor="values" className="mb-2 block font-bold">
-          Values:
-        </label>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a person" />
-          </SelectTrigger>
-          <SelectContent>
-            {initialList.map((person) => (
-              <SelectItem key={person.id} value={person.id.toString()}>
-                {person.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="useKeySelector"
+            checked={useKeySelector}
+            onCheckedChange={(checked) => {
+              setUseKeySelector(checked as boolean);
+            }}
+          />
+          <Label htmlFor="useKeySelector" className="text-sm">
+            Use Key Selector (id only)
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="useComparator"
+            checked={useComparator}
+            onCheckedChange={(checked) => {
+              setUseComparator(checked as boolean);
+            }}
+          />
+          <Label htmlFor="useComparator" className="text-sm">
+            Use Comparator (id and first letter)
+          </Label>
+        </div>
       </div>
-
-      <div className="mb-4">
-        <label htmlFor="key" className="mb-2 block font-bold">
-          Key:
-        </label>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a key" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="id">ID</SelectItem>
-            <SelectItem value="name">Name</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
       <div>
-        <h2 className="mb-2 text-xl font-bold">Difference:</h2>
-        <ul>
-          {difference.map((person) => (
-            <li key={person.id}>{person.name}</li>
-          ))}
-        </ul>
+        <Label className="block text-sm font-medium">Difference:</Label>
+        <pre className="bg-secondary rounded-md p-2 text-xs">
+          {JSON.stringify(difference, null, 1)}
+        </pre>
       </div>
     </div>
   );
 }
+
 export default ArrayDifferenceDemo;

@@ -1,0 +1,76 @@
+---
+title: 'useArrayDifference'
+description: Calculate the difference between two arrays
+---
+
+<Demo name="useArrayDifference" category="Array" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useArrayDifference
+```
+
+## Usage
+
+```ts
+const list = [1, 2, 3, 4, 5];
+const values = [2, 4];
+const difference = useArrayDifference(list, values);
+console.log(difference); // [1, 3, 5]
+```
+
+## Reference
+
+`useArrayDifference` is a hook that calculates the difference between two arrays, returning elements from the first array that are not present in the second array.
+
+### Parameters
+
+The hook accepts four parameters:
+
+<TypeTable
+  type={{
+    list: {
+      description: 'The main array to compare from.',
+      type: 'readonly T[] | null | undefined',
+    },
+    values: {
+      description: 'The array to compare against.',
+      type: 'readonly T[] | null | undefined',
+    },
+    keySelector: {
+      description: 'Optional function to select a key for comparison.',
+      type: '(item: T) => unknown',
+      default: 'undefined',
+    },
+    comparator: {
+      description: 'Optional custom comparison function.',
+      type: '(a: T, b: T) => boolean',
+      default: 'undefined',
+    },
+  }}
+/>
+
+### Return Value
+
+The hook returns an array of elements from list that are not present in values:
+
+<TypeTable
+  type={{
+    difference: {
+      description: 'Array of elements from list not present in values.',
+      type: 'readonly T[]',
+    },
+  }}
+/>
+
+## Notes
+
+- If either `list` or `values` is not an array, an empty array is returned.
+- If a `comparator` function is provided, it's used for element comparison.
+- If a `keySelector` function is provided, it's used to generate keys for comparison.
+- If neither `comparator` nor `keySelector` is provided, direct equality comparison is used.
+  The order of precedence for comparison methods is: `comparator` > `keySelector` > `direct equality`.
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Demo } from '@/components/Common/Preview/preview';

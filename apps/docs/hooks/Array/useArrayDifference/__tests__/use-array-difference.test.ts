@@ -1,146 +1,202 @@
 import { renderHook } from '@testing-library/react';
-import { expect, it, describe, vi } from 'vitest';
+import { expect, it, describe } from 'vitest';
 import {
   useArrayDifference,
-  type UseArrayDifferenceKey,
 } from '../use-array-difference';
 
+type KeySelector<T> = (item: T) => unknown;
+type Comparator<T> = (a: T, b: T) => boolean;
+
 describe('useArrayDifference', () => {
-  it('should return an empty array when the list is empty', () => {
-    const { result } = renderHook(() => useArrayDifference([], [{ id: 1 }]));
-    expect(result.current).toEqual([]);
-  });
-
-  it('should return the original list when values is empty', () => {
-    const list = [{ id: 1 }, { id: 2 }];
-    const { result } = renderHook(() => useArrayDifference(list, []));
-    expect(result.current).toEqual(list);
-  });
-
-  it('should filter out items based on a key comparison', () => {
-    const list = [{ id: 1 }, { id: 2 }, { id: 3 }];
-    const values = [{ id: 2 }];
-    const { result } = renderHook(() => useArrayDifference(list, values, 'id'));
-    expect(result.current).toEqual([{ id: 1 }, { id: 3 }]);
-  });
-
-  it('should filter out items based on a custom comparison function', () => {
-    const list = [{ id: 1 }, { id: 2 }, { id: 3 }];
-    const values = [{ id: 2 }];
-    const compareFn = (a: { id: number }, b: { id: number }): boolean => a.id === b.id;
-    const { result } = renderHook(() =>
-      useArrayDifference(list, values, compareFn),
-    );
-    expect(result.current).toEqual([{ id: 1 }, { id: 3 }]);
-  });
-
-  it('should throw an error when list is not an array', () => {
-    const invalidList = 'not an array' as unknown as object[];
-    expect(() => renderHook(() => useArrayDifference(invalidList, []))).toThrow(
-      'useArrayDifference: Both list and values must be arrays',
-    );
-  });
-
-  it('should throw an error when values is not an array', () => {
-    const invalidValues = 'not an array' as unknown as object[];
-    expect(() =>
-      renderHook(() => useArrayDifference([], invalidValues)),
-    ).toThrow('useArrayDifference: Both list and values must be arrays');
-  });
-
-  it('should throw an error when an invalid key is provided', () => {
-    const list = [{ id: 1 }, { id: 2 }];
-    const values = [{ id: 2 }];
-    const invalidKey = 'invalidKey' as UseArrayDifferenceKey<{ id: number }>;
-    expect(() =>
-      renderHook(() => useArrayDifference(list, values, invalidKey)),
-    ).toThrow('useArrayDifference: Invalid key "invalidKey" for comparison');
-  });
-
-  it('should throw an error when keyOrCompareFn is neither a string nor a function', () => {
-    const list = [{ id: 1 }, { id: 2 }];
-    const values = [{ id: 2 }];
-    const invalidKey = 123 as unknown as UseArrayDifferenceKey<{ id: number }>;
-    expect(() =>
-      renderHook(() => useArrayDifference(list, values, invalidKey)),
-    ).toThrow('useArrayDifference: Invalid keyOrCompareFn parameter');
-  });
-
-  it('should log errors to console.error', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {
-      /* noop */
+  describe('basic functionality', () => {
+    it('should return the difference between two arrays', () => {
+      const { result } = renderHook(() =>
+        useArrayDifference([1, 2, 3, 4, 5], [2, 4]),
+      );
+      expect(result.current).toEqual([1, 3, 5]);
     });
-    const list = [{ id: 1 }, { id: 2 }];
-    const values = [{ id: 2 }];
-    const invalidKey = 'invalidKey' as UseArrayDifferenceKey<{ id: number }>;
 
-    expect(() =>
-      renderHook(() => useArrayDifference(list, values, invalidKey)),
-    ).toThrow();
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'Error in useArrayDifference:',
-      expect.any(Error),
-    );
+    it('should return an empty array when inputs are empty', () => {
+      const { result } = renderHook(() => useArrayDifference([], []));
+      expect(result.current).toEqual([]);
+    });
 
-    consoleSpy.mockRestore();
+    it('should handle null or undefined inputs', () => {
+      const { result: result1 } = renderHook(() =>
+        useArrayDifference(null, [1, 2, 3]),
+      );
+      expect(result1.current).toEqual([]);
+
+      const { result: result2 } = renderHook(() =>
+        useArrayDifference([1, 2, 3], undefined),
+      );
+      expect(result2.current).toEqual([]);
+    });
+
+    it('should use keySelector to compare complex objects', () => {
+      const list = [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' },
+        { id: 3, name: 'Charlie' },
+        { id: 4, name: 'David' },
+      ];
+      const values = [
+        { id: 2, name: 'Different Bob' },
+        { id: 4, name: 'Different David' },
+      ];
+      const keySelector: KeySelector<{ id: number; name: string }> = (item) =>
+        item.id;
+
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, keySelector),
+      );
+      expect(result.current).toEqual([
+        { id: 1, name: 'Alice' },
+        { id: 3, name: 'Charlie' },
+      ]);
+    });
+
+    it('should handle keySelector with primitive values', () => {
+      const list = ['a1', 'b2', 'c3', 'd4'];
+      const values = ['b2', 'd4'];
+      const keySelector: KeySelector<string> = (item) => item.charAt(0);
+
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, keySelector),
+      );
+      expect(result.current).toEqual(['a1', 'c3']);
+    });
+
+    it('should work correctly when keySelector produces duplicate keys', () => {
+      const list = [
+        { group: 'A', value: 1 },
+        { group: 'A', value: 2 },
+        { group: 'B', value: 3 },
+        { group: 'B', value: 4 },
+      ];
+      const values = [
+        { group: 'A', value: 5 },
+        { group: 'B', value: 6 },
+      ];
+      const keySelector: KeySelector<{ group: string; value: number }> = (
+        item,
+      ) => item.group;
+
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, keySelector),
+      );
+      expect(result.current).toEqual([]);
+    });
+
+    it('should handle empty values array with keySelector', () => {
+      const list = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const values: { id: number }[] = [];
+      const keySelector: KeySelector<{ id: number }> = (item) => item.id;
+
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, keySelector),
+      );
+      expect(result.current).toEqual(list);
+    });
+
+    it('should handle all items being filtered out with keySelector', () => {
+      const list = [{ id: 1 }, { id: 2 }, { id: 3 }];
+      const values = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+      const keySelector: KeySelector<{ id: number }> = (item) => item.id;
+
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, keySelector),
+      );
+      expect(result.current).toEqual([]);
+    });
   });
 
-  it('should memoize the result', () => {
-    const list = [{ id: 1 }, { id: 2 }, { id: 3 }];
-    const values = [{ id: 2 }];
-    const { result, rerender } = renderHook(
-      (props: { list: typeof list; values: typeof values }) =>
-        useArrayDifference(props.list, props.values, 'id'),
-      { initialProps: { list, values } },
-    );
+  describe('with keySelector', () => {
+    it('should return the difference between two arrays', () => {
+      const { result } = renderHook(() =>
+        useArrayDifference([1, 2, 3, 4, 5], [2, 4]),
+      );
+      expect(result.current).toEqual([1, 3, 5]);
+    });
 
-    const firstResult = result.current;
-    rerender({ list, values });
-    expect(result.current).toBe(firstResult);
+    it('should return an empty array when inputs are empty', () => {
+      const { result } = renderHook(() => useArrayDifference([], []));
+      expect(result.current).toEqual([]);
+    });
+
+    it('should handle null or undefined inputs', () => {
+      const { result: result1 } = renderHook(() =>
+        useArrayDifference(null, [1, 2, 3]),
+      );
+      expect(result1.current).toEqual([]);
+
+      const { result: result2 } = renderHook(() =>
+        useArrayDifference([1, 2, 3], undefined),
+      );
+      expect(result2.current).toEqual([]);
+    });
   });
 
-  it('should update the result when inputs change', () => {
-    const initialList = [{ id: 1 }, { id: 2 }, { id: 3 }];
-    const initialValues = [{ id: 2 }];
-    const { result, rerender } = renderHook(
-      (props: { list: typeof initialList; values: typeof initialValues }) =>
-        useArrayDifference(props.list, props.values, 'id'),
-      { initialProps: { list: initialList, values: initialValues } },
-    );
+  describe('with comparator', () => {
+    it('should work with a custom comparator function', () => {
+      const list = [1, 2, 3, 4, 5];
+      const values = [2, 4];
+      const comparator: Comparator<number> = (a, b) => a % 2 === b % 2;
 
-    expect(result.current).toEqual([{ id: 1 }, { id: 3 }]);
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, undefined, comparator),
+      );
+      expect(result.current).toEqual([1, 3, 5]);
+    });
 
-    const newList = [...initialList, { id: 4 }];
-    rerender({ list: newList, values: initialValues });
-    expect(result.current).toEqual([{ id: 1 }, { id: 3 }, { id: 4 }]);
+    it('should work with objects and a custom comparator', () => {
+      const list = [{ value: 1 }, { value: 2 }, { value: 3 }];
+      const values = [{ value: 2 }];
+      const comparator: Comparator<{ value: number }> = (a, b) =>
+        a.value === b.value;
 
-    const newValues = [...initialValues, { id: 3 }];
-    rerender({ list: newList, values: newValues });
-    expect(result.current).toEqual([{ id: 1 }, { id: 4 }]);
+      const { result } = renderHook(() =>
+        useArrayDifference(list, values, undefined, comparator),
+      );
+      expect(result.current).toEqual([{ value: 1 }, { value: 3 }]);
+    });
   });
 
-  it('should handle empty objects', () => {
-    const list = [{}, {}, {}] as Record<string, never>[];
-    const values = [{}] as Record<string, never>[];
-    const { result } = renderHook(() => useArrayDifference(list, values));
-    expect(result.current).toEqual([{}, {}, {}]);
+  describe('edge cases', () => {
+    it('should handle large arrays efficiently', () => {
+      const largeList = Array.from({ length: 10000 }, (_, i) => i);
+      const largeValues = Array.from({ length: 5000 }, (_, i) => i * 2);
+
+      const { result } = renderHook(() =>
+        useArrayDifference(largeList, largeValues),
+      );
+      expect(result.current.length).toBe(5000);
+      expect(result.current[0]).toBe(1);
+      expect(result.current[result.current.length - 1]).toBe(9999);
+    });
+
+    it('should handle arrays with duplicate values', () => {
+      const list = [1, 2, 2, 3, 4, 4, 5];
+      const values = [2, 4];
+
+      const { result } = renderHook(() => useArrayDifference(list, values));
+      expect(result.current).toEqual([1, 3, 5]);
+    });
   });
 
-  it('should handle objects with nested properties', () => {
-    const list = [
-      { user: { id: 1, name: 'Alice' } },
-      { user: { id: 2, name: 'Bob' } },
-      { user: { id: 3, name: 'Charlie' } },
-    ];
-    const values = [{ user: { id: 2, name: 'Bob' } }];
-    const compareFn = (a: (typeof list)[0], b: (typeof values)[0]): boolean =>
-      a.user.id === b.user.id;
-    const { result } = renderHook(() =>
-      useArrayDifference(list, values, compareFn),
-    );
-    expect(result.current).toEqual([
-      { user: { id: 1, name: 'Alice' } },
-      { user: { id: 3, name: 'Charlie' } },
-    ]);
+  describe('memoization', () => {
+    it('should memoize the result', () => {
+      const list = [1, 2, 3, 4, 5];
+      const values = [2, 4];
+
+      const { result, rerender } = renderHook(
+        ({ l, v }) => useArrayDifference(l, v),
+        { initialProps: { l: list, v: values } },
+      );
+
+      const firstResult = result.current;
+      rerender({ l: list, v: values });
+      expect(result.current).toBe(firstResult);
+    });
   });
 });
