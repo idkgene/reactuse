@@ -2,7 +2,7 @@ import { useMemo, useCallback } from 'react';
 
 type ArrayOrFunction<T> = T[] | (() => T[]);
 
-export function useArrayFind<T>(
+function useArrayFind<T>(
   list: ArrayOrFunction<T>,
   predicate: (element: T, index: number, array: readonly T[]) => boolean,
   deps: readonly unknown[] = [],
@@ -23,3 +23,5 @@ export function useArrayFind<T>(
 
   return result;
 }
+
+export { useArrayFind };
