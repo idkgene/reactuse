@@ -2,80 +2,108 @@
 
 import { useState } from 'react';
 import { useList } from './use-list';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
-export default function UseListDemo() {
-  const [list, { push, removeAt, insertAt, updateAt, clear }] = useList<number>(
-    [1, 2, 3],
-  );
+function UseListDemo(): JSX.Element {
+  const [list, actions] = useList<string>(['Apple', 'Banana', 'Cherry']);
   const [inputValue, setInputValue] = useState('');
-
-  const handleAddItem = () => {
-    if (inputValue.trim() !== '') {
-      push(Number(inputValue));
-      setInputValue('');
-    }
-  };
+  const [indexInput, setIndexInput] = useState('');
 
   return (
-    <div className="relative mb-[10px] rounded-lg border p-[2em] transition-colors">
-      <div className="mb-4">
-        <label
-          htmlFor="inputItem"
-          className="mb-2 block font-bold text-gray-700"
-        >
-          Add Item:
-        </label>
-        <div className="flex">
-          <input
-            type="text"
-            id="inputItem"
-            className="flex-1 rounded-l-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
-          />
-          <button
-            className="rounded-r-md bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
-            onClick={handleAddItem}
-          >
-            Add
-          </button>
-        </div>
+    <div className="space-y-4">
+      <div>
+        <Label className="block text-sm font-medium">Current List:</Label>
+        <pre className="bg-secondary rounded-md p-2 text-xs">
+          {JSON.stringify(list, null, 2)}
+        </pre>
       </div>
-      <ul className="space-y-2">
-        {list.map((item, index) => (
-          <li key={index} className="flex items-center justify-between">
-            <span>{item}</span>
-            <div>
-              <button
-                className="px-2 py-1 font-bold text-blue-500 hover:text-blue-600"
-                onClick={() => {
-                  removeAt(index);
-                }}
-              >
-                Remove
-              </button>
-              <button
-                className="px-2 py-1 font-bold text-blue-500 hover:text-blue-600"
-                onClick={() => {
-                  updateAt(index, Number(`${item}`));
-                }}
-              >
-                Update
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4">
-        <button
-          className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
-          onClick={clear}
+
+      <div className="space-y-2">
+        <Input
+          type="text"
+          value={inputValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setInputValue(e.target.value);
+          }}
+          placeholder="Enter a value"
+        />
+        <Input
+          type="number"
+          value={indexInput}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setIndexInput(e.target.value);
+          }}
+          placeholder="Enter an index"
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        <Button
+          onClick={() => {
+            actions.push(inputValue);
+          }}
         >
-          Clear List
-        </button>
+          Push
+        </Button>
+        <Button onClick={() => actions.pop()}>Pop</Button>
+        <Button
+          onClick={() => {
+            actions.unshift(inputValue);
+          }}
+        >
+          Unshift
+        </Button>
+        <Button onClick={() => actions.shift()}>Shift</Button>
+        <Button
+          onClick={() => {
+            actions.insertAt(Number(indexInput), inputValue);
+          }}
+        >
+          Insert At
+        </Button>
+        <Button onClick={() => actions.removeAt(Number(indexInput))}>
+          Remove At
+        </Button>
+        <Button
+          onClick={() => {
+            actions.updateAt(Number(indexInput), inputValue);
+          }}
+        >
+          Update At
+        </Button>
+        <Button
+          onClick={() => {
+            actions.clear();
+          }}
+        >
+          Clear
+        </Button>
+        <Button
+          onClick={() => {
+            actions.filter((item) => item.length > 5);
+          }}
+        >
+          Filter (length &gt; 5)
+        </Button>
+        <Button
+          onClick={() => {
+            actions.sort();
+          }}
+        >
+          Sort
+        </Button>
+        <Button
+          onClick={() => {
+            actions.reverse();
+          }}
+        >
+          Reverse
+        </Button>
       </div>
     </div>
   );
 }
+
+export default UseListDemo;

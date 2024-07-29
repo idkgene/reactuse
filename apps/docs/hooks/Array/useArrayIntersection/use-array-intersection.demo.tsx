@@ -1,74 +1,120 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useArrayIntersection } from './use-array-intersection';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+
+interface ArrayItem {
+  id: string;
+  values: string[];
+  useFunction: boolean;
+}
+
+const MAX_ARRAYS = 3;
 
 function ArrayIntersectionDemo(): JSX.Element {
-  const [array1, setArray1] = useState('1, 2, 3, 4, 5');
-  const [array2, setArray2] = useState('2, 4, 6, 8');
-  const [array3, setArray3] = useState('1, 2, 4, 8');
+  const [arrays, setArrays] = useState<ArrayItem[]>([
+    { id: '1', values: ['a', 'b', 'c', 'd'], useFunction: false },
+    { id: '2', values: ['b', 'c', 'd', 'e'], useFunction: false },
+  ]);
+  const [newArray, setNewArray] = useState<string>('');
 
-  const parsedArray1 = array1.split(',').map((item) => item.trim());
-  const parsedArray2 = array2.split(',').map((item) => item.trim());
-  const parsedArray3 = array3.split(',').map((item) => item.trim());
-
-  const intersectionArray = useArrayIntersection(
-    parsedArray1,
-    parsedArray2,
-    parsedArray3,
+  const arrayOrGetters = useMemo(
+    () =>
+      arrays.map((arr) => (arr.useFunction ? () => arr.values : arr.values)),
+    [arrays],
   );
+
+  const intersection = useArrayIntersection(...arrayOrGetters);
+
+  const handleAddArray = (): void => {
+    if (newArray.trim() && arrays.length < MAX_ARRAYS) {
+      const newId = (
+        Math.max(...arrays.map((arr) => parseInt(arr.id))) + 1
+      ).toString();
+      setArrays([
+        ...arrays,
+        {
+          id: newId,
+          values: newArray.split(',').map((item) => item.trim()),
+          useFunction: false,
+        },
+      ]);
+      setNewArray('');
+    }
+  };
+
+  const handleRemoveArray = (id: string): void => {
+    setArrays(arrays.filter((arr) => arr.id !== id));
+  };
+
+  const toggleUseFunction = (id: string): void => {
+    setArrays(
+      arrays.map((arr) =>
+        arr.id === id ? { ...arr, useFunction: !arr.useFunction } : arr,
+      ),
+    );
+  };
 
   return (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="array1" className="block text-sm font-medium">
-          Array 1:
+        <Label className="block text-sm font-medium">
+          Arrays ({arrays.length}/{MAX_ARRAYS}):
         </Label>
-        <Input
-          id="array1"
-          disabled
-          aria-disabled
-          value={array1}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setArray1(e.target.value);
-          }}
-        />
+        {arrays.map((arr) => (
+          <div key={arr.id} className="mt-2 flex items-center space-x-2">
+            <pre className="bg-secondary grow rounded-md p-2 text-xs">
+              {JSON.stringify(arr.values)}
+            </pre>
+            <Checkbox
+              checked={arr.useFunction}
+              onCheckedChange={() => {
+                toggleUseFunction(arr.id);
+              }}
+              id={`useFunction-${arr.id}`}
+            />
+            <Label htmlFor={`useFunction-${arr.id}`} className="text-sm">
+              Use as function
+            </Label>
+            <Button
+              onClick={() => {
+                handleRemoveArray(arr.id);
+              }}
+              variant="destructive"
+              size="sm"
+            >
+              Remove
+            </Button>
+          </div>
+        ))}
       </div>
-      <div>
-        <Label htmlFor="array2" className="block text-sm font-medium">
-          Array 2:
-        </Label>
+      <div className="flex items-center space-x-2">
         <Input
-          id="array2"
-          disabled
-          aria-disabled
-          value={array2}
+          value={newArray}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setArray2(e.target.value);
+            setNewArray(e.target.value);
           }}
+          placeholder="Enter comma-separated values"
+          disabled={arrays.length >= MAX_ARRAYS}
         />
+        <Button onClick={handleAddArray} disabled={arrays.length >= MAX_ARRAYS}>
+          Add Array
+        </Button>
       </div>
+      {arrays.length >= MAX_ARRAYS && (
+        <p className="text-sm text-red-500">
+          Maximum number of arrays reached.
+        </p>
+      )}
       <div>
-        <label htmlFor="array3" className="block text-sm font-medium">
-          Array 3:
-        </label>
-        <Input
-          id="array3"
-          disabled
-          aria-disabled
-          value={array3}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setArray3(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <p className="text-sm font-medium">Intersection Array:</p>
-        <div className="bg-secondary rounded-md">
-          <pre>{JSON.stringify(intersectionArray, null, 2)}</pre>
-        </div>
+        <Label className="block text-sm font-medium">Intersection:</Label>
+        <pre className="bg-secondary rounded-md p-2 text-xs">
+          {JSON.stringify(intersection, null, 2)}
+        </pre>
       </div>
     </div>
   );

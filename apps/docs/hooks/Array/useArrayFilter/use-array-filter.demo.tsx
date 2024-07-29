@@ -1,83 +1,113 @@
 'use client';
 
-import { useState } from 'react';
-import { Input } from '../../../components/ui/input';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useArrayFilter } from './use-array-filter';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+
+interface Person {
+  id: number;
+  name: string;
+  age: number;
+}
 
 function ArrayFilterDemo(): JSX.Element {
-  const [inputArray, setInputArray] = useState('1, 2, 3, 4, 5');
-  const [filterConditions, setFilterConditions] = useState({
-    even: false,
-    odd: false,
-    greaterThan3: false,
-  });
+  const [filterCriteria, setFilterCriteria] = useState<string>('21');
+  const [filterType, setFilterType] = useState<'age' | 'name'>('age');
+  const [useFunction, setUseFunction] = useState<boolean>(false);
 
-  const parsedArray = inputArray
-    .split(',')
-    .map((item) => parseInt(item.trim(), 10));
+  const people: Person[] = useMemo(
+    () => [
+      { id: 1, name: 'Alice', age: 25 },
+      { id: 2, name: 'Bob', age: 30 },
+      { id: 3, name: 'Charlie', age: 20 },
+    ],
+    [],
+  );
 
-  const filterFunctions: Record<string, (item: number) => boolean> = {
-    even: (item) => item % 2 === 0,
-    odd: (item) => item % 2 !== 0,
-    greaterThan3: (item) => item > 3,
-  };
+  const getPeople = useCallback(() => people, [people]);
 
-  const combinedFilterFunction = (item: number): boolean => {
-    return Object.entries(filterConditions).some(
-      ([key, isActive]) => isActive && filterFunctions[key](item),
-    );
-  };
+  const predicate = useMemo(() => {
+    if (filterType === 'age') {
+      return (person: Person) => person.age >= Number(filterCriteria);
+    }
+    return (person: Person) =>
+      person.name.toLowerCase().includes(filterCriteria.toLowerCase());
+  }, [filterType, filterCriteria]);
 
-  const filteredArray = useArrayFilter(parsedArray, combinedFilterFunction);
+  const filteredPeople = useArrayFilter(
+    useFunction ? getPeople : people,
+    predicate,
+  );
 
-  const handleCheckboxChange = (condition: string): void => {
-    setFilterConditions((prev) => ({
-      ...prev,
-      [condition]: !prev[condition as keyof typeof filterConditions],
-    }));
-  };
+  useEffect(() => {
+    if (filterType === 'age') {
+      setFilterCriteria('18');
+    } else {
+      setFilterCriteria('');
+    }
+  }, [filterType]);
 
   return (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="inputArray" className="block text-sm font-medium">
-          Input Array:
-        </Label>
-        <Input
-          id="inputArray"
-          value={inputArray}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputArray(e.target.value);
-          }}
-        />
+        <Label className="block text-sm font-medium">Original People:</Label>
+        <pre className="bg-secondary rounded-md p-2 text-xs">
+          {JSON.stringify(people, null, 2)}
+        </pre>
       </div>
-      <div>
-        <p className="mb-2 text-sm font-medium">Filter Conditions:</p>
-        <div className="space-y-2">
-          {Object.keys(filterConditions).map((condition) => (
-            <div key={condition} className="flex items-center space-x-2">
-              <Checkbox
-                id={condition}
-                checked={
-                  filterConditions[condition as keyof typeof filterConditions]
-                }
-                onCheckedChange={() => {
-                  handleCheckboxChange(condition);
-                }}
-              />
-              <Label htmlFor={condition} className="text-sm">
-                {condition === 'greaterThan3' ? 'Greater than 3' : condition}
-              </Label>
-            </div>
-          ))}
+      <RadioGroup
+        value={filterType}
+        onValueChange={(value: string) => {
+          setFilterType(value as 'age' | 'name');
+        }}
+        className="flex space-x-4"
+      >
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="age" id="age" />
+          <Label htmlFor="age">Filter by Age</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="name" id="name" />
+          <Label htmlFor="name">Filter by Name</Label>
+        </div>
+      </RadioGroup>
+      <div className="flex items-end space-x-4">
+        <div className="grow">
+          <Label htmlFor="filterCriteria" className="block text-sm font-medium">
+            {filterType === 'age' ? 'Minimum Age:' : 'Name Contains:'}
+          </Label>
+          <Input
+            id="filterCriteria"
+            type={filterType === 'age' ? 'number' : 'text'}
+            value={filterCriteria}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setFilterCriteria(e.target.value);
+            }}
+            placeholder={
+              filterType === 'age' ? 'Enter minimum age' : 'Enter name'
+            }
+          />
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="useFunction"
+            checked={useFunction}
+            onCheckedChange={(checked) => {
+              setUseFunction(checked as boolean);
+            }}
+          />
+          <Label htmlFor="useFunction" className="text-sm">
+            Use Function Input
+          </Label>
         </div>
       </div>
       <div>
-        <p className="text-sm font-medium">Filtered Array:</p>
-        <pre className="bg-secondary mt-2 rounded-md p-4 text-sm">
-          {JSON.stringify(filteredArray, null, 2)}
+        <Label className="block text-sm font-medium">Filtered People:</Label>
+        <pre className="bg-secondary rounded-md p-2 text-xs">
+          {JSON.stringify(filteredPeople, null, 2)}
         </pre>
       </div>
     </div>
