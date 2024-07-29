@@ -7,23 +7,23 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 function ArrayCopyWithinDemo(): JSX.Element {
-  const [initialArray, setInitialArray] = useState('1, 2, 3, 4, 5');
-  const [target, setTarget] = useState('0');
-  const [start, setStart] = useState('2');
-  const [end, setEnd] = useState('4');
+  const [initialArray, setInitialArray] = useState('1,2,3,4,5,6,7,8,9,10');
+  const [target, setTarget] = useState(0);
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState('');
 
-  const parsedArray = initialArray.split(',').map((item) => item.trim());
+  const parsedArray = initialArray.split(',').map(Number);
   const { array, copyWithin } = useArrayCopyWithin(parsedArray);
 
   const handleCopyWithin = (): void => {
-    copyWithin(Number(target), Number(start), Number(end) || undefined);
+    copyWithin(target, start, end === '' ? undefined : Number(end));
   };
 
   return (
     <div className="space-y-4">
       <div>
         <Label htmlFor="initialArray" className="block text-sm font-medium">
-          Initial Array:
+          Initial Array (comma-separated):
         </Label>
         <Input
           id="initialArray"
@@ -33,47 +33,60 @@ function ArrayCopyWithinDemo(): JSX.Element {
           }}
         />
       </div>
-      <div>
-        <Label htmlFor="target" className="block text-sm font-medium">
-          Target:
-        </Label>
-        <Input
-          id="target"
-          value={target}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setTarget(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <Label htmlFor="start" className="block text-sm font-medium">
-          Start:
-        </Label>
-        <Input
-          id="start"
-          value={start}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setStart(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <Label htmlFor="end" className="block text-sm font-medium">
-          End:
-        </Label>
-        <Input
-          id="end"
-          value={end}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setEnd(e.target.value);
-          }}
-        />
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <Label htmlFor="target" className="block text-sm font-medium">
+            Target:
+          </Label>
+          <Input
+            id="target"
+            type="number"
+            value={target}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setTarget(Number(e.target.value));
+            }}
+          />
+        </div>
+        <div>
+          <Label htmlFor="start" className="block text-sm font-medium">
+            Start:
+          </Label>
+          <Input
+            id="start"
+            type="number"
+            value={start}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setStart(Number(e.target.value));
+            }}
+          />
+        </div>
+        <div>
+          <Label htmlFor="end" className="block text-sm font-medium">
+            End (optional):
+          </Label>
+          <Input
+            id="end"
+            type="number"
+            value={end}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setEnd(e.target.value);
+            }}
+          />
+        </div>
       </div>
       <Button onClick={handleCopyWithin}>Copy Within</Button>
-      <div>
-        <p className="text-sm font-medium">Result Array:</p>
-        <div className="bg-secondary rounded-md">
-          <pre>{JSON.stringify(array, null, 2)}</pre>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label className="block text-sm font-medium">Initial Array:</Label>
+          <pre className="bg-secondary rounded-md p-2 text-xs">
+            {JSON.stringify(parsedArray, null, 2)}
+          </pre>
+        </div>
+        <div>
+          <Label className="block text-sm font-medium">Result Array:</Label>
+          <pre className="bg-secondary rounded-md p-2 text-xs">
+            {JSON.stringify(array, null, 2)}
+          </pre>
         </div>
       </div>
     </div>
