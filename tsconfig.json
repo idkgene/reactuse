@@ -1,46 +1,43 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "typeRoots": ["node_modules/@types"],
-    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "outDir": "dist",
-    "sourceMap": true,
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": ["./*"],
-      "@hooks/*": ["./hooks/*"],
-      "@lib": ["./lib/utils.ts"],
-      "@utils": ["./utils/utils.ts"],
-      "@animation-hook": ["./hooks/Animation/*"],
-      "@array-hook": ["./hooks/Array*"],
-      "@browser-hook": ["./hooks/Browser/*"],
-      "@component-hook": ["./hooks/Component/*"],
-      "@date-hook": ["./hooks/Date/*"],
-      "@elements-hook": ["./hooks/Elements/*"],
-      "@math-hook": ["./hooks/Math/*"],
-      "@network-hook": ["./hooks/Network/*"],
-      "@sensor-hook": ["./hooks/Sensors/*"],
-      "@state-hook": ["./hooks/State/*"],
-      "@utility-hook": ["./hooks/Utilities/*"],
-      "@watch-hook": ["./hooks/Watch/*"]
-    }
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "@vercel/style-guide/typescript/node18",
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -48,7 +45,5 @@
     "jest.config.js",
     ".next/types/**/*.ts",
     "sadfsadf.ts"
-  ],
-  "exclude": ["node_modules"],
-  "extends": "@vercel/style-guide/typescript/node18"
+  ]
 }

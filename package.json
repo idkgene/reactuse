@@ -1,7 +1,6 @@
 {
   "name": "root",
   "version": "0.0.0",
-  "private": true,
   "scripts": {
     "build": "turbo run build",
     "clean": "turbo run clean",
@@ -11,7 +10,17 @@
     "lint:prettier": "prettier --cache --check --ignore-path .gitignore --ignore-path .prettierignore .",
     "test": "vitest"
   },
+  "packageManager": "pnpm@9.4.0",
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "esbuild",
+        "next"
+      ]
+    }
+  },
   "prettier": "@vercel/style-guide/prettier",
+  "private": true,
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -26,14 +35,5 @@
     "tsup": "^8.2.4",
     "turbo": "^2.0.11",
     "typescript": "^5.5.4"
-  },
-  "packageManager": "pnpm@9.4.0",
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "esbuild",
-        "next"
-      ]
-    }
   }
 }
