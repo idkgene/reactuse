@@ -1,0 +1,94 @@
+name: Requests & Suggestions
+description: Suggest a new hook, utility, improvement, or documentation update for ReactUse
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to contribute to ReactUse! Your feedback and suggestions are valuable in improving our project.
+
+        Before submitting a new request, please search the existing issues to avoid duplicates.
+  - type: dropdown
+    attributes:
+      label: Request Type
+      description: Select the type of request you're making.
+      options:
+        - New Hook
+        - New Utility Function
+        - Enhancement to Existing Hook/Utility
+        - Documentation Improvement
+        - Other
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Hook/Utility Name or Documentation Section
+      description: Specify the name of the new hook/utility or the section of documentation that needs improvement.
+      placeholder: e.g., "useXYZ", "Getting Started", "API Reference"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Problem Description / Current Limitation
+      description: Provide a clear and concise description of the problem or limitation you've encountered.
+      placeholder: |
+        I often find myself needing a specific functionality when working with React components, but the current set of hooks and utilities doesn't cover this use case.
+
+        OR
+
+        The current documentation lacks a clear explanation of how to handle edge cases when using this hook.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed Solution / Changes
+      description: Describe the new hook, utility, improvement, or documentation changes you'd like to see.
+      placeholder: |
+        Add a new hook called `useXYZ` that provides the following functionality:
+        - Ability to do X
+        - Integration with Y
+        - Support for Z
+
+        OR
+
+        - Add a more detailed explanation of the hook's behavior
+        - Include a code example demonstrating the usage of the utility
+        - Clarify the expected input and output types
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Use Case / Rationale
+      description: Provide a specific use case or explain why these changes would be beneficial.
+      placeholder: |
+        This new hook would be particularly useful when building complex forms with dynamic fields and validation requirements.
+
+        OR
+
+        Adding a section addressing common pitfalls and providing examples would help developers avoid mistakes and better understand the hook's usage.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Alternative Solutions / Current Workarounds
+      description: Describe any alternative solutions or workarounds you've considered.
+      placeholder: |
+        I've tried using a combination of existing hooks like `useABC` and `useDEF`, but it doesn't quite achieve the desired behavior.
+    validations:
+      required: false
+  - type: dropdown
+    attributes:
+      label: Impact
+      description: Assess the impact of the proposed changes.
+      options:
+        - 'Minor: Small tweaks or additions'
+        - 'Moderate: Improves functionality or clarity'
+        - 'Major: Addresses a significant gap or introduces a valuable new feature'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or references that support your request.
+    validations:
+      required: false
