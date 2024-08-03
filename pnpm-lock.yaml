@@ -166,8 +166,8 @@ importers:
         specifier: ^8.2.7
         version: 8.2.7(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))
       '@storybook/addon-interactions':
-        specifier: ^8.2.5
-        version: 8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(vitest@2.0.4(@types/node@18.19.42)(jsdom@24.1.1)(terser@5.31.3))
+        specifier: ^8.2.7
+        version: 8.2.7(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(vitest@2.0.4(@types/node@18.19.42)(jsdom@24.1.1)(terser@5.31.3))
       '@storybook/addon-links':
         specifier: ^8.2.7
         version: 8.2.7(react@18.3.1)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))
@@ -2364,10 +2364,10 @@ packages:
     peerDependencies:
       storybook: ^8.2.7
 
-  '@storybook/addon-interactions@8.2.6':
-    resolution: {integrity: sha512-YXpHf8jWPz9HJV+Fw4GaunaCWeE6uqF24aLXdAd8xuhN1UfWJeNV6AwAvFQ0hTLqvmz0yMhX/5JXDKeKESoYDA==}
+  '@storybook/addon-interactions@8.2.7':
+    resolution: {integrity: sha512-WZXlwpBNLE483uKuR70A7nm+ZbcZNEmuVz/J1/u7dbi0BUWzmJUa9YIgVeQ/1KTwW8KTkxvB0TuUUH3aA4ZKlA==}
     peerDependencies:
-      storybook: ^8.2.6
+      storybook: ^8.2.7
 
   '@storybook/addon-links@8.2.7':
     resolution: {integrity: sha512-BJdR+vdj7S6Rtx8XqBNQzLsRGH/FYHJ6B6BPWGp0awVx0jNWJnxepINQov8i+GAddUVQGCNG+r4LI3QSD3tNAA==}
@@ -9982,11 +9982,11 @@ snapshots:
       '@storybook/global': 5.0.0
       storybook: 8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7))
 
-  '@storybook/addon-interactions@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(vitest@2.0.4(@types/node@18.19.42)(jsdom@24.1.1)(terser@5.31.3))':
+  '@storybook/addon-interactions@8.2.7(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(vitest@2.0.4(@types/node@18.19.42)(jsdom@24.1.1)(terser@5.31.3))':
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/instrumenter': 8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))
-      '@storybook/test': 8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(vitest@2.0.4(@types/node@18.19.42)(jsdom@24.1.1)(terser@5.31.3))
+      '@storybook/instrumenter': 8.2.7(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))
+      '@storybook/test': 8.2.7(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(vitest@2.0.4(@types/node@18.19.42)(jsdom@24.1.1)(terser@5.31.3))
       polished: 4.3.1
       storybook: 8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.7))
       ts-dedent: 2.2.0
