@@ -5,11 +5,36 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
-    labels:
-      - 'type: chore'
-    # disable version updates
-    open-pull-requests-limit: 0
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+      - 'type: chore'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      dev-dependencies:
+        patterns:
+          - '*eslint*'
+          - 'prettier'
+          - 'typescript'
+      build-tools:
+        patterns:
+          - 'turbo'
+          - 'tsup'
+    commit-message:
+      prefix: 'chore'
+      include: 'scope'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'github-actions'
+      - 'type: chore'

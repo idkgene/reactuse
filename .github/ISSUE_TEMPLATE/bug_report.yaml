@@ -1,73 +1,102 @@
 name: Bug Report
-description: Create a detailed bug report to help us improve
-labels: ['🐛 bug']
+description: Report a bug in ReactUse to help us improve
+labels: ['bug', 'needs reproduction']
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to fill out this bug report. Before opening a new issue, please search the existing issues to avoid duplicates.
+        Thank you for taking the time to file a bug report for ReactUse. Before submitting, please search existing issues to avoid duplicates.
 
-        If you need assistance, please consider starting a discussion in the [Q&A Section](#).
+        For general questions or help, please use our [Discussions](link_to_discussions) section.
+  - type: input
+    attributes:
+      label: Affected Hook(s)
+      description: Which specific hook(s) are you experiencing issues with?
+      placeholder: e.g., useLocalStorage, useDebounce
+    validations:
+      required: true
+   - type: textarea
+    attributes:
+      label: Bug Description
+      description: Provide a clear and concise description of the bug.
+      placeholder: When using useLocalStorage with a complex object, the stored value becomes undefined after a page refresh.
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Steps to Reproduce
-      description: Please provide a clear and concise step-by-step description of how to reproduce the issue. If applicable, include a link to a minimal reproducible repository.
+      description: List the steps to reproduce the behavior. If possible, provide a minimal reproduction repository or CodeSandbox link.
       placeholder: |
-        1. Start the application in development mode using `next dev`
-        2. Navigate to the X page
-        3. Click on the Y button
-        4. Observe the unexpected behavior Z
+        1. Install the hook
+        2. Import useLocalStorage from the package
+        3. Call useLocalStorage with a complex object
+        4. Refresh the page
+        5. Observe that the stored value is undefined
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Expected vs. Actual behavior
-      description: Describe the expected behavior and contrast it with the actual behavior you observed.
-      placeholder: 'Following the reproduction steps, I expected A to happen. However, I observed B happening instead'
+      label: Expected vs Actual Behavior
+      description: Describe what you expected to happen and what actually happened.
+      placeholder: |
+        Expected: The complex object should persist in localStorage and be retrieved correctly after a page refresh.
+        Actual: The value becomes undefined after a page refresh.
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Environment information
-      description: Please run `next info` in the root directory of your project and paste the results.
-      render: bash
+      label: Code Snippet
+      description: Add a minimal code snippet to demonstrate the issue.
+      render: typescript
       placeholder: |
-        Operating System:
-          Platform: darwin
-          Arch: arm64
-          Version: Darwin Kernel Version 22.5.0
-        Binaries:
-          Node: 20.14.0
-          npm: 10.8.1
-          Yarn: 1.22.22
-          pnpm: 9.3.0
-        Relevant Packages:
-          react: 18.3.1
-          react-dom: 18.3.1
-          typescript: 5.4.5
+        import { useLocalStorage } from '#';
+
+        const MyComponent = () => {
+          const [value, setValue] = useLocalStorage('myKey', { complex: 'object' });
+          // ...
+        }
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Environment
+      description: Please provide information about your development environment.
+      render: markdown
+      placeholder: |
+        - OS: [e.g., macOS 12.6]
+        - Browser: [e.g., Chrome 98.0.4758.102]
+        - Node.js version: [e.g., 16.14.2]
+        - React version: [e.g., 18.2.0]
+        - TypeScript version (if applicable): [e.g., 4.9.5]
     validations:
       required: true
   - type: dropdown
     attributes:
       label: Affected Area(s)
-      description: Select all the areas that are affected by this bug.
+      description: Select all areas affected by this bug.
       multiple: true
       options:
-        - 'Unsure'
-        - 'Hooks'
-        - 'Website'
-        - 'TypeScript (built-in types)'
-        - 'Examples'
+        - 'Core functionality'
+        - 'TypeScript types'
+        - 'Performance'
+        - 'Browser compatibility'
+        - 'Server-side rendering'
     validations:
       required: true
-  - type: textarea
+        - type: textarea
     attributes:
-      label: Additional context
-      description: |
-        Please provide any additional information that might help us investigate and resolve the issue, such as:
-        - Relevant logs or error messages
-        - Screenshots or screen recordings
-        - Versions of dependencies or packages you suspect might be causing the issue
-        - Any workarounds or temporary fixes you have discovered
-      placeholder: |
-        I tested my reproduction against different canary releases, and the first one that introduced the bug was "11.0.0". Reverting to version "10.0.0" resolves the issue.
+      label: Additional Context
+      description: Add any other context about the problem here (e.g., logs, screenshots, possible solutions).
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: Confirmations
+      description: Please confirm the following
+      options:
+        - label: I have searched the existing issues and this is not a duplicate.
+          required: true
+        - label: I have tested this issue with the latest version of the affected hook or package.
+          required: true
+        - label: I have included a minimal code example or reproduction link (if applicable).
+          required: true
