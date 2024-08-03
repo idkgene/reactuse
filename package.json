@@ -8,11 +8,8 @@
     "dev": "turbo run dev",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "format": "prettier --write .",
     "lint:prettier": "prettier --cache --check --ignore-path .gitignore --ignore-path .prettierignore .",
-    "prettier": "prettier --cache --write --list-different --ignore-path .gitignore --ignore-path .prettierignore .",
-    "test": "vitest",
-    "types:check": "turbo run types:check"
+    "test": "vitest"
   },
   "prettier": "@vercel/style-guide/prettier",
   "devDependencies": {

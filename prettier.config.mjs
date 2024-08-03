@@ -8,7 +8,7 @@ const config = {
   singleQuote: true,
   tabWidth: 2,
   trailingComma: 'es5',
-  plugins: [...vercelPrettierOptions.plugins, 'prettier-plugin-prisma'],
+  plugins: [...vercelPrettierOptions.plugins],
 };
 
 export default config;

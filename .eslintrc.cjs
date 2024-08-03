@@ -37,10 +37,8 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': 'off',
     'no-console': 'off',
-    // Next.js routes
     'import/no-default-export': 'off',
 
-    // handled by typescript eslint
     'import/default': 'off',
     'import/export': 'off',
     'import/namespace': 'off',
