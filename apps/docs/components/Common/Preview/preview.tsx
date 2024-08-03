@@ -133,7 +133,7 @@ export function Demo({ name, category, className }: DemoProps): JSX.Element {
               </Link>
             </div>
           </div>
-          <div className={cn('mx-auto w-full px-10')}>
+          <div className={cn('mx-auto w-full px-10 py-6')}>
             {error ? (
               <div className="text-red-500">{error}</div>
             ) : (
