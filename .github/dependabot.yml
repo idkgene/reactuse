@@ -37,4 +37,3 @@ updates:
       interval: 'weekly'
     labels:
       - 'github-actions'
-      - 'type: chore'
