@@ -1,58 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/input';
-import { useIntervalFn } from './use-interval-fn';
-import Demo from '@/components/Common/Demo/demo';
+import {
+  IntervalSettings,
+  IntervalControls,
+  CounterDisplay,
+  StatusDisplay,
+} from './components';
+import { useIntervalFnState } from './hooks/use-interval-fn-state';
 
-const greetings = [
-  'Hello',
-  'こんにちは',
-  'Bonjour',
-  'Привет',
-  'Hey',
-  '你好',
-  'Yo!',
-];
-
-export default function IntervalFnDemo(): JSX.Element {
-  const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
-  const [interval, setInterval] = useState(250);
-
-  const { isActive, pause, resume } = useIntervalFn(
-    () => {
-      const randomIndex = Math.floor(Math.random() * greetings.length);
-      setCurrentGreeting(greetings[randomIndex]);
-    },
+function IntervalFnDemo(): JSX.Element {
+  const {
     interval,
-    { immediate: false },
-  );
+    counter,
+    isActive,
+    reset,
+    handleIntervalChange,
+    handlePauseResume,
+  } = useIntervalFnState();
 
   return (
-    <Demo category="Animation" title="useIntervalFn">
-      <div>
-        <div className="my-4">
-          <span>{currentGreeting}</span>
-        </div>
-        <div className="my-4">
-          <label htmlFor="interval">Interval (ms):</label>
-          <Input
-            id="interval"
-            type="number"
-            className="mt-1"
-            value={interval}
-            onChange={(e) => {
-              setInterval(Number(e.target.value));
-            }}
-          />
-        </div>
-        <div className="my-4 flex gap-3">
-          <Button onClick={isActive ? pause : resume}>
-            {isActive ? 'Pause' : 'Resume'}
-          </Button>
-        </div>
+    <div className="bg-background mx-auto max-w-md space-y-8 rounded-lg p-8">
+      <IntervalSettings
+        interval={interval}
+        onIntervalChange={handleIntervalChange}
+      />
+      <div className="flex flex-col items-center space-y-4">
+        <CounterDisplay counter={counter} />
+        <IntervalControls
+          isActive={isActive}
+          onReset={reset}
+          onPauseResume={handlePauseResume}
+        />
       </div>
-    </Demo>
+      <StatusDisplay isActive={isActive} />
+    </div>
   );
 }
+
+export default IntervalFnDemo;
