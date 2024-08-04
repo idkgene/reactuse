@@ -3,67 +3,90 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 interface UseTimeoutOptions {
   controls?: boolean;
   callback?: () => void;
+  autoStart?: boolean;
 }
 
 interface UseTimeoutReturn {
-  ready: boolean;
+  isReady: boolean;
+  isRunning: boolean;
   start: () => void;
   stop: () => void;
+  reset: () => void;
 }
 
 function useTimeout(
   interval: number | (() => number),
   options: UseTimeoutOptions = {},
 ): UseTimeoutReturn {
-  const { controls = false, callback } = options;
+  const { controls = false, callback, autoStart = true } = options;
 
-  const [ready, setReady] = useState<boolean>(true);
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const callbackRef = useRef<(() => void) | undefined>(callback);
+  const intervalRef = useRef<number | (() => number)>(interval);
 
-  const start = useCallback(() => {
-    setReady(false);
-    if (timeoutRef.current !== null) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    const ms = typeof interval === 'function' ? interval() : interval;
-
+  const getInterval = useCallback((): number => {
+    const ms =
+      typeof intervalRef.current === 'function'
+        ? intervalRef.current()
+        : intervalRef.current;
     if (typeof ms !== 'number' || isNaN(ms) || ms < 0) {
       throw new Error('Invalid interval value');
     }
+    return ms;
+  }, []);
 
-    timeoutRef.current = setTimeout(() => {
-      setReady(true);
-      if (callbackRef.current) {
-        callbackRef.current();
-      }
-    }, ms);
-  }, [interval]);
-
-  const stop = useCallback(() => {
+  const clearTimeoutSafely = useCallback(() => {
     if (timeoutRef.current !== null) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    setReady(true);
   }, []);
+
+  const start = useCallback(() => {
+    clearTimeoutSafely();
+    setIsReady(false);
+    setIsRunning(true);
+
+    timeoutRef.current = setTimeout(() => {
+      setIsReady(true);
+      setIsRunning(false);
+      if (callbackRef.current) {
+        callbackRef.current();
+      }
+    }, getInterval());
+  }, [clearTimeoutSafely, getInterval]);
+
+  const stop = useCallback(() => {
+    clearTimeoutSafely();
+    setIsReady(false);
+    setIsRunning(false);
+  }, [clearTimeoutSafely]);
+
+  const reset = useCallback(() => {
+    stop();
+    start();
+  }, [start, stop]);
 
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
   useEffect(() => {
-    if (!controls) {
+    intervalRef.current = interval;
+  }, [interval]);
+
+  useEffect(() => {
+    if (!controls && autoStart) {
       start();
     }
     return () => {
-      stop();
+      clearTimeoutSafely();
     };
-  }, [controls, start, stop]);
+  }, [controls, autoStart, start, clearTimeoutSafely]);
 
-  return { ready, start, stop };
+  return { isReady, isRunning, start, stop, reset };
 }
 
 export { useTimeout };
-export type { UseTimeoutOptions, UseTimeoutReturn };

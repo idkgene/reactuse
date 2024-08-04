@@ -1,34 +1,41 @@
 'use client';
 
-import { useState } from 'react';
-import { useTimeout } from './use-timeout';
-import Demo from '@/components/Common/Demo/demo';
-import { Button } from '@/components/Common/Button/button';
+import {
+  TimeoutDisplay,
+  StatusDisplay,
+  TimeoutControls,
+  TimeoutSettings,
+} from './components';
+import { useTimeoutState } from './hooks/use-timeout-state';
 
 function TimeoutDemo(): JSX.Element {
-  const [isRunning, setIsRunning] = useState(false);
-
-  const timeout = useTimeout(1000, {
-    controls: true,
-    callback: () => {
-      setIsRunning(false);
-    },
-  }) as { ready: boolean; start: () => void };
-
-  const handleClick = (): void => {
-    if (timeout.ready && 'start' in timeout) {
-      setIsRunning(true);
-      timeout.start();
-    }
-  };
+  const {
+    isReady,
+    isRunning,
+    interval,
+    start,
+    stop,
+    reset,
+    handleIntervalChange,
+  } = useTimeoutState();
 
   return (
-    <Demo category="Animation" title="useTimeout">
-      <p className="text-sm font-semibold">Ready: {timeout.ready.toString()}</p>
-      <Button type="button" onClick={handleClick} disabled={isRunning}>
-        {isRunning ? 'Running...' : 'Start Timeout'}
-      </Button>
-    </Demo>
+    <div className="bg-background mx-auto max-w-md space-y-8 rounded-lg p-8">
+      <TimeoutSettings
+        interval={interval}
+        onIntervalChange={handleIntervalChange}
+      />
+      <div className="flex flex-col items-center space-y-4">
+        <TimeoutDisplay isReady={isReady} />
+        <TimeoutControls
+          isRunning={isRunning}
+          onStart={start}
+          onStop={stop}
+          onReset={reset}
+        />
+      </div>
+      <StatusDisplay isRunning={isRunning} isReady={isReady} />
+    </div>
   );
 }
 
