@@ -20,9 +20,3 @@ export function toKebabCase(str: string): string {
     return str.toLowerCase();
   }
 }
-
-export const formatStatus = (isRunning: boolean): string =>
-  isRunning ? 'Running' : 'Paused';
-
-export const clamp = (value: number, min: number, max: number): number =>
-  Math.min(Math.max(value, min), max);
