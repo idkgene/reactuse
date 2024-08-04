@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import GithubIcon from '../Icons/github-icon';
+import GithubIcon from './github-icon';
 
 interface DemoProps {
   children: React.ReactNode;
