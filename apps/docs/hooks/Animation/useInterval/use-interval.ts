@@ -1,66 +1,29 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-/**
- * Options for configuring the useInterval hook.
- * @param immediate - Whether to start the interval immediately.
- * @param callback - Optional callback function to be invoked on each interval tick.
- */
-interface UseIntervalOptions {
+interface IntervalSettings {
   immediate?: boolean;
   callback?: (count: number) => void;
+  maxCount?: number;
 }
 
-/**
- * The control functions and counter value returned by the useInterval hook.
- * @param counter - The current value of the interval counter.
- * @param reset - Function to reset the counter to 0.
- * @param pause - Function to pause the interval.
- * @param resume - Function to resume the interval.
- */
-interface UseIntervalControls {
+interface IntervalControls {
   counter: number;
+  isRunning: boolean;
   reset: () => void;
   pause: () => void;
   resume: () => void;
+  setCounter: (value: number) => void;
 }
 
-/**
- * Custom React hook that provides interval functionality with controls.
- *
- * @param interval - The interval duration in milliseconds. Must be a positive number.
- * @param options - Optional configuration options for the interval.
- * @returns  An object containin the current counter value and control functions.
- *
- * @example
- * ```tsx
- * const { counter, reset, pause, resume } = useInterval(1000, {
- *   immediate: true,
- *   callback: (count) => {
- *     console.log(`Interval count: ${count}`);
- *   },
- * });
- *
- * return (
- *   <div>
- *     <p>Counter: {counter}</p>
- *     <button onClick={reset}>Reset</button>
- *     <button onClick={pause}>Pause</button>
- *     <button onClick={resume}>Resume</button>
- *   </div>
- * );
- * ```
- *
- * @throws Error - If the provided interval is not a positive number.
- */
 function useInterval(
   interval: number,
-  options?: UseIntervalOptions,
-): UseIntervalControls {
+  options?: IntervalSettings,
+): IntervalControls {
   if (typeof interval !== 'number' || interval <= 0) {
     throw new Error('useInterval: interval must be a positive number');
   }
 
-  const { immediate = true, callback } = options ?? {};
+  const { immediate = true, callback, maxCount } = options ?? {};
 
   const [counter, setCounter] = useState(0);
   const [isRunning, setIsRunning] = useState(immediate);
@@ -71,46 +34,68 @@ function useInterval(
     savedCallback.current = callback;
   }, [callback]);
 
-  const reset = useCallback(() => {
+  const reset = useCallback((): void => {
     setCounter(0);
   }, []);
 
-  const pause = useCallback(() => {
+  const pause = useCallback((): void => {
     setIsRunning(false);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
   }, []);
 
-  const resume = useCallback(() => {
+  const resume = useCallback((): void => {
     setIsRunning(true);
   }, []);
 
-  useEffect(() => {
-    if (isRunning) {
-      intervalRef.current = setInterval(() => {
-        setCounter((prevCounter) => {
-          const newCounter = prevCounter + 1;
-          try {
-            savedCallback.current?.(newCounter);
-          } catch (error) {
-            console.error('useInterval: Error in callback:', error);
-          }
-          return newCounter;
-        });
-      }, interval);
+  const setCounterSafe = useCallback((value: number): void => {
+    if (typeof value !== 'number' || value < 0) {
+      throw new Error(
+        'useInterval: counter value must be a non-negative number',
+      );
     }
+    setCounter(value);
+  }, []);
+
+  useEffect(() => {
+    if (!isRunning) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
+
+    intervalRef.current = setInterval(() => {
+      setCounter((prevCounter) => {
+        const newCounter = prevCounter + 1;
+        if (maxCount !== undefined && newCounter > maxCount) {
+          setIsRunning(false);
+          return prevCounter;
+        }
+        try {
+          savedCallback.current?.(newCounter);
+        } catch (error) {
+          console.error('useInterval: Error in callback:', error);
+        }
+        return newCounter;
+      });
+    }, interval);
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     };
-  }, [interval, isRunning]);
+  }, [interval, isRunning, maxCount]);
 
-  return { counter, reset, pause, resume };
+  return {
+    counter,
+    isRunning,
+    reset,
+    pause,
+    resume,
+    setCounter: setCounterSafe,
+  };
 }
 
 export { useInterval };
-export type { UseIntervalOptions, UseIntervalControls };
+export type { IntervalSettings, IntervalControls };

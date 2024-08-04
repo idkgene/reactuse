@@ -1,6 +1,6 @@
 # useInterval
 
-Creates an interval that invokes a callback function at a specified delay
+Managing interval-based counters with pause, resume, and reset capabilities.
 
 Please refer to the documentation for more information.
 

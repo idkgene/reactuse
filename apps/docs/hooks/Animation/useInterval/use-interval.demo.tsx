@@ -1,22 +1,45 @@
 'use client';
 
-import { Button } from '../../../components/ui/button';
-import { useInterval } from './use-interval';
-import Demo from '@/components/Common/Demo/demo';
+import { CounterDisplay, StatusDisplay } from './components/displays';
+import IntervalControls from './components/interval-controls';
+import IntervalSettings from './components/interval-settings';
+import { useIntervalState } from './hooks/use-interval-state';
 
-export default function IntervalDemo(): JSX.Element {
-  const { counter, reset, pause, resume } = useInterval(250, {
-    immediate: true,
-  });
+function IntervalDemo(): JSX.Element {
+  const {
+    interval,
+    maxCount,
+    counter,
+    isRunning,
+    reset,
+    handleIntervalChange,
+    handleMaxCountChange,
+    handleDecrement,
+    handleIncrement,
+    handlePauseResume,
+  } = useIntervalState();
 
   return (
-    <Demo category="Animation" title="useInterval">
-      <div className="text-sm font-semibold">Interval Fired: {counter}</div>
-      <div className="my-4 flex gap-2">
-        <Button onClick={reset}>Reset</Button>
-        <Button onClick={pause}>Pause</Button>
-        <Button onClick={resume}>Resume</Button>
+    <div className="bg-background mx-auto max-w-md space-y-8 rounded-lg p-8">
+      <IntervalSettings
+        interval={interval}
+        maxCount={maxCount}
+        onIntervalChange={handleIntervalChange}
+        onMaxCountChange={handleMaxCountChange}
+      />
+      <div className="flex flex-col items-center space-y-4">
+        <CounterDisplay counter={counter} />
+        <IntervalControls
+          isRunning={isRunning}
+          onReset={reset}
+          onPauseResume={handlePauseResume}
+          onDecrement={handleDecrement}
+          onIncrement={handleIncrement}
+        />
       </div>
-    </Demo>
+      <StatusDisplay isRunning={isRunning} />
+    </div>
   );
 }
+
+export default IntervalDemo;
