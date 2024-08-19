@@ -55,7 +55,7 @@
     "@shikijs/transformers": "^1.12.1",
     "@storybook/addon-essentials": "^8.2.7",
     "@storybook/addon-interactions": "^8.2.7",
-    "@storybook/addon-links": "^8.2.7",
+    "@storybook/addon-links": "^8.2.9",
     "@storybook/addon-onboarding": "^8.2.8",
     "@storybook/blocks": "^8.2.7",
     "@storybook/nextjs": "^8.2.7",
