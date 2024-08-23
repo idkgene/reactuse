@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+const ERROR_MESSAGES = {
+  NON_POSITIVE_INTERVAL: 'Interval must be a positive number',
+  CALLBACK_ERROR: 'An error occurred in the interval callback',
+};
+
 type IntervalFnCallback = () => void;
 type IntervalValue = number | (() => number);
 
@@ -12,61 +17,111 @@ interface IntervalFnControl {
   isActive: boolean;
   pause: () => void;
   resume: () => void;
+  reset: () => void;
+  setInterval: (interval: IntervalValue) => void;
+  setCallback: (callback: IntervalFnCallback) => void;
+  getCurrentInterval: () => number;
 }
 
 function useIntervalFn(
-  callback: IntervalFnCallback,
-  interval: IntervalValue,
+  initialCallback: IntervalFnCallback,
+  initialInterval: IntervalValue,
   options: IntervalFnOptions = {},
 ): IntervalFnControl {
   const { immediate = true, immediateCallback = false } = options;
 
-  const [isActive, setIsActive] = useState<boolean>(immediate);
-  const savedCallback = useRef<IntervalFnCallback>(callback);
-  const intervalRef = useRef<number | null>(null);
+  const [isActive, setIsActive] = useState(immediate);
+  const callbackRef = useRef(initialCallback);
+  const intervalRef = useRef<IntervalValue>(initialInterval);
+  const timerRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
+  const getCurrentInterval = useCallback((): number => {
+    const interval =
+      typeof intervalRef.current === 'function'
+        ? intervalRef.current()
+        : intervalRef.current;
 
-  const executeCallback = useCallback((): void => {
-    savedCallback.current();
+    if (typeof interval !== 'number' || interval <= 0) {
+      throw new RangeError(ERROR_MESSAGES.NON_POSITIVE_INTERVAL);
+    }
+
+    return interval;
   }, []);
 
-  useEffect(() => {
-    if (!isActive) return;
+  const executeCallback = useCallback(() => {
+    try {
+      callbackRef.current();
+    } catch (error) {
+      console.error(ERROR_MESSAGES.CALLBACK_ERROR, error);
+    }
+  }, []);
 
-    if (immediateCallback) {
+  const clearTimer = useCallback(() => {
+    if (timerRef.current !== null) {
+      window.clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const setTimer = useCallback(() => {
+    clearTimer();
+    if (isActive) {
+      timerRef.current = window.setInterval(
+        executeCallback,
+        getCurrentInterval(),
+      );
+    }
+  }, [isActive, getCurrentInterval, executeCallback, clearTimer]);
+
+  useEffect(() => {
+    if (immediateCallback && isActive) {
       executeCallback();
     }
+    setTimer();
+    return clearTimer;
+  }, [isActive, immediateCallback, setTimer, clearTimer, executeCallback]);
 
-    const intervalValue =
-      typeof interval === 'function' ? interval() : interval;
-
-    if (typeof intervalValue !== 'number' || intervalValue <= 0) {
-      throw new RangeError('useIntervalFn: interval must be a positive number');
-    }
-
-    intervalRef.current = window.setInterval(executeCallback, intervalValue);
-
-    return () => {
-      if (intervalRef.current !== null) {
-        window.clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, [isActive, interval, immediateCallback, executeCallback]);
-
-  const pause = useCallback((): void => {
+  const pause = useCallback(() => {
     setIsActive(false);
   }, []);
 
-  const resume = useCallback((): void => {
+  const resume = useCallback(() => {
     setIsActive(true);
   }, []);
+  
+  const reset = useCallback(() => {
+    clearTimer();
+    setIsActive(immediate);
+    setTimer();
+  }, [immediate, clearTimer, setTimer]);
 
-  return { isActive, pause, resume };
+  const setInterval = useCallback(
+    (newInterval: IntervalValue) => {
+      intervalRef.current = newInterval;
+      if (isActive) setTimer();
+    },
+    [isActive, setTimer],
+  );
+
+  const setCallback = useCallback((newCallback: IntervalFnCallback) => {
+    callbackRef.current = newCallback;
+  }, []);
+
+  return {
+    isActive,
+    pause,
+    resume,
+    reset,
+    setInterval,
+    setCallback,
+    getCurrentInterval,
+  };
 }
 
 export { useIntervalFn };
-export type { IntervalFnCallback, IntervalValue, IntervalFnOptions };
+export type {
+  IntervalFnCallback,
+  IntervalValue,
+  IntervalFnOptions,
+  IntervalFnControl,
+};
