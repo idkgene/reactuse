@@ -1,0 +1,84 @@
+---
+title: useDeviceMotion
+description: Accessing device motion data
+---
+
+<Demo name="useDeviceMotion" category="Sensors" />
+
+## Installation
+
+```bash
+npx changeelog/reactuse@latest add useDeviceMotion
+```
+
+## Usage
+
+```ts
+const motionState = useDeviceMotion();
+
+console.log(motionState.acceleration);
+console.log(motionState.rotationRate);
+```
+
+| State                        | Type     | Description                                                                                                          |
+| ---------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| acceleration                 | `object` | An object giving the acceleration of the device on the three axis X, Y and Z.                                        |
+| accelerationIncludingGravity | `object` | An object giving the acceleration of the device on the three axis X, Y and Z with the effect of gravity.             |
+| rotationRate                 | `object` | An object giving the rate of change of the device's orientation on the three orientation axis alpha, beta and gamma. |
+| interval                     | `number` | A number representing the interval of time, in milliseconds, at which data is obtained from the device.              |
+
+You can find [more information about the state on the MDN](https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent#Properties).
+
+## Reference
+
+`useDeviceMotion(options)`
+
+### Parameters
+
+<TypeTable
+  type={{
+    options: {
+      description: 'Optional configuration object.',
+      type: 'UseDeviceMotionOptions',
+      default: '{}',
+    },
+  }}
+/>
+
+### Options
+
+<TypeTable
+  type={{
+    eventFilter: {
+      description: 'Function to filter device motion events.',
+      type: '(event: DeviceMotionEvent) => boolean',
+      default: '() => true',
+    },
+  }}
+/>
+
+### Return Value
+
+<TypeTable
+  type={{
+    acceleration: {
+      description: 'Acceleration of the device, excluding gravity.',
+      type: 'DeviceMotionEventAcceleration | null',
+    },
+    accelerationIncludingGravity: {
+      description: 'Acceleration of the device, including gravity.',
+      type: 'DeviceMotionEventAcceleration | null',
+    },
+    rotationRate: {
+      description: 'Rate of rotation of the device.',
+      type: 'DeviceMotionEventRotationRate | null',
+    },
+    interval: {
+      description: 'Interval at which data is obtained from the device.',
+      type: 'number',
+    },
+  }}
+/>
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Demo } from '@/components/Common/Preview/preview';
