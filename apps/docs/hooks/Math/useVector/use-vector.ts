@@ -1,23 +1,28 @@
 import { useState, useCallback, useMemo } from 'react';
 
-type Numeric = number | { valueOf: () => number };
+type VectorComponent = number;
+type Vector3D =
+  | [VectorComponent, VectorComponent, VectorComponent]
+  | readonly [VectorComponent, VectorComponent, VectorComponent];
 
-interface Vector3D {
-  readonly x: number;
-  readonly y: number;
-  readonly z: number;
+enum VectorError {
+  InvalidVector = 'Invalid vector: components must be finite numbers',
+  ZeroVectorNormalization = 'Cannot normalize a zero vector',
+  InvalidScalar = 'Invalid scalar: must be a finite number',
 }
 
-type VectorOperation = (v: Readonly<Vector3D>) => void;
-type ScalarOperation = (scalar: Numeric) => void;
+type VectorOperation = (v: Readonly<Vector3D>) => Vector3D;
+type ScalarOperation = (scalar: number) => Vector3D;
 
 interface VectorMethods {
   add: VectorOperation;
   subtract: VectorOperation;
   scale: ScalarOperation;
-  normalize: () => void;
+  normalize: () => Vector3D;
   dot: (v: Readonly<Vector3D>) => number;
   cross: VectorOperation;
+  project: VectorOperation;
+  clone: () => Vector3D;
 }
 
 interface VectorProperties {
@@ -26,27 +31,42 @@ interface VectorProperties {
   readonly unit: Vector3D;
 }
 
+interface VectorComponents {
+  getX: () => VectorComponent;
+  getY: () => VectorComponent;
+  getZ: () => VectorComponent;
+}
+
+interface UseVectorOptions {
+  epsilon?: number;
+}
+
 type UseVectorReturn = Readonly<{
   vector: Readonly<Vector3D>;
   setVector: React.Dispatch<React.SetStateAction<Vector3D>>;
 }> &
   VectorMethods &
-  VectorProperties;
+  VectorProperties &
+  VectorComponents;
 
-const EPSILON = 1e-10;
+const DEFAULT_EPSILON = 1e-10;
 
-const isValidNumber = (n: unknown): n is number =>
-  typeof n === 'number' && Number.isFinite(n);
+function isValidNumber(n: unknown): n is number {
+  return typeof n === 'number' && Number.isFinite(n);
+}
 
-const validateVector = (v: Readonly<Vector3D>): void => {
-  if (!isValidNumber(v.x) || !isValidNumber(v.y) || !isValidNumber(v.z)) {
-    throw new Error('Invalid vector: components must be finite numbers');
+function validateVector(v: Readonly<Vector3D>): void {
+  if (!v.every(isValidNumber)) {
+    throw new Error(VectorError.InvalidVector);
   }
-};
+}
 
-const useVector = (
-  initialVector: Readonly<Vector3D> = { x: 0, y: 0, z: 0 },
-): UseVectorReturn => {
+function useVector(
+  initialVector: Readonly<Vector3D> = [0, 0, 0],
+  options: UseVectorOptions = {},
+): UseVectorReturn {
+  const { epsilon = DEFAULT_EPSILON } = options;
+
   validateVector(initialVector);
   const [vector, setVector] = useState<Vector3D>(initialVector);
 
@@ -54,84 +74,94 @@ const useVector = (
     (operation: (a: number, b: number) => number): VectorOperation =>
       (v: Readonly<Vector3D>) => {
         validateVector(v);
-        setVector((prev) => ({
-          x: operation(prev.x, v.x),
-          y: operation(prev.y, v.y),
-          z: operation(prev.z, v.z),
-        }));
+        return vector.map((component, index) =>
+          operation(component, v[index]),
+        ) as Vector3D;
       },
-    [],
-  );
-
-  const add = useMemo(
-    () => createVectorOperation((a, b) => a + b),
-    [createVectorOperation],
-  );
-  const subtract = useMemo(
-    () => createVectorOperation((a, b) => a - b),
-    [createVectorOperation],
-  );
-
-  const scale = useCallback((scalar: Numeric) => {
-    const value = Number(scalar);
-    if (!isValidNumber(value)) {
-      throw new Error('Invalid scalar: must be a finite number');
-    }
-    setVector((prev) => ({
-      x: prev.x * value,
-      y: prev.y * value,
-      z: prev.z * value,
-    }));
-  }, []);
-
-  const magnitude = useMemo(
-    () => Math.sqrt(vector.x ** 2 + vector.y ** 2 + vector.z ** 2),
     [vector],
   );
 
-  const isZero = useMemo(() => magnitude < EPSILON, [magnitude]);
+  const add = useCallback(
+    (v: Readonly<Vector3D>) => createVectorOperation((a, b) => a + b)(v),
+    [createVectorOperation],
+  );
 
-  const normalize = useCallback(() => {
-    if (isZero) {
-      throw new Error('Cannot normalize a zero vector');
-    }
-    setVector((prev) => {
-      const mag = Math.sqrt(prev.x ** 2 + prev.y ** 2 + prev.z ** 2);
-      return {
-        x: prev.x / mag,
-        y: prev.y / mag,
-        z: prev.z / mag,
-      };
-    });
-  }, [isZero]);
+  const subtract = useCallback(
+    (v: Readonly<Vector3D>) => createVectorOperation((a, b) => a - b)(v),
+    [createVectorOperation],
+  );
 
-  const dot = useCallback(
-    (v: Readonly<Vector3D>): number => {
-      validateVector(v);
-      return vector.x * v.x + vector.y * v.y + vector.z * v.z;
+  const scale = useCallback(
+    (scalar: number): Vector3D => {
+      if (!isValidNumber(scalar)) {
+        throw new Error(VectorError.InvalidScalar);
+      }
+      return vector.map((component) => component * scalar) as Vector3D;
     },
     [vector],
   );
 
-  const cross = useCallback((v: Readonly<Vector3D>) => {
-    validateVector(v);
-    setVector((prev) => ({
-      x: prev.y * v.z - prev.z * v.y,
-      y: prev.z * v.x - prev.x * v.z,
-      z: prev.x * v.y - prev.y * v.x,
-    }));
-  }, []);
+  const magnitude = useMemo(
+    () => Math.sqrt(vector.reduce((sum, component) => sum + component ** 2, 0)),
+    [vector],
+  );
+
+  const isZero = useMemo(() => magnitude < epsilon, [magnitude, epsilon]);
+
+  const normalize = useCallback((): Vector3D => {
+    if (isZero) {
+      throw new Error(VectorError.ZeroVectorNormalization);
+    }
+    return vector.map((component) => component / magnitude) as Vector3D;
+  }, [vector, magnitude, isZero]);
+
+  const dot = useCallback(
+    (v: Readonly<Vector3D>): number => {
+      validateVector(v);
+      return vector.reduce(
+        (sum, component, index) => sum + component * v[index],
+        0,
+      );
+    },
+    [vector],
+  );
+
+  const cross = useCallback(
+    (v: Readonly<Vector3D>): Vector3D => {
+      validateVector(v);
+      const [ax, ay, az] = vector;
+      const [bx, by, bz] = v;
+      return [ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx];
+    },
+    [vector],
+  );
+
+  const project = useCallback(
+    (v: Readonly<Vector3D>): Vector3D => {
+      validateVector(v);
+      const dotProduct = dot(v);
+      const vMagnitudeSquared = v.reduce(
+        (sum, component) => sum + component ** 2,
+        0,
+      );
+      const scalar = dotProduct / vMagnitudeSquared;
+      return scale(scalar);
+    },
+    [dot, scale],
+  );
 
   const unit = useMemo((): Vector3D => {
     if (isZero) {
-      return { x: 0, y: 0, z: 0 };
+      return [0, 0, 0];
     }
-    return {
-      x: vector.x / magnitude,
-      y: vector.y / magnitude,
-      z: vector.z / magnitude,
-    };
+    return vector.map((component) => component / magnitude) as Vector3D;
   }, [vector, magnitude, isZero]);
+
+  const clone = useCallback((): Vector3D => [...vector], [vector]);
+
+  const getX = useCallback(() => vector[0], [vector]);
+  const getY = useCallback(() => vector[1], [vector]);
+  const getZ = useCallback(() => vector[2], [vector]);
 
   return {
     vector,
@@ -142,11 +172,16 @@ const useVector = (
     normalize,
     dot,
     cross,
+    project,
     magnitude,
     isZero,
     unit,
+    clone,
+    getX,
+    getY,
+    getZ,
   };
-};
+}
 
-export { useVector, useVector as vector };
-export type { Vector3D, VectorOperation, ScalarOperation };
+export { useVector };
+export type { Vector3D, VectorOperation, ScalarOperation, UseVectorOptions };
