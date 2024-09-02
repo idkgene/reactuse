@@ -157,8 +157,8 @@ importers:
         specifier: 1.6.1
         version: 1.6.1(react@18.3.1)
       '@shikijs/rehype':
-        specifier: ^1.12.1
-        version: 1.12.1
+        specifier: ^1.16.1
+        version: 1.16.1
       '@shikijs/transformers':
         specifier: ^1.12.1
         version: 1.12.1
@@ -2280,11 +2280,20 @@ packages:
   '@shikijs/core@1.12.1':
     resolution: {integrity: sha512-biCz/mnkMktImI6hMfMX3H9kOeqsInxWEyCHbSlL8C/2TR1FqfmGxTLRNwYCKsyCyxWLbB8rEqXRVZuyxuLFmA==}
 
-  '@shikijs/rehype@1.12.1':
-    resolution: {integrity: sha512-AZLC80TIiRWFwPbSqdwykeSeMjQwYWlkX8yfI7T4nan0qgWfvv/oP7C767JQ8USudEylbe5KzBdE8Ao2sHsidA==}
+  '@shikijs/core@1.16.1':
+    resolution: {integrity: sha512-aI0hBtw+a6KsJp2jcD4YuQqKpeCbURMZbhHVozDknJpm+KJqeMRkEnfBC8BaKE/5XC+uofPgCLsa/TkTk0Ba0w==}
+
+  '@shikijs/rehype@1.16.1':
+    resolution: {integrity: sha512-6GM4yvvs4iz9JYaKWww/02tkOK3nBkmK1j2IcRd8y4/LKnDrv2Nm/TeNohYkZG8CjX8UQfLlBQB5nCXD2OMSgg==}
 
   '@shikijs/transformers@1.12.1':
     resolution: {integrity: sha512-zOpj/S2thBvnJV4Ty3EE8aRs/VqCbV+lgtEYeBRkPxTW22uLADEIZq0qjt5W2Rfy2KSu29e73nRyzp4PefjUTg==}
+
+  '@shikijs/transformers@1.16.1':
+    resolution: {integrity: sha512-mfbe4YMov+1eyIBU3F6BtaPmLgDkRQaVse8xsBlKTVAcNF3cbZMRCyUz2N6gJOMKLJiv9T5gapBPbRxrDMuoxA==}
+
+  '@shikijs/vscode-textmate@9.2.0':
+    resolution: {integrity: sha512-5FinaOp6Vdh/dl4/yaOTh0ZeKch+rYS8DUb38V3GMKYVkdqzxw53lViRKUYkVILRiVQT7dcPC7VvAKOR73zVtQ==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -6683,6 +6692,9 @@ packages:
   shiki@1.12.1:
     resolution: {integrity: sha512-nwmjbHKnOYYAe1aaQyEBHvQymJgfm86ZSS7fT8OaPRr4sbAcBNz7PbfAikMEFSDQ6se2j2zobkXvVKcBOm0ysg==}
 
+  shiki@1.16.1:
+    resolution: {integrity: sha512-tCJIMaxDVB1mEIJ5TvfZU7kCPB5eo9fli5+21Olc/bmyv+w8kye3JOp+LZRmGkAyT71hrkefQhTiY+o9mBikRQ==}
+
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
@@ -9827,18 +9839,29 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  '@shikijs/rehype@1.12.1':
+  '@shikijs/core@1.16.1':
     dependencies:
-      '@shikijs/transformers': 1.12.1
+      '@shikijs/vscode-textmate': 9.2.0
+      '@types/hast': 3.0.4
+
+  '@shikijs/rehype@1.16.1':
+    dependencies:
+      '@shikijs/transformers': 1.16.1
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.12.1
+      shiki: 1.16.1
       unified: 11.0.5
       unist-util-visit: 5.0.0
 
   '@shikijs/transformers@1.12.1':
     dependencies:
       shiki: 1.12.1
+
+  '@shikijs/transformers@1.16.1':
+    dependencies:
+      shiki: 1.16.1
+
+  '@shikijs/vscode-textmate@9.2.0': {}
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -12682,7 +12705,7 @@ snapshots:
   fumadocs-core@12.5.6(@types/react@18.3.3)(next@14.2.5(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@formatjs/intl-localematcher': 0.5.4
-      '@shikijs/rehype': 1.12.1
+      '@shikijs/rehype': 1.16.1
       '@shikijs/transformers': 1.12.1
       flexsearch: 0.7.21
       github-slugger: 2.0.0
@@ -15514,6 +15537,12 @@ snapshots:
   shiki@1.12.1:
     dependencies:
       '@shikijs/core': 1.12.1
+      '@types/hast': 3.0.4
+
+  shiki@1.16.1:
+    dependencies:
+      '@shikijs/core': 1.16.1
+      '@shikijs/vscode-textmate': 9.2.0
       '@types/hast': 3.0.4
 
   side-channel@1.0.6:

@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.6.1",
-    "@shikijs/rehype": "^1.12.1",
+    "@shikijs/rehype": "^1.16.1",
     "@shikijs/transformers": "^1.12.1",
     "@storybook/addon-essentials": "^8.2.7",
     "@storybook/addon-interactions": "^8.2.7",
