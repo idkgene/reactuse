@@ -111,8 +111,8 @@ importers:
         specifier: 8.2.34
         version: 8.2.34(fumadocs-core@12.5.6(@types/react@18.3.3)(next@14.2.5(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       fumadocs-typescript:
-        specifier: ^2.0.1
-        version: 2.0.1(typescript@5.5.4)
+        specifier: ^2.1.0
+        version: 2.1.0(typescript@5.5.4)
       fumadocs-ui:
         specifier: 12.5.6
         version: 12.5.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(next@14.2.5(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.7)
@@ -4521,8 +4521,8 @@ packages:
       fumadocs-core: 12.x.x
       next: '>= 14.1.0'
 
-  fumadocs-typescript@2.0.1:
-    resolution: {integrity: sha512-FKgO/g23tcRbXnv47blZ+KLs6HacKB5eO13d+LmQyBZxa3J5L+Ewi3vjjQmkf33Gva1WMojhYELe4m6YXZLErA==}
+  fumadocs-typescript@2.1.0:
+    resolution: {integrity: sha512-fxxC8F+bQQxlVQA03vWaoztJFeKkevW3WgT7ECPCmdOB2UFsRB61cgzlRvwKqtFWJuJYASX55+2wEMxXAjzBjQ==}
     peerDependencies:
       typescript: '*'
 
@@ -10671,7 +10671,7 @@ snapshots:
 
   '@types/estree-jsx@1.0.5':
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
 
   '@types/estree@0.0.51': {}
 
@@ -12578,7 +12578,7 @@ snapshots:
 
   estree-util-attach-comments@3.0.0:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
 
   estree-util-build-jsx@3.0.1:
     dependencies:
@@ -12918,7 +12918,7 @@ snapshots:
   fumadocs-docgen@1.1.0(typescript@5.5.4):
     dependencies:
       estree-util-value-to-estree: 3.1.2
-      fumadocs-typescript: 2.0.1(typescript@5.5.4)
+      fumadocs-typescript: 2.1.0(typescript@5.5.4)
       hast-util-to-estree: 3.1.0
       npm-to-yarn: 2.2.1
       unist-util-visit: 5.0.0
@@ -12939,7 +12939,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-typescript@2.0.1(typescript@5.5.4):
+  fumadocs-typescript@2.1.0(typescript@5.5.4):
     dependencies:
       fast-glob: 3.3.2
       hast-util-to-jsx-runtime: 2.3.0
@@ -13250,7 +13250,7 @@ snapshots:
 
   hast-util-to-jsx-runtime@2.3.0:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       '@types/hast': 3.0.4
       '@types/unist': 3.0.2
       comma-separated-tokens: 2.0.3
@@ -13533,7 +13533,7 @@ snapshots:
 
   is-reference@3.0.2:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
 
   is-regex@1.1.4:
     dependencies:
@@ -14855,7 +14855,7 @@ snapshots:
 
   periscopic@3.1.0:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       estree-walker: 3.0.3
       is-reference: 3.0.2
 
