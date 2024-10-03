@@ -44,6 +44,5 @@
     "**/*.tsx",
     "jest.config.js",
     ".next/types/**/*.ts",
-    "sadfsadf.ts"
   ]
 }
