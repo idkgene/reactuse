@@ -1,20 +1,10 @@
-import createMDX from 'fumadocs-mdx/config';
-import createBundleAnalyzer from '@next/bundle-analyzer';
-import { remarkDocGen, typescriptGenerator } from 'fumadocs-docgen';
+import { createMDX } from 'fumadocs-mdx/next';
 
-const withAnalyzer = createBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
-
-const withMDX = createMDX({
-  mdxOptions: {
-    remarkPlugins: [[remarkDocGen, { generators: [typescriptGenerator()] }]],
-  },
-});
+const withMDX = createMDX();
 
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
 };
 
-export default withAnalyzer(withMDX(config));
+export default withMDX(config);
