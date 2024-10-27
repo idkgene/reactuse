@@ -1,14 +1,9 @@
-import vercelPrettierOptions from '@vercel/style-guide/prettier';
+import prettierOptions from '@reactuse/prettier-config'
 
 /** @type {import("prettier").Config} */
 const config = {
-  ...vercelPrettierOptions,
-  endOfLine: 'lf',
-  semi: true,
-  singleQuote: true,
-  tabWidth: 2,
-  trailingComma: 'es5',
-  plugins: [...vercelPrettierOptions.plugins],
+  ...prettierOptions,
+  plugins: [...prettierOptions.plugins],
 };
 
 export default config;

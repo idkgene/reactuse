@@ -1,8 +1,14 @@
 {
   "name": "@reactuse/prettier-config",
   "version": "0.0.0",
-  "private": true,
+  "files": [
+    "index.js"
+  ],
   "description": "Shared Prettier configuration for ReactUse",
+  "author": {
+    "name": "Gene",
+    "url": "https://github.com/changeelog"
+  },
   "keywords": [
     "prettier",
     "prettierconfig",
@@ -10,13 +16,9 @@
     "reactuse"
   ],
   "license": "MIT",
-  "author": {
-    "name": "Gene",
-    "url": "https://github.com/changeelog"
-  },
-  "type": "module",
-  "dependencies": {
-    "prettier": "^3.3.3",
+  "private": true,
+  "peerDependencies": {
+    "prettier": "^3.0.0",
     "prettier-plugin-packagejson": "^2.5.3"
   }
 }
