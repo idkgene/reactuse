@@ -1,48 +1,38 @@
 {
+  "extends": "@reactuse/tsconfig/node20",
   "compilerOptions": {
-    "module": "esnext",
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "moduleResolution": "Bundler",
-    "noEmit": true,
-    "outDir": "dist",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "typeRoots": [
-      "node_modules/@types"
     ]
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "extends": "@vercel/style-guide/typescript/node18",
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "jest.config.js",
     ".next/types/**/*.ts",
-  ]
+    "eslint.config.mеs",
+    "eslint.config.ts",
+    "scripts/lint.ts"
+  ],
+  "exclude": ["node_modules"]
 }
