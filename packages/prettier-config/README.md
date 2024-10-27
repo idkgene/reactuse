@@ -1,4 +1,4 @@
-# @reactuse/prettier-config
+### `@reactuse/prettier-config`
 
 General Prettier configuration for ReactUse.
 
