@@ -1,3 +1,3 @@
-# @reactuse/tsconfig
+### `@reactuse/tsconfig`
 
 Shared TypeScript configuration for ReactUse.
