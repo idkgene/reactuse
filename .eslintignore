@@ -1,7 +1,0 @@
-node_modules
-**/.next/**
-**/_next/**
-**/.vscode/**
-**/dist/**
-apps/docs/lib/utils.ts
-coverage/
