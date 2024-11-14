@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "module": "ESNext",
+    "allowJs": true,
+    "baseUrl": ".",
+    "incremental": true,
+    "jsx": "preserve",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "paths": {
+      "@/*": ["./*"],
+      "@reactuse/*": ["../../packages/*"],
+      "content-collections": ["./.content-collections/generated"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "tsBuildInfoFile": "./.next/cache/tsbuildinfo"
+  },
+  "display": "Next.js",
+  "exclude": ["node_modules", ".next", "out"],
+  "extends": "./base.json",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}

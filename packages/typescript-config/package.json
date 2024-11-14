@@ -1,0 +1,41 @@
+{
+  "name": "@reactuse/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TypeScript configurations for ReactUse",
+  "keywords": [
+    "typescript",
+    "tsconfig",
+    "react",
+    "reactuse",
+    "configuration"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idkgene/reactuse"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Gene (idkgene)",
+    "url": "https://github.com/idkgene"
+  },
+  "exports": {
+    ".": "./base.json",
+    "./base": "./base.json",
+    "./nextjs": "./nextjs.json",
+    "./node16": "./node16.json",
+    "./node18": "./node18.json",
+    "./node20": "./node20.json",
+    "./react-library": "./react-library.json"
+  },
+  "main": "base.json",
+  "files": [
+    "*.json"
+  ],
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
