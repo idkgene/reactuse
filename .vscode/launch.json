@@ -1,0 +1,58 @@
+{
+  "version": "0.0.0",
+  "configurations": [
+    {
+      "name": "Debug All (Turbo)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev"
+    },
+    {
+      "name": "Debug Docs",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev:docs"
+    },
+    {
+      "name": "Debug Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Debug Edge",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Debug Full Stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    },
+    {
+      "name": "Debug Tests",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm test"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack (Edge)",
+      "configurations": ["Debug All (Turbo)", "Debug Edge"]
+    },
+    {
+      "name": "Debug Full Stack (Chrome)",
+      "configurations": ["Debug All (Turbo)", "Debug Chrome"]
+    }
+  ]
+}

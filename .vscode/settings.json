@@ -19,6 +19,12 @@
     { "rule": "*semi", "severity": "off", "fixable": true }
   ],
 
+  "explorer.fileNesting.patterns": {
+    "*.ts": "$(capture).js, $(capture).d.ts.map, $(capture).*.ts, $(capture)_*.js, $(capture)_*.ts, $(capture).config.ts, $(capture).demo.tsx, $(capture).stories.tsx",
+    "*.tsx": "$(capture).ts, $(capture).*.tsx, $(capture)_*.ts, $(capture)_*.tsx, $(capture).less, $(capture).module.less, $(capture).scss, $(capture).module.scss",
+    "index.ts": "$(capture).*, $(capture)_*"
+  },
+
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -51,5 +57,5 @@
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
+  ]
 }
