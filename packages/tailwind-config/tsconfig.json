@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "@reactuse/typescript-config/react-library.json",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}
