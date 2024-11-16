@@ -1,0 +1,22 @@
+{
+  "name": "@reactuse/use-abs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A React hook for absolute value calculations",
+  "keywords": [
+    "react",
+    "hook",
+    "absolute",
+    "math",
+    "reactuse"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idkgene/reactuse"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Gene (idkgene)",
+    "url": "https://github.com/idkgene"
+  }
+}
