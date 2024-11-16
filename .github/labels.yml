@@ -1,0 +1,187 @@
+- name: "priority: critical"
+  color: "#b60205"
+  description: "Requires immediate attention"
+
+- name: "priority: high"
+  color: "#d93f0b"
+  description: "Requires attention in the near term"
+
+- name: "priority: medium"
+  color: "#fbca04"
+  description: "Requires attention in the foreseeable future"
+
+- name: "priority: low"
+  color: "#0e8a16"
+  description: "Can be deferred"
+
+- name: "type: bug"
+  color: "#d73a4a"
+  description: "Something isn't working as expected"
+
+- name: "type: feature"
+  color: "#a2eeef"
+  description: "New feature or request"
+
+- name: "type: enhancement"
+  color: "#7057ff"
+  description: "Improvement to existing functionality"
+
+- name: "type: docs"
+  color: "#0075ca"
+  description: "Documentation improvement"
+
+- name: "type: performance"
+  color: "#2cbe4e"
+  description: "Performance optimization"
+
+- name: "type: refactor"
+  color: "#1d76db"
+  description: "Code refactoring without changing functionality"
+
+- name: "type: test"
+  color: "#9e6a03"
+  description: "Adding or improving tests"
+
+- name: "status: help wanted"
+  color: "#008672"
+  description: "Community assistance needed"
+
+- name: "status: in progress"
+  color: "#fed330"
+  description: "Work in progress"
+
+- name: "status: blocked"
+  color: "#e11d21"
+  description: "Blocked by another issue"
+
+- name: "status: review needed"
+  color: "#fbca04"
+  description: "Ready for code review"
+
+- name: "status: ready"
+  color: "#0e8a16"
+  description: "Ready for merge"
+
+- name: "size: XS"
+  color: "#009900"
+  description: "Extra small changes (<10 lines)"
+
+- name: "size: S"
+  color: "#77bb00"
+  description: "Small changes (10-30 lines)"
+
+- name: "size: M"
+  color: "#eebb00"
+  description: "Medium changes (30-100 lines)"
+
+- name: "size: L"
+  color: "#ee9900"
+  description: "Large changes (100-500 lines)"
+
+- name: "size: XL"
+  color: "#ee5500"
+  description: "Extra large changes (500+ lines)"
+
+- name: "semver: major"
+  color: "#b60205"
+  description: "Major version change"
+
+- name: "semver: minor"
+  color: "#fbca04"
+  description: "Minor version change"
+
+- name: "semver: patch"
+  color: "#0e8a16"
+  description: "Patch version change"
+
+- name: "good first issue"
+  color: "#7057ff"
+  description: "Good for newcomers"
+
+- name: "breaking change"
+  color: "#b60205"
+  description: "Introduces breaking changes to the API"
+
+- name: "dependencies"
+  color: "#0366d6"
+  description: "Dependency updates"
+
+- name: "duplicate"
+  color: "#cfd3d7"
+  description: "Duplicate of an existing issue"
+
+- name: "wontfix"
+  color: "#ffffff"
+  description: "This will not be addressed"
+
+- name: "needs discussion"
+  color: "#d4c5f9"
+  description: "Requires further discussion"
+
+- name: "needs research"
+  color: "#fef2c0"
+  description: "Requires additional investigation"
+
+- name: "invalid"
+  color: "#e4e669"
+  description: "This doesn't seem right"
+
+- name: "release: next"
+  color: "#0366d6"
+  description: "Slated for the next release"
+
+- name: "release: beta"
+  color: "#0366d6"
+  description: "Beta release"
+
+- name: "release: stable"
+  color: "#0366d6"
+  description: "Stable release"
+
+- name: "infra: build"
+  color: "#006b75"
+  description: "Build system"
+
+- name: "infra: ci"
+  color: "#006b75"
+  description: "Continuous integration"
+
+- name: "infra: deployment"
+  color: "#006b75"
+  description: "Deployment process"
+
+- name: "infra: tooling"
+  color: "#006b75"
+  description: "Development tools"
+
+- name: "example: needed"
+  color: "#0075ca"
+  description: "Usage example required"
+
+- name: "example: outdated"
+  color: "#0075ca"
+  description: "Outdated example"
+
+- name: "repro: needed"
+  color: "#c2e0c6"
+  description: "Reproduction steps required"
+
+- name: "repro: provided"
+  color: "#c2e0c6"
+  description: "Reproduction steps provided"
+
+- name: "repro: confirmed"
+  color: "#c2e0c6"
+  description: "Issue confirmed"
+
+- name: "sprint: current"
+  color: "#bfd4f2"
+  description: "Current sprint task"
+
+- name: "sprint: next"
+  color: "#bfd4f2"
+  description: "Next sprint task"
+
+- name: "community: feedback needed"
+  color: "#dd4e4c"
+  description: "Community feedback required"
