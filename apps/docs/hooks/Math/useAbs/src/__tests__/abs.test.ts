@@ -2,6 +2,13 @@ import { renderHook } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { useAbs } from '../abs';
 
+class AbsValueError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'AbsValueError';
+  }
+}
+
 describe('useAbs', () => {
   it('should return the same value for positive numbers', () => {
     const { result } = renderHook(() => useAbs(5));
@@ -35,10 +42,24 @@ describe('useAbs', () => {
     expect(result.current).toBe(-smallNumber);
   });
 
+  it('should handle Infinity values', () => {
+    expect(() => {
+      renderHook(() => useAbs(Infinity));
+    }).toThrow('Invalid input: value must be a finite number. Received: Infinity');
+
+    expect(() => {
+      renderHook(() => useAbs(-Infinity));
+    }).toThrow('Invalid input: value must be a finite number. Received: -Infinity');
+  });
+
   it('should throw error for NaN input', () => {
     expect(() => {
       renderHook(() => useAbs(NaN));
-    }).toThrow('Invalid input: value must not be NaN');
+    }).toThrow(
+      new AbsValueError(
+        'Invalid input: value must be a finite number. Received: NaN',
+      ),
+    );
   });
 
   it('should handle function input', () => {

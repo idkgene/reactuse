@@ -1,8 +1,33 @@
+/** Available core operations for absolute value calculations */
+enum CoreOperations {
+  COMPUTE = 'COMPUTE',      // Basic calculation of the absolute value
+  VALIDATE = 'VALIDATE',    // Input validation
+}
+
+/** Configuration for operations */
+interface OperationsConfig {
+  readonly core: readonly CoreOperations[];
+  readonly addons: readonly string[];
+}
+
+/** Options for absolute value calculations */
+interface AbsOptions {}
+
+/** Configuration type */
+interface AbsConfigType {
+  operations: OperationsConfig;
+  defaults: {
+    operations: OperationsConfig;
+    options: AbsOptions;
+  };
+}
+
+/**
+ * Defines configuration for absolute value operations
+ * @returns Configuration object with core operations and addons
+ */
 export const defineConfig = () => {
-  const CORE_OPS = [
-    'COMPUTE',        // Basic calculation of the absolute value
-    'VALIDATE',       // Input validation
-  ] as const;
+  const CORE_OPS = [CoreOperations.COMPUTE, CoreOperations.VALIDATE] as const;
 
   const ADDONS = [] as const;
 
@@ -14,18 +39,11 @@ export const defineConfig = () => {
     defaults: {
       operations: {
         core: CORE_OPS,
-        addons: [] as (typeof ADDONS)[number][],
+        addons: [],
       },
-      options: {},
+      options: {} as AbsOptions,
     },
-    type: {} as {
-      Config: {
-        readonly operations: {
-          readonly core: readonly (typeof CORE_OPS)[number][];
-          readonly addons: readonly (typeof ADDONS)[number][];
-        };
-      };
-    },
+    type: {} as { Config: AbsConfigType },
   };
 };
 
