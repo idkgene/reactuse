@@ -45,11 +45,19 @@ describe('useAbs', () => {
   it('should handle Infinity values', () => {
     expect(() => {
       renderHook(() => useAbs(Infinity));
-    }).toThrow('Invalid input: value must be a finite number. Received: Infinity');
+    }).toThrow(
+      new AbsValueError(
+        'Invalid input: value must be a finite number. Received: Infinity'
+      )
+    );
 
     expect(() => {
       renderHook(() => useAbs(-Infinity));
-    }).toThrow('Invalid input: value must be a finite number. Received: -Infinity');
+    }).toThrow(
+      new AbsValueError(
+        'Invalid input: value must be a finite number. Received: -Infinity'
+      )
+    );
   });
 
   it('should throw error for NaN input', () => {
