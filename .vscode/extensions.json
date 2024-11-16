@@ -1,13 +1,12 @@
 {
   "recommendations": [
     // Linting / Formatting
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
+    "biomejs.biome",
     "usernamehw.errorlens",
     "ast-grep.ast-grep-vscode",
 
     // Testing
-    "orta.vscode-jest",
+    "vitest.explorer",
 
     // PR management / Reviewing
     "github.vscode-pull-request-github",
