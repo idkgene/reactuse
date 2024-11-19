@@ -1,20 +1,20 @@
 {
   "name": "@reactuse/typescript-config",
   "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript configurations for ReactUse",
-  "keywords": [
-    "typescript",
-    "tsconfig",
-    "react",
-    "reactuse",
-    "configuration"
+  "main": "base.json",
+  "files": [
+    "base.json",
+    "presets/**/*.json"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
+    "directory": "packages/typescript-config",
     "type": "git",
     "url": "https://github.com/idkgene/reactuse"
   },
-  "license": "MIT",
+  "description": "Basic TypeScript configurations for ReactUse",
   "author": {
     "name": "Gene (idkgene)",
     "url": "https://github.com/idkgene"
@@ -22,20 +22,23 @@
   "exports": {
     ".": "./base.json",
     "./base": "./base.json",
-    "./nextjs": "./nextjs.json",
-    "./node16": "./node16.json",
-    "./node18": "./node18.json",
-    "./node20": "./node20.json",
-    "./react-library": "./react-library.json"
+    "./nextjs": "./presets/react/nextjs.json",
+    "./node-16": "./presets/node/node16.json",
+    "./node-18": "./presets/node/node18.json",
+    "./node-20": "./presets/node/node20.json",
+    "./react-library": "./presets/react/library.json"
   },
-  "main": "base.json",
-  "files": [
-    "*.json"
+  "keywords": [
+    "typescript",
+    "tsconfig",
+    "config",
+    "react",
+    "node",
+    "nextjs"
   ],
+  "license": "MIT",
+  "private": false,
   "peerDependencies": {
     "typescript": "^5.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
