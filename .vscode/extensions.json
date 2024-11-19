@@ -1,7 +1,7 @@
 {
   "recommendations": [
     // Linting / Formatting
-    "biomejs.biome",
+    "esbenp.prettier-vscode",
     "usernamehw.errorlens",
     "ast-grep.ast-grep-vscode",
 
