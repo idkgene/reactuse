@@ -1,0 +1,27 @@
+{
+  "version": "0.2",
+  "gitignoreRoot": ".",
+  "useGitignore": true,
+  "dictionaries": [
+    "css",
+    "html",
+    "fonts",
+    "typescript",
+    "softwareTerms",
+    "lorem-ipsum"
+  ],
+  "ignorePaths": [
+    "CHANGELOG.md",
+    "package.json",
+    "pnpm-lock.yaml",
+    "build",
+    "coverage",
+    "dist",
+    "tsconfig.json",
+    "*.test.ts",
+    "*spec.ts",
+    ".git",
+    "*.gitignore"
+  ],
+  "enableFiletypes": ["mdx", "typescript", "typescriptreact"]
+}
