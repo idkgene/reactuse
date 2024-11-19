@@ -1,13 +1,15 @@
 {
   "astGrep.serverPath": "node_modules/@ast-grep/cli/ast-grep",
   "debug.javascript.unmapMissingSources": true,
-  "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit",
-    "sourcee.organizeImports.biome": "explicit"
-  },
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "explorer.fileNesting.patterns": {
     "*.ts": "$(capture).js, $(capture).d.ts.map, $(capture).*.ts, $(capture)_*.js, $(capture)_*.ts, $(capture).config.ts, $(capture).demo.tsx, $(capture).stories.tsx",
     "*.tsx": "$(capture).ts, $(capture).*.tsx, $(capture)_*.ts, $(capture)_*.tsx, $(capture).less, $(capture).module.less, $(capture).scss, $(capture).module.scss",
