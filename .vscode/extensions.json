@@ -1,23 +1,15 @@
 {
   "recommendations": [
-    // Linting / Formatting
     "esbenp.prettier-vscode",
     "usernamehw.errorlens",
     "ast-grep.ast-grep-vscode",
-
-    // Testing
+    "dbaeumer.vscode-eslint",
+    "christian-kohler.path-intellisense",
     "vitest.explorer",
-
-    // PR management / Reviewing
     "github.vscode-pull-request-github",
-
-    // Showing todo comments
     "gruntfuggly.todo-tree",
-
-    // Debugging
     "ms-vscode.vscode-js-profile-flame",
-
-    // MDX Authoring
-    "unifiedjs.vscode-mdx"
+    "unifiedjs.vscode-mdx",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
