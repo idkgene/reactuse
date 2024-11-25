@@ -4,7 +4,6 @@ type NumberValue = number | bigint;
 type NumberFactory<T extends NumberValue> = () => T;
 type MaybeFactory<T extends NumberValue> = T | NumberFactory<T>;
 
-// Why do I use generic here
 interface Options<T extends NumberValue> {
   power?: number;
   precision?: number;
@@ -61,7 +60,7 @@ const handleNumber = (
     return NaN;
   }
 
-  if (precision !== undefined && 
+  if (precision !== undefined &&
       (precision < 0 || precision > LIMITS.PRECISION || !Number.isInteger(precision))) {
     return NaN;
   }
@@ -94,9 +93,12 @@ function useCeil<T extends NumberValue>(
   options: Options<T> = {},
 ): [T, (newValue: MaybeFactory<T>) => T] {
   const {
-    power = 0,
+    power: rawPower = 0,
     precision,
   } = options;
+
+  const power = Number.isFinite(Number(rawPower)) ? Number(rawPower) : 0;
+  const normalizedPrecision = precision != null ? Number(precision) : undefined;
 
   const handleValue = useCallback(
     (input: MaybeFactory<T>): T => {
@@ -111,10 +113,10 @@ function useCeil<T extends NumberValue>(
       return handleNumber(
         rawValue as number,
         power,
-        precision,
+        normalizedPrecision,
       ) as T;
     },
-    [power, precision],
+    [power, normalizedPrecision],
   );
 
   const currentValue = handleValue(value);
