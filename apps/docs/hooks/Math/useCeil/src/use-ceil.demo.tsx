@@ -38,19 +38,22 @@ export const CeilDemo = () => {
   const handleCalculate = () => {
     setError('');
     try {
-      if (!inputValue) {
-        throw new Error('Please enter a value');
+      if (!inputValue.trim()) {
+        throw new Error('Input value is required');
       }
 
       if (type === 'bigint') {
         if (inputValue.includes('.')) {
-          throw new Error('BigInt cannot have decimal points');
+          throw new Error('BigInt values must be integers without decimal points');
+        }
+        if (!/^-?\d+$/.test(inputValue)) {
+          throw new Error('BigInt values must contain only digits');
         }
         setValue(BigInt(inputValue));
       } else {
         const num = Number(inputValue);
-        if (isNaN(num)) {
-          throw new Error('Please enter a valid number');
+        if (Number.isNaN(num)) {
+          throw new Error('Input must be a valid number');
         }
         setValue(num);
       }
