@@ -53,9 +53,16 @@ const handleNumber = (
   power: number,
   precision: number | undefined,
 ): number => {
-  if (!Number.isFinite(value) ||
-      (power && Math.abs(power) > LIMITS.POWER) ||
-      (precision !== undefined && (precision < 0 || precision > LIMITS.PRECISION))) {
+  if (!Number.isFinite(value)) {
+    return NaN;
+  }
+
+  if (power && (power < -LIMITS.POWER || power > LIMITS.POWER || !Number.isInteger(power))) {
+    return NaN;
+  }
+
+  if (precision !== undefined && 
+      (precision < 0 || precision > LIMITS.PRECISION || !Number.isInteger(precision))) {
     return NaN;
   }
 
@@ -63,6 +70,9 @@ const handleNumber = (
 
   if (power) {
     const scale = pow10(power);
+    if (!Number.isFinite(scale)) {
+      return NaN;
+    }
     result = Math.ceil(result * scale) / scale;
   } else {
     result = Math.ceil(result);
@@ -70,6 +80,9 @@ const handleNumber = (
 
   if (precision !== undefined) {
     const scale = pow10(precision);
+    if (!Number.isFinite(scale)) {
+      return NaN;
+    }
     result = Math.round(result * scale) / scale;
   }
 
