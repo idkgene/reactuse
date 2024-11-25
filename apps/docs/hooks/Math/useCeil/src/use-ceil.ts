@@ -18,15 +18,26 @@ const LIMITS = {
 const BIGINT = {
   ZERO: 0n,
   ONE: 1n,
+  TEN: 10n,
 } as const;
 
 const pow10 = (n: number) => Math.pow(10, n);
 
+const pow10BigInt = (n: number): bigint => {
+  if (n < 0) {
+    throw new RangeError('Negative exponents are not supported for BigInt.');
+  }
+  return BIGINT.TEN ** BigInt(n);
+};
+
 const handleBigInt = (
   value: bigint,
-  power: number,
+  power?: number,
 ): bigint => {
-  const divisor = power ? BigInt(pow10(power)) : BIGINT.ONE;
+  if (power !== undefined && power < 0) {
+    throw new RangeError('Negative power is not supported for BigInt values.');
+  }
+  const divisor = power ? pow10BigInt(power) : BIGINT.ONE;
   if (divisor === BIGINT.ZERO) return value;
 
   const isNegative = value < BIGINT.ZERO;
