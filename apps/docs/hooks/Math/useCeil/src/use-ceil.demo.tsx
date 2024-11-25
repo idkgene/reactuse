@@ -26,6 +26,7 @@ export const CeilDemo = () => {
   const [precision, setPrecision] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [type, setType] = useState<'number' | 'bigint'>('number');
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const [value, setValue] = useCeil(
     type === 'number' ? Number(inputValue) || 0 : BigInt(Math.floor(Number(inputValue)) || 0),
@@ -37,6 +38,7 @@ export const CeilDemo = () => {
 
   const handleCalculate = () => {
     setError('');
+    setIsCalculating(true);
     try {
       if (!inputValue.trim()) {
         throw new Error('Input value is required');
@@ -59,6 +61,8 @@ export const CeilDemo = () => {
       }
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setIsCalculating(false);
     }
   };
 
@@ -71,6 +75,7 @@ export const CeilDemo = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       handleCalculate();
     }
   };
@@ -115,6 +120,10 @@ export const CeilDemo = () => {
                 onKeyPress={handleKeyPress}
                 placeholder={type === 'number' ? "Enter a number..." : "Enter an integer..."}
                 className="flex-1"
+                aria-label={type === 'number' ? "Number input" : "BigInt input"}
+                aria-invalid={!!error}
+                aria-describedby={error ? "error-message" : undefined}
+                disabled={isCalculating}
               />
             </div>
             <Tooltip>
@@ -184,7 +193,7 @@ export const CeilDemo = () => {
           )}
 
           {error && (
-            <Alert variant="destructive" className="flex items-center">
+            <Alert variant="destructive" className="flex items-center" id="error-message" role="alert">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="ml-2">{error}</AlertDescription>
             </Alert>
@@ -195,9 +204,9 @@ export const CeilDemo = () => {
               <AlertDescription className="flex items-center space-x-2">
                 <span className="font-medium">Input:</span>
                 <span>{inputValue}</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 <span className="font-medium">Result:</span>
-                <span>{value.toString()}</span>
+                <span>{isCalculating ? 'Calculating...' : value.toString()}</span>
               </AlertDescription>
             </Alert>
           )}
