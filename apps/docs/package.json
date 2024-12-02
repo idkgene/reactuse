@@ -43,7 +43,7 @@
     "cmdk": "1.0.0",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.3.0",
-    "fumadocs-core": "14.0.2",
+    "fumadocs-core": "14.3.1",
     "fumadocs-mdx": "11.0.0",
     "fumadocs-ui": "14.0.2",
     "input-otp": "^1.2.4",
