@@ -80,6 +80,23 @@ function handleNumber(
   return Math.ceil(withPrecision);
 }
 
+function validatePower(power: number): number {
+  if (!Number.isInteger(power) || power < -LIMITS.POWER || power > LIMITS.POWER) {
+    throw new Error(`Power must be an integer between -${LIMITS.POWER} and ${LIMITS.POWER}`);
+  }
+  return power;
+}
+
+function validatePrecision(precision: number | undefined): number | undefined {
+  if (precision === undefined) return undefined;
+  
+  const value = Number(precision);
+  if (!Number.isInteger(value) || value < 0 || value > LIMITS.PRECISION) {
+    throw new Error(`Precision must be an integer between 0 and ${LIMITS.PRECISION}`);
+  }
+  return value;
+}
+
 function useCeil<T extends NumericValue>(
   value: MaybeNumericValue<T>,
   options: UseCeilOptions = {},
@@ -89,8 +106,8 @@ function useCeil<T extends NumericValue>(
     precision,
   } = options;
 
-  const power = Number.isFinite(Number(rawPower)) ? Number(rawPower) : 0;
-  const normalizedPrecision = precision != null ? Number(precision) : undefined;
+  const power = validatePower(Number(rawPower));
+  const normalizedPrecision = validatePrecision(precision);
 
   const handleValue = useCallback(
     (input: MaybeNumericValue<T>): T => {
