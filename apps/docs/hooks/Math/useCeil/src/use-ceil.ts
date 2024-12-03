@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 
-type NumberValue = number | bigint;
-type NumberFactory<T extends NumberValue> = () => T;
-type MaybeFactory<T extends NumberValue> = T | NumberFactory<T>;
+type NumericValue = number | bigint;
+type NumericValueFactory<T extends NumericValue> = () => T;
+type MaybeNumericValue<T extends NumericValue> = T | NumericValueFactory<T>;
 
-interface Options<T extends NumberValue> {
+interface UseCeilOptions {
   power?: number;
   precision?: number;
 }
@@ -20,19 +20,21 @@ const BIGINT = {
   TEN: 10n,
 } as const;
 
-const pow10 = (n: number) => Math.pow(10, n);
+function pow10(n: number): number {
+  return Math.pow(10, n);
+}
 
-const pow10BigInt = (n: number): bigint => {
+function pow10BigInt(n: number): bigint {
   if (n < 0) {
     throw new RangeError('Negative exponents are not supported for BigInt.');
   }
   return BIGINT.TEN ** BigInt(n);
-};
+}
 
-const handleBigInt = (
+function handleBigInt(
   value: bigint,
   power?: number,
-): bigint => {
+): bigint {
   if (power !== undefined && power < 0) {
     throw new RangeError('Negative power is not supported for BigInt values.');
   }
@@ -45,13 +47,13 @@ const handleBigInt = (
   const remainder = abs % divisor;
   let result = remainder === BIGINT.ZERO ? quotient : quotient + BIGINT.ONE;
   return isNegative ? -result : result;
-};
+}
 
-const handleNumber = (
+function handleNumber(
   value: number,
   power: number,
   precision: number | undefined,
-): number => {
+): number {
   if (!Number.isFinite(value)) {
     return NaN;
   }
@@ -88,10 +90,10 @@ const handleNumber = (
   return result;
 };
 
-function useCeil<T extends NumberValue>(
-  value: MaybeFactory<T>,
-  options: Options<T> = {},
-): [T, (newValue: MaybeFactory<T>) => T] {
+function useCeil<T extends NumericValue>(
+  value: MaybeNumericValue<T>,
+  options: UseCeilOptions = {},
+): [T, (newValue: MaybeNumericValue<T>) => T] {
   const {
     power: rawPower = 0,
     precision,
@@ -101,9 +103,9 @@ function useCeil<T extends NumberValue>(
   const normalizedPrecision = precision != null ? Number(precision) : undefined;
 
   const handleValue = useCallback(
-    (input: MaybeFactory<T>): T => {
+    (input: MaybeNumericValue<T>): T => {
       const rawValue = typeof input === 'function'
-        ? (input as NumberFactory<T>)()
+        ? (input as NumericValueFactory<T>)()
         : input;
 
       if (typeof rawValue === 'bigint') {
@@ -120,7 +122,7 @@ function useCeil<T extends NumberValue>(
   );
 
   const currentValue = handleValue(value);
-  const setValue = useCallback((newValue: MaybeFactory<T>) => {
+  const setValue = useCallback((newValue: MaybeNumericValue<T>) => {
     return handleValue(newValue);
   }, [handleValue]);
 
@@ -128,10 +130,10 @@ function useCeil<T extends NumberValue>(
 }
 
 export type {
-  NumberValue,
-  NumberFactory,
-  MaybeFactory,
-  Options,
+  NumericValue,
+  NumericValueFactory,
+  MaybeNumericValue,
+  UseCeilOptions,
 };
 
 export default useCeil;
