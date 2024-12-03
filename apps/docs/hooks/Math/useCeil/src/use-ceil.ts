@@ -21,7 +21,7 @@ const BIGINT = {
 } as const;
 
 function pow10(n: number): number {
-  return Math.pow(10, n);
+  return 10 ** n;
 }
 
 function pow10BigInt(n: number): bigint {
@@ -39,8 +39,6 @@ function handleBigInt(
     throw new RangeError('Negative power is not supported for BigInt values.');
   }
   const divisor = power ? pow10BigInt(power) : BIGINT.ONE;
-  if (divisor === BIGINT.ZERO) return value;
-
   const isNegative = value < BIGINT.ZERO;
   const abs = isNegative ? -value : value;
   const quotient = abs / divisor;
@@ -49,46 +47,38 @@ function handleBigInt(
   return isNegative ? -result : result;
 }
 
+function validateNumber(value: number): number {
+  if (!Number.isFinite(value)) {
+    return NaN;
+  }
+  return value;
+}
+
+function applyPower(value: number, power: number): number {
+  if (power === 0) return value;
+  return value * pow10(power);
+}
+
+function applyPrecision(value: number, precision: number | undefined): number {
+  if (precision == null) return value;
+  
+  const factor = pow10(precision);
+  return Math.round(value * factor) / factor;
+}
+
 function handleNumber(
   value: number,
   power: number,
   precision: number | undefined,
 ): number {
-  if (!Number.isFinite(value)) {
-    return NaN;
-  }
+  const validatedValue = validateNumber(value);
+  if (!Number.isFinite(validatedValue)) return validatedValue;
 
-  if (power && (power < -LIMITS.POWER || power > LIMITS.POWER || !Number.isInteger(power))) {
-    return NaN;
-  }
-
-  if (precision !== undefined &&
-      (precision < 0 || precision > LIMITS.PRECISION || !Number.isInteger(precision))) {
-    return NaN;
-  }
-
-  let result = value;
-
-  if (power) {
-    const scale = pow10(power);
-    if (!Number.isFinite(scale)) {
-      return NaN;
-    }
-    result = Math.ceil(result * scale) / scale;
-  } else {
-    result = Math.ceil(result);
-  }
-
-  if (precision !== undefined) {
-    const scale = pow10(precision);
-    if (!Number.isFinite(scale)) {
-      return NaN;
-    }
-    result = Math.round(result * scale) / scale;
-  }
-
-  return result;
-};
+  const withPower = applyPower(validatedValue, power);
+  const withPrecision = applyPrecision(withPower, precision);
+  
+  return Math.ceil(withPrecision);
+}
 
 function useCeil<T extends NumericValue>(
   value: MaybeNumericValue<T>,
