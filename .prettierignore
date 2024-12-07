@@ -3,15 +3,7 @@ pnpm-lock.yaml
 .changeset/*.md
 .github/**/*.md
 
-packages/create-app/versions.json
-
 apps/docs/shaders/*
 
 **/test/out/**/*
 **/test/fixtures/*.output.*
-
-apps/docs/content/docs/ui/museum/events.mdx
-apps/docs/content/docs/ui/museum/operations.mdx
-apps/docs/content/docs/ui/museum/tickets.mdx
-
-apps/docs/content/docs/ui/typescript.mdx
