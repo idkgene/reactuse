@@ -31,7 +31,7 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
     "@swc/cli": "0.4.1-nightly.20240914",
-    "@swc/core": "^1.9.3",
+    "@swc/core": "^1.10.1",
     "@swc/helpers": "^0.5.15",
     "@swc/types": "^0.1.17",
     "@types/node": "22.7.8",
@@ -42,13 +42,13 @@
     "jiti": "^2.4.1",
     "lint-staged": "^15.2.10",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "prettier-plugin-packagejson": "^2.5.6",
     "simple-git-hooks": "^2.11.1",
     "syncpack": "^13.0.0",
     "tsup": "^8.3.5",
     "turbo": "^2.3.3",
-    "typescript-eslint": "^8.17.0"
+    "typescript-eslint": "^8.18.0"
   },
-  "packageManager": "pnpm@9.14.4"
+  "packageManager": "pnpm@9.15.0"
 }
